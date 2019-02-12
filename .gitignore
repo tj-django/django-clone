@@ -1,0 +1,10 @@
+*.egg-info/
+.idea/
+__pycache__
+.pytest_cache
+*.pyc
+.tox/
+build/
+dist/
+
+*.db
