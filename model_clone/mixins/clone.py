@@ -117,9 +117,6 @@ class CloneMixin(object):
 
         # Clone many to many fields
         for field in many_to_many_fields:
-            source = getattr(self, field.attname)
-            destination = getattr(duplicate, field.attname)
-
             if field.remote_field.through and not field.remote_field.through._meta.auto_created:
                 objs = field.remote_field.through.objects.filter(**{field.m2m_field_name(): self.pk})
                 for item in objs:
@@ -130,5 +127,7 @@ class CloneMixin(object):
                         setattr(item, field.m2m_field_name(), duplicate)
                         item.save()
             else:
+                source = getattr(self, field.attname)
+                destination = getattr(duplicate, field.attname)
                 destination.set(source.all())
         return duplicate
