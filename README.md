@@ -1,6 +1,6 @@
 ## django-clone
 
-A django library for creating clone (i.e a copy) of a model instance on the fly. 
+A django library for creating clones (i.e a copy) of a model instance on the fly. 
 
 
 ```python
