@@ -78,9 +78,9 @@ class CloneMixin(object):
             duplicate.pk = None
         else:
             duplicate = self._create_copy_of_instance(self)
-
-        for name, value in attrs.items():
-            setattr(duplicate, name, value)
+            # Supports only updating the attributes of the base instance.
+            for name, value in attrs.items():
+                setattr(duplicate, name, value)
 
         duplicate.save()
 
