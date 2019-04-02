@@ -6,8 +6,7 @@ from django.db.models.base import ModelBase
 from django.utils import six
 
 
-@six.with_metaclass(abc.ABCMeta, ModelBase)
-class CloneMixin(object):
+class CloneMixin(six.with_metaclass(abc.ABCMeta, ModelBase)):
     """
     CloneMixin mixin to duplicate an object using the model cls.
 
