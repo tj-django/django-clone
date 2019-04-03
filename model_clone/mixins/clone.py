@@ -2,11 +2,17 @@ import abc
 
 from django.core.exceptions import ValidationError
 from django.db import transaction
+from django.db.models import SlugField
 from django.db.models.base import ModelBase
 from django.utils import six
+from django.utils.text import slugify
 
 
-class CloneMixin(six.with_metaclass(abc.ABCMeta, ModelBase)):
+class CloneMetaClass(abc.ABCMeta, ModelBase):
+    pass
+
+
+class CloneMixin(six.with_metaclass(CloneMetaClass)):
     """
     CloneMixin mixin to duplicate an object using the model cls.
 
@@ -30,10 +36,7 @@ class CloneMixin(six.with_metaclass(abc.ABCMeta, ModelBase)):
     _clonable_many_to_one_or_one_to_many_fields = []
     _clonable_one_to_one_fields = []
 
-    @property
-    @abc.abstractmethod
-    def _meta(self):
-        pass
+    UNIQUE_DUPLICATE_SUFFIX = 'copy'
 
     @property
     @abc.abstractmethod
@@ -47,6 +50,15 @@ class CloneMixin(six.with_metaclass(abc.ABCMeta, ModelBase)):
         if cls._clonable_model_fields:
             fields = [f for f in fields if f.name in cls._clonable_model_fields]
 
+        unique_field_names = cls.unpack_unique_together(
+            opts=instance._meta,
+            only_fields=[f.attname for f in fields],
+        )
+
+        unique_fields = [
+            f.name for f in fields if not f.auto_created and (f.unique or f.name in unique_field_names)
+        ]
+
         for f in fields:
             if all([
                 not f.auto_created,
@@ -55,9 +67,20 @@ class CloneMixin(six.with_metaclass(abc.ABCMeta, ModelBase)):
                 f not in instance._meta.related_objects,
                 f not in instance._meta.many_to_many,
             ]):
-                defaults[f.attname] = getattr(instance, f.attname, f.get_default())
+                value = getattr(instance, f.attname, f.get_default())
+                if f.attname in unique_fields:
+                    count = (
+                        instance.__class__._default_manager
+                        .filter(**{'{}__startswith'.format(f.attname): value})
+                        .count()
+                    )
+                    if not str(value).isdigit():
+                        value += ' {} {}'.format(cls.UNIQUE_DUPLICATE_SUFFIX, count)
+                    if isinstance(f, SlugField):
+                        value = slugify(value)
+                defaults[f.attname] = value
 
-        return cls.objects.create(**defaults)
+        return cls(**defaults)
 
     @transaction.atomic
     def make_clone(self, attrs=(), sub_clone=False):
@@ -130,3 +153,15 @@ class CloneMixin(six.with_metaclass(abc.ABCMeta, ModelBase)):
                 destination = getattr(duplicate, field.attname)
                 destination.set(source.all())
         return duplicate
+
+
+    @staticmethod
+    def unpack_unique_together(opts, only_fields=()):
+        fields = []
+        for field in opts.unique_together:
+            if isinstance(field, str):
+                if field in only_fields:
+                    fields.append(field)
+            else:
+                fields.extend(list([f for f in field if f in only_fields]))
+        return fields
