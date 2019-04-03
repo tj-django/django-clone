@@ -1,4 +1,4 @@
-## django-clone
+## django-clone [![CircleCI](https://circleci.com/gh/jackton1/django-clone.svg?style=svg)](https://circleci.com/gh/jackton1/django-clone)
 
 Creating clones (i.e a copy) of a model instance on the fly. 
 
