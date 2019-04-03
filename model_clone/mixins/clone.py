@@ -1,7 +1,7 @@
 import abc
 
 from django.core.exceptions import ValidationError
-from django.db import transaction
+from django.db import transaction, models
 from django.db.models import SlugField
 from django.db.models.base import ModelBase
 from django.utils import six
@@ -68,7 +68,7 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                 f not in instance._meta.many_to_many,
             ]):
                 value = getattr(instance, f.attname, f.get_default())
-                if f.attname in unique_fields:
+                if f.attname in unique_fields and isinstance(f, models.CharField):
                     count = (
                         instance.__class__._default_manager
                         .filter(**{'{}__startswith'.format(f.attname): value})
