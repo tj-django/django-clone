@@ -37,7 +37,7 @@ jobs:
           name: install dependencies
           command: |
             python -m pip install virtualenv
-            python -m venv venv
+            python -m virtualenv venv
             . venv/bin/activate
             make install-test
       - save_cache:
