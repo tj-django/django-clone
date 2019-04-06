@@ -37,7 +37,8 @@ jobs:
           name: install dependencies
           command: |
             python -m venv venv || virtualenv venv
-            bash venv/bin/activate
+            chmod +x venv/bin/activate
+            . venv/bin/activate
             make install-test
       - save_cache:
           paths:
@@ -52,7 +53,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            bash venv/bin/activate
+            . venv/bin/activate
             tox
 
       - store_artifacts:
