@@ -94,7 +94,7 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
         """
         attrs = attrs or {}
         if not self.pk:
-            raise ValidationError(f'{self.__class__.__name__}: Instance must be saved before it can be cloned.')
+            raise ValidationError('{}: Instance must be saved before it can be cloned.'.format(self.__class__.__name__))
         if sub_clone:
             duplicate = self
             duplicate.pk = None
