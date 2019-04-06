@@ -3,8 +3,15 @@
 # Check https://circleci.com/docs/2.0/language-python/ for more details
 #
 version: 2
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test-3.6
+      - test-3.5
+      - test-2.7
 jobs:
-  build:
+  test-3.6: &test-template
     docker:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
@@ -22,7 +29,7 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "requirements.txt" }}
+            - v1-dependencies-{{ checksum "setup.py" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
@@ -35,7 +42,7 @@ jobs:
       - save_cache:
           paths:
             - ./venv
-          key: v1-dependencies-{{ checksum "requirements.txt" }}
+          key: v1-dependencies-{{ checksum "setup.py" }}
 
       # run tests!
       # this example uses Django's built-in test-runner
@@ -51,3 +58,12 @@ jobs:
       - store_artifacts:
           path: test-reports
           destination: test-reports
+  test-3.5:
+    <<: *test-template
+    docker:
+    - image: circleci/python:3.5
+  test-2.7:
+    <<: *test-template
+    docker:
+    - image: circleci/python:2.7
+
