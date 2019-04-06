@@ -6,11 +6,10 @@ from setuptools import find_packages, setup
 install_requires = ['future==0.17.1']
 
 test_requires = [
-    'tox==3.1.2',
-    'pytest-django==3.4.4',
+    'tox==3.8.6',
     'pluggy>=0.7',
     'mock==2.0.0',
-    'codacy-coverage==1.3.10',
+    'codacy-coverage==1.3.11',
 ]
 
 deploy_requires = [
@@ -93,7 +92,7 @@ setup(
         'Framework :: Django :: 2.2',
     ],
     install_requires=install_requires,
-    tests_require=['coverage', 'pytest'],
+    tests_require=['coverage'],
     extras_require=extras_require,
     packages=find_packages(exclude=['*.tests', '*.tests.*', 'tests.*', 'tests', 'demo']),
 )

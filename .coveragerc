@@ -1,0 +1,3 @@
+[run]
+source = model_clone
+omit = model_clone/test*
