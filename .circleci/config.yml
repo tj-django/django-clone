@@ -61,9 +61,9 @@ jobs:
   test-3.5:
     <<: *test-template
     docker:
-    - image: circleci/python:3.5.7-browsers
+    - image: circleci/python:3.5
   test-2.7:
     <<: *test-template
     docker:
-    - image: circleci/python:2.7.16-browsers
+    - image: circleci/python:2.7
 
