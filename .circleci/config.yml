@@ -36,8 +36,8 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            python -m pip install virtualenv
-            python -m virtualenv venv
+            python -m venv venv || virtualenv venv
+            . venv/bin/activate
             source venv/bin/activate
             make install-test
       - save_cache:
@@ -53,7 +53,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            source venv/bin/activate
+            . venv/bin/activate
             tox
 
       - store_artifacts:
