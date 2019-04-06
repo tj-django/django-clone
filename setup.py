@@ -43,7 +43,8 @@ extras_require = {
 }
 
 BASE_DIR = os.path.dirname(__file__)
-README_PATH = os.path.join(BASE_DIR, 'README.rst')
+README_PATH = os.path.join(BASE_DIR, 'README.md')
+LONG_DESCRIPTION_TYPE = 'text/markdown'
 
 if os.path.isfile(README_PATH):
     with io.open(README_PATH, encoding='utf-8') as f:
@@ -61,6 +62,7 @@ setup(
     description='Create a clone of a django model instance.',
     python_requires='>=2.6',
     long_description=LONG_DESCRIPTION,
+    long_description_content_type=LONG_DESCRIPTION_TYPE,
     author='Tonye Jack',
     author_email='jtonye@ymail.com',
     maintainer='Tonye Jack',

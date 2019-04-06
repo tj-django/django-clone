@@ -31,7 +31,7 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            pip install -r requirements.txt
+            make install-test
       - save_cache:
           paths:
             - ./venv
@@ -46,7 +46,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            python manage.py test
+            tox
 
       - store_artifacts:
           path: test-reports

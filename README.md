@@ -5,28 +5,45 @@ Creating clones (i.e a copy) of a model instance on the fly.
 
 
 ```python
-from model_clone import CloneMixin
 from django.db import models
+from django.utils.translation import gettext_lazy as _
+from model_clone import CloneMixin
+
+class Tags(models.Model):
+    name = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return _(self.name)
+
 
 class TestModel(CloneMixin, models.Model):
-    field_1 = models.CharField(max_length=200)
-    rel_field =  models.ManyToManyField(Rel)
+    title = models.CharField(max_length=200)
+    tags =  models.ManyToManyField(Tags)
 
-    _clonable_many_to_many_fields = ['rel_field']
+    _clonable_many_to_many_fields = ['tags']
 ```
 
 
 Creating a clone
 
 ```python
+In [1]: test_obj = TestModel.objects.create(title='New')
 
-In [2]: test_obj = TestModel.objects.first()
+In [2]: test_obj.tags.create(name='men')
 
-In [3]: clone = test_obj.make_clone(attrs={'field_1': 'Updated'})
+In [3]: test_obj.tags.create(name='women')
 
-In [4]: test_obj.field_1
-Out[4]: 'Default'
+In [4]: clone = test_obj.make_clone(attrs={'title': 'Updated title'})
 
-In [5]: clone.field_1
-Out[5]: 'Updated'
+In [5]: test_obj.title
+Out[5]: 'New'
+
+In [6]: test_obj.tags.all()
+Out[6]: <QuerySet [<Tag: men>, <Tag: women>]>
+
+In [7]: clone.title
+Out[7]: 'Updated title'
+
+In [8]: clone.tags.all()
+Out[8]: <QuerySet [<Tag: men>, <Tag: women>]>
 ```
