@@ -38,7 +38,7 @@ jobs:
           command: |
             python -m pip install virtualenv
             python -m virtualenv venv
-            . venv/bin/activate
+            source venv/bin/activate
             make install-test
       - save_cache:
           paths:
@@ -53,7 +53,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            . venv/bin/activate
+            source venv/bin/activate
             tox
 
       - store_artifacts:
