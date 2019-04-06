@@ -36,8 +36,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            python -m venv venv || virtualenv venv
-            chmod +x venv/bin/activate
+            python -m venv venv || sudo virtualenv venv
             . venv/bin/activate
             make install-test
       - save_cache:
@@ -62,9 +61,9 @@ jobs:
   test-3.5:
     <<: *test-template
     docker:
-    - image: circleci/python:3.5
+    - image: circleci/python:3.5.7-browsers
   test-2.7:
     <<: *test-template
     docker:
-    - image: circleci/python:2.7
+    - image: circleci/python:2.7.16-browsers
 
