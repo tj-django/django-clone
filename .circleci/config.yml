@@ -37,7 +37,7 @@ jobs:
           name: install dependencies
           command: |
             python -m venv venv || virtualenv venv
-            echo $PWD
+            sudo chown -R circleci:circleci virtualenv
             . venv/bin/activate
             make install-test
       - save_cache:
