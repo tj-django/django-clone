@@ -38,6 +38,7 @@ jobs:
           command: |
             echo $PWD
             python -m venv venv || python -m virtualenv venv
+            sudo chmod -R a+rX venv
             . venv/bin/activate
             make install-test
       - save_cache:
