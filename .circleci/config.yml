@@ -66,5 +66,5 @@ jobs:
   test-2.7:
     <<: *test-template
     docker:
-    - image: circleci/python:2.7
+    - image: circleci/python:2.7.16-stretch-node-browsers
 
