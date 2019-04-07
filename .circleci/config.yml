@@ -40,7 +40,8 @@ jobs:
             which virtualenv
             which python
             head -1 $(which virtualenv)
-            python -m venv venv || $(python -m pip install virtualenv && virtualenv venv)
+            pip install virtualenv
+            python -m venv venv || virtualenv venv
             sudo chown -R circleci:circleci venv
             . venv/bin/activate
             make install-test
