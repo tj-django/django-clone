@@ -36,6 +36,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
+            echo $PWD
             python -m venv venv || python -m virtualenv venv
             . venv/bin/activate
             make install-test
