@@ -37,6 +37,9 @@ jobs:
           name: install dependencies
           command: |
             whoami
+            which virtualenv
+            which python
+            head -1 $(which virtualenv)
             python -m venv venv || sudo virtualenv venv
             sudo chown -R circleci:circleci venv
             . venv/bin/activate
