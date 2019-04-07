@@ -37,7 +37,7 @@ jobs:
           name: install dependencies
           command: |
             echo $PWD
-            sudo python -m venv venv || sudo python -m virtualenv venv
+            sudo python -m venv venv || virtualenv venv
             sudo chmod -R a+rX venv
             . venv/bin/activate
             make install-test
