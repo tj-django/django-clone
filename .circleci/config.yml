@@ -36,13 +36,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            whoami
-            which virtualenv
-            which python
-            head -1 $(which virtualenv)
-            pip install virtualenv
-            python -m venv venv || virtualenv venv
-            sudo chown -R circleci:circleci venv
+            python -m venv venv
             . venv/bin/activate
             make install-test
       - save_cache:
@@ -71,5 +65,41 @@ jobs:
   test-2.7:
     <<: *test-template
     docker:
-    - image: circleci/python:2.7.16-stretch-node-browsers
+    - image: circleci/python:2.7
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "setup.py" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run:
+          name: install dependencies
+          command: |
+            pip install virtualenv
+            virtualenv venv
+            sudo chown -R circleci:circleci venv
+            . venv/bin/activate
+            make install-test
+      - save_cache:
+          paths:
+          - ./venv
+          key: v1-dependencies-{{ checksum "setup.py" }}
+
+      # run tests!
+      # this example uses Django's built-in test-runner
+      # other common Python testing frameworks include pytest and nose
+      # https://pytest.org
+      # https://nose.readthedocs.io
+      - run:
+          name: run tests
+          command: |
+            . venv/bin/activate
+            tox
+
+      - store_artifacts:
+          path: test-reports
+          destination: test-reports
 
