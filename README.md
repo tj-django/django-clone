@@ -1,4 +1,5 @@
 [![CircleCI](https://circleci.com/gh/jackton1/django-clone.svg?style=shield)](https://circleci.com/gh/jackton1/django-clone)
+![PyPI - Django Version](https://img.shields.io/pypi/djversions/django_clone.svg)
 ## django-clone 
 
 Creating clones (i.e a copy) of a model instance on the fly. 
