@@ -4,8 +4,29 @@
 [![PyPI - Django Version](https://img.shields.io/pypi/djversions/django_clone.svg)](https://docs.djangoproject.com/en/2.2/releases/)
 ## django-clone 
 
-Creating clones (i.e a copy) of a model instance on the fly. 
+Creating clones (i.e a copy) of a model instance on the fly offering more control over how many fields or related objects can be cloned.
 
+> NB: Ensure that required fields skipped from being cloned are passed in using the `attrs` dictionary.
+
+
+### Installation
+
+```bash
+pip install django-clone
+```
+
+Add `model_clone` to your INSTALLED_APPS
+
+```
+INSTALLED_APPS = [
+    ...
+    'model_clone',
+    ...
+]
+```
+
+
+### Usage
 
 ```python
 from django.db import models
