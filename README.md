@@ -4,7 +4,15 @@
 [![PyPI - Django Version](https://img.shields.io/pypi/djversions/django_clone.svg)](https://docs.djangoproject.com/en/2.2/releases/)
 ## django-clone 
 
-Creating clones (i.e a copy) of a model instance on the fly offering more control over how many fields or related objects can be cloned.
+Creating clones (i.e a copy) of a model instance on the fly offering more control over how many fields or related objects can be cloned. 
+
+#### Using class attributes
+```text
+_clonable_model_fields: Restrict the list of fields to copy from the instance.
+_clonable_many_to_many_fields: Restricted Many to many fields (i.e Test.tags).
+_clonable_many_to_one_or_one_to_many_fields: Restricted Many to One/One to Many fields.
+_clonable_one_to_one_fields: Restricted One to One fields.
+```
 
 > NB: Ensure that required fields skipped from being cloned are passed in using the `attrs` dictionary.
 
@@ -48,7 +56,7 @@ class TestModel(CloneMixin, models.Model):
 ```
 
 
-Creating a clone
+#### Creating a clone
 
 ```python
 In [1]: test_obj = TestModel.objects.create(title='New')
