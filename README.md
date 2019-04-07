@@ -1,3 +1,4 @@
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django_clone.svg)
 [![CircleCI](https://circleci.com/gh/jackton1/django-clone.svg?style=shield)](https://circleci.com/gh/jackton1/django-clone)
 ![PyPI - Django Version](https://img.shields.io/pypi/djversions/django_clone.svg)
 ## django-clone 
