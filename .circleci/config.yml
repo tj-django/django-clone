@@ -36,8 +36,8 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            python -m venv venv || virtualenv venv
             whoami
+            python -m venv venv || virtualenv venv
             sudo chown -R circleci:circleci venv
             . venv/bin/activate
             make install-test
