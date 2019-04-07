@@ -36,8 +36,8 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            echo $PWD
             python -m venv venv || virtualenv venv
+            echo $PWD
             . venv/bin/activate
             make install-test
       - save_cache:
@@ -66,5 +66,5 @@ jobs:
   test-2.7:
     <<: *test-template
     docker:
-    - image: python:2.7
+    - image: circleci/python:2.7
 
