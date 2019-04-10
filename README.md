@@ -4,7 +4,7 @@
 [![PyPI - Django Version](https://img.shields.io/pypi/djversions/django_clone.svg)](https://docs.djangoproject.com/en/2.2/releases/)
 ## django-clone 
 
-Creating clones (i.e a copy) of a model instance on the fly offering more control over how many fields or related objects can be cloned. 
+Creating copies of a model instance on the fly offering more control on how the object should be cloned with support for limiting the fields or related objects to be copied. 
 
 #### Using class attributes
 ```text
