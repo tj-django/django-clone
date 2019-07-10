@@ -113,7 +113,7 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
 
         many_to_one_or_one_to_many_fields = [
             f.name for f in self._meta.related_objects
-            if any([f.many_to_one, f.one_to_many, f.one_to_one])
+            if any([f.many_to_one, f.one_to_many])
             and f.name in self._clonable_many_to_one_or_one_to_many_fields
         ]
 
