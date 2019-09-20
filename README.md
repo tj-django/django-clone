@@ -85,3 +85,20 @@ Out[9]: 'Updated title'
 In [10]: clone.tags.all()
 Out[10]: <QuerySet [<Tag: men>, <Tag: women>]>
 ```
+
+
+#### Duplicate Django-Model from Django-Admin
+
+Change
+ 
+```python
+@admin.register(models.ModelToCloneAdmin)
+class ModelToCloneAdmin(ModelAdmin):
+```
+
+to
+
+```python
+@admin.register(ModelToCloneAdmin)
+class ModelToCloneAdmin(ClonableModelAdmin):
+```
