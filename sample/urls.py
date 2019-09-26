@@ -1,8 +1,11 @@
 from django.contrib import admin
-from django.urls import path
+try:
+   from django.urls import re_path as path, include
+except ImportError:
+   from django.conf.urls import url as path, include
 
 app_name = 'sample'
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('^admin/$', admin.site.urls),
 ]
