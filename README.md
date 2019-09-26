@@ -118,8 +118,8 @@ class ModelToCloneAdmin(ClonableModelAdmin):
 
 
 ##### SETTINGS
-> include_duplicate_action: Enables/Disables the Duplicate action in the List view (Defaults to True)
-> include_duplicate_object_link: Enables/Disables the Duplicate action in the Change view (Defaults to 
+`include_duplicate_action`: Enables/Disables the Duplicate action in the List view (Defaults to True)
+`include_duplicate_object_link`: Enables/Disables the Duplicate action in the Change view (Defaults to 
 True)
 
 
