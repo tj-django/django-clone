@@ -92,13 +92,39 @@ Out[10]: <QuerySet [<Tag: men>, <Tag: women>]>
 Change
  
 ```python
-@admin.register(models.ModelToCloneAdmin)
+from django.contrib import admin
+from django.contrib.admin import ModelAdmin
+
+@admin.register(TestModel)
 class ModelToCloneAdmin(ModelAdmin):
+    pass
 ```
 
 to
 
 ```python
-@admin.register(ModelToCloneAdmin)
+from model_clone import ClonableModelAdmin
+
+@admin.register(TestModel)
 class ModelToCloneAdmin(ClonableModelAdmin):
+    pass
+```
+
+##### SETTINGS
+![Screenshot](./Duplicate Action.png)
+> include_duplicate_action: Enables/Disables the Duplicate action in the List view (Defaults to True)
+
+![Screenshot](./Duplicate button.png)
+> include_duplicate_object_link: Enables/Disables the Duplicate action in the Change view (Defaults to 
+True)
+
+
+> NOTE: To include the duplicate button on the change view ensure that `model_clone` is placed before 
+`django.contrib.admin`
+```python
+INSTALLED_APPS = [
+    'model_clone',
+    'django.contrib.admin',
+    '...',
+]
 ```
