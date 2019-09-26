@@ -89,16 +89,34 @@ Out[10]: <QuerySet [<Tag: men>, <Tag: women>]>
 
 #### Duplicate Django-Model from Django-Admin
 
+
+![Screenshot](./Duplicate Action.png)
+
+
+![Screenshot](./Duplicate button.png)
+
 Change
  
 ```python
-@admin.register(models.ModelToCloneAdmin)
+from django.contrib import admin
+from django.contrib.admin import ModelAdmin
+
+@admin.register(TestModel)
 class ModelToCloneAdmin(ModelAdmin):
+    pass
 ```
 
 to
 
 ```python
-@admin.register(ModelToCloneAdmin)
+from model_clone import ClonableModelAdmin
+
+@admin.register(TestModel)
 class ModelToCloneAdmin(ClonableModelAdmin):
+    pass
 ```
+
+##### SETTINGS
+> include_duplicate_action: Enables/Disables the Duplicate action in the List view (Defaults to True)
+> include_duplicate_object_link: Enables/Disables the Duplicate action in the Change view (Defaults to 
+True)

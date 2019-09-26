@@ -1,0 +1,8 @@
+{% extends "admin/change_form_object_tools.html" %}
+{% load i18n %}
+{% block object-tools-items %}
+{% if include_duplicate_object_link %}
+<li><a href="{{ request.path }}?duplicate=true" class="clonelink">{% trans "Duplicate" %}</a></li>
+{% endif %}
+{{ block.super }}
+{% endblock %}
