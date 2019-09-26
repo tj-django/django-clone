@@ -85,3 +85,39 @@ Out[9]: 'Updated title'
 In [10]: clone.tags.all()
 Out[10]: <QuerySet [<Tag: men>, <Tag: women>]>
 ```
+
+
+#### Creative clones without using `CloneMixin`.
+
+> NOTE: This method won't copy over related objects like Many to Many/One to Many relationships.
+
+```python
+
+In [1]: from model_clone import create_copy_of_instance
+
+In [2]: test_obj = TestModel.objects.create(title='New')
+
+In [3]: test_obj.tags.create(name='men')
+
+In [4]: test_obj.tags.create(name='women')
+
+In [5]: clone = create_copy_of_instance(test_obj, attrs={'title': 'Updated title'})
+
+In [6]: test_obj.pk
+Out[6]: 1
+
+In [7]: test_obj.title
+Out[7]: 'New'
+
+In [8]: test_obj.tags.all()
+Out[8]: <QuerySet [<Tag: men>, <Tag: women>]>
+
+In [9]: clone.pk
+Out[9]: 2
+
+In [10]: clone.title
+Out[10]: 'Updated title'
+
+In [11]: clone.tags.all()
+Out[11]: <QuerySet []>
+```
