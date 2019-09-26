@@ -90,10 +90,10 @@ Out[10]: <QuerySet [<Tag: men>, <Tag: women>]>
 #### Duplicate Django-Model from Django-Admin
 
 
-![Screenshot](./Duplicate Action.png)
 
 
-![Screenshot](./Duplicate button.png)
+
+
 
 Change
  
@@ -117,6 +117,20 @@ class ModelToCloneAdmin(ClonableModelAdmin):
 ```
 
 ##### SETTINGS
+![Screenshot](./Duplicate Action.png)
 > include_duplicate_action: Enables/Disables the Duplicate action in the List view (Defaults to True)
+
+![Screenshot](./Duplicate button.png)
 > include_duplicate_object_link: Enables/Disables the Duplicate action in the Change view (Defaults to 
 True)
+
+
+> NOTE: To include the duplicate button on the change view ensure that `model_clone` is placed before 
+`django.contrib.admin`
+```python
+INSTALLED_APPS = [
+    'model_clone',
+    'django.contrib.admin',
+    '...',
+]
+```
