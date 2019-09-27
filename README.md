@@ -87,7 +87,7 @@ Out[10]: <QuerySet [<Tag: men>, <Tag: women>]>
 ```
 
 
-#### Duplicate Django-Model from Django-Admin
+### Duplicate Django-Model from Django-Admin
 
 Change
  
