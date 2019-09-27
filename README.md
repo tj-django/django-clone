@@ -86,8 +86,7 @@ In [10]: clone.tags.all()
 Out[10]: <QuerySet [<Tag: men>, <Tag: women>]>
 ```
 
-
-#### Creative clones without using `CloneMixin`.
+### Creative clones without using `CloneMixin`.
 
 > NOTE: This method won't copy over related objects like Many to Many/One to Many relationships.
 
@@ -120,4 +119,49 @@ Out[10]: 'Updated title'
 
 In [11]: clone.tags.all()
 Out[11]: <QuerySet []>
+
+### Duplicating Models from Django Admin view.
+
+Change
+ 
+```python
+from django.contrib import admin
+from django.contrib.admin import ModelAdmin
+
+@admin.register(TestModel)
+class ModelToCloneAdmin(ModelAdmin):
+    pass
+```
+
+to
+
+```python
+from model_clone import ClonableModelAdmin
+
+@admin.register(TestModel)
+class ModelToCloneAdmin(ClonableModelAdmin):
+    pass
+```
+
+#### List View
+![Screenshot](Duplicate-action.png)
+
+#### Change View
+![Screenshot](Duplicate-button.png)
+
+
+##### SETTINGS
+`include_duplicate_action`: Enables/Disables the Duplicate action in the List view (Defaults to True)
+`include_duplicate_object_link`: Enables/Disables the Duplicate action in the Change view (Defaults to 
+True)
+
+
+> NOTE: To include the duplicate button on the change view ensure that `model_clone` is placed before 
+`django.contrib.admin`
+```python
+INSTALLED_APPS = [
+    'model_clone',
+    'django.contrib.admin',
+    '...',
+]
 ```
