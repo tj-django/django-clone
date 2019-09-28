@@ -93,7 +93,7 @@ _clonable_many_to_one_or_one_to_many_fields: Restricted Many to One/One to Many 
 _clonable_one_to_one_fields: Restricted One to One fields.
 ```
 
-> NB: Ensure that required fields skipped from being cloned are passed in using the `attrs` dictionary.
+> :warning: Ensure that required fields skipped from being cloned are passed in using the `attrs` dictionary.
 
 
 
@@ -169,8 +169,8 @@ class ModelToCloneAdmin(ClonableModelAdmin):
 True)
 
 
-> NOTE: To include the duplicate button on the change view ensure that `model_clone` is placed before 
-`django.contrib.admin`
+> :warning: Ensure that `model_clone` is placed before `django.contrib.admin`
+
 ```python
 INSTALLED_APPS = [
     'model_clone',
