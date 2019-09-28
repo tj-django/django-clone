@@ -6,15 +6,9 @@
 
 Creating copies of a model instance on the fly offering more control on how the object should be cloned with support for limiting the fields or related objects copied. 
 
-#### Using class attributes
-```text
-_clonable_model_fields: Restrict the list of fields to copy from the instance.
-_clonable_many_to_many_fields: Restricted Many to many fields (i.e Test.tags).
-_clonable_many_to_one_or_one_to_many_fields: Restricted Many to One/One to Many fields.
-_clonable_one_to_one_fields: Restricted One to One fields.
-```
-
-> NB: Ensure that required fields skipped from being cloned are passed in using the `attrs` dictionary.
+## Table of contents
+[Installation](#Installation)  
+[Usage](#Usage)
 
 
 ### Installation
@@ -56,7 +50,7 @@ class TestModel(CloneMixin, models.Model):
 ```
 
 
-#### Creating a clone
+#### Duplicating a model instance
 
 ```python
 In [1]: test_obj = TestModel.objects.create(title='New')
@@ -85,6 +79,20 @@ Out[9]: 'Updated title'
 In [10]: clone.tags.all()
 Out[10]: <QuerySet [<Tag: men>, <Tag: women>]>
 ```
+
+#### CloneMixin attributes
+
+```text
+_clonable_model_fields: Restrict the list of fields to copy from the instance.
+_clonable_many_to_many_fields: Restricted Many to many fields (i.e Test.tags).
+_clonable_many_to_one_or_one_to_many_fields: Restricted Many to One/One to Many fields.
+_clonable_one_to_one_fields: Restricted One to One fields.
+```
+
+> NB: Ensure that required fields skipped from being cloned are passed in using the `attrs` dictionary.
+
+
+
 
 #### Create clones without using the `CloneMixin` for a single use case.
 
