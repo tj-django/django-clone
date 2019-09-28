@@ -10,7 +10,9 @@ Creating copies of a model instance on the fly offering more control on how the 
 * [Installation](#Installation)  
 * [Usage](#Usage)
     * [Duplicate a Model Instance](#duplicating-a-model-instance)
-    * [CloneMixin attributes](clonemixin-attributes)
+    * [CloneMixin attributes](#clonemixin-attributes)
+    * [Creating clones without subclassing `CloneMixin`](#creeating-clones-without-subclassing-clonemixin)
+* [Duplicating Models from Django Admin view](#duplicating-models-from-django-admin-view)
 
 
 ### Installation
@@ -96,7 +98,7 @@ _clonable_one_to_one_fields: Restricted One to One fields.
 
 
 
-#### Create clones without using the `CloneMixin` for a single use case.
+#### Creating clones without subclassing `CloneMixin`.
 
 > NOTE: This method won't copy over related objects like Many to Many/One to Many relationships.
 
