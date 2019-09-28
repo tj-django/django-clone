@@ -86,7 +86,7 @@ In [10]: clone.tags.all()
 Out[10]: <QuerySet [<Tag: men>, <Tag: women>]>
 ```
 
-### Creative clones without using `CloneMixin`.
+#### Create clones without using the `CloneMixin` for a single use case.
 
 > NOTE: This method won't copy over related objects like Many to Many/One to Many relationships.
 
