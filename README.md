@@ -9,7 +9,8 @@ Creating copies of a model instance on the fly offering more control on how the 
 ## Table of contents
 * [Installation](#Installation)  
 * [Usage](#Usage)
-* [Duplicate a Model Instance](#duplicating-a-model-instance)
+    * [Duplicate a Model Instance](#duplicating-a-model-instance)
+    * [CloneMixin attributes](clonemixin-attributes)
 
 
 ### Installation
