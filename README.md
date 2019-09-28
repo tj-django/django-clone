@@ -19,7 +19,7 @@ pip install django-clone
 
 Add `model_clone` to your INSTALLED_APPS
 
-```
+```python
 INSTALLED_APPS = [
     ...
     'model_clone',
