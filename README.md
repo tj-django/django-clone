@@ -119,6 +119,7 @@ Out[10]: 'Updated title'
 
 In [11]: clone.tags.all()
 Out[11]: <QuerySet []>
+```
 
 ### Duplicating Models from Django Admin view.
 
