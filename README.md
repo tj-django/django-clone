@@ -93,14 +93,9 @@ _clonable_many_to_one_or_one_to_many_fields: Restricted Many to One/One to Many 
 _clonable_one_to_one_fields: Restricted One to One fields.
 ```
 
-> :warning: Ensure that required fields skipped from being cloned are passed in using the `attrs` dictionary.
-
-
-
-
 #### Creating clones without subclassing `CloneMixin`.
 
-> NOTE: This method won't copy over related objects like Many to Many/One to Many relationships.
+> :warning: This method won't copy over related objects like Many to Many/One to Many relationships.
 
 ```python
 
@@ -132,6 +127,9 @@ Out[10]: 'Updated title'
 In [11]: clone.tags.all()
 Out[11]: <QuerySet []>
 ```
+
+> :warning: Ensure that required fields skipped from being cloned are passed in using the `attrs` dictionary.
+
 
 ### Duplicating Models from Django Admin view.
 
