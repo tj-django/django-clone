@@ -7,8 +7,8 @@
 Creating copies of a model instance on the fly offering more control on how the object should be cloned with support for limiting the fields or related objects copied. 
 
 ## Table of contents
-[Installation](#Installation)  
-[Usage](#Usage)
+* [Installation](#Installation)  
+* [Usage](#Usage)
 
 
 ### Installation
