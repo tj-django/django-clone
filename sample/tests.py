@@ -1,3 +1,9 @@
 from django.test import TestCase
 
-# Create your tests here.
+from .models import Library
+
+class TestCloneMixin(TestCase):
+    def test_clone_with_custom_id(self):
+        base = Library.objects.create(name='First library')
+        clone = base.make_clone()
+        self.assertNotEqual(base.pk, clone.pk)
