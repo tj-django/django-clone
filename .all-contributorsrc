@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "gerbyzation",
+      "name": "Gerben Neven",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/2500973?v=4",
+      "profile": "http://gerritneven.nl",
+      "contributions": [
+        "bug",
+        "test",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "django-clone",
+  "projectOwner": "jackton1",
+  "repoType": "github",
+  "repoHost": "https://github.com"
+}
