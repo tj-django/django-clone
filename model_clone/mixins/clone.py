@@ -46,7 +46,7 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
     @classmethod
     def _create_copy_of_instance(cls, instance):
         defaults = {}
-        fields = [f for f in instance._meta.concrete_fields if f.name != cls._meta.pk.name]
+        fields = [f for f in instance._meta.concrete_fields if not f.primary_key]
 
         if cls._clonable_model_fields:
             fields = [f for f in fields if f.name in cls._clonable_model_fields]
