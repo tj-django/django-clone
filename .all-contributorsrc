@@ -15,6 +15,16 @@
         "test",
         "code"
       ]
+    },
+    {
+      "login": "SebastianKapunkt",
+      "name": "Sebastian Kapunkt",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/2536081?v=4",
+      "profile": "http://sebastian-kindt.com",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
