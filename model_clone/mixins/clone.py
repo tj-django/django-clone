@@ -37,6 +37,7 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
     _clonable_one_to_one_fields = []
 
     UNIQUE_DUPLICATE_SUFFIX = 'copy'
+    USE_UNIQUE_DUPLICATE_SUFFIX = True
 
     @property
     @abc.abstractmethod
@@ -75,8 +76,9 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                         .filter(**{'{}__startswith'.format(f.attname): value})
                         .count()
                     )
-                    if not str(value).isdigit():
-                        value += ' {} {}'.format(cls.UNIQUE_DUPLICATE_SUFFIX, count)
+                    if cls.USE_UNIQUE_DUPLICATE_SUFFIX is True:
+                        if not str(value).isdigit():
+                            value += ' {} {}'.format(cls.UNIQUE_DUPLICATE_SUFFIX, count)
                     if isinstance(f, SlugField):
                         value = slugify(value)
                 defaults[f.attname] = value
