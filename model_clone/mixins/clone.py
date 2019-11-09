@@ -76,7 +76,7 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                         .filter(**{'{}__startswith'.format(f.attname): value})
                         .count()
                     )
-                    if cls.USE_UNIQUE_DUPLICATE_SUFFIX is True:
+                    if cls.USE_UNIQUE_DUPLICATE_SUFFIX:
                         if not str(value).isdigit():
                             value += ' {} {}'.format(cls.UNIQUE_DUPLICATE_SUFFIX, count)
                     if isinstance(f, SlugField):
