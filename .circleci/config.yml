@@ -36,9 +36,9 @@ jobs:
       - run:
           name: install dependencies
           command: |
+            python -m pip install --force-reinstall pip==8.1.1 --user
             python -m venv venv
             . venv/bin/activate
-            python -m pip install --force-reinstall pip==8.1.1 --user
             make install-test
       - save_cache:
           paths:
