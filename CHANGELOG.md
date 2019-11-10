@@ -4,13 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v0.1.0](https://github.com/jackton1/django-clone/releases/tag/v0.1.0) ([compare](https://github.com/jackton1/django-clone/compare/v0.0.5...v0.1.0))
+## [v0.0.7](https://github.com/jackton1/django-clone/releases/tag/v0.0.7) ([compare](https://github.com/jackton1/django-clone/compare/v0.0.6...v0.0.7))
+
+### Misc
+- "2019-11-10 14:30 - Increased django-clone version: VERSION = (0, 0, 6) to VERSION = (0, 0, 7)" ([e1cd9e7](https://github.com/jackton1/django-clone/commit/e1cd9e7b29b1d8d9539fa09b2e97ee8f44e7a76e)).
+- Pinned twine at 1.4.0. ([c96daa8](https://github.com/jackton1/django-clone/commit/c96daa806954507eecea9c65bd859f155636439d)).
+
+
+## [v0.0.6](https://github.com/jackton1/django-clone/releases/tag/v0.0.6) ([compare](https://github.com/jackton1/django-clone/compare/v0.0.5...v0.0.6)) - 2019-11-10
 
 ### Added
 - Added twine to deploy requirements ([59eba81](https://github.com/jackton1/django-clone/commit/59eba81e23cfb07687ae2c1b01ce82573597f61a)).
 
 ### Misc
 - "2019-11-10 14:29 - Increased django-clone version: VERSION = (0, 0, 5) to VERSION = (0, 0, 6)" ([93288ef](https://github.com/jackton1/django-clone/commit/93288efb47106d342f169f5fa797723aa1adc802)).
+- Updated CHANGELOG.md. ([3a170ea](https://github.com/jackton1/django-clone/commit/3a170eaf3c242f52862efaa1a68310041c6765ee)).
 
 
 ## [v0.0.5](https://github.com/jackton1/django-clone/releases/tag/v0.0.5) ([compare](https://github.com/jackton1/django-clone/compare/v0.0.3...v0.0.5)) - 2019-11-10
