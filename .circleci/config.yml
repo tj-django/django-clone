@@ -10,6 +10,7 @@ workflows:
       - test-3.7
       - test-3.6
       - test-3.5
+      - test-2.7
 jobs:
   test-3.6: &test-template
     docker:
@@ -66,44 +67,53 @@ jobs:
     <<: *test-template
     docker:
     - image: circleci/python:3.5
-#  test-2.7:
-#    <<: *test-template
-#    docker:
-#    - image: circleci/python:2.7
-#    steps:
-#      - checkout
-#      # Download and cache dependencies
-#      - restore_cache:
-#          keys:
-#          - v1-dependencies-{{ checksum "setup.py" }}
-#          # fallback to using the latest cache if no exact match is found
-#          - v1-dependencies-
-#
-#      - run:
-#          name: install dependencies
-#          command: |
-#            pip install virtualenv
-#            virtualenv venv
-#            sudo chown -R circleci:circleci venv
-#            . venv/bin/activate
-#            make install-test
-#      - save_cache:
-#          paths:
-#          - ./venv
-#          key: v1-dependencies-{{ checksum "setup.py" }}
-#
-#      # run tests!
-#      # this example uses Django's built-in test-runner
-#      # other common Python testing frameworks include pytest and nose
-#      # https://pytest.org
-#      # https://nose.readthedocs.io
-#      - run:
-#          name: run tests
-#          command: |
-#            . venv/bin/activate
-#            tox
-#
-#      - store_artifacts:
-#          path: test-reports
-#          destination: test-reports
+  test-2.7:
+    <<: *test-template
+    docker:
+    - image: circleci/python:2.7
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "setup.py" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run:
+          name: install dependencies
+          command: |
+            sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
+              libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+              xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+            curl https://pyenv.run | bash
+            export PATH="$HOME/.pyenv/bin:$PATH"
+            eval "$(pyenv init -)"
+            eval "$(pyenv virtualenv-init -)"
+            pyenv virtualenv venv
+            sudo chown -R circleci:circleci ~/.pyenv/versions/venv
+      - save_cache:
+          paths:
+          - ~/.pyenv/versions/venv
+          key: v1-dependencies-{{ checksum "setup.py" }}
+
+      # run tests!
+      # this example uses Django's built-in test-runner
+      # other common Python testing frameworks include pytest and nose
+      # https://pytest.org
+      # https://nose.readthedocs.io
+      - run:
+          name: run tests
+          command: |
+            export PATH="$HOME/.pyenv/bin:$PATH"
+            eval "$(pyenv init -)"
+            eval "$(pyenv virtualenv-init -)"
+            . ~/.pyenv/versions/venv/bin/activate
+            python -m pip install 'tox>3.8.0'
+            . ~/.pyenv/versions/venv/bin/activate
+            tox
+
+      - store_artifacts:
+          path: test-reports
+          destination: test-reports
 
