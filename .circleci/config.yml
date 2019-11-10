@@ -38,6 +38,9 @@ jobs:
           command: |
             python -m venv venv
             . venv/bin/activate
+            pip install -U pip
+            python --version
+            pip --version
             make install-test
       - save_cache:
           paths:
