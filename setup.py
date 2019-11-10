@@ -13,6 +13,7 @@ test_requires = [
 ]
 
 deploy_requires = [
+    'bump2version==0.5.11',
     'readme_renderer[md]',
     'changes==0.7.0',
 ]
