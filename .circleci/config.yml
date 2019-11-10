@@ -36,13 +36,9 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            python --version
-            pip install --user -I pip==19.2.3
-            python -m venv  --without-pip venv
+            python -m venv venv
             . venv/bin/activate
-            pip install -U pip
-            python --version
-            pip --version
+            echo "Activated"
             make install-test
       - save_cache:
           paths:
