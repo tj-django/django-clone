@@ -92,7 +92,6 @@ jobs:
             eval "$(pyenv virtualenv-init -)"
             pyenv virtualenv venv
             sudo chown -R circleci:circleci ~/.pyenv/versions/venv
-            pyenv activate venv
       - save_cache:
           paths:
           - ~/.pyenv/versions/venv
@@ -109,8 +108,8 @@ jobs:
             export PATH="$HOME/.pyenv/bin:$PATH"
             eval "$(pyenv init -)"
             eval "$(pyenv virtualenv-init -)"
-            pyenv activate venv
-            python -m pip install tox
+            . ~/.pyenv/versions/venv/bin/activate
+            python -m pip install 'tox>3.8.0'
             tox
 
       - store_artifacts:
