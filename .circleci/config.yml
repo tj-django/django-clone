@@ -52,7 +52,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            pip install tox
+            python -m pip install tox
             tox
 
       - store_artifacts:
