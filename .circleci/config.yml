@@ -37,7 +37,7 @@ jobs:
           name: install dependencies
           command: |
             python --version
-            pip install -I pip==19.0.3
+            pip install --user -I pip==19.0.3
             python -m venv venv
             . venv/bin/activate
             pip install -U pip
