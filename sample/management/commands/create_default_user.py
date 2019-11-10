@@ -20,7 +20,7 @@ class Command(BaseCommand):
             )
             self.stdout.write('Created superuser.')
         else:
-            self.stdout.write('User already exists.')
+            self.stderr.write('User already exists.')
 
     def _get_admin_creds(self):
         email = os.getenv('ADMIN_EMAIL', 'admin@admin.com')

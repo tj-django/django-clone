@@ -1,1 +1,20 @@
-recursive-include model_clone *.py
+recursive-include model_clone *.py *.html
+recursive-exclude sample *
+
+include *.md
+exclude *.png
+exclude *.py
+exclude *.txt
+exclude .bumpversion.cfg
+exclude .coveragerc
+include LICENSE
+exclude Makefile
+exclude tox.ini
+exclude sample
+exclude .all-contributorsrc
+exclude .circleci
+exclude .circleci/config.yml
+exclude .github
+exclude .github/ISSUE_TEMPLATE
+exclude .github/ISSUE_TEMPLATE/feature_request.md
+exclude .pypirc
