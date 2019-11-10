@@ -38,6 +38,8 @@ jobs:
           command: |
             sudo python -m pip uninstall -y pip
             sudo apt-get install -y --no-install-recommends --reinstall python3-pip
+            pip --version
+            python --version
             python -m venv venv
             . venv/bin/activate
             echo "Activated"
