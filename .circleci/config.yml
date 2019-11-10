@@ -38,7 +38,7 @@ jobs:
           command: |
             python --version
             pip install --user -I pip==19.2.3
-            python -m venv venv
+            python -m venv  --without-pip venv
             . venv/bin/activate
             pip install -U pip
             python --version
