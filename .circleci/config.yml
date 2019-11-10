@@ -36,13 +36,9 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            sudo python -m pip uninstall -y pip
-            sudo apt-get install -y --no-install-recommends --reinstall python3-pip
-            pip --version
-            python --version
             python -m venv venv
             . venv/bin/activate
-            echo "Activated"
+            python -m pip install --force-reinstall pip==8.1.1 --user
             make install-test
       - save_cache:
           paths:
