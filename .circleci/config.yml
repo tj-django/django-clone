@@ -39,7 +39,6 @@ jobs:
             python -m pip install --force-reinstall pip==8.1.1 --user
             python -m venv venv
             . venv/bin/activate
-            make install-test
       - save_cache:
           paths:
             - ./venv
@@ -54,6 +53,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
+            pip install tox
             tox
 
       - store_artifacts:
