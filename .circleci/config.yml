@@ -83,13 +83,18 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            pip install virtualenv
-            virtualenv venv
-            sudo chown -R circleci:circleci venv
-            . venv/bin/activate
+            sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
+              libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+              xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+            export PATH="$HOME/.pyenv/bin:$PATH"
+            eval "$(pyenv init -)"
+            eval "$(pyenv virtualenv-init -)"
+            pyenv virtualenv venv
+            sudo chown -R circleci:circleci ~/.pyenv/versions/venv
+            pyenv activate venv
       - save_cache:
           paths:
-          - ./venv
+          - ~/.pyenv/versions/venv
           key: v1-dependencies-{{ checksum "setup.py" }}
 
       # run tests!
@@ -100,7 +105,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            . venv/bin/activate
+            pyenv activate venv
             python -m pip install tox
             tox
 
