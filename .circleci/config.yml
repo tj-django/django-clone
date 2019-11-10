@@ -36,6 +36,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
+            python -m pip uninstall pip && apt install python3-pip --reinstall
             python -m venv venv
             . venv/bin/activate
             echo "Activated"
