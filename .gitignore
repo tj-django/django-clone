@@ -6,6 +6,7 @@ __pycache__
 .tox/
 build/
 dist/
+.DS_Store
 
 *.db
 *.sqlite*
