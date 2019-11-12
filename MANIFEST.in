@@ -3,8 +3,8 @@ recursive-exclude sample *
 
 include *.md
 exclude *.png
-exclude *.py
-exclude *.txt
+include *.py
+include *.txt
 exclude .bumpversion.cfg
 exclude .coveragerc
 include LICENSE
