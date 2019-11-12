@@ -4,11 +4,53 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v0.0.9](https://github.com/jackton1/django-clone/releases/tag/v0.0.9) ([compare](https://github.com/jackton1/django-clone/compare/v0.0.8...v0.0.9))
+## [v0.0.10](https://github.com/jackton1/django-clone/releases/tag/v0.0.10) ([compare](https://github.com/jackton1/django-clone/compare/v0.0.9...v0.0.10))
+
+### Fixed
+- Fixed manage.py. ([eaa73f6](https://github.com/jackton1/django-clone/commit/eaa73f6687b4bf586cd4c6468819a615aea76d37)).
+- Fixed pyenv. ([66aabd5](https://github.com/jackton1/django-clone/commit/66aabd5536d6b924d56b4a04180c460fdc399449)).
+- Fixed pyenv. ([ad03e08](https://github.com/jackton1/django-clone/commit/ad03e083ba36863af88819d90a4b28dd215b55c7)).
+- Fixed pyenv. ([88b67f1](https://github.com/jackton1/django-clone/commit/88b67f13e8e3259f068c7577511ffcdd54a0c195)).
+- Fixed pyenv. ([b265eba](https://github.com/jackton1/django-clone/commit/b265ebae44e6f1904594dc80f66f794e5aafb4d3)).
+- Fixed python27. ([20b3c55](https://github.com/jackton1/django-clone/commit/20b3c55ecaa376d8069134427b39ce857c218931)).
+- Fixed tox. ([82afdde](https://github.com/jackton1/django-clone/commit/82afdde7929d85b55bec6e4ad8784e268564bbee)).
+
+### Removed
+- Removed bumpversion==0.5.3. ([60a18e5](https://github.com/jackton1/django-clone/commit/60a18e57e7e4b98335cc7c612c25e77f8a5b4564)).
+
+### Misc
+- "2019-11-12 06:32 - Increased django-clone version: VERSION = (0, 0, 9) to VERSION = (0, 0, 10)" ([444b53f](https://github.com/jackton1/django-clone/commit/444b53fce9c4b8c7ca757104960342255711eb9a)).
+- Updated .circleci config. ([35f8480](https://github.com/jackton1/django-clone/commit/35f8480564d8a4b4bef7400795520479f8d91818)).
+- Updated .circleci config. ([af79831](https://github.com/jackton1/django-clone/commit/af798313389e196a0a5d59e2ec63141ff86d9383)).
+- Updated .circleci config. ([4ebf82f](https://github.com/jackton1/django-clone/commit/4ebf82f460d14b5417b25d0bbd8e444599deeb34)).
+- Updated .circleci config. ([f261c02](https://github.com/jackton1/django-clone/commit/f261c021c542b2544edad6f31512f16d7ab86283)).
+- Updated .circleci config. ([b247dd3](https://github.com/jackton1/django-clone/commit/b247dd32d14d8e9bc911db28f223937c990da8ca)).
+- Updated .circleci config. ([524e664](https://github.com/jackton1/django-clone/commit/524e664bcb1c907a6607cfb78f59aecbe9437d1b)).
+- Updated .circleci config. ([07d6665](https://github.com/jackton1/django-clone/commit/07d66650dc8381565eda9a841c068ae5ce18059c)).
+- Updated .circleci config. ([93be99e](https://github.com/jackton1/django-clone/commit/93be99ea92e73d0c2baf9c43a188deb187f599da)).
+- Updated .circleci config. ([745d253](https://github.com/jackton1/django-clone/commit/745d253282dfcdd3849926af934dd90a84c2df29)).
+- Updated .circleci config. ([d9cbdb8](https://github.com/jackton1/django-clone/commit/d9cbdb8d7173303c84a92339f51603711c6f3f23)).
+- Updated .circleci config. ([35c75ff](https://github.com/jackton1/django-clone/commit/35c75ff3df71a00984a84058e6239a6167e0e442)).
+- Updated .circleci config. ([3c7b10c](https://github.com/jackton1/django-clone/commit/3c7b10cd99ba73f898809656f34396c8a649b998)).
+- Updated .circleci config. ([93b9f0a](https://github.com/jackton1/django-clone/commit/93b9f0aaa3364e995b0f344883413679efa8dd02)).
+- Updated .circleci config. ([d6f7899](https://github.com/jackton1/django-clone/commit/d6f7899ccf17baab2f7c6b4d552354d2bf546c60)).
+- Updated .circleci config. ([0ac7ad8](https://github.com/jackton1/django-clone/commit/0ac7ad849f082555d79593f0e693a6e9cb8d6c2a)).
+- Updated .circleci config. ([e4a51c1](https://github.com/jackton1/django-clone/commit/e4a51c164783d770f1cb1f7cc23528234b63e37d)).
+- Updated .circleci config. ([5076819](https://github.com/jackton1/django-clone/commit/50768196198a6009fa23cb99ca9e002ce26a8dde)).
+- Updated .circleci config. ([e5e5c7e](https://github.com/jackton1/django-clone/commit/e5e5c7e8608e4e2706f09d99dbc5eaefb0ce6154)).
+- Updated .circleci config. ([642c236](https://github.com/jackton1/django-clone/commit/642c23698c4a90eb6cd882ae055f058628ec94c3)).
+- Updated .circleci config. ([fcef3b4](https://github.com/jackton1/django-clone/commit/fcef3b4985e229b4af70744816aa1514c3a1f0b3)).
+- Updated .circleci config. ([bc7cc2c](https://github.com/jackton1/django-clone/commit/bc7cc2c7818e39070c3b5f06e114fc8ca5382343)).
+- Updated .circleci config. ([97cba25](https://github.com/jackton1/django-clone/commit/97cba252f03bdca0157f5f437607787b7084dff5)).
+- Updated MANIFEST.in ([0d39096](https://github.com/jackton1/django-clone/commit/0d390966488978453da3b3fc3026eacf2c620686)).
+
+
+## [v0.0.9](https://github.com/jackton1/django-clone/releases/tag/v0.0.9) ([compare](https://github.com/jackton1/django-clone/compare/v0.0.8...v0.0.9)) - 2019-11-10
 
 ### Misc
 - "2019-11-10 14:52 - Increased django-clone version: VERSION = (0, 0, 8) to VERSION = (0, 0, 9)" ([5b3dbb0](https://github.com/jackton1/django-clone/commit/5b3dbb0ed3a3f39103a7e7991c8a4681a99c856b)).
 - Downgraded twine ([7f954b1](https://github.com/jackton1/django-clone/commit/7f954b1abcc9cc62e4200267bdad7fc1c8f9c65f)).
+- Updated CHANGELOG.md. ([5a3a495](https://github.com/jackton1/django-clone/commit/5a3a495306d020444ee13abdb3c96986e8204072)).
 
 
 ## [v0.0.8](https://github.com/jackton1/django-clone/releases/tag/v0.0.8) ([compare](https://github.com/jackton1/django-clone/compare/v0.0.7...v0.0.8)) - 2019-11-10
