@@ -10,3 +10,7 @@ dist/
 
 *.db
 *.sqlite*
+.coverage.*
+.coverage
+coverage.*
+.envrc

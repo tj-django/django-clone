@@ -13,6 +13,7 @@ workflows:
       - test-2.7
 jobs:
   test-3.6: &test-template
+    context: django-clone
     docker:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
@@ -112,6 +113,8 @@ jobs:
             python -m pip install 'tox>3.8.0'
             . ~/.pyenv/versions/venv/bin/activate
             tox
+          env:
+
 
       - store_artifacts:
           path: test-reports
