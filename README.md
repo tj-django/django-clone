@@ -11,11 +11,13 @@ Creating copies of a model instance on the fly offering more control on how the 
 
 ## Table of contents
 
--   [Installation](#Installation)  
+-   [Installation](#Installation)
+
 -   [Usage](#Usage)
     -   [Duplicate a Model Instance](#duplicating-a-model-instance)
     -   [CloneMixin attributes](#clonemixin-attributes)
     -   [Creating clones without subclassing `CloneMixin`](#creating-clones-without-subclassing-clonemixin)
+
 -   [Duplicating Models from Django Admin view](#duplicating-models-from-django-admin-view)
 
 ### Installation
