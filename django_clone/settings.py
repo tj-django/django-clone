@@ -118,3 +118,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+try:
+    import xmlrunner
+except ImportError:
+    pass
+else:
+    # https://github.com/xmlrunner/unittest-xml-reporting#django
+    TEST_RUNNER = 'xmlrunner.extra.djangotestrunner.XMLTestRunner'
+    TEST_OUTPUT_VERBOSE = 2
+    TEST_OUTPUT_DESCRIPTIONS = True
+    TEST_OUTPUT_DIR = 'test-reports'

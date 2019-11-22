@@ -38,11 +38,11 @@ install: clean-build  ## Install project dependencies.
 	@echo "Installing project in dependencies..."
 	@$(PYTHON_PIP) install -r requirements.txt
 
-install-lint: pipconf clean-build  ## Install lint extra dependencies.
+install-lint: clean-build  ## Install lint extra dependencies.
 	@echo "Installing lint extra requirements..."
 	@$(PYTHON_PIP) install -e .'[lint]'
 
-install-test: clean-build  ## Install test extra dependencies.
+install-test: clean-build clean-test-all ## Install test extra dependencies.
 	@echo "Installing test extra requirements..."
 	@$(PYTHON_PIP) install -e .'[test]'
 
@@ -83,5 +83,6 @@ tox: install-test  ## Run tox test
 
 clean-test-all: clean-build  ## Clean build and test assets.
 	@rm -rf .tox/
+	@rm -rf test-results
 	@rm -rf .pytest_cache/
 	@rm test.db
