@@ -5,7 +5,7 @@
 [![PyPI - Django Version](https://img.shields.io/pypi/djversions/django_clone.svg)](https://docs.djangoproject.com/en/2.2/releases/)
 ## django-clone 
 
-Creating copies of a model instance on the fly offering more control on how the object should be cloned with support for limiting the fields or related objects copied. 
+Creating copies of a model instance on the fly offering more control on how the object should be cloned with support for limiting fields or related objects copied with unique field detection. 
 
 ## Table of contents
 * [Installation](#Installation)  
