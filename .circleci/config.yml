@@ -7,7 +7,6 @@ version: 2
 workflows:
   version: 2
   test:
-    context: django-clone
     jobs:
       - test-3.7
       - test-3.6
@@ -15,6 +14,7 @@ workflows:
       - test-2.7
 jobs:
   test-3.6: &test-template
+    context: django-clone
     docker:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
