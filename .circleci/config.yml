@@ -1,3 +1,4 @@
+---
 # Python CircleCI 2.0 configuration file
 #
 # Check https://circleci.com/docs/2.0/language-python/ for more details
@@ -70,25 +71,27 @@ jobs:
   test-3.5:
     <<: *test-template
     docker:
-    - image: circleci/python:3.5
+      - image: circleci/python:3.5
   test-2.7:
     <<: *test-template
     docker:
-    - image: circleci/python:2.7
+      - image: circleci/python:2.7
     steps:
       - checkout
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "setup.py" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "setup.py" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
 
       - run:
           name: install dependencies
           command: |
-            sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
-              libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+            sudo apt-get install -y make build-essential \
+              libssl-dev zlib1g-dev libbz2-dev \
+              libreadline-dev libsqlite3-dev \
+              wget curl llvm libncurses5-dev libncursesw5-dev \
               xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
             curl https://pyenv.run | bash
             export PATH="$HOME/.pyenv/bin:$PATH"
@@ -98,7 +101,7 @@ jobs:
             sudo chown -R circleci:circleci ~/.pyenv/versions/venv
       - save_cache:
           paths:
-          - ~/.pyenv/versions/venv
+            - ~/.pyenv/versions/venv
           key: v1-dependencies-{{ checksum "setup.py" }}
 
       # run tests!
@@ -119,5 +122,3 @@ jobs:
 
       - store_test_results:
         path: test-results
-
-
