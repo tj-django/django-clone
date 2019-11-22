@@ -117,7 +117,7 @@ jobs:
             . ~/.pyenv/versions/venv/bin/activate
             tox
 
-      - store_artifacts:
-          path: test-reports
-          destination: test-reports
+      - store_test_results:
+        path: test-results
+
 
