@@ -88,6 +88,7 @@ Out[10]: <QuerySet [<Tag: men>, <Tag: women>]>
 
 #### CloneMixin attributes
 
+* Explicit field names required
 ```text
 _clone_model_fields: Restrict the list of fields to copy from the instance (By default: Copies all 
 non-unique/auto created/editable model fields).
@@ -95,6 +96,16 @@ _clone_many_to_many_fields: Restricted Many to many fields (i.e Test.tags).
 _clone_many_to_one_or_one_to_many_fields: Restricted Many to One/One to Many fields.
 _clone_one_to_one_fields: Restricted One to One fields.
 ```
+
+* Implicit include all except these fields.
+```text
+_clone_excluded_model_fields (list): Excluded model fields.
+_clone_excluded_many_to_many_fields (list): Excluded many to many fields.
+_clone_excluded_many_to_one_or_one_to_many_fields (list): Excluded Many to One/One to Many fields.
+_clone_excluded_one_to_one_fields (list): Excluded one to one fields.
+```
+> :warning: Ensure to either set `_clone_excluded_*` or `_clone_*`. Using both would raise errors. 
+
 
 #### Creating clones without subclassing `CloneMixin`.
 
