@@ -34,8 +34,9 @@ class CloneModelAdmin(ModelAdmin):
                 cloned_admin_url = reverse(
                     'admin:{0}_{1}_change'.format(
                         clone._meta.app_label,
-                        clone._meta.model_name),
-                        args=(clone.pk,)
+                        clone._meta.model_name
+                    ),
+                    args=(clone.pk,)
                 )
                 return HttpResponseRedirect(cloned_admin_url)
 
