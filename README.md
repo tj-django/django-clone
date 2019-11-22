@@ -3,6 +3,7 @@
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django_clone.svg)](https://pypi.org/project/django-clone)
 [![PyPI - License](https://img.shields.io/pypi/l/django_clone.svg)](https://github.com/jackton1/django-clone/blob/master/LICENSE)
 [![PyPI - Django Version](https://img.shields.io/pypi/djversions/django_clone.svg)](https://docs.djangoproject.com/en/2.2/releases/)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3ba2fce2205842328054eb65256eda71)](https://www.codacy.com/manual/jackton1/django-clone?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jackton1/django-clone&amp;utm_campaign=Badge_Grade)
 ## django-clone 
 
 Creating copies of a model instance on the fly offering more control on how the object should be cloned with support for limiting fields or related objects copied with unique field detection. 
