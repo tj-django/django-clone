@@ -8,13 +8,13 @@ workflows:
   test:
     jobs:
       - test-3.7:
-        context: django-clone
+          context: django-clone
       - test-3.6:
-        context: django-clone
+          context: django-clone
       - test-3.5:
-        context: django-clone
+          context: django-clone
       - test-2.7:
-        context: django-clone
+          context: django-clone
 jobs:
   test-3.6: &test-template
     docker:
