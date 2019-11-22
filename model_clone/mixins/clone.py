@@ -10,6 +10,7 @@ from django.core.checks import Error
 
 from model_clone.apps import ModelCloneConfig
 
+
 class CloneMetaClass(abc.ABCMeta, ModelBase):
     pass
 
@@ -26,7 +27,7 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
             tags =  models.ManyToManyField(Tags)
             audiences = models.ManyToManyField(Audience)
             user = models.ForiegnKey(
-                settings.AUTH_USER_MODEL, 
+                settings.AUTH_USER_MODEL,
                 on_delete=models.CASCADE,
             )
 
@@ -41,17 +42,17 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
             tags =  models.ManyToManyField(Tags)
             audiences = models.ManyToManyField(Audience)
             user = models.ForiegnKey(
-                settings.AUTH_USER_MODEL, 
-                on_delete=models.CASCADE, 
+                settings.AUTH_USER_MODEL,
+                on_delete=models.CASCADE,
                 null=True,
             )
-            
+
             # Clones any other m2m field excluding "audiences".
             _clone_excluded_many_to_many_fields = ['audiences']
-            # Clones all other fk fields excluding "user". 
+            # Clones all other fk fields excluding "user".
             _clone_excluded_many_to_one_or_one_to_many_fields = ['user']
             ...
-        
+
 
     Attributes:
         _clone_model_fields (list): Restricted list of fields to copy from the instance.
@@ -61,10 +62,11 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
 
         _clone_excluded_model_fields (list): Excluded model fields.
         _clone_excluded_many_to_many_fields (list): Excluded many to many fields.
-        _clone_excluded_many_to_one_or_one_to_many_fields (list): Excluded m2m and o2m fields.
+        _clone_excluded_many_to_one_or_one_to_many_fields (list): Excluded m2m and
+            o2m fields.
         _clone_excluded_one_to_one_fields (list): Excluded one to one fields.
     """
-    # TODO: Move these to use succient 
+    # TODO: Move these to use succient
     # names m2m_clone_fields -> many_to_many, m2o_o2m_clone_fields = []
 
     # Included fields
@@ -106,7 +108,8 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
         )
 
         unique_fields = [
-            f.name for f in fields if not f.auto_created and (f.unique or f.name in unique_field_names)
+            f.name for f in fields
+            if not f.auto_created and (f.unique or f.name in unique_field_names)
         ]
 
         for f in fields:
@@ -121,12 +124,13 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                 if f.attname in unique_fields and isinstance(f, models.CharField):
                     count = (
                         instance.__class__._default_manager
-                            .filter(**{'{}__startswith'.format(f.attname): value})
-                            .count()
+                        .filter(**{'{}__startswith'.format(f.attname): value})
+                        .count()
                     )
                     if cls.USE_UNIQUE_DUPLICATE_SUFFIX:
                         if not str(value).isdigit():
-                            value += ' {} {}'.format(cls.UNIQUE_DUPLICATE_SUFFIX, count)
+                            value += ' {} {}'.format(
+                                cls.UNIQUE_DUPLICATE_SUFFIX, count)
                     if isinstance(f, SlugField):
                         value = slugify(value)
                 defaults[f.attname] = value
@@ -136,14 +140,15 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
     @classmethod
     def check(cls, **kwargs):
         errors = super(CloneMixin, cls).check(**kwargs)
-        
+
         if cls.USE_UNIQUE_DUPLICATE_SUFFIX and not cls.UNIQUE_DUPLICATE_SUFFIX:
             errors.append(
                 Error(
                     'UNIQUE_DUPLICATE_SUFFIX is reqiured.',
                     hint=(
-                        'Please provide UNIQUE_DUPLICATE_SUFFIX' + 
-                        'for {} or set USE_UNIQUE_DUPLICATE_SUFFIX=False'.format(cls.__name__)
+                        'Please provide UNIQUE_DUPLICATE_SUFFIX' +
+                        'for {} or set USE_UNIQUE_DUPLICATE_SUFFIX=False'.format(
+                            cls.__name__)
                     ),
                     obj=cls,
                     id='{}.E001'.format(ModelCloneConfig.name),
@@ -158,8 +163,9 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                 Error(
                     'Conflicting configuration.',
                     hint=(
-                        'Please provide either "_clone_model_fields"' + 
-                        'or "_clone_excluded_model_fields" for {}'.format(cls.__name__)
+                        'Please provide either "_clone_model_fields"' +
+                        'or "_clone_excluded_model_fields" for {}'.format(
+                            cls.__name__)
                     ),
                     obj=cls,
                     id='{}.E002'.format(ModelCloneConfig.name),
@@ -174,13 +180,14 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                 Error(
                     'Conflicting configuration.',
                     hint=(
-                        'Please provide either "_clone_many_to_many_fields"' + 
-                        'or "_clone_excluded_many_to_many_fields" for {}'.format(cls.__name__)
+                        'Please provide either "_clone_many_to_many_fields"' +
+                        'or "_clone_excluded_many_to_many_fields" for {}'.format(
+                            cls.__name__)
                     ),
                     obj=cls,
                     id='{}.E002'.format(ModelCloneConfig.name),
                 )
-            ) 
+            )
 
         if all([
             cls._clone_many_to_one_or_one_to_many_fields,
@@ -190,14 +197,15 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                 Error(
                     'Conflicting configuration.',
                     hint=(
-                        'Please provide either "_clone_many_to_one_or_one_to_many_fields"' + 
-                        'or "_clone_excluded_many_to_one_or_one_to_many_fields" for {}'.format(cls.__name__)
+                        'Please provide either "_clone_many_to_one_or_one_to_many_fields"' +
+                        'or "_clone_excluded_many_to_one_or_one_to_many_fields" for {}'.format(
+                            cls.__name__)
                     ),
                     obj=cls,
                     id='{}.E002'.format(ModelCloneConfig.name),
                 )
-            ) 
-        
+            )
+
         if all([
             cls._clone_one_to_one_fields,
             cls._clone_excluded_one_to_one_fields
@@ -206,8 +214,9 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                 Error(
                     'Conflicting configuration.',
                     hint=(
-                        'Please provide either "_clone_one_to_one_fields"' + 
-                        'or "_clone_excluded_one_to_one_fields" for {}'.format(cls.__name__)
+                        'Please provide either "_clone_one_to_one_fields"' +
+                        'or "_clone_excluded_one_to_one_fields" for {}'.format(
+                            cls.__name__)
                     ),
                     obj=cls,
                     id='{}.E002'.format(ModelCloneConfig.name),
@@ -250,7 +259,7 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
         for f in self._meta.related_objects:
             if f.one_to_one and f.name in self._clone_one_to_one_fields:
                 one_to_one_fields.append(f)
-            
+
             elif all([
                 not self._clone_one_to_one_fields,
                 f.one_to_one,
@@ -292,7 +301,8 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
             rel_object = getattr(self, field.related_name, None)
             if rel_object:
                 if hasattr(rel_object, 'make_clone'):
-                    rel_object.make_clone(attrs={field.remote_field.name: duplicate}, sub_clone=True)
+                    rel_object.make_clone(
+                        attrs={field.remote_field.name: duplicate}, sub_clone=True)
                 else:
                     rel_object.pk = None
                     setattr(rel_object, field.remote_field.name, duplicate)
@@ -300,15 +310,21 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
 
         # Clone one to many/many to one fields
         for field in many_to_one_or_one_to_many_fields:
-            getattr(duplicate, field.related_name).set(getattr(self, field.related_name).all())
+            getattr(duplicate, field.related_name).set(
+                getattr(self, field.related_name).all())
 
         # Clone many to many fields
         for field in many_to_many_fields:
-            if field.remote_field.through and not field.remote_field.through._meta.auto_created:
-                objs = field.remote_field.through.objects.filter(**{field.m2m_field_name(): self.pk})
+            if all([
+                field.remote_field.through,
+                not field.remote_field.through._meta.auto_created,
+            ]):
+                objs = field.remote_field.through.objects.filter(
+                    **{field.m2m_field_name(): self.pk})
                 for item in objs:
                     if hasattr(field.remote_field.through, 'make_clone'):
-                        item.make_clone(attrs={field.m2m_field_name(): duplicate}, sub_clone=True)
+                        item.make_clone(
+                            attrs={field.m2m_field_name(): duplicate}, sub_clone=True)
                     else:
                         item.pk = None
                         setattr(item, field.m2m_field_name(), duplicate)

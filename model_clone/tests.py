@@ -85,7 +85,10 @@ class CloneMixinTestCase(TestCase):
         )
 
     @patch('sample.models.Book._clone_many_to_many_fields', new_callable=PropertyMock)
-    def test_cloning_with_explicit__clone_many_to_many_fields(self, _clone_many_to_many_fields_mock):
+    def test_cloning_with_explicit__clone_many_to_many_fields(
+        self,
+        _clone_many_to_many_fields_mock,
+    ):
         author_1 = Author.objects.create(
             first_name='Ruby',
             last_name='Jack',
@@ -152,7 +155,7 @@ class CloneMixinTestCase(TestCase):
             sex='F',
             created_by=self.user
         )
-        with self.assertRaises(IntegrityError) as e:
+        with self.assertRaises(IntegrityError):
             author.make_clone()
 
         use_unique_duplicate_suffix_mock.assert_called_once()
@@ -180,4 +183,3 @@ class CloneMixinTestCase(TestCase):
             author_clone.first_name,
             '{} {} {}'.format(first_name, 'new', 1),
         )
-

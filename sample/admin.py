@@ -7,10 +7,10 @@ from sample.models import Book, Author
 
 
 @admin.register(Book)
-class ModelToCloneAdmin(CloneModelAdmin):
+class BookAdmin(CloneModelAdmin):
     pass
 
 
 @admin.register(Author)
-class ModelToCloneAdmin(CloneModelAdmin):
+class AuthorAdmin(CloneModelAdmin):
     pass
