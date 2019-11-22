@@ -21,36 +21,31 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
             field_1 = models.CharField(max_length=200)
             rel_field =  models.ManyToManyField(Rel)
 
-            _clonable_many_to_many_fields = ['tags', 'audiences']
-            _clonable_many_to_one_fields = ['treatments', 'attributes']
+            _clone_many_to_many_fields = ['tags', 'audiences']
+            _clone_many_to_one_fields = ['treatments', 'attributes']
             ...
 
     Attributes:
-        _clonable_model_fields: Restricted list of fields to copy from the instance.
-        _clonable_many_to_many_fields (list): Many to many fields (i.e Event.tags).
-        _clonable_many_to_one_or_one_to_many_fields (list): Many to one/One to many fields (Event.eventtreatment).
-        _clonable_one_to_one_fields (list): One to One fields (Event.preheader)
+        _clone_model_fields: Restricted list of fields to copy from the instance.
+        _clone_many_to_many_fields (list): Many to many fields (i.e TestModel.tags).
+        _clone_many_to_one_or_one_to_many_fields (list): Many to one/One to many fields.
+        _clone_one_to_one_fields (list): One to One fields.
     """
-    _clonable_model_fields = []
-    _clonable_many_to_many_fields = []
-    _clonable_many_to_one_or_one_to_many_fields = []
-    _clonable_one_to_one_fields = []
+    _clone_model_fields = []
+    _clone_many_to_many_fields = []
+    _clone_many_to_one_or_one_to_many_fields = []
+    _clone_one_to_one_fields = []
 
     UNIQUE_DUPLICATE_SUFFIX = 'copy'
     USE_UNIQUE_DUPLICATE_SUFFIX = True
-
-    @property
-    @abc.abstractmethod
-    def objects(self):
-        pass
 
     @classmethod
     def _create_copy_of_instance(cls, instance):
         defaults = {}
         fields = [f for f in instance._meta.concrete_fields if not f.primary_key]
 
-        if cls._clonable_model_fields:
-            fields = [f for f in fields if f.name in cls._clonable_model_fields]
+        if cls._clone_model_fields:
+            fields = [f for f in fields if f.name in cls._clone_model_fields]
 
         unique_field_names = cls.unpack_unique_together(
             opts=instance._meta,
@@ -73,8 +68,8 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                 if f.attname in unique_fields and isinstance(f, models.CharField):
                     count = (
                         instance.__class__._default_manager
-                        .filter(**{'{}__startswith'.format(f.attname): value})
-                        .count()
+                            .filter(**{'{}__startswith'.format(f.attname): value})
+                            .count()
                     )
                     if cls.USE_UNIQUE_DUPLICATE_SUFFIX:
                         if not str(value).isdigit():
@@ -86,7 +81,7 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
         return cls(**defaults)
 
     @transaction.atomic
-    def make_clone(self, attrs=(), sub_clone=False):
+    def make_clone(self, attrs=None, sub_clone=False):
         """
         Creates a clone of the django model instance.
 
@@ -97,7 +92,8 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
         """
         attrs = attrs or {}
         if not self.pk:
-            raise ValidationError('{}: Instance must be saved before it can be cloned.'.format(self.__class__.__name__))
+            raise ValidationError(
+                '{}: Instance must be saved before it can be cloned.'.format(self.__class__.__name__))
         if sub_clone:
             duplicate = self
             duplicate.pk = None
@@ -111,18 +107,18 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
 
         one_to_one_fields = [
             f for f in self._meta.related_objects
-            if f.one_to_one and f.name in self._clonable_one_to_one_fields
+            if f.one_to_one and f.name in self._clone_one_to_one_fields
         ]
 
         many_to_one_or_one_to_many_fields = [
             f for f in self._meta.related_objects
             if any([f.many_to_one, f.one_to_many])
-            and f.name in self._clonable_many_to_one_or_one_to_many_fields
+               and f.name in self._clone_many_to_one_or_one_to_many_fields
         ]
 
         many_to_many_fields = [
             f for f in self._meta.many_to_many
-            if not sub_clone and f.name in self._clonable_many_to_many_fields
+            if not sub_clone and f.name in self._clone_many_to_many_fields
         ]
 
         # Clone one to one fields
@@ -156,7 +152,6 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                 destination = getattr(duplicate, field.attname)
                 destination.set(source.all())
         return duplicate
-
 
     @staticmethod
     def unpack_unique_together(opts, only_fields=()):

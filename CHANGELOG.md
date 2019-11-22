@@ -95,7 +95,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Add class variable USE_UNIQUE_DUPLICATE_SUFFIX ([fd207c4](https://github.com/jackton1/django-clone/commit/fd207c41398a469ebca01bbe7ad7c0284a54d218)).
-- Add django-admin ClonableModelAdmin ([147c56f](https://github.com/jackton1/django-clone/commit/147c56fa59f770278050eeecf0868a611a15e060)).
+- Add django-admin CloneModelAdmin ([147c56f](https://github.com/jackton1/django-clone/commit/147c56fa59f770278050eeecf0868a611a15e060)).
 - Added create_copy_of_instance utility. ([ab41b02](https://github.com/jackton1/django-clone/commit/ab41b02f1b52cf8f4ca6b7452085f66e69f25bb7)).
 - Added new line at the end of the file. ([b5b68fc](https://github.com/jackton1/django-clone/commit/b5b68fc139e5c708c5f370fc4b3256d31d1daefc)).
 - Added new line. ([4327dab](https://github.com/jackton1/django-clone/commit/4327dab28b06a0efec071eb4822bc916945399dc)).
@@ -184,7 +184,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Updated install command ([ed43314](https://github.com/jackton1/django-clone/commit/ed43314c94d4a903d71828ce48e7d0dd9505d5c8)).
 - Updated install command ([4f502b7](https://github.com/jackton1/django-clone/commit/4f502b72b435ae03252f9990f18174e75af1c8af)).
 - Updated install command ([365dc2d](https://github.com/jackton1/django-clone/commit/365dc2d23d77c328464a7591aa379ad35bb626d8)).
-- Updated the ClonableModelAdmin to support duplicate actions and moved the submit row to using an object tool link. ([164bc35](https://github.com/jackton1/django-clone/commit/164bc356c696d836ee2b0a14654da8e882692dea)).
+- Updated the CloneModelAdmin to support duplicate actions and moved the submit row to using an object tool link. ([164bc35](https://github.com/jackton1/django-clone/commit/164bc356c696d836ee2b0a14654da8e882692dea)).
 - Updated the deploy requirement. ([cb44d84](https://github.com/jackton1/django-clone/commit/cb44d84a70a0f1ff216bb0201c7a1344b3675894)).
 - Updated the install command. ([739445c](https://github.com/jackton1/django-clone/commit/739445c7e5c020532a8fdcea59dd727396a04b71)).
 - Updated the python config. ([e20fd58](https://github.com/jackton1/django-clone/commit/e20fd580f47aa064b70a810516959fedc01ff8f1)).

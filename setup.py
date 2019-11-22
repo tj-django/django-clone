@@ -73,7 +73,7 @@ setup(
     url='https://github.com/jackton1/django-clone.git',
     license='MIT/Apache-2.0',
     keywords=[
-        'django', 'django-clone', 'django clonable', 'django object clone',
+        'django', 'django-clone', 'django clone', 'django object clone',
         'clone-django', 'model cloning', 'django instance duplication',
         'django duplication',
     ],

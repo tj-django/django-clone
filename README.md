@@ -51,7 +51,7 @@ class TestModel(CloneMixin, models.Model):
     title = models.CharField(max_length=200)
     tags =  models.ManyToManyField(Tags)
 
-    _clonable_many_to_many_fields = ['tags']
+    _clone_many_to_many_fields = ['tags']
 ```
 
 
@@ -88,10 +88,11 @@ Out[10]: <QuerySet [<Tag: men>, <Tag: women>]>
 #### CloneMixin attributes
 
 ```text
-_clonable_model_fields: Restrict the list of fields to copy from the instance.
-_clonable_many_to_many_fields: Restricted Many to many fields (i.e Test.tags).
-_clonable_many_to_one_or_one_to_many_fields: Restricted Many to One/One to Many fields.
-_clonable_one_to_one_fields: Restricted One to One fields.
+_clone_model_fields: Restrict the list of fields to copy from the instance (By default: Copies all 
+non-unique/auto created/editable model fields).
+_clone_many_to_many_fields: Restricted Many to many fields (i.e Test.tags).
+_clone_many_to_one_or_one_to_many_fields: Restricted Many to One/One to Many fields.
+_clone_one_to_one_fields: Restricted One to One fields.
 ```
 
 #### Creating clones without subclassing `CloneMixin`.
@@ -148,10 +149,10 @@ class ModelToCloneAdmin(ModelAdmin):
 to
 
 ```python
-from model_clone import ClonableModelAdmin
+from model_clone import cloneModelAdmin
 
 @admin.register(TestModel)
-class ModelToCloneAdmin(ClonableModelAdmin):
+class ModelToCloneAdmin(cloneModelAdmin):
     pass
 ```
 

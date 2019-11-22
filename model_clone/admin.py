@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from model_clone import CloneMixin
 
 
-class ClonableModelAdmin(ModelAdmin):
+class CloneModelAdmin(ModelAdmin):
     """Admin to handle duplication of models."""
     include_duplicate_action = True
     include_duplicate_object_link = True
