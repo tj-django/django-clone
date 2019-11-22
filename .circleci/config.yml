@@ -113,8 +113,6 @@ jobs:
             python -m pip install 'tox>3.8.0'
             . ~/.pyenv/versions/venv/bin/activate
             tox
-          env:
-
 
       - store_artifacts:
           path: test-reports
