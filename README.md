@@ -4,18 +4,19 @@
 [![PyPI - License](https://img.shields.io/pypi/l/django_clone.svg)](https://github.com/jackton1/django-clone/blob/master/LICENSE)
 [![PyPI - Django Version](https://img.shields.io/pypi/djversions/django_clone.svg)](https://docs.djangoproject.com/en/2.2/releases/)
 [![Known Vulnerabilities](https://snyk.io/test/github/jackton1/django-clone/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/jackton1/django-clone?targetFile=requirements.txt)
-## django-clone 
+
+## django-clone
 
 Creating copies of a model instance on the fly offering more control on how the object should be cloned with support for limiting the fields or related objects copied. 
 
 ## Table of contents
-* [Installation](#Installation)  
-* [Usage](#Usage)
-    * [Duplicate a Model Instance](#duplicating-a-model-instance)
-    * [CloneMixin attributes](#clonemixin-attributes)
-    * [Creating clones without subclassing `CloneMixin`](#creating-clones-without-subclassing-clonemixin)
-* [Duplicating Models from Django Admin view](#duplicating-models-from-django-admin-view)
 
+-   [Installation](#Installation)  
+-   [Usage](#Usage)
+    -   [Duplicate a Model Instance](#duplicating-a-model-instance)
+    -   [CloneMixin attributes](#clonemixin-attributes)
+    -   [Creating clones without subclassing `CloneMixin`](#creating-clones-without-subclassing-clonemixin)
+-   [Duplicating Models from Django Admin view](#duplicating-models-from-django-admin-view)
 
 ### Installation
 
@@ -86,7 +87,8 @@ Out[10]: <QuerySet [<Tag: men>, <Tag: women>]>
 
 #### CloneMixin attributes
 
-  * Explicit field names required
+-   Explicit field names required
+
 ```text
 _clone_model_fields: Restrict the list of fields to copy from the instance (By default: Copies all 
 non-unique/auto created/editable model fields).
@@ -95,13 +97,15 @@ _clone_many_to_one_or_one_to_many_fields: Restricted Many to One/One to Many fie
 _clone_one_to_one_fields: Restricted One to One fields.
 ```
 
-  * Implicit include all except these fields.
+-   Implicit include all except these fields.
+
 ```text
 _clone_excluded_model_fields (list): Excluded model fields.
 _clone_excluded_many_to_many_fields (list): Excluded many to many fields.
 _clone_excluded_many_to_one_or_one_to_many_fields (list): Excluded Many to One/One to Many fields.
 _clone_excluded_one_to_one_fields (list): Excluded one to one fields.
 ```
+
 > :warning: Ensure to either set `_clone_excluded_*` or `_clone_*`. Using both would raise errors. 
 
 #### Creating clones without subclassing `CloneMixin`.
@@ -144,7 +148,7 @@ Out[11]: <QuerySet []>
 ### Duplicating Models from Django Admin view.
 
 Change
- 
+
 ```python
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
@@ -165,12 +169,15 @@ class ModelToCloneAdmin(cloneModelAdmin):
 ```
 
 #### List View
+
 ![Screenshot](Duplicate-action.png)
 
 #### Change View
+
 ![Screenshot](Duplicate-button.png)
 
 ##### SETTINGS
+
 `include_duplicate_action`: Enables/Disables the Duplicate action in the List view (Defaults to True)
 `include_duplicate_object_link`: Enables/Disables the Duplicate action in the Change view (Defaults to 
 True)
@@ -190,7 +197,9 @@ INSTALLED_APPS = [
 Thanks goes to these wonderful people:
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
 <!-- prettier-ignore -->
+
 <table>
   <tr>
     <td align="center"><a href="http://gerritneven.nl"><img src="https://avatars1.githubusercontent.com/u/2500973?v=4" width="100px;" alt="Gerben Neven"/><br /><sub><b>Gerben Neven</b></sub></a><br /><a href="https://github.com/jackton1/django-clone/issues?q=author%3Agerbyzation" title="Bug reports">🐛</a> <a href="https://github.com/jackton1/django-clone/commits?author=gerbyzation" title="Tests">⚠️</a> <a href="https://github.com/jackton1/django-clone/commits?author=gerbyzation" title="Code">💻</a></td>
