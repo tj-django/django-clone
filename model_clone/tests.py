@@ -1,5 +1,7 @@
 from django.contrib.auth import get_user_model
+from django.db import IntegrityError
 from django.test import TestCase
+from mock import patch, PropertyMock
 
 from sample.models import Library, Book, Author
 
@@ -53,15 +55,17 @@ class CloneMixinTestCase(TestCase):
 
     def test_cloning_without_explicit__clone_many_to_many_fields(self):
         author_1 = Author.objects.create(
-            first_name='Jack',
-            last_name='Ruby', age=26,
+            first_name='Ruby',
+            last_name='Jack',
+            age=26,
             sex='F',
             created_by=self.user
         )
 
         author_2 = Author.objects.create(
-            first_name='Jack',
-            last_name='Ibinabo', age=19,
+            first_name='Ibinabo',
+            last_name='Jack',
+            age=19,
             sex='F',
             created_by=self.user
         )
@@ -80,26 +84,28 @@ class CloneMixinTestCase(TestCase):
             book_clone.authors.values_list('first_name', 'last_name'),
         )
 
-    def test_cloning_with_explicit__clone_many_to_many_fields(self):
+    @patch('sample.models.Book._clone_many_to_many_fields', new_callable=PropertyMock)
+    def test_cloning_with_explicit__clone_many_to_many_fields(self, _clone_many_to_many_fields_mock):
         author_1 = Author.objects.create(
-            first_name='Jack',
-            last_name='Ruby', age=26,
+            first_name='Ruby',
+            last_name='Jack',
+            age=26,
             sex='F',
             created_by=self.user
         )
 
         author_2 = Author.objects.create(
-            first_name='Jack',
-            last_name='Ibinabo', age=19,
+            first_name='Ibinabo',
+            last_name='Jack',
+            age=19,
             sex='F',
             created_by=self.user
         )
 
         name = 'New Book'
+        _clone_many_to_many_fields_mock.return_value = ['authors']
 
-        Book.add_to_class('_clone_many_to_many_fields', ['authors'])
         book = Book.objects.create(name=name, created_by=self.user)
-        Book.add_to_class('_clone_many_to_many_fields', [])
 
         book.authors.set([author_1, author_2])
 
@@ -111,3 +117,67 @@ class CloneMixinTestCase(TestCase):
             book.authors.values_list('first_name', 'last_name'),
             book_clone.authors.values_list('first_name', 'last_name'),
         )
+        _clone_many_to_many_fields_mock.assert_called_once()
+
+    def test_cloning_unique_fields_is_valid(self):
+        first_name = 'Ruby'
+        author = Author.objects.create(
+            first_name=first_name,
+            last_name='Jack',
+            age=26,
+            sex='F',
+            created_by=self.user
+        )
+
+        author_clone = author.make_clone()
+
+        self.assertNotEqual(author.pk, author_clone.pk)
+        self.assertEqual(
+            author_clone.first_name,
+            '{} {} {}'.format(first_name, Author.UNIQUE_DUPLICATE_SUFFIX, 1),
+        )
+
+    @patch('sample.models.Author.USE_UNIQUE_DUPLICATE_SUFFIX', new_callable=PropertyMock)
+    def test_cloning_unique_field_with_use_unique_duplicate_suffix_set_to_False(
+        self,
+        use_unique_duplicate_suffix_mock,
+    ):
+        use_unique_duplicate_suffix_mock.return_value = False
+        first_name = 'Ruby'
+
+        author = Author.objects.create(
+            first_name=first_name,
+            last_name='Jack',
+            age=26,
+            sex='F',
+            created_by=self.user
+        )
+        with self.assertRaises(IntegrityError) as e:
+            author.make_clone()
+
+        use_unique_duplicate_suffix_mock.assert_called_once()
+
+    @patch('sample.models.Author.UNIQUE_DUPLICATE_SUFFIX', new_callable=PropertyMock)
+    def test_cloning_unique_field_with_a_custom_unique_duplicate_suffix(
+        self,
+        unique_duplicate_suffix_mock,
+    ):
+        unique_duplicate_suffix_mock.return_value = 'new'
+        first_name = 'Ruby'
+
+        author = Author.objects.create(
+            first_name=first_name,
+            last_name='Jack',
+            age=26,
+            sex='F',
+            created_by=self.user
+        )
+
+        author_clone = author.make_clone()
+
+        self.assertNotEqual(author.pk, author_clone.pk)
+        self.assertEqual(
+            author_clone.first_name,
+            '{} {} {}'.format(first_name, 'new', 1),
+        )
+

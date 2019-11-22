@@ -3,6 +3,7 @@
 .DEFAULT_GOAL := help
 
 PYTHON 			:= /usr/bin/env python
+PYTHON_VERSION  := $(PYTHON) --version
 MANAGE_PY 		:= $(PYTHON) manage.py
 PYTHON_PIP  	:= /usr/bin/env pip
 PIP_COMPILE 	:= /usr/bin/env pip-compile
@@ -28,6 +29,10 @@ clean-build: ## Clean project build artifacts.
 	@rm -rf build/
 	@rm -rf dist/
 	@rm -rf *.egg-info
+
+test:
+	@echo "Running `$(PYTHON_VERSION)` test..."
+	@$(MANAGE_PY) test
 
 install: clean-build  ## Install project dependencies.
 	@echo "Installing project in dependencies..."

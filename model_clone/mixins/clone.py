@@ -32,6 +32,8 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
         _clone_one_to_one_fields (list): One to One fields.
     """
     _clone_model_fields = []
+    # TODO: Support excluded fields, which could be used
+    #  instead of listing all possible fields.
     _clone_many_to_many_fields = []
     _clone_many_to_one_or_one_to_many_fields = []
     _clone_one_to_one_fields = []
@@ -93,7 +95,9 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
         attrs = attrs or {}
         if not self.pk:
             raise ValidationError(
-                '{}: Instance must be saved before it can be cloned.'.format(self.__class__.__name__))
+                '{}: Instance must be saved before it can be cloned.'
+                .format(self.__class__.__name__)
+            )
         if sub_clone:
             duplicate = self
             duplicate.pk = None

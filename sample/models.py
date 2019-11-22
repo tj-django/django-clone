@@ -8,7 +8,7 @@ from model_clone.models import CloneModel
 
 
 class Author(CloneModel):
-    first_name = models.CharField(max_length=200)
+    first_name = models.CharField(max_length=200, unique=True)
     last_name = models.CharField(max_length=200)
     age = models.PositiveIntegerField()
 
