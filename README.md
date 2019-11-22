@@ -33,7 +33,6 @@ INSTALLED_APPS = [
 ]
 ```
 
-
 ### Usage
 
 ```python
@@ -54,7 +53,6 @@ class TestModel(CloneMixin, models.Model):
 
     _clone_many_to_many_fields = ['tags']
 ```
-
 
 #### Duplicating a model instance
 
@@ -88,7 +86,7 @@ Out[10]: <QuerySet [<Tag: men>, <Tag: women>]>
 
 #### CloneMixin attributes
 
-* Explicit field names required
+  * Explicit field names required
 ```text
 _clone_model_fields: Restrict the list of fields to copy from the instance (By default: Copies all 
 non-unique/auto created/editable model fields).
@@ -97,7 +95,7 @@ _clone_many_to_one_or_one_to_many_fields: Restricted Many to One/One to Many fie
 _clone_one_to_one_fields: Restricted One to One fields.
 ```
 
-* Implicit include all except these fields.
+  * Implicit include all except these fields.
 ```text
 _clone_excluded_model_fields (list): Excluded model fields.
 _clone_excluded_many_to_many_fields (list): Excluded many to many fields.
@@ -105,7 +103,6 @@ _clone_excluded_many_to_one_or_one_to_many_fields (list): Excluded Many to One/O
 _clone_excluded_one_to_one_fields (list): Excluded one to one fields.
 ```
 > :warning: Ensure to either set `_clone_excluded_*` or `_clone_*`. Using both would raise errors. 
-
 
 #### Creating clones without subclassing `CloneMixin`.
 
@@ -144,7 +141,6 @@ In [11]: clone.tags.all()
 Out[11]: <QuerySet []>
 ```
 
-
 ### Duplicating Models from Django Admin view.
 
 Change
@@ -174,12 +170,10 @@ class ModelToCloneAdmin(cloneModelAdmin):
 #### Change View
 ![Screenshot](Duplicate-button.png)
 
-
 ##### SETTINGS
 `include_duplicate_action`: Enables/Disables the Duplicate action in the List view (Defaults to True)
 `include_duplicate_object_link`: Enables/Disables the Duplicate action in the Change view (Defaults to 
 True)
-
 
 > :warning: Ensure that `model_clone` is placed before `django.contrib.admin`
 

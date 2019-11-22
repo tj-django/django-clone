@@ -120,7 +120,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 try:
-    import xmlrunner
+    import xmlrunner  # noqa
 except ImportError:
     pass
 else:
