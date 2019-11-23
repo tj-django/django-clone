@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v0.0.11](https://github.com/jackton1/django-clone/releases/tag/v0.0.11) ([compare](https://github.com/jackton1/django-clone/compare/v0.0.10...v0.0.11))
+## [v0.0.12](https://github.com/jackton1/django-clone/releases/tag/v0.0.12) ([compare](https://github.com/jackton1/django-clone/compare/v0.0.11...v0.0.12))
+
+### Misc
+- "2019-11-22 21:58 - Increased django-clone version: VERSION = (0, 0, 11) to VERSION = (0, 1, 0)" ([ed56f09](https://github.com/jackton1/django-clone/commit/ed56f09fc14f0a7e49926a41ac7d288e5b38a94b)).
+
+
+## [v0.0.11](https://github.com/jackton1/django-clone/releases/tag/v0.0.11) ([compare](https://github.com/jackton1/django-clone/compare/v0.0.10...v0.0.11)) - 2019-11-23
 
 ### Fixed
 - Fixed duplicate context ([be24df3](https://github.com/jackton1/django-clone/commit/be24df310abd82f4c7d716b18da82c376246578f)).
@@ -28,6 +34,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update README.md inlcuded snyk tag. ([0c40147](https://github.com/jackton1/django-clone/commit/0c40147cefeb10e32d60b0f9295555760c43a84e)).
 - Update the .circleci config. ([ee3d223](https://github.com/jackton1/django-clone/commit/ee3d22350e35e01b095619fba68acd143123f41f)).
 - Updated .gitignore. ([707078f](https://github.com/jackton1/django-clone/commit/707078fa41b151a07ef9d10b6dce1a8e78049822)).
+- Updated CHANGELOG.md. ([e2a8bf9](https://github.com/jackton1/django-clone/commit/e2a8bf9745184735d21c1bf52e8118f3d70ed9b3)).
 - Updated CI and fix tox test. ([7515ef9](https://github.com/jackton1/django-clone/commit/7515ef9402c530667d32029fa9b34c541955813a)).
 - Updated the .gitignore. ([4ce930b](https://github.com/jackton1/django-clone/commit/4ce930bbb09f5ef7363807726fbed71d7bc63f32)).
 - Updated the config ([d9fa0d4](https://github.com/jackton1/django-clone/commit/d9fa0d4951530420dde68a55ea392190ba7a71f7)).
