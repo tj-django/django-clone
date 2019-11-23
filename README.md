@@ -112,10 +112,6 @@ _clone_excluded_one_to_one_fields (list): Excluded one to one fields.
 
 #### Creating clones without subclassing `CloneMixin`.
 
-> :warning: This method won't copy over related objects like Many to Many/One to Many relationships.
-
-> :warning: Ensure that required fields skipped from being cloned are passed in using the `attrs` dictionary.
-
 ```python
 
 In [1]: from model_clone import create_copy_of_instance
@@ -146,6 +142,10 @@ Out[10]: 'Updated title'
 In [11]: clone.tags.all()
 Out[11]: <QuerySet []>
 ```
+
+> :warning: This method won't copy over related objects like Many to Many/One to Many relationships.
+
+> :warning: Ensure that required fields skipped from being cloned are passed in using the `attrs` dictionary.
 
 ### Duplicating Models from Django Admin view.
 
