@@ -9,6 +9,7 @@ test_requires = [
     'tox==3.8.6',
     'pluggy>=0.7',
     'mock==2.0.0',
+    'unittest-xml-reporting==2.5.2',
     'codacy-coverage==1.3.11',
 ]
 
@@ -73,7 +74,7 @@ setup(
     url='https://github.com/jackton1/django-clone.git',
     license='MIT/Apache-2.0',
     keywords=[
-        'django', 'django-clone', 'django clonable', 'django object clone',
+        'django', 'django-clone', 'django clone', 'django object clone',
         'clone-django', 'model cloning', 'django instance duplication',
         'django duplication',
     ],

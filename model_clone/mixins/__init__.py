@@ -1,1 +1,1 @@
-from .clone import CloneMixin  # noqa
+from model_clone.mixins.clone import CloneMixin  # noqa

@@ -15,7 +15,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Library',
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, primary_key=True, serialize=False)),
+                ('id', models.UUIDField(default=uuid.uuid4,
+                                        primary_key=True, serialize=False)),
                 ('name', models.CharField(max_length=100)),
             ],
             bases=(model_clone.mixins.clone.CloneMixin, models.Model),
