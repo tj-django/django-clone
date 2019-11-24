@@ -108,7 +108,7 @@ _clone_excluded_many_to_one_or_one_to_many_fields (list): Excluded Many to One/O
 _clone_excluded_one_to_one_fields (list): Excluded one to one fields.
 ```
 
-> :warning: Ensure to either set `_clone_excluded_*` or `_clone_*`. Using both would raise errors. 
+> :warning: NOTE: Ensure to either set `_clone_excluded_*` or `_clone_*`. Using both would raise errors. 
 
 #### Creating clones without subclassing `CloneMixin`.
 
@@ -143,9 +143,9 @@ In [11]: clone.tags.all()
 Out[11]: <QuerySet []>
 ```
 
-> :warning: This method won't copy over related objects like Many to Many/One to Many relationships.
+> :warning: NOTE: This method won't copy over related objects like Many to Many/One to Many relationships.
 
-> :warning: Ensure that required fields skipped from being cloned are passed in using the `attrs` dictionary.
+> :warning: NOTE: Ensure that required fields skipped from being cloned are passed in using the `attrs` dictionary.
 
 ### Duplicating Models from Django Admin view.
 
@@ -184,7 +184,7 @@ class ModelToCloneAdmin(cloneModelAdmin):
 `include_duplicate_object_link`: Enables/Disables the Duplicate action in the Change view (Defaults to 
 True)
 
-> :warning: Ensure that `model_clone` is placed before `django.contrib.admin`
+> :warning: NOTE: Ensure that `model_clone` is placed before `django.contrib.admin`
 
 ```python
 INSTALLED_APPS = [
