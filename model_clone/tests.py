@@ -183,3 +183,33 @@ class CloneMixinTestCase(TestCase):
             author_clone.first_name,
             '{} {} {}'.format(first_name, 'new', 1),
         )
+
+    def test_cloning_unique_fields_max_length(self):
+        """Max unique field length handling
+
+        Set the initial value for the unique field to max length
+        and test to append the [ copy count]
+        """
+        first_name = (
+            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, '
+            'sed diam nonumy eirmod tempor invidunt ut labore et dolore '
+            'magna aliquyam erat, sed diam voluptua. At vero eos et accusam '
+            'et justo duo dolores '
+        )
+        author = Author.objects.create(
+            first_name=first_name,
+            last_name='Jack',
+            age=26,
+            sex='F',
+            created_by=self.user
+        )
+
+        author_clone = author.make_clone()
+
+        # clone slices 8 chars of but count uses only 1 digit.
+        self.assertEqual(len(author_clone.first_name), 199)
+        self.assertNotEqual(author.pk, author_clone.pk)
+        self.assertEqual(
+            author_clone.first_name,
+            '{} {} {}'.format(first_name[:192], Author.UNIQUE_DUPLICATE_SUFFIX, 1),
+        )

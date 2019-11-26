@@ -82,6 +82,8 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
     _clone_excluded_one_to_one_fields = []
 
     UNIQUE_DUPLICATE_SUFFIX = 'copy'
+    # 1 for space, 4 for copy, 1 for space, 2 for count  == ' copy 33'
+    UNIQUE_DUPLICATE_LENGTH = 8
     USE_UNIQUE_DUPLICATE_SUFFIX = True
 
     @classmethod
@@ -128,6 +130,8 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                         .count()
                     )
                     if cls.USE_UNIQUE_DUPLICATE_SUFFIX:
+                        if len(value) + cls.UNIQUE_DUPLICATE_LENGTH > f.max_length:
+                            value = value[: f.max_length - cls.UNIQUE_DUPLICATE_LENGTH]
                         if not str(value).isdigit():
                             value += ' {} {}'.format(
                                 cls.UNIQUE_DUPLICATE_SUFFIX, count)
