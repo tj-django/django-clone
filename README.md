@@ -163,10 +163,10 @@ class ModelToCloneAdmin(ModelAdmin):
 to
 
 ```python
-from model_clone import cloneModelAdmin
+from model_clone import CloneModelAdmin
 
 @admin.register(TestModel)
-class ModelToCloneAdmin(cloneModelAdmin):
+class ModelToCloneAdmin(CloneModelAdmin):
     pass
 ```
 
