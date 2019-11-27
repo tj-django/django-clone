@@ -1,5 +1,9 @@
+import contextlib
+import re
+
 from django.core.exceptions import ValidationError
-from django.db import models
+from django.db import models, transaction
+from django.utils import six
 
 
 def create_copy_of_instance(instance, exclude=(), save_new=True, attrs=()):
@@ -74,3 +78,74 @@ def create_copy_of_instance(instance, exclude=(), save_new=True, attrs=()):
         new_obj.save()
 
     return new_obj
+
+
+def clean_value(value, suffix):
+    # type: (str, str) -> str
+    return re.sub(r'{}\s[\d]$'.format(suffix), '', value, flags=re.I)
+
+
+@contextlib.contextmanager
+def transaction_autocommit(using=None):
+    try:
+        transaction.set_autocommit(True, using=using)
+        yield
+    except:
+        transaction.rollback(using=using)
+        raise
+    finally:
+        transaction.set_autocommit(False, using=using)
+
+
+@contextlib.contextmanager
+def context_mutable_attribute(obj, key, value):
+    default = None
+    is_set = hasattr(obj, key)
+    if is_set:
+        default = getattr(obj, key)
+    try:
+        setattr(obj, key, value)
+        yield
+    except:
+        pass
+    finally:
+        if not is_set and hasattr(obj, key):
+            del obj[key]
+        else:
+            setattr(obj, key, default)
+
+
+def get_value(value, suffix, max_length, index):
+    duplicate_suffix = ' {} {}'.format(suffix, index)
+    total_length = len(value + duplicate_suffix)
+
+    if total_length > max_length:
+        # Truncate the value to max_length - suffix length.
+        value = value[:max_length - len(duplicate_suffix)]
+
+    return '{}{}'.format(value, duplicate_suffix)
+
+def generate_value(value, suffix, max_length, max_attempts):
+    yield get_value(value, suffix, max_length, 1)
+
+    for i in range(1, max_attempts):
+        yield get_value(value, suffix, max_length, i)
+
+    raise StopIteration(
+        'CloneError: max unique attempts for {} exceeded ({})'
+        .format(value, max_attempts)
+    )
+
+
+def get_unique_value(obj, fname, value, suffix, max_length, max_attempts):
+    qs = obj.__class__._default_manager.exclude(pk=obj.pk)
+    it = generate_value(value, suffix, max_length, max_attempts)
+
+    new = six.next(it)
+    kwargs = {fname: new}
+
+    while not new or qs.filter(**kwargs):
+        new = six.next(it)
+        kwargs[fname] = new
+
+    return new
