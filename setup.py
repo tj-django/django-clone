@@ -12,6 +12,7 @@ test_requires = [
     'tox==3.8.6',
     'pluggy>=0.7',
     'mock==2.0.0',
+    'unittest-xml-reporting==2.5.2',
     'codacy-coverage==1.3.11',
 ]
 
@@ -58,7 +59,7 @@ if os.path.isfile(README_PATH):
 else:
     LONG_DESCRIPTION = ''
 
-VERSION = (0, 0, 10)
+VERSION = (0, 1, 0)
 
 version = '.'.join(map(str, VERSION))
 
@@ -76,7 +77,7 @@ setup(
     url='https://github.com/jackton1/django-clone.git',
     license='MIT/Apache-2.0',
     keywords=[
-        'django', 'django-clone', 'django clonable', 'django object clone',
+        'django', 'django-clone', 'django clone', 'django object clone',
         'clone-django', 'model cloning', 'django instance duplication',
         'django duplication',
     ],
