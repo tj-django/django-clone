@@ -370,7 +370,10 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
         clones = []
         batch_size = (batch_size or max(ops.bulk_batch_size(fields, objs), 1))
 
-        with conditional(auto_commit, transaction_autocommit()):
+        with conditional(
+            auto_commit,
+            transaction_autocommit(using=self.__class__._default_manager.db),
+        ):
             # If count exceeds the MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS
             with conditional(
                 self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS < count,
