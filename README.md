@@ -8,7 +8,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/jackton1/django-clone/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/jackton1/django-clone?targetFile=requirements.txt)
 ## django-clone 
 
-Creating copies of a model instance on the fly offering more control on how the object should be cloned with support for limiting fields or related objects copied with unique field detection. 
+Creating copies of a model instance on the fly with explicit declaration on how the object should be cloned with support for limiting fields or related objects copied with unique field detection. 
 
 ## Table of contents
 
