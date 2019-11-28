@@ -381,8 +381,12 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                     count,
                 ),
             ):
-                assert self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS >= count
-                for i in range(0, count, batch_size):
-                    clones.append(self.make_clone(attrs=attrs))
+                if not self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS >= count:
+                    raise AssertionError(
+                        'An Unknown error has occured: Expected ({}) >= ({})'
+                        .format(self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS, count),
+                    )
+                clones = [self.make_clone(attrs=attrs)
+                          for _ in range(0, count, batch_size)]
 
         return clones
