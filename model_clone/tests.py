@@ -257,6 +257,8 @@ class CloneMixinTestCase(TestCase):
 
         clones = author.bulk_clone(1000)
 
+        self.assertEqual(len(clones), 1000)
+
         for clone in clones:
             self.assertNotEqual(author.pk, clone.pk)
             self.assertRegexpMatches(
@@ -284,6 +286,8 @@ class CloneMixinTransactionTestCase(TransactionTestCase):
 
         clones = author.bulk_clone(1000)
 
+        self.assertEqual(len(clones), 1000)
+
         for clone in clones:
             self.assertNotEqual(author.pk, clone.pk)
             self.assertRegexpMatches(
@@ -308,6 +312,8 @@ class CloneMixinTransactionTestCase(TransactionTestCase):
         )
 
         clones = author.bulk_clone(1000, auto_commit=True)
+
+        self.assertEqual(len(clones), 1000)
 
         for clone in clones:
             self.assertNotEqual(author.pk, clone.pk)

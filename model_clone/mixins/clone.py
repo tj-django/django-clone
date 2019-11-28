@@ -1,4 +1,5 @@
 import abc
+from itertools import repeat
 
 from django.core.checks import Error
 from django.core.exceptions import ValidationError
@@ -363,10 +364,10 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
 
     def bulk_clone(self, count, attrs=None, batch_size=None, auto_commit=False):
         ops = connections[self.__class__._default_manager.db].ops
-        fields = self._meta.concrete_fields
         objs = range(count)
         clones = []
-        batch_size = (batch_size or max(ops.bulk_batch_size(fields, objs), 1))
+        batch_size = (batch_size or max(
+            ops.bulk_batch_size([], list(objs)), 1))
 
         with conditional(
             auto_commit,
@@ -386,7 +387,7 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                         'An Unknown error has occured: Expected ({}) >= ({})'
                         .format(self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS, count),
                     )
-                clones = [self.make_clone(attrs=attrs)
-                          for _ in range(0, count, batch_size)]
+                clones.extend(
+                    list(repeat(self.make_clone(attrs=attrs), batch_size)))
 
         return clones
