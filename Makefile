@@ -85,4 +85,11 @@ clean-test-all: clean-build  ## Clean build and test assets.
 	@rm -rf .tox/
 	@rm -rf test-results
 	@rm -rf .pytest_cache/
-	@rm test.db
+	@rm -f test.db
+
+
+# -----------------------------------------------------------
+# --------- Run autopep8 ------------------------------------
+# -----------------------------------------------------------
+run-autopep8:  ## Run autopep8 with inplace for model_clone package. 
+	@autopep8 -ri model_clone

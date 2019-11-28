@@ -95,8 +95,6 @@ def transaction_autocommit(using=None):
     except:
         transaction.rollback(using=using)
         raise
-    finally:
-        transaction.set_autocommit(False, using=using)
 
 
 @contextlib.contextmanager
@@ -126,6 +124,7 @@ def get_value(value, suffix, max_length, index):
         value = value[:max_length - len(duplicate_suffix)]
 
     return '{}{}'.format(value, duplicate_suffix)
+
 
 def generate_value(value, suffix, max_length, max_attempts):
     yield get_value(value, suffix, max_length, 1)

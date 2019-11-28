@@ -214,7 +214,8 @@ class CloneMixinTestCase(TestCase):
         self.assertNotEqual(author.pk, author_clone.pk)
         self.assertEqual(
             author_clone.first_name,
-            '{} {} {}'.format(first_name[:193], Author.UNIQUE_DUPLICATE_SUFFIX, 1),
+            '{} {} {}'.format(first_name[:193],
+                              Author.UNIQUE_DUPLICATE_SUFFIX, 1),
         )
 
     def test_cloning_instances_in_an_atomic_transaction_with_auto_commit_on_raises_errors(

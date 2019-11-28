@@ -1,5 +1,4 @@
 import abc
-from typing import List, Dict, Optional
 
 from django.core.checks import Error
 from django.core.exceptions import ValidationError
@@ -361,7 +360,6 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
         # type: (List[models.Model], Optional[List[Dict]], Optional[int]) -> List[models.Model]
         # TODO: Support bulk clones split by the batch_szie
         pass
-
 
     def bulk_clone(self, count, attrs=None, batch_size=None, auto_commit=False):
         ops = connections[self.__class__._default_manager.db].ops
