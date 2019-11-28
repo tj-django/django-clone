@@ -3,6 +3,7 @@ import re
 
 from django.core.exceptions import ValidationError
 from django.db import models, transaction
+from django.db.transaction import TransactionManagementError
 from django.utils import six
 
 
@@ -92,8 +93,7 @@ def transaction_autocommit(using=None):
     try:
         transaction.set_autocommit(True, using=using)
         yield
-    except:
-        transaction.rollback(using=using)
+    except TransactionManagementError:
         raise
 
 
@@ -106,8 +106,6 @@ def context_mutable_attribute(obj, key, value):
     try:
         setattr(obj, key, value)
         yield
-    except:
-        pass
     finally:
         if not is_set and hasattr(obj, key):
             del obj[key]
