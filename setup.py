@@ -3,7 +3,10 @@ import io
 
 from setuptools import find_packages, setup
 
-install_requires = ['future==0.17.1']
+install_requires = [
+    'future>=0.17.1',
+    'conditional>=1.3',
+]
 
 test_requires = [
     'tox==3.8.6',

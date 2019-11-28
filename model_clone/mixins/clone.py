@@ -1,14 +1,20 @@
 import abc
+from itertools import repeat
 
+from django.core.checks import Error
 from django.core.exceptions import ValidationError
-from django.db import transaction, models
+from django.db import transaction, models, connections
 from django.db.models import SlugField
 from django.db.models.base import ModelBase
 from django.utils import six
 from django.utils.text import slugify
-from django.core.checks import Error
+from conditional import conditional
 
 from model_clone.apps import ModelCloneConfig
+from model_clone.utils import (
+    clean_value, transaction_autocommit,
+    get_unique_value, context_mutable_attribute
+)
 
 
 class CloneMetaClass(abc.ABCMeta, ModelBase):
@@ -85,6 +91,7 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
     # 1 for space, 4 for copy, 1 for space, 2 for count  == ' copy 33'
     UNIQUE_DUPLICATE_LENGTH = 8
     USE_UNIQUE_DUPLICATE_SUFFIX = True
+    MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS = 100
 
     @classmethod
     def _create_copy_of_instance(cls, instance):
@@ -124,17 +131,16 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
             ]):
                 value = getattr(instance, f.attname, f.get_default())
                 if f.attname in unique_fields and isinstance(f, models.CharField):
-                    count = (
-                        instance.__class__._default_manager
-                        .filter(**{'{}__startswith'.format(f.attname): value})
-                        .count()
-                    )
+                    value = clean_value(value, cls.UNIQUE_DUPLICATE_SUFFIX)
                     if cls.USE_UNIQUE_DUPLICATE_SUFFIX:
-                        if len(value) + cls.UNIQUE_DUPLICATE_LENGTH > f.max_length:
-                            value = value[: f.max_length - cls.UNIQUE_DUPLICATE_LENGTH]
-                        if not str(value).isdigit():
-                            value += ' {} {}'.format(
-                                cls.UNIQUE_DUPLICATE_SUFFIX, count)
+                        value = get_unique_value(
+                            instance,
+                            f.attname,
+                            value,
+                            cls.UNIQUE_DUPLICATE_SUFFIX,
+                            f.max_length,
+                            cls.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS
+                        )
                     if isinstance(f, SlugField):
                         value = slugify(value)
                 defaults[f.attname] = value
@@ -349,3 +355,38 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
             else:
                 fields.extend(list([f for f in field if f in only_fields]))
         return fields
+
+    @classmethod
+    def bulk_clone_multi(cls, objs, attrs=None, batch_size=None):
+        # type: (List[models.Model], Optional[List[Dict]], Optional[int]) -> List[models.Model]
+        # TODO: Support bulk clones split by the batch_szie
+        pass
+
+    def bulk_clone(self, count, attrs=None, batch_size=None, auto_commit=False):
+        ops = connections[self.__class__._default_manager.db].ops
+        objs = range(count)
+        clones = []
+        batch_size = (batch_size or max(
+            ops.bulk_batch_size([], list(objs)), 1))
+
+        with conditional(
+            auto_commit,
+            transaction_autocommit(using=self.__class__._default_manager.db),
+        ):
+            # If count exceeds the MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS
+            with conditional(
+                self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS < count,
+                context_mutable_attribute(
+                    self,
+                    'MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS',
+                    count,
+                ),
+            ):
+                if not self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS >= count:
+                    raise AssertionError(
+                        'An Unknown error has occured: Expected ({}) >= ({})'
+                        .format(self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS, count),
+                    )
+                clones = list(repeat(self.make_clone(attrs=attrs), batch_size))
+
+        return clones

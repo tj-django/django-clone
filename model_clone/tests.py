@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
-from django.test import TestCase
+from django.db.transaction import TransactionManagementError
+from django.test import TestCase, TransactionTestCase
 from mock import patch, PropertyMock
 
 from sample.models import Library, Book, Author
@@ -206,10 +207,117 @@ class CloneMixinTestCase(TestCase):
 
         author_clone = author.make_clone()
 
-        # clone slices 8 chars of but count uses only 1 digit.
-        self.assertEqual(len(author_clone.first_name), 199)
+        self.assertEqual(
+            len(author_clone.first_name),
+            Author._meta.get_field('first_name').max_length,
+        )
         self.assertNotEqual(author.pk, author_clone.pk)
         self.assertEqual(
             author_clone.first_name,
-            '{} {} {}'.format(first_name[:192], Author.UNIQUE_DUPLICATE_SUFFIX, 1),
+            '{} {} {}'.format(first_name[:193],
+                              Author.UNIQUE_DUPLICATE_SUFFIX, 1),
         )
+
+    def test_cloning_instances_in_an_atomic_transaction_with_auto_commit_on_raises_errors(
+        self,
+    ):
+        first_name = (
+            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, '
+            'sed diam nonumy eirmod tempor invidunt ut labore et dolore '
+            'magna aliquyam erat, sed diam voluptua. At vero eos et accusam '
+            'et justo duo dolores '
+        )
+        author = Author.objects.create(
+            first_name=first_name,
+            last_name='Jack',
+            age=26,
+            sex='F',
+            created_by=self.user
+        )
+
+        with self.assertRaises(TransactionManagementError):
+            author.bulk_clone(1000, auto_commit=True)
+
+    def test_cloning_instances_in_an_atomic_transaction_with_auto_commit_off_is_valid(
+        self,
+    ):
+        first_name = (
+            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, '
+            'sed diam nonumy eirmod tempor invidunt ut labore et dolore '
+            'magna aliquyam erat, sed diam voluptua. At vero eos et accusam '
+            'et justo duo dolores '
+        )
+        author = Author.objects.create(
+            first_name=first_name,
+            last_name='Jack',
+            age=26,
+            sex='F',
+            created_by=self.user
+        )
+
+        clones = author.bulk_clone(1000)
+
+        self.assertEqual(len(clones), 1000)
+
+        for clone in clones:
+            self.assertNotEqual(author.pk, clone.pk)
+            self.assertRegexpMatches(
+                clone.first_name,
+                r'{}\s[\d]'.format(Author.UNIQUE_DUPLICATE_SUFFIX),
+            )
+
+
+class CloneMixinTransactionTestCase(TransactionTestCase):
+    def test_cloning_multiple_instances_doesnt_exceed_the_max_length(self):
+        user = User.objects.create()
+        first_name = (
+            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, '
+            'sed diam nonumy eirmod tempor invidunt ut labore et dolore '
+            'magna aliquyam erat, sed diam voluptua. At vero eos et accusam '
+            'et justo duo dolores '
+        )
+        author = Author.objects.create(
+            first_name=first_name,
+            last_name='Jack',
+            age=26,
+            sex='F',
+            created_by=user
+        )
+
+        clones = author.bulk_clone(1000)
+
+        self.assertEqual(len(clones), 1000)
+
+        for clone in clones:
+            self.assertNotEqual(author.pk, clone.pk)
+            self.assertRegexpMatches(
+                clone.first_name,
+                r'{}\s[\d]'.format(Author.UNIQUE_DUPLICATE_SUFFIX),
+            )
+
+    def test_cloning_multiple_instances_with_autocommit_is_valid(self):
+        user = User.objects.create()
+        first_name = (
+            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, '
+            'sed diam nonumy eirmod tempor invidunt ut labore et dolore '
+            'magna aliquyam erat, sed diam voluptua. At vero eos et accusam '
+            'et justo duo dolores 2'
+        )
+        author = Author.objects.create(
+            first_name=first_name,
+            last_name='Jack',
+            age=26,
+            sex='F',
+            created_by=user
+        )
+
+        clones = author.bulk_clone(1000, auto_commit=True)
+
+        self.assertEqual(len(clones), 1000)
+
+        for clone in clones:
+            self.assertNotEqual(author.pk, clone.pk)
+            self.assertRegexpMatches(
+                clone.first_name,
+                r'{}\s[\d]'.format(Author.UNIQUE_DUPLICATE_SUFFIX),
+            )

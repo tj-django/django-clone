@@ -16,3 +16,4 @@ node_modules/
 coverage.*
 .envrc
 htmlcov/
+test-reports/
