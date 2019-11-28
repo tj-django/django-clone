@@ -387,7 +387,6 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                         'An Unknown error has occured: Expected ({}) >= ({})'
                         .format(self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS, count),
                     )
-                clones.extend(
-                    list(repeat(self.make_clone(attrs=attrs), batch_size)))
+                clones = list(repeat(self.make_clone(attrs=attrs), batch_size))
 
         return clones
