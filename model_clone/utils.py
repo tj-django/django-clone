@@ -28,6 +28,7 @@ def create_copy_of_instance(instance, exclude=(), save_new=True, attrs=()):
         1
         >>> instance.name
         "The Beautiful Life"
+        >>> duplicate = instance.make_clone(attrs={'name': 'Duplicate Book 2'})
         >>> duplicate.pk
         2
         >>> duplicate.name
