@@ -7,14 +7,15 @@ from django.db.transaction import TransactionManagementError
 from django.utils import six
 
 
-def create_copy_of_instance(instance, exclude=(), save_new=True, attrs=()):
+def create_copy_of_instance(instance, exclude=(), save_new=True, attrs=None):
     """
     Clone an instance of `django.db.models.Model`.
 
     Args:
         instance(django.db.models.Model): The model instance to clone.
         exclude(list|set): List or set of fields to exclude from unique validation.
-        **attrs: Kwargs of field and value to set on the duplicated instance.
+        save_new(bool): Save the model instance after duplication calling .save().
+        attrs(dict): Kwargs of field and value to set on the duplicated instance.
 
     Returns:
         (django.db.models.Model): The new duplicated instance.
