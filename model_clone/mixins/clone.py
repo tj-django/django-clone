@@ -399,4 +399,5 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
         # If it takes 10ms to clone 10 objects i'll like to keep this down to 10ms for
         # max_num_of_threads i.e 10 threads for 100 objects.
         # This should run in parallel
+        # Testing jit and cpython if they offer better API's.
         pass
