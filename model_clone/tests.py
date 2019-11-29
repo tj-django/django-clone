@@ -105,7 +105,6 @@ class CloneMixinTestCase(TestCase):
             sex='F',
             created_by=self.user
         )
-        
         _clone_many_to_many_fields_mock.return_value = ['authors']
 
         book = Book.objects.create(name='New Book', created_by=self.user)
