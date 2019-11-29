@@ -81,8 +81,8 @@ class CloneMixinTestCase(TestCase):
         self.assertEqual(book.name, name)
         self.assertEqual(book.created_by, book_clone.created_by)
         self.assertNotEqual(
-            book.authors.values_list('first_name', 'last_name'),
-            book_clone.authors.values_list('first_name', 'last_name'),
+            list(book.authors.values_list('first_name', 'last_name')),
+            list(book_clone.authors.values_list('first_name', 'last_name')),
         )
 
     @patch('sample.models.Book._clone_many_to_many_fields', new_callable=PropertyMock)
@@ -91,35 +91,32 @@ class CloneMixinTestCase(TestCase):
         _clone_many_to_many_fields_mock,
     ):
         author_1 = Author.objects.create(
-            first_name='Ruby',
+            first_name='Opubo',
             last_name='Jack',
-            age=26,
+            age=24,
             sex='F',
             created_by=self.user
         )
 
         author_2 = Author.objects.create(
-            first_name='Ibinabo',
+            first_name='Nimabo',
             last_name='Jack',
-            age=19,
+            age=16,
             sex='F',
             created_by=self.user
         )
-
-        name = 'New Book'
+        
         _clone_many_to_many_fields_mock.return_value = ['authors']
 
-        book = Book.objects.create(name=name, created_by=self.user)
+        book = Book.objects.create(name='New Book', created_by=self.user)
 
         book.authors.set([author_1, author_2])
 
         book_clone = book.make_clone()
 
-        self.assertEqual(book.name, name)
-        self.assertEqual(book.created_by, book_clone.created_by)
-        self.assertNotEqual(
-            book.authors.values_list('first_name', 'last_name'),
-            book_clone.authors.values_list('first_name', 'last_name'),
+        self.assertEqual(
+            list(book.authors.values_list('first_name', 'last_name')),
+            list(book_clone.authors.values_list('first_name', 'last_name')),
         )
         _clone_many_to_many_fields_mock.assert_called_once()
 
