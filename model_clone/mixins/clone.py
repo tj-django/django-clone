@@ -390,3 +390,13 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                 clones = list(repeat(self.make_clone(attrs=attrs), batch_size))
 
         return clones
+
+    def parallel_clone(self, count, attrs=None, batch_size=None, auto_commit=False):
+        # if this takes n time for t records
+        # t^n i.e 100 * 10ms = 1000ms to clone 100 objects.
+        # I'll like to reduce this down to max time to clone count/batch_size i.e
+        # If it take 100ms to clone 100 objects with a db of batch_size 100
+        # If it takes 10ms to clone 10 objects i'll like to keep this down to 10ms for
+        # max_num_of_threads i.e 10 threads for 100 objects.
+        # This should run in parallel
+        pass
