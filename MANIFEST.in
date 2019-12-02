@@ -1,5 +1,6 @@
 recursive-include model_clone *.py *.html
 recursive-exclude sample *
+recursive-include model_clone/templates *.html
 
 include *.md
 exclude *.png
