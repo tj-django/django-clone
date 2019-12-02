@@ -4,10 +4,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v0.0.12](https://github.com/jackton1/django-clone/releases/tag/v0.0.12) ([compare](https://github.com/jackton1/django-clone/compare/v0.0.11...v0.0.12))
+## [v0.1.1](https://github.com/jackton1/django-clone/releases/tag/v0.1.1) ([compare](https://github.com/jackton1/django-clone/compare/v0.1.0...v0.1.1))
+
+### Fixed
+- Fix bug with cloning unique fields and added support for bulk_clone. ([70e76a8](https://github.com/jackton1/django-clone/commit/70e76a81e6497ef52a2d525bc4a5e6a27d5b0e75)).
+- Fix typo cloneModelAdmin -> CloneModelAdmin ([b8a29c2](https://github.com/jackton1/django-clone/commit/b8a29c240aba7f7736ef297a69f54eb0a399d1ad)).
+- Fixed example. ([1ad41d3](https://github.com/jackton1/django-clone/commit/1ad41d3f2866136a53d4fc0f91ded97ffe5f7f89)).
+- Fixed flake8 error. ([b28fb8c](https://github.com/jackton1/django-clone/commit/b28fb8c5f67f1ef9b790fa7f0ac3e9b106544d6f)).
+- Fixed lint errors and added support for running autopep8. ([4537a46](https://github.com/jackton1/django-clone/commit/4537a460de92d0ef34c875d37439f79c26a69d36)).
+- Fixed test. ([ec39547](https://github.com/jackton1/django-clone/commit/ec395478f1ecfce4a1d1a0afbc8f0299d5f4c6dc)).
+
+### Removed
+- Remove .extend. ([3e31e86](https://github.com/jackton1/django-clone/commit/3e31e86ab49d834cc2aad89760fa2a25eff687df)).
+
+### Misc
+- "2019-12-02 10:28 - Increased django-clone version: VERSION = (0, 1, 0) to VERSION = (0, 1, 1)" ([c033538](https://github.com/jackton1/django-clone/commit/c033538a1da2500098d509d3f1aac2b4b91c0a67)).
+- Cleaned up the sample app. ([4ed3a52](https://github.com/jackton1/django-clone/commit/4ed3a52b0293a0510338c0886693cc6c386bf683)).
+- Handle case when value in unquie field has fields max_length ([02d7c48](https://github.com/jackton1/django-clone/commit/02d7c4857301d33066b2a27b041e11089d558c81)).
+- Imprvoed docstrings. ([4eec273](https://github.com/jackton1/django-clone/commit/4eec273f6d6c849d4d7d36b78411116f411343d0)).
+- Switched to use TransactionManagementError exception. ([fa2d18c](https://github.com/jackton1/django-clone/commit/fa2d18c3873daa2445b760d09351505a96e98f94)).
+- Update README.md ([cd4bc76](https://github.com/jackton1/django-clone/commit/cd4bc76fccc39ee51b496dec65a447932fe5f285)).
+- Update README.md ([ccd8b12](https://github.com/jackton1/django-clone/commit/ccd8b12601d1b405f63a520f39a98eb9274fd242)).
+- Update README.md ([01523cb](https://github.com/jackton1/django-clone/commit/01523cb35fc8bb9c660b9894185108e0daf070e2)).
+- Updated dependencies to fix test. ([1280d91](https://github.com/jackton1/django-clone/commit/1280d91f3e40d56ef3e1f24bc0caf5bf11ae7834)).
+- Updated MANIFEST.in to include model_clone templates. ([c13a70c](https://github.com/jackton1/django-clone/commit/c13a70c5c2bf48b1af58931e747a4c133dcdb24d)).
+- Updated the test. ([ada0ba2](https://github.com/jackton1/django-clone/commit/ada0ba296ffe7b41137b017db505c30781cdc2ab)).
+- Updated to use db. ([e489e47](https://github.com/jackton1/django-clone/commit/e489e473fce0e5585328dfd8ea3115b42d612b0f)).
+- Updated to use list comprehension. ([9fa7c04](https://github.com/jackton1/django-clone/commit/9fa7c04dc7395191545a126ce0bf65619a361643)).
+
+
+## [v0.1.0](https://github.com/jackton1/django-clone/releases/tag/v0.1.0) ([compare](https://github.com/jackton1/django-clone/compare/v0.0.11...v0.1.0)) - 2019-11-23
 
 ### Misc
 - "2019-11-22 21:58 - Increased django-clone version: VERSION = (0, 0, 11) to VERSION = (0, 1, 0)" ([ed56f09](https://github.com/jackton1/django-clone/commit/ed56f09fc14f0a7e49926a41ac7d288e5b38a94b)).
+- Updated CHANGELOG.md. ([fc5daef](https://github.com/jackton1/django-clone/commit/fc5daef7900a32afdb39f1ffcdefb9becda2d46d)).
 
 
 ## [v0.0.11](https://github.com/jackton1/django-clone/releases/tag/v0.0.11) ([compare](https://github.com/jackton1/django-clone/compare/v0.0.10...v0.0.11)) - 2019-11-23
@@ -29,6 +59,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Exclude the venv. ([051f0ff](https://github.com/jackton1/django-clone/commit/051f0ffe085976ff796169a807e4853b31c20800)).
 - Increased test coverage and renamed clonabled -> clone. ([8f996eb](https://github.com/jackton1/django-clone/commit/8f996eb38d68cc6edd4d01ca380fd6aa18bd6e42)).
 - Revert change. ([eb94c6d](https://github.com/jackton1/django-clone/commit/eb94c6d682f0e89119e36c4f019f779bfe897ce1)).
+- Update README.md ([ada08a4](https://github.com/jackton1/django-clone/commit/ada08a461f6a24a3d41bd8830e73f325a3a56ae3)).
+- Update README.md ([51c21ca](https://github.com/jackton1/django-clone/commit/51c21ca297b7d93f914abfd2a5cd1b360e594806)).
+- Update README.md ([0eec6fa](https://github.com/jackton1/django-clone/commit/0eec6fabda05c11f890971f94d32ca4f7cdc65a0)).
+- Update README.md ([a75a083](https://github.com/jackton1/django-clone/commit/a75a08363475fd523604b651556e3cfd07cbc3e8)).
 - Update README.md ([d556bf6](https://github.com/jackton1/django-clone/commit/d556bf60cadca183e528e28c5448e1512499de99)).
 - Update README.md ([ec89373](https://github.com/jackton1/django-clone/commit/ec893734a6b18995c19fee6c4b5395d71de2def0)).
 - Update README.md inlcuded snyk tag. ([0c40147](https://github.com/jackton1/django-clone/commit/0c40147cefeb10e32d60b0f9295555760c43a84e)).
