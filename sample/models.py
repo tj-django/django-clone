@@ -45,6 +45,5 @@ class Library(CloneModel):
 
     _clone_model_fields = ['id']
 
-
     def __str__(self):
         return _(self.name)
