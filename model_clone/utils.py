@@ -1,10 +1,10 @@
 import contextlib
 import re
 
+import six
 from django.core.exceptions import ValidationError
 from django.db import models, transaction
 from django.db.transaction import TransactionManagementError
-from django.utils import six
 
 
 def create_copy_of_instance(instance, exclude=(), save_new=True, attrs=None):
