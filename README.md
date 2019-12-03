@@ -1,10 +1,10 @@
 [![PyPI version](https://badge.fury.io/py/django-clone.svg)](https://badge.fury.io/py/django-clone)
 [![CircleCI](https://circleci.com/gh/jackton1/django-clone.svg?style=shield)](https://circleci.com/gh/jackton1/django-clone)
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django_clone.svg)](https://pypi.org/project/django-clone)
-[![PyPI - License](https://img.shields.io/pypi/l/django_clone.svg)](https://github.com/jackton1/django-clone/blob/master/LICENSE)
 [![PyPI - Django Version](https://img.shields.io/pypi/djversions/django_clone.svg)](https://docs.djangoproject.com/en/2.2/releases/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django_clone.svg)](https://pypi.org/project/django-clone)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/3ba2fce2205842328054eb65256eda71)](https://www.codacy.com/manual/jackton1/django-clone?utm_source=github.com&utm_medium=referral&utm_content=jackton1/django-clone&utm_campaign=Badge_Coverage)
+[![PyPI - License](https://img.shields.io/pypi/l/django_clone.svg)](https://github.com/jackton1/django-clone/blob/master/LICENSE)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3ba2fce2205842328054eb65256eda71)](https://www.codacy.com/manual/jackton1/django-clone?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jackton1/django-clone&amp;utm_campaign=Badge_Grade)
 [![Known Vulnerabilities](https://snyk.io/test/github/jackton1/django-clone/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/jackton1/django-clone?targetFile=requirements.txt)
 ## django-clone 
