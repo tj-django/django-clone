@@ -18,7 +18,9 @@ class Author(CloneModel):
     ]
     sex = models.CharField(choices=SEX_CHOICES, max_length=1)
     created_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+        settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT,
+    )
 
     def __str__(self):
         return _('{} {}'.format(self.first_name, self.last_name))
@@ -28,7 +30,9 @@ class Book(CloneModel):
     name = models.CharField(max_length=2000)
     authors = models.ManyToManyField(Author, related_name='books')
     created_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+        settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT,
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -40,3 +44,6 @@ class Library(CloneModel):
     name = models.CharField(max_length=100)
 
     _clone_model_fields = ['id']
+
+    def __str__(self):
+        return _(self.name)
