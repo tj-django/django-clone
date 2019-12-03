@@ -94,7 +94,6 @@ jobs:
               libreadline-dev libsqlite3-dev \
               wget curl llvm libncurses5-dev libncursesw5-dev \
               xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
-            rm -rf $HOME/.pyenv
             curl https://pyenv.run | bash
             export PATH="$HOME/.pyenv/bin:$PATH"
             eval "$(pyenv init -)"
