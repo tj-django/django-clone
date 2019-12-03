@@ -5,7 +5,7 @@ import six
 from conditional import conditional
 from django.core.checks import Error
 from django.core.exceptions import ValidationError
-from django.db import transaction, models, connections
+from django.db import transaction, models, IntegrityError, connections
 from django.db.models import SlugField
 from django.db.models.base import ModelBase
 from django.utils.text import slugify
@@ -320,8 +320,12 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
 
         # Clone one to many/many to one fields
         for field in many_to_one_or_one_to_many_fields:
-            getattr(duplicate, field.related_name).set(
-                getattr(self, field.related_name).all())
+            for item in getattr(self, field.related_name).all():
+                try:
+                    item_clone = item.make_clone()
+                except IntegrityError:
+                    item_clone = item.make_clone(sub_clone=True)
+                getattr(duplicate, field.related_name).add(item_clone)
 
         # Clone many to many fields
         for field in many_to_many_fields:
