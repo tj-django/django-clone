@@ -4,13 +4,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v0.1.1](https://github.com/jackton1/django-clone/releases/tag/v0.1.1) ([compare](https://github.com/jackton1/django-clone/compare/v0.1.0...v0.1.1))
+## [v0.1.2](https://github.com/jackton1/django-clone/releases/tag/v0.1.2) ([compare](https://github.com/jackton1/django-clone/compare/v0.1.1...v0.1.2))
+
+### Fixed
+- Fixed flake8 errors. ([ac0c27b](https://github.com/jackton1/django-clone/commit/ac0c27b2a93c10c29b3a32990752d3c544bf9619)).
+- Fixed test. ([5b65a84](https://github.com/jackton1/django-clone/commit/5b65a842380d30ec84e4e6d3db882702385bfec8)).
+
+### Removed
+- Remove tabs. ([f8c1a46](https://github.com/jackton1/django-clone/commit/f8c1a46e77c5c1ec42f4fc84af6872d2861a8a69)).
+- Remove unused code. ([ecfa4b6](https://github.com/jackton1/django-clone/commit/ecfa4b623ed4456cff431095f4b62ec41badb829)).
+- Remove unused code. ([dca546c](https://github.com/jackton1/django-clone/commit/dca546c24f41d33ce4860cc5e2b8acae92480323)).
+- Remove unused code. ([229eb94](https://github.com/jackton1/django-clone/commit/229eb940021b2bd7553ee6266dffcb17c832b86b)).
+- Removed unused line. ([4e1d5d1](https://github.com/jackton1/django-clone/commit/4e1d5d144acccfb8a15a8551ce3902338387467b)).
+
+### Misc
+- "2019-12-02 20:19 - Increased django-clone version: VERSION = (0, 1, 1) to VERSION = (0, 1, 2)" ([a2fad40](https://github.com/jackton1/django-clone/commit/a2fad4054fa1f9a6a7abed350d9a33094d7acb33)).
+- Upated the config. ([adc31d0](https://github.com/jackton1/django-clone/commit/adc31d076acb4b532e87554d45818a6324c3d937)).
+
+
+## [v0.1.1](https://github.com/jackton1/django-clone/releases/tag/v0.1.1) ([compare](https://github.com/jackton1/django-clone/compare/v0.1.0...v0.1.1)) - 2019-12-02
+
+### Added
+- Added PyPi badge. ([e0a09e4](https://github.com/jackton1/django-clone/commit/e0a09e4dd084fd7ffe2c95a66aaa1a5b09762d78)).
 
 ### Fixed
 - Fix bug with cloning unique fields and added support for bulk_clone. ([70e76a8](https://github.com/jackton1/django-clone/commit/70e76a81e6497ef52a2d525bc4a5e6a27d5b0e75)).
 - Fix typo cloneModelAdmin -> CloneModelAdmin ([b8a29c2](https://github.com/jackton1/django-clone/commit/b8a29c240aba7f7736ef297a69f54eb0a399d1ad)).
 - Fixed example. ([1ad41d3](https://github.com/jackton1/django-clone/commit/1ad41d3f2866136a53d4fc0f91ded97ffe5f7f89)).
 - Fixed flake8 error. ([b28fb8c](https://github.com/jackton1/django-clone/commit/b28fb8c5f67f1ef9b790fa7f0ac3e9b106544d6f)).
+- Fixed indentation. ([75214a5](https://github.com/jackton1/django-clone/commit/75214a5b786a5322b8aa2af59fc95f6d0d10a78c)).
 - Fixed lint errors and added support for running autopep8. ([4537a46](https://github.com/jackton1/django-clone/commit/4537a460de92d0ef34c875d37439f79c26a69d36)).
 - Fixed test. ([ec39547](https://github.com/jackton1/django-clone/commit/ec395478f1ecfce4a1d1a0afbc8f0299d5f4c6dc)).
 
@@ -26,6 +48,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update README.md ([cd4bc76](https://github.com/jackton1/django-clone/commit/cd4bc76fccc39ee51b496dec65a447932fe5f285)).
 - Update README.md ([ccd8b12](https://github.com/jackton1/django-clone/commit/ccd8b12601d1b405f63a520f39a98eb9274fd242)).
 - Update README.md ([01523cb](https://github.com/jackton1/django-clone/commit/01523cb35fc8bb9c660b9894185108e0daf070e2)).
+- Updated CHANGELOG.md. ([f9dac86](https://github.com/jackton1/django-clone/commit/f9dac86ed8863415d827720e6d80785aa07ec151)).
 - Updated dependencies to fix test. ([1280d91](https://github.com/jackton1/django-clone/commit/1280d91f3e40d56ef3e1f24bc0caf5bf11ae7834)).
 - Updated MANIFEST.in to include model_clone templates. ([c13a70c](https://github.com/jackton1/django-clone/commit/c13a70c5c2bf48b1af58931e747a4c133dcdb24d)).
 - Updated the test. ([ada0ba2](https://github.com/jackton1/django-clone/commit/ada0ba296ffe7b41137b017db505c30781cdc2ab)).
