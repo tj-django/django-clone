@@ -32,6 +32,7 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
+            - v1-tox-dependencies-{{ checksum "tox.ini" }}
             - v1-dependencies-{{ checksum "setup.py" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
@@ -57,6 +58,10 @@ jobs:
             . venv/bin/activate
             python -m pip install tox
             tox
+      - save_cache:
+          paths:
+            - ./tox
+          key: v1-tox-dependencies-{{ checksum "tox.ini" }}
 
       - store_artifacts:
           path: test-reports
@@ -78,7 +83,8 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "setup.py" }}
+            - v1-py2-dependencies-{{ checksum "setup.py" }}
+            - v1-py2-tox-dependencies-{{ checksum "tox.ini" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
@@ -99,7 +105,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.pyenv/versions/venv
-          key: v1-dependencies-{{ checksum "setup.py" }}
+          key: v1-py2-dependencies-{{ checksum "setup.py" }}
 
       # run tests!
       # this example uses Django's built-in test-runner
@@ -116,6 +122,10 @@ jobs:
             python -m pip install 'tox>3.8.0'
             . ~/.pyenv/versions/venv/bin/activate
             tox
+      - save_cache:
+          paths:
+            - ./tox
+          key: v1-py2-tox-dependencies-{{ checksum "tox.ini" }}
 
       - store_test_results:
           path: test-results
