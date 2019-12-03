@@ -83,7 +83,6 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-py2-dependencies-{{ checksum "setup.py" }}
             - v1-py2-tox-dependencies-{{ checksum "tox.ini" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
@@ -102,10 +101,6 @@ jobs:
             eval "$(pyenv virtualenv-init -)"
             pyenv virtualenv venv
             sudo chown -R circleci:circleci ~/.pyenv/versions/venv
-      - save_cache:
-          paths:
-            - ~/.pyenv/versions/venv
-          key: v1-py2-dependencies-{{ checksum "setup.py" }}
 
       # run tests!
       # this example uses Django's built-in test-runner
