@@ -8,10 +8,22 @@ workflows:
   version: 2
   test:
     jobs:
-      - test-3.7
-      - test-3.6
-      - test-3.5
-      - test-2.7
+      - test-3.7:
+          filters:
+              ignore:
+                - develop
+      - test-3.6:
+          filters:
+              ignore:
+                - develop
+      - test-3.5:
+          filters:
+              ignore:
+                - develop
+      - test-2.7:
+          filters:
+              ignore:
+                - develop
 jobs:
   test-3.6: &test-template
     context: django-clone
