@@ -101,10 +101,9 @@ jobs:
             eval "$(pyenv virtualenv-init -)"
             pyenv virtualenv venv
             sudo chown -R circleci:circleci ~/.pyenv/versions/venv
-
-      - save_cache:		
-          paths:		
-            - ~/.pyenv/versions/venv		
+      - save_cache:
+          paths:
+            - ~/.pyenv/versions/venv
           key: v1-py2-dependencies-{{ checksum "setup.py" }}
 
       # run tests!
