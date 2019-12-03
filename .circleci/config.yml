@@ -8,25 +8,16 @@ workflows:
   version: 2
   test:
     jobs:
-      - test-3.7:
-          filters:
-              ignore:
-                - develop
-      - test-3.6:
-          filters:
-              ignore:
-                - develop
-      - test-3.5:
-          filters:
-              ignore:
-                - develop
-      - test-2.7:
-          filters:
-              ignore:
-                - develop
+      - test-3.7
+      - test-3.6
+      - test-3.5
+      - test-2.7
 jobs:
   test-3.6: &test-template
     context: django-clone
+    filters:
+      ignore:
+        - develop
     docker:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
@@ -75,9 +66,8 @@ jobs:
             - ./tox
           key: v1-tox-dependencies-{{ checksum "tox.ini" }}
 
-      - store_artifacts:
-          path: test-reports
-          destination: test-reports
+      - store_test_results:
+          path: test-results
   test-3.7:
     <<: *test-template
     docker:
