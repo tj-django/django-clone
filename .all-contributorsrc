@@ -23,7 +23,8 @@
       "profile": "http://sebastian-kindt.com",
       "contributions": [
         "code",
-        "bug"
+        "bug",
+        "test"
       ]
     },
     {
@@ -40,5 +41,6 @@
   "projectName": "django-clone",
   "projectOwner": "jackton1",
   "repoType": "github",
-  "repoHost": "https://github.com"
+  "repoHost": "https://github.com",
+  "skipCi": true
 }
