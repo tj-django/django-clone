@@ -262,11 +262,11 @@ class CloneMixinTestCase(TestCase):
             )
 
     @patch(
-        'sample.models.Book._clone_many_to_one_or_one_to_many_fields', 
+        'sample.models.Book._clone_many_to_one_or_one_to_many_fields',
         new_callable=PropertyMock,
     )
     def test_cloning_one_to_many_many_to_one(
-        self, 
+        self,
         _clone_many_to_one_or_one_to_many_fields_mock,
     ):
         _clone_many_to_one_or_one_to_many_fields_mock.return_value = ['pages']
