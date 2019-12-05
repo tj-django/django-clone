@@ -324,7 +324,7 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                     item_clone = item.make_clone()
                 except IntegrityError:
                     item_clone = item.make_clone(sub_clone=True)
-                items.append(item_clone.pk)
+                items.append(item_clone)
 
             getattr(duplicate, field.related_name).set(items)
 
