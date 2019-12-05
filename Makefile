@@ -3,6 +3,7 @@
 .DEFAULT_GOAL := help
 
 PYTHON 			:= /usr/bin/env python
+PYTHON_VERSION  := $(PYTHON) --version
 MANAGE_PY 		:= $(PYTHON) manage.py
 PYTHON_PIP  	:= /usr/bin/env pip
 PIP_COMPILE 	:= /usr/bin/env pip-compile
@@ -29,15 +30,19 @@ clean-build: ## Clean project build artifacts.
 	@rm -rf dist/
 	@rm -rf *.egg-info
 
+test:
+	@echo "Running `$(PYTHON_VERSION)` test..."
+	@$(MANAGE_PY) test
+
 install: clean-build  ## Install project dependencies.
 	@echo "Installing project in dependencies..."
 	@$(PYTHON_PIP) install -r requirements.txt
 
-install-lint: pipconf clean-build  ## Install lint extra dependencies.
+install-lint: clean-build  ## Install lint extra dependencies.
 	@echo "Installing lint extra requirements..."
 	@$(PYTHON_PIP) install -e .'[lint]'
 
-install-test: clean-build  ## Install test extra dependencies.
+install-test: clean-build clean-test-all ## Install test extra dependencies.
 	@echo "Installing test extra requirements..."
 	@$(PYTHON_PIP) install -e .'[test]'
 
@@ -65,6 +70,10 @@ increase-version: clean-build guard-PART  ## Bump the project version (using the
 	@echo "Increasing project '$(PART)' version..."
 	@$(PYTHON_PIP) install -q -e .'[deploy]'
 	@bumpversion --verbose $(PART)
+	@git-changelog . > CHANGELOG.md
+	@git commit -am "Updated CHANGELOG.md."
+	@git push --tags
+	@git push
 
 # ----------------------------------------------------------
 # --------- Run project Test -------------------------------
@@ -74,5 +83,13 @@ tox: install-test  ## Run tox test
 
 clean-test-all: clean-build  ## Clean build and test assets.
 	@rm -rf .tox/
+	@rm -rf test-results
 	@rm -rf .pytest_cache/
-	@rm test.db
+	@rm -f test.db
+
+
+# -----------------------------------------------------------
+# --------- Run autopep8 ------------------------------------
+# -----------------------------------------------------------
+run-autopep8:  ## Run autopep8 with inplace for model_clone package. 
+	@autopep8 -ri model_clone

@@ -6,6 +6,14 @@ __pycache__
 .tox/
 build/
 dist/
+.DS_Store
+node_modules/
 
 *.db
 *.sqlite*
+.coverage.*
+.coverage
+coverage.*
+.envrc
+htmlcov/
+test-reports/

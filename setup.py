@@ -3,18 +3,26 @@ import io
 
 from setuptools import find_packages, setup
 
-install_requires = ['future==0.17.1']
+install_requires = [
+    'future>=0.17.1',
+    'conditional>=1.3',
+    'six==1.13.0',
+]
 
 test_requires = [
     'tox==3.8.6',
     'pluggy>=0.7',
     'mock==2.0.0',
+    'unittest-xml-reporting==2.5.2',
     'codacy-coverage==1.3.11',
 ]
 
 deploy_requires = [
+    'bump2version==0.5.11',
     'readme_renderer[md]',
     'changes==0.7.0',
+    'git-changelog==0.1.0',
+    'twine==1.3.1',
 ]
 
 lint_requires = [
@@ -52,7 +60,7 @@ if os.path.isfile(README_PATH):
 else:
     LONG_DESCRIPTION = ''
 
-VERSION = (0, 0, 1)
+VERSION = (0, 1, 2)
 
 version = '.'.join(map(str, VERSION))
 
@@ -70,7 +78,7 @@ setup(
     url='https://github.com/jackton1/django-clone.git',
     license='MIT/Apache-2.0',
     keywords=[
-        'django', 'django-clone', 'django clonable', 'django object clone',
+        'django', 'django-clone', 'django clone', 'django object clone',
         'clone-django', 'model cloning', 'django instance duplication',
         'django duplication',
     ],

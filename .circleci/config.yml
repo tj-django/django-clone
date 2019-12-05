@@ -1,3 +1,4 @@
+---
 # Python CircleCI 2.0 configuration file
 #
 # Check https://circleci.com/docs/2.0/language-python/ for more details
@@ -10,8 +11,13 @@ workflows:
       - test-3.7
       - test-3.6
       - test-3.5
+      - test-2.7
 jobs:
   test-3.6: &test-template
+    context: django-clone
+    filters:
+      ignore:
+        - develop
     docker:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
@@ -29,6 +35,7 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
+            - v1-tox-dependencies-{{ checksum "tox.ini" }}
             - v1-dependencies-{{ checksum "setup.py" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
@@ -38,7 +45,6 @@ jobs:
           command: |
             python -m venv venv
             . venv/bin/activate
-            make install-test
       - save_cache:
           paths:
             - ./venv
@@ -53,11 +59,15 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
+            python -m pip install tox
             tox
+      - save_cache:
+          paths:
+            - ./tox
+          key: v1-tox-dependencies-{{ checksum "tox.ini" }}
 
-      - store_artifacts:
-          path: test-reports
-          destination: test-reports
+      - store_test_results:
+          path: test-results
   test-3.7:
     <<: *test-template
     docker:
@@ -65,45 +75,57 @@ jobs:
   test-3.5:
     <<: *test-template
     docker:
-    - image: circleci/python:3.5
-#  test-2.7:
-#    <<: *test-template
-#    docker:
-#    - image: circleci/python:2.7
-#    steps:
-#      - checkout
-#      # Download and cache dependencies
-#      - restore_cache:
-#          keys:
-#          - v1-dependencies-{{ checksum "setup.py" }}
-#          # fallback to using the latest cache if no exact match is found
-#          - v1-dependencies-
-#
-#      - run:
-#          name: install dependencies
-#          command: |
-#            pip install virtualenv
-#            virtualenv venv
-#            sudo chown -R circleci:circleci venv
-#            . venv/bin/activate
-#            make install-test
-#      - save_cache:
-#          paths:
-#          - ./venv
-#          key: v1-dependencies-{{ checksum "setup.py" }}
-#
-#      # run tests!
-#      # this example uses Django's built-in test-runner
-#      # other common Python testing frameworks include pytest and nose
-#      # https://pytest.org
-#      # https://nose.readthedocs.io
-#      - run:
-#          name: run tests
-#          command: |
-#            . venv/bin/activate
-#            tox
-#
-#      - store_artifacts:
-#          path: test-reports
-#          destination: test-reports
+      - image: circleci/python:3.5
+  test-2.7:
+    <<: *test-template
+    docker:
+      - image: circleci/python:2.7
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-py2-tox-dependencies-{{ checksum "tox.ini" }}
+            - v1-py2-dependencies-{{ checksum "setup.py" }}
 
+      - run:
+          name: install dependencies
+          command: |
+            sudo apt-get install -y make build-essential \
+              libssl-dev zlib1g-dev libbz2-dev \
+              libreadline-dev libsqlite3-dev \
+              wget curl llvm libncurses5-dev libncursesw5-dev \
+              xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+            curl https://pyenv.run | bash
+            export PATH="$HOME/.pyenv/bin:$PATH"
+            eval "$(pyenv init -)"
+            eval "$(pyenv virtualenv-init -)"
+            pyenv virtualenv venv
+            sudo chown -R circleci:circleci ~/.pyenv/versions/venv
+      - save_cache:
+          paths:
+            - ~/.pyenv/versions/venv
+          key: v1-py2-dependencies-{{ checksum "setup.py" }}
+
+      # run tests!
+      # this example uses Django's built-in test-runner
+      # other common Python testing frameworks include pytest and nose
+      # https://pytest.org
+      # https://nose.readthedocs.io
+      - run:
+          name: run tests
+          command: |
+            export PATH="$HOME/.pyenv/bin:$PATH"
+            eval "$(pyenv init -)"
+            eval "$(pyenv virtualenv-init -)"
+            . ~/.pyenv/versions/venv/bin/activate
+            python -m pip install 'tox>3.8.0'
+            . ~/.pyenv/versions/venv/bin/activate
+            tox
+      - save_cache:
+          paths:
+            - ./tox
+          key: v1-py2-tox-dependencies-{{ checksum "tox.ini" }}
+
+      - store_test_results:
+          path: test-results
