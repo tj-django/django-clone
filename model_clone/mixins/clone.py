@@ -320,12 +320,16 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
 
         # Clone one to many/many to one fields
         for field in many_to_one_or_one_to_many_fields:
+            items = []
             for item in getattr(self, field.related_name).all():
                 try:
                     item_clone = item.make_clone()
                 except IntegrityError:
                     item_clone = item.make_clone(sub_clone=True)
-                getattr(duplicate, field.related_name).add(item_clone)
+                
+                items.append(item_clone.pk)
+            
+            getattr(duplicate, field.related_name).set(items)
 
         # Clone many to many fields
         for field in many_to_many_fields:
