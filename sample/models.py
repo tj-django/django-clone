@@ -39,6 +39,11 @@ class Book(CloneModel):
         return _(self.name)
 
 
+class Page(CloneModel):
+    content = models.CharField(max_length=20000)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='pages')
+
+
 class Library(CloneModel):
     id = models.UUIDField(primary_key=True, default=uuid4)
     name = models.CharField(max_length=100)

@@ -4,7 +4,7 @@ from django.db.transaction import TransactionManagementError
 from django.test import TestCase, TransactionTestCase
 from mock import patch, PropertyMock
 
-from sample.models import Library, Book, Author
+from sample.models import Library, Book, Author, Page
 
 User = get_user_model()
 
@@ -108,7 +108,6 @@ class CloneMixinTestCase(TestCase):
         _clone_many_to_many_fields_mock.return_value = ['authors']
 
         book = Book.objects.create(name='New Book', created_by=self.user)
-
         book.authors.set([author_1, author_2])
 
         book_clone = book.make_clone()
@@ -261,6 +260,37 @@ class CloneMixinTestCase(TestCase):
                 clone.first_name,
                 r'{}\s[\d]'.format(Author.UNIQUE_DUPLICATE_SUFFIX),
             )
+
+    @patch('sample.models.Book._clone_many_to_one_or_one_to_many_fields', new_callable=PropertyMock)
+    def test_cloning_one_to_many_many_to_one(self, _clone_many_to_one_or_one_to_many_fields_mock):
+        _clone_many_to_one_or_one_to_many_fields_mock.return_value = ['pages']
+
+        name = 'New Book'
+        book = Book.objects.create(name=name, created_by=self.user)
+
+        page_1 = Page.objects.create(
+            content="Page 1 content",
+            book=book
+        )
+        page_2 = Page.objects.create(
+            content="Page 2 content",
+            book=book
+        )
+
+        book.pages.set([page_1, page_2])
+        book_clone = book.make_clone()
+
+        self.assertEqual(book.name, name)
+        self.assertEqual(book_clone.name, name)
+        self.assertEqual(
+            list(book.pages.values_list('content')),
+            list(book_clone.pages.values_list('content')),
+        )
+        self.assertNotEqual(
+            list(book.pages.values_list('id')),
+            list(book_clone.pages.values_list('id')),
+        )
+        _clone_many_to_one_or_one_to_many_fields_mock.assert_called_once()
 
 
 class CloneMixinTransactionTestCase(TransactionTestCase):
