@@ -88,8 +88,6 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
     _clone_excluded_one_to_one_fields = []
 
     UNIQUE_DUPLICATE_SUFFIX = 'copy'
-    # 1 for space, 4 for copy, 1 for space, 2 for count  == ' copy 33'
-    UNIQUE_DUPLICATE_LENGTH = 8
     USE_UNIQUE_DUPLICATE_SUFFIX = True
     MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS = 100
 
