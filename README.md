@@ -158,7 +158,7 @@ from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 
 @admin.register(TestModel)
-class ModelToCloneAdmin(ModelAdmin):
+class TestModelAdmin(ModelAdmin):
     pass
 ```
 
@@ -168,7 +168,7 @@ to
 from model_clone import CloneModelAdmin
 
 @admin.register(TestModel)
-class ModelToCloneAdmin(CloneModelAdmin):
+class TestModelAdmin(CloneModelAdmin):
     pass
 ```
 
@@ -180,11 +180,20 @@ class ModelToCloneAdmin(CloneModelAdmin):
 
 ![Screenshot](Duplicate-button.png)
 
-##### SETTINGS
+##### CLONE MODEL ADMIN CLASS PROPERTIES
 
-`include_duplicate_action`: Enables/Disables the Duplicate action in the List view (Defaults to True)
-`include_duplicate_object_link`: Enables/Disables the Duplicate action in the Change view (Defaults to 
-True)
+```python
+
+from model_clone import CloneModelAdmin
+
+@admin.register(TestModel)
+class TestModelAdmin(CloneModelAdmin):
+    # Enables/Disables the Duplicate action in the List view (Defaults to True)
+    include_duplicate_action = True
+    # Enables/Disables the Duplicate action in the Change view (Defaults to True)
+    include_duplicate_object_link = True
+```
+
 
 > :warning: NOTE: Ensure that `model_clone` is placed before `django.contrib.admin`
 
