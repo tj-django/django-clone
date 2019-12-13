@@ -91,7 +91,8 @@ Out[10]: <QuerySet [<Tag: men>, <Tag: women>]>
 
 #### CloneMixin attributes
 
--   Explicit field names required.
+***
+* Explicit field names
 ***
 
 `_clone_model_fields`: Restrict the list of fields to copy from the instance 
@@ -103,7 +104,8 @@ Out[10]: <QuerySet [<Tag: men>, <Tag: women>]>
 
 `_clone_one_to_one_fields`: Restricted One to One fields.
 
--   Implicit include all except these fields.
+***
+*  Implicit include all except these fields.
 ***
 `_clone_excluded_model_fields`: Excluded model fields.
 
