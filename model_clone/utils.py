@@ -23,8 +23,7 @@ def create_copy_of_instance(instance, exclude=(), save_new=True, attrs=None):
     Examples:
         >>> from django.contrib.auth import get_user_model
         >>> from sample.models import Book
-        >>> user = get_user_model().objects.create()
-        >>> instance = Book.objects.get(pk=1)
+        >>> instance = Book.objects.create(name='The Beautiful Life')
         >>> instance.pk
         1
         >>> instance.name
