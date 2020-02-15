@@ -90,6 +90,11 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
     UNIQUE_DUPLICATE_SUFFIX = 'copy'
     USE_UNIQUE_DUPLICATE_SUFFIX = True
     MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS = 100
+    
+    @property
+    @abc.abstractmethod
+    def _meta(self):
+        pass
 
     @classmethod
     def _create_copy_of_instance(cls, instance):
