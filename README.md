@@ -45,18 +45,18 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from model_clone import CloneMixin
 
+class TestModel(CloneMixin, models.Model):
+    title = models.CharField(max_length=200)
+    tags =  models.ManyToManyField('Tags')
+
+    _clone_many_to_many_fields = ['tags']
+    
+
 class Tags(models.Model):
     name = models.CharField(max_length=255)
     
     def __str__(self):
         return _(self.name)
-
-
-class TestModel(CloneMixin, models.Model):
-    title = models.CharField(max_length=200)
-    tags =  models.ManyToManyField(Tags)
-
-    _clone_many_to_many_fields = ['tags']
 ```
 
 #### Duplicating a model instance
