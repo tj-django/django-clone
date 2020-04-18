@@ -1,12 +1,16 @@
-[![PyPI version](https://badge.fury.io/py/django-clone.svg)](https://badge.fury.io/py/django-clone)
-[![CircleCI](https://circleci.com/gh/jackton1/django-clone.svg?style=shield)](https://circleci.com/gh/jackton1/django-clone)
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors)
-[![PyPI - Django Version](https://img.shields.io/pypi/djversions/django_clone.svg)](https://docs.djangoproject.com/en/3.0/releases/)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django_clone.svg)](https://pypi.org/project/django-clone)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/3ba2fce2205842328054eb65256eda71)](https://www.codacy.com/manual/jackton1/django-clone?utm_source=github.com&utm_medium=referral&utm_content=jackton1/django-clone&utm_campaign=Badge_Coverage)
-[![PyPI - License](https://img.shields.io/pypi/l/django_clone.svg)](https://github.com/jackton1/django-clone/blob/master/LICENSE)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3ba2fce2205842328054eb65256eda71)](https://www.codacy.com/manual/jackton1/django-clone?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jackton1/django-clone&amp;utm_campaign=Badge_Grade)
-[![Known Vulnerabilities](https://snyk.io/test/github/jackton1/django-clone/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/jackton1/django-clone?targetFile=requirements.txt)
+|    PyPI                        |  Python   | Django  | [LICENSE](./LICENSE) |
+|:------------------------------:|:---------:|:-------:|:--------------------:|
+| [![PyPI version](https://badge.fury.io/py/django-clone.svg)](https://badge.fury.io/py/django-clone) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django_clone.svg)](https://pypi.org/project/django-clone) | [![PyPI - Django Version](https://img.shields.io/pypi/djversions/django_clone.svg)](https://docs.djangoproject.com/en/3.0/releases/) | [![PyPI - License](https://img.shields.io/pypi/l/django_clone.svg)](https://github.com/jackton1/django-clone/blob/master/LICENSE)
+
+
+| Test | Vulnerabilities | Coverage | Code Quality  | Contributors  | 
+|:----:|:---------------:|:--------:|:-------------:|:-------------:|
+| [![CircleCI](https://circleci.com/gh/jackton1/django-clone.svg?style=shield)](https://circleci.com/gh/jackton1/django-clone) | [![Known Vulnerabilities](https://snyk.io/test/github/jackton1/django-clone/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/jackton1/django-clone?targetFile=requirements.txt) | [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/3ba2fce2205842328054eb65256eda71)](https://www.codacy.com/manual/jackton1/django-clone?utm_source=github.com&utm_medium=referral&utm_content=jackton1/django-clone&utm_campaign=Badge_Coverage) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3ba2fce2205842328054eb65256eda71)](https://www.codacy.com/manual/jackton1/django-clone?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jackton1/django-clone&amp;utm_campaign=Badge_Grade) | [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors)
+
+
+
+
+
 ## django-clone 
 
 Creating copies of a model instance on the fly with explicit declaration on how the instance should be cloned (limiting fields or related objects) copied and unique field detection. 
@@ -91,29 +95,23 @@ Out[10]: <QuerySet [<Tag: men>, <Tag: women>]>
 
 #### CloneMixin attributes
 
-***
-* Explicit field names
-***
+##### Explicit
 
-`_clone_model_fields`: Restrict the list of fields to copy from the instance 
-   (By default: Copies all fields excluding auto created/non editable model fields).
+|    Field Names        |  Description |
+|:------------------------------:|:------------:|
+| `_clone_model_fields` | Restrict the list of fields to copy from the instance (By default: Copies all fields excluding auto-created/non editable model fields) |
+`_clone_many_to_many_fields` | Restricted Many to many fields (i.e Test.tags) |
+`_clone_many_to_one_or_one_to_many_fields` | Restricted Many to One/One to Many fields | 
+`_clone_one_to_one_fields` | Restricted One to One fields |
 
-`_clone_many_to_many_fields`: Restricted Many to many fields (i.e Test.tags).
+##### Implicit
 
-`_clone_many_to_one_or_one_to_many_fields`: Restricted Many to One/One to Many fields.
-
-`_clone_one_to_one_fields`: Restricted One to One fields.
-
-***
-*  Implicit include all except these fields.
-***
-`_clone_excluded_model_fields`: Excluded model fields.
-
-`_clone_excluded_many_to_many_fields`: Excluded many to many fields.
-
-`_clone_excluded_many_to_one_or_one_to_many_fields`: Excluded Many to One/One to Many fields.
-
-`_clone_excluded_one_to_one_fields`: Excluded one to one fields.
+|  Field Names (include all except these fields.) | Description |
+|:--------------------:|:-----------:|
+| `_clone_excluded_model_fields` | Excluded model fields. |
+`_clone_excluded_many_to_many_fields` | Excluded many to many fields. |
+`_clone_excluded_many_to_one_or_one_to_many_fields` |  Excluded Many to One/One to Many fields. |
+`_clone_excluded_one_to_one_fields` | Excluded one to one fields. |
 
 
 > :warning: NOTE: Ensure to either set `_clone_excluded_*` or `_clone_*`. Using both would raise errors. 
