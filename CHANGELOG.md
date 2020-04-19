@@ -4,7 +4,44 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v0.1.2](https://github.com/jackton1/django-clone/releases/tag/v0.1.2) ([compare](https://github.com/jackton1/django-clone/compare/v0.1.1...v0.1.2))
+## [v0.1.3](https://github.com/jackton1/django-clone/releases/tag/v0.1.3) ([compare](https://github.com/jackton1/django-clone/compare/v0.1.2...v0.1.3))
+
+### Documented
+- docs: update .all-contributorsrc [skip ci] ([05d17f1](https://github.com/jackton1/django-clone/commit/05d17f195bd7ef282578271bc14bcd97f5ac4a35)).
+- docs: update README.md [skip ci] ([72fee8b](https://github.com/jackton1/django-clone/commit/72fee8b9a643a12631db79c2158073d7ea325011)).
+
+### Fixed
+- Fix lint errors ([9dab0f7](https://github.com/jackton1/django-clone/commit/9dab0f7c5d7c6105d1552d3130050aa0889f94df)).
+- Fixed example documentation. ([b6ceae9](https://github.com/jackton1/django-clone/commit/b6ceae92bae52e7efa49789ffcd1cb7b749a8546)).
+- Fixed invalid config. ([d33354b](https://github.com/jackton1/django-clone/commit/d33354ba8f83c5c694f52512db0575ce12d6fa19)).
+- Fixed lint errors. ([a72040d](https://github.com/jackton1/django-clone/commit/a72040d601a19e341d39381510c949d2f2316251)).
+- Fixed typo ([e2f9643](https://github.com/jackton1/django-clone/commit/e2f9643ffd165adbe98c343293936b879061056d)).
+
+### Removed
+- Removed trailing whitespace. ([6933020](https://github.com/jackton1/django-clone/commit/6933020271094b054a9753e64a75d1064bb2fdb7)).
+- Removed unused line ([0307889](https://github.com/jackton1/django-clone/commit/0307889c5550b098fa8cf553c91d0a5b3756b1ff)).
+
+### Misc
+- "2020-04-16 14:15 - Increased django-clone version: VERSION = (0, 1, 2) to VERSION = (0, 1, 3)" ([5826499](https://github.com/jackton1/django-clone/commit/582649950319c89751212de7a43b3c87cb37d53f)).
+- Actually clone many_to_one fields not only transfer related ([85e6941](https://github.com/jackton1/django-clone/commit/85e6941513647f06c694c0490d279f437c39a780)).
+- Create FUNDING.yml ([25fd02f](https://github.com/jackton1/django-clone/commit/25fd02f522d1ff80594fa67e02d66e4ac074905c)).
+- Reordered badges ([9e5b8d1](https://github.com/jackton1/django-clone/commit/9e5b8d1328dcacdf0746140e0e443435b7aae6d5)).
+- Switched to .set ([4aa377a](https://github.com/jackton1/django-clone/commit/4aa377abb21b1f0d3e59b5b028f06b15a7f18eab)).
+- Update README.md ([bc00a9a](https://github.com/jackton1/django-clone/commit/bc00a9a1d447894f30c6d140291058688c8b4ee8)).
+- Update README.md ([d30b266](https://github.com/jackton1/django-clone/commit/d30b266a37a6d4c798f22baa2bd8ac7005d90758)).
+- Update README.md ([cb58857](https://github.com/jackton1/django-clone/commit/cb588571f8337222db8612e2a2de6e44e2fe8eb6)).
+- Update README.md ([a0f1e47](https://github.com/jackton1/django-clone/commit/a0f1e47a50c766a666c32737f619d962a52474c6)).
+- Update README.md ([eacb836](https://github.com/jackton1/django-clone/commit/eacb8368e089152bc38d2b2b714ea9b7d9b1659b)).
+- Update README.md ([ca98fed](https://github.com/jackton1/django-clone/commit/ca98fededac6a03b8115d3420db339f0c89bc648)).
+- Update README.md ([02f0155](https://github.com/jackton1/django-clone/commit/02f0155edc8283fee1465ed94a57d3c7a831195e)).
+- Update README.md ([d07c230](https://github.com/jackton1/django-clone/commit/d07c230e47a370eccfe86562adf398dbe6e22e87)).
+- Update setup.py ([4f99987](https://github.com/jackton1/django-clone/commit/4f99987f69caae0f6aa57b7c770176ee62360466)).
+- Update tox.ini ([feb6cd8](https://github.com/jackton1/django-clone/commit/feb6cd875fc249708e82385295b8abc907604f77)).
+- Updated .set passing the instance instead of pk. ([0d38e8d](https://github.com/jackton1/django-clone/commit/0d38e8d696bf89746ce599a4cb9fe1aa3219ce0d)).
+- Updated the .circle config. ([a2a4dcc](https://github.com/jackton1/django-clone/commit/a2a4dcc57db08e4baf90a263977ecb220eedc5be)).
+
+
+## [v0.1.2](https://github.com/jackton1/django-clone/releases/tag/v0.1.2) ([compare](https://github.com/jackton1/django-clone/compare/v0.1.1...v0.1.2)) - 2019-12-03
 
 ### Fixed
 - Fixed flake8 errors. ([ac0c27b](https://github.com/jackton1/django-clone/commit/ac0c27b2a93c10c29b3a32990752d3c544bf9619)).
@@ -20,12 +57,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Misc
 - "2019-12-02 20:19 - Increased django-clone version: VERSION = (0, 1, 1) to VERSION = (0, 1, 2)" ([a2fad40](https://github.com/jackton1/django-clone/commit/a2fad4054fa1f9a6a7abed350d9a33094d7acb33)).
 - Upated the config. ([adc31d0](https://github.com/jackton1/django-clone/commit/adc31d076acb4b532e87554d45818a6324c3d937)).
+- Updated CHANGELOG.md. ([285fc66](https://github.com/jackton1/django-clone/commit/285fc6639101a54785dcb728cdcfee61c05b4765)).
 
 
 ## [v0.1.1](https://github.com/jackton1/django-clone/releases/tag/v0.1.1) ([compare](https://github.com/jackton1/django-clone/compare/v0.1.0...v0.1.1)) - 2019-12-02
 
 ### Added
 - Added PyPi badge. ([e0a09e4](https://github.com/jackton1/django-clone/commit/e0a09e4dd084fd7ffe2c95a66aaa1a5b09762d78)).
+- Added spec for cloning in parallel. ([bede5de](https://github.com/jackton1/django-clone/commit/bede5de00cd40a610c65d9d8ae19fa270cf8fc41)).
 
 ### Fixed
 - Fix bug with cloning unique fields and added support for bulk_clone. ([70e76a8](https://github.com/jackton1/django-clone/commit/70e76a81e6497ef52a2d525bc4a5e6a27d5b0e75)).
@@ -50,6 +89,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update README.md ([01523cb](https://github.com/jackton1/django-clone/commit/01523cb35fc8bb9c660b9894185108e0daf070e2)).
 - Updated CHANGELOG.md. ([f9dac86](https://github.com/jackton1/django-clone/commit/f9dac86ed8863415d827720e6d80785aa07ec151)).
 - Updated dependencies to fix test. ([1280d91](https://github.com/jackton1/django-clone/commit/1280d91f3e40d56ef3e1f24bc0caf5bf11ae7834)).
+- Updated docstrings. ([85a729c](https://github.com/jackton1/django-clone/commit/85a729c51937d2e5f7b976155736af95967c63d2)).
 - Updated MANIFEST.in to include model_clone templates. ([c13a70c](https://github.com/jackton1/django-clone/commit/c13a70c5c2bf48b1af58931e747a4c133dcdb24d)).
 - Updated the test. ([ada0ba2](https://github.com/jackton1/django-clone/commit/ada0ba296ffe7b41137b017db505c30781cdc2ab)).
 - Updated to use db. ([e489e47](https://github.com/jackton1/django-clone/commit/e489e473fce0e5585328dfd8ea3115b42d612b0f)).
