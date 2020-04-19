@@ -2,4 +2,3 @@ exclude:
   - develop
   - master
 delete_closed_pr: true
-
