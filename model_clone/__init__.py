@@ -4,5 +4,7 @@ from model_clone.admin import CloneModelAdmin
 
 
 __all__ = [
-    'CloneMixin', 'CloneModelAdmin', 'create_copy_of_instance',
+    "CloneMixin",
+    "CloneModelAdmin",
+    "create_copy_of_instance",
 ]

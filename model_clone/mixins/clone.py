@@ -12,8 +12,10 @@ from django.utils.text import slugify
 
 from model_clone.apps import ModelCloneConfig
 from model_clone.utils import (
-    clean_value, transaction_autocommit,
-    get_unique_value, context_mutable_attribute
+    clean_value,
+    transaction_autocommit,
+    get_unique_value,
+    context_mutable_attribute,
 )
 
 
@@ -72,6 +74,7 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
             o2m fields.
         _clone_excluded_one_to_one_fields (list): Excluded one to one fields.
     """
+
     # TODO: Move these to use succient
     # names m2m_clone_fields -> many_to_many, m2o_o2m_clone_fields = []
 
@@ -87,7 +90,7 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
     _clone_excluded_many_to_one_or_one_to_many_fields = []
     _clone_excluded_one_to_one_fields = []
 
-    UNIQUE_DUPLICATE_SUFFIX = 'copy'
+    UNIQUE_DUPLICATE_SUFFIX = "copy"
     USE_UNIQUE_DUPLICATE_SUFFIX = True
     MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS = 100
 
@@ -110,23 +113,25 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                 fields.append(f)
 
         unique_field_names = cls.unpack_unique_together(
-            opts=instance._meta,
-            only_fields=[f.attname for f in fields],
+            opts=instance._meta, only_fields=[f.attname for f in fields],
         )
 
         unique_fields = [
-            f.name for f in fields
+            f.name
+            for f in fields
             if not f.auto_created and (f.unique or f.name in unique_field_names)
         ]
 
         for f in fields:
-            if all([
-                not f.auto_created,
-                f.concrete,
-                f.editable,
-                f not in instance._meta.related_objects,
-                f not in instance._meta.many_to_many,
-            ]):
+            if all(
+                [
+                    not f.auto_created,
+                    f.concrete,
+                    f.editable,
+                    f not in instance._meta.related_objects,
+                    f not in instance._meta.many_to_many,
+                ]
+            ):
                 value = getattr(instance, f.attname, f.get_default())
                 if f.attname in unique_fields and isinstance(f, models.CharField):
                     value = clean_value(value, cls.UNIQUE_DUPLICATE_SUFFIX)
@@ -137,7 +142,7 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                             value,
                             cls.UNIQUE_DUPLICATE_SUFFIX,
                             f.max_length,
-                            cls.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS
+                            cls.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS,
                         )
                     if isinstance(f, SlugField):
                         value = slugify(value)
@@ -152,82 +157,76 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
         if cls.USE_UNIQUE_DUPLICATE_SUFFIX and not cls.UNIQUE_DUPLICATE_SUFFIX:
             errors.append(
                 Error(
-                    'UNIQUE_DUPLICATE_SUFFIX is reqiured.',
+                    "UNIQUE_DUPLICATE_SUFFIX is reqiured.",
                     hint=(
-                        'Please provide UNIQUE_DUPLICATE_SUFFIX' +
-                        'for {} or set USE_UNIQUE_DUPLICATE_SUFFIX=False'.format(
-                            cls.__name__)
+                        "Please provide UNIQUE_DUPLICATE_SUFFIX"
+                        + "for {} or set USE_UNIQUE_DUPLICATE_SUFFIX=False".format(
+                            cls.__name__
+                        )
                     ),
                     obj=cls,
-                    id='{}.E001'.format(ModelCloneConfig.name),
+                    id="{}.E001".format(ModelCloneConfig.name),
                 )
             )
 
-        if all([
-            cls._clone_model_fields,
-            cls._clone_excluded_model_fields
-        ]):
+        if all([cls._clone_model_fields, cls._clone_excluded_model_fields]):
             errors.append(
                 Error(
-                    'Conflicting configuration.',
+                    "Conflicting configuration.",
                     hint=(
-                        'Please provide either "_clone_model_fields"' +
-                        'or "_clone_excluded_model_fields" for {}'.format(
-                            cls.__name__)
+                        'Please provide either "_clone_model_fields"'
+                        + 'or "_clone_excluded_model_fields" for {}'.format(cls.__name__)
                     ),
                     obj=cls,
-                    id='{}.E002'.format(ModelCloneConfig.name),
+                    id="{}.E002".format(ModelCloneConfig.name),
                 )
             )
 
-        if all([
-            cls._clone_many_to_many_fields,
-            cls._clone_excluded_many_to_many_fields
-        ]):
+        if all([cls._clone_many_to_many_fields, cls._clone_excluded_many_to_many_fields]):
             errors.append(
                 Error(
-                    'Conflicting configuration.',
+                    "Conflicting configuration.",
                     hint=(
-                        'Please provide either "_clone_many_to_many_fields"' +
-                        'or "_clone_excluded_many_to_many_fields" for {}'.format(
-                            cls.__name__)
+                        'Please provide either "_clone_many_to_many_fields"'
+                        + 'or "_clone_excluded_many_to_many_fields" for {}'.format(
+                            cls.__name__
+                        )
                     ),
                     obj=cls,
-                    id='{}.E002'.format(ModelCloneConfig.name),
+                    id="{}.E002".format(ModelCloneConfig.name),
                 )
             )
 
-        if all([
-            cls._clone_many_to_one_or_one_to_many_fields,
-            cls._clone_excluded_many_to_one_or_one_to_many_fields
-        ]):
+        if all(
+            [
+                cls._clone_many_to_one_or_one_to_many_fields,
+                cls._clone_excluded_many_to_one_or_one_to_many_fields,
+            ]
+        ):
             errors.append(
                 Error(
-                    'Conflicting configuration.',
+                    "Conflicting configuration.",
                     hint=(
-                        'Please provide either "_clone_many_to_one_or_one_to_many_fields"' +
-                        'or "_clone_excluded_many_to_one_or_one_to_many_fields" for {}'.format(
-                            cls.__name__)
+                        'Please provide either "_clone_many_to_one_or_one_to_many_fields"'
+                        + 'or "_clone_excluded_many_to_one_or_one_to_many_fields" for {}'.format(
+                            cls.__name__
+                        )
                     ),
                     obj=cls,
-                    id='{}.E002'.format(ModelCloneConfig.name),
+                    id="{}.E002".format(ModelCloneConfig.name),
                 )
             )
 
-        if all([
-            cls._clone_one_to_one_fields,
-            cls._clone_excluded_one_to_one_fields
-        ]):
+        if all([cls._clone_one_to_one_fields, cls._clone_excluded_one_to_one_fields]):
             errors.append(
                 Error(
-                    'Conflicting configuration.',
+                    "Conflicting configuration.",
                     hint=(
-                        'Please provide either "_clone_one_to_one_fields"' +
-                        'or "_clone_excluded_one_to_one_fields" for {}'.format(
-                            cls.__name__)
+                        'Please provide either "_clone_one_to_one_fields"'
+                        + 'or "_clone_excluded_one_to_one_fields" for {}'.format(cls.__name__)
                     ),
                     obj=cls,
-                    id='{}.E002'.format(ModelCloneConfig.name),
+                    id="{}.E002".format(ModelCloneConfig.name),
                 )
             )
 
@@ -246,8 +245,9 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
         attrs = attrs or {}
         if not self.pk:
             raise ValidationError(
-                '{}: Instance must be saved before it can be cloned.'
-                .format(self.__class__.__name__)
+                "{}: Instance must be saved before it can be cloned.".format(
+                    self.__class__.__name__
+                )
             )
         if sub_clone:
             duplicate = self
@@ -268,49 +268,58 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
             if f.one_to_one and f.name in self._clone_one_to_one_fields:
                 one_to_one_fields.append(f)
 
-            elif all([
-                not self._clone_one_to_one_fields,
-                f.one_to_one,
-                self._clone_excluded_one_to_one_fields,
-                f not in one_to_one_fields,
-                f.name not in self._clone_excluded_one_to_one_fields,
-            ]):
+            elif all(
+                [
+                    not self._clone_one_to_one_fields,
+                    f.one_to_one,
+                    self._clone_excluded_one_to_one_fields,
+                    f not in one_to_one_fields,
+                    f.name not in self._clone_excluded_one_to_one_fields,
+                ]
+            ):
                 one_to_one_fields.append(f)
 
-            elif all([
-                any([f.many_to_one, f.one_to_many]),
-                f.name in self._clone_many_to_one_or_one_to_many_fields,
-            ]):
+            elif all(
+                [
+                    any([f.many_to_one, f.one_to_many]),
+                    f.name in self._clone_many_to_one_or_one_to_many_fields,
+                ]
+            ):
                 many_to_one_or_one_to_many_fields.append(f)
 
-            elif all([
-                not self._clone_many_to_one_or_one_to_many_fields,
-                any([f.many_to_one, f.one_to_many]),
-                self._clone_excluded_many_to_one_or_one_to_many_fields,
-                f not in many_to_one_or_one_to_many_fields,
-                f.name not in self._clone_excluded_many_to_one_or_one_to_many_fields,
-            ]):
+            elif all(
+                [
+                    not self._clone_many_to_one_or_one_to_many_fields,
+                    any([f.many_to_one, f.one_to_many]),
+                    self._clone_excluded_many_to_one_or_one_to_many_fields,
+                    f not in many_to_one_or_one_to_many_fields,
+                    f.name not in self._clone_excluded_many_to_one_or_one_to_many_fields,
+                ]
+            ):
                 many_to_one_or_one_to_many_fields.append(f)
 
         for f in self._meta.many_to_many:
             if not sub_clone:
                 if f.name in self._clone_many_to_many_fields:
                     many_to_many_fields.append(f)
-                elif all([
-                    not self._clone_many_to_many_fields,
-                    self._clone_excluded_many_to_many_fields,
-                    f.name not in self._clone_excluded_many_to_many_fields,
-                    f not in many_to_many_fields,
-                ]):
+                elif all(
+                    [
+                        not self._clone_many_to_many_fields,
+                        self._clone_excluded_many_to_many_fields,
+                        f.name not in self._clone_excluded_many_to_many_fields,
+                        f not in many_to_many_fields,
+                    ]
+                ):
                     many_to_many_fields.append(f)
 
         # Clone one to one fields
         for field in one_to_one_fields:
             rel_object = getattr(self, field.related_name, None)
             if rel_object:
-                if hasattr(rel_object, 'make_clone'):
+                if hasattr(rel_object, "make_clone"):
                     rel_object.make_clone(
-                        attrs={field.remote_field.name: duplicate}, sub_clone=True)
+                        attrs={field.remote_field.name: duplicate}, sub_clone=True
+                    )
                 else:
                     rel_object.pk = None
                     setattr(rel_object, field.remote_field.name, duplicate)
@@ -330,16 +339,20 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
 
         # Clone many to many fields
         for field in many_to_many_fields:
-            if all([
-                field.remote_field.through,
-                not field.remote_field.through._meta.auto_created,
-            ]):
+            if all(
+                [
+                    field.remote_field.through,
+                    not field.remote_field.through._meta.auto_created,
+                ]
+            ):
                 objs = field.remote_field.through.objects.filter(
-                    **{field.m2m_field_name(): self.pk})
+                    **{field.m2m_field_name(): self.pk}
+                )
                 for item in objs:
-                    if hasattr(field.remote_field.through, 'make_clone'):
+                    if hasattr(field.remote_field.through, "make_clone"):
                         item.make_clone(
-                            attrs={field.m2m_field_name(): duplicate}, sub_clone=True)
+                            attrs={field.m2m_field_name(): duplicate}, sub_clone=True
+                        )
                     else:
                         item.pk = None
                         setattr(item, field.m2m_field_name(), duplicate)
@@ -371,26 +384,21 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
         ops = connections[self.__class__._default_manager.db].ops
         objs = range(count)
         clones = []
-        batch_size = (batch_size or max(
-            ops.bulk_batch_size([], list(objs)), 1))
+        batch_size = batch_size or max(ops.bulk_batch_size([], list(objs)), 1)
 
         with conditional(
-            auto_commit,
-            transaction_autocommit(using=self.__class__._default_manager.db),
+            auto_commit, transaction_autocommit(using=self.__class__._default_manager.db),
         ):
             # If count exceeds the MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS
             with conditional(
                 self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS < count,
-                context_mutable_attribute(
-                    self,
-                    'MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS',
-                    count,
-                ),
+                context_mutable_attribute(self, "MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS", count,),
             ):
                 if not self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS >= count:
                     raise AssertionError(
-                        'An Unknown error has occured: Expected ({}) >= ({})'
-                        .format(self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS, count),
+                        "An Unknown error has occured: Expected ({}) >= ({})".format(
+                            self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS, count
+                        ),
                     )
                 clones = list(repeat(self.make_clone(attrs=attrs), batch_size))
 

@@ -11,36 +11,34 @@ from model_clone import CloneMixin
 
 class CloneModelAdmin(ModelAdmin):
     """Admin to handle duplication of models."""
+
     include_duplicate_action = True
     include_duplicate_object_link = True
 
-    def change_view(self, request, object_id, form_url='', extra_context=None):
+    def change_view(self, request, object_id, form_url="", extra_context=None):
         extra_context = extra_context or {}
-        extra_context['include_duplicate_object_link'] = (
-            self.include_duplicate_object_link
-        )
+        extra_context["include_duplicate_object_link"] = self.include_duplicate_object_link
         if self.include_duplicate_object_link:
-            to_field = request.POST.get(
-                TO_FIELD_VAR, request.GET.get(TO_FIELD_VAR))
+            to_field = request.POST.get(TO_FIELD_VAR, request.GET.get(TO_FIELD_VAR))
             if to_field and not self.to_field_allowed(request, to_field):
                 raise DisallowedModelAdminToField(
-                    "The field %s cannot be referenced." % to_field)
+                    "The field %s cannot be referenced." % to_field
+                )
 
             obj = self.get_object(request, unquote(object_id), to_field)
 
-            if object_id is not None and request.GET.get('duplicate'):
+            if object_id is not None and request.GET.get("duplicate"):
                 clone = obj.make_clone()
                 clone.save()
                 self.message_user(
                     request,
-                    _("Duplication successful, redirected to cloned: {}".format(clone))
+                    _("Duplication successful, redirected to cloned: {}".format(clone)),
                 )
                 cloned_admin_url = reverse(
-                    'admin:{0}_{1}_change'.format(
-                        clone._meta.app_label,
-                        clone._meta.model_name
+                    "admin:{0}_{1}_change".format(
+                        clone._meta.app_label, clone._meta.model_name
                     ),
-                    args=(clone.pk,)
+                    args=(clone.pk,),
                 )
                 return HttpResponseRedirect(cloned_admin_url)
 
@@ -57,7 +55,7 @@ class CloneModelAdmin(ModelAdmin):
         if clone_obj_ids:
             self.message_user(
                 request,
-                _("Successfully created: {} new duplicates".format(len(clone_obj_ids)))
+                _("Successfully created: {} new duplicates".format(len(clone_obj_ids))),
             )
 
     make_clone.short_description = "Duplicate selected objects"
@@ -67,7 +65,6 @@ class CloneModelAdmin(ModelAdmin):
         actions = list(super()._get_base_actions())
         # Add the make clone action
         if self.include_duplicate_action and issubclass(self.model, CloneMixin):
-            actions.extend(self.get_action(action)
-                           for action in ['make_clone'])
+            actions.extend(self.get_action(action) for action in ["make_clone"])
 
         return actions

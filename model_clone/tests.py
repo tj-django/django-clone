@@ -10,18 +10,17 @@ User = get_user_model()
 
 
 class CloneMixinTestCase(TestCase):
-
     @classmethod
     def setUpTestData(cls):
         cls.user = User.objects.create()
 
     def test_cloning_model_with_custom_id(self):
-        instance = Library.objects.create(name='First library')
+        instance = Library.objects.create(name="First library")
         clone = instance.make_clone()
         self.assertNotEqual(instance.pk, clone.pk)
 
     def test_cloning_explict_fields(self):
-        name = 'New Library'
+        name = "New Library"
         instance = Library.objects.create(name=name)
         clone = instance.make_clone()
 
@@ -31,10 +30,10 @@ class CloneMixinTestCase(TestCase):
         self.assertNotEqual(instance.name, clone.name)
 
     def test_cloning_with_field_overriden(self):
-        name = 'New Library'
+        name = "New Library"
         instance = Library.objects.create(name=name)
-        new_name = 'My New Library'
-        clone = instance.make_clone(attrs={'name': new_name})
+        new_name = "My New Library"
+        clone = instance.make_clone(attrs={"name": new_name})
 
         self.assertEqual(instance.name, name)
 
@@ -44,10 +43,10 @@ class CloneMixinTestCase(TestCase):
         self.assertEqual(clone.name, new_name)
 
     def test_cloning_using_auto_now_field_is_updated(self):
-        name = 'New Book'
+        name = "New Book"
         instance = Book.objects.create(name=name, created_by=self.user)
-        new_name = 'My New Book'
-        clone = instance.make_clone(attrs={'name': new_name})
+        new_name = "My New Book"
+        clone = instance.make_clone(attrs={"name": new_name})
 
         self.assertEqual(instance.name, name)
         self.assertEqual(clone.created_by, instance.created_by)
@@ -56,22 +55,14 @@ class CloneMixinTestCase(TestCase):
 
     def test_cloning_without_explicit__clone_many_to_many_fields(self):
         author_1 = Author.objects.create(
-            first_name='Ruby',
-            last_name='Jack',
-            age=26,
-            sex='F',
-            created_by=self.user
+            first_name="Ruby", last_name="Jack", age=26, sex="F", created_by=self.user
         )
 
         author_2 = Author.objects.create(
-            first_name='Ibinabo',
-            last_name='Jack',
-            age=19,
-            sex='F',
-            created_by=self.user
+            first_name="Ibinabo", last_name="Jack", age=19, sex="F", created_by=self.user
         )
 
-        name = 'New Book'
+        name = "New Book"
         book = Book.objects.create(name=name, created_by=self.user)
 
         book.authors.set([author_1, author_2])
@@ -81,51 +72,38 @@ class CloneMixinTestCase(TestCase):
         self.assertEqual(book.name, name)
         self.assertEqual(book.created_by, book_clone.created_by)
         self.assertNotEqual(
-            list(book.authors.values_list('first_name', 'last_name')),
-            list(book_clone.authors.values_list('first_name', 'last_name')),
+            list(book.authors.values_list("first_name", "last_name")),
+            list(book_clone.authors.values_list("first_name", "last_name")),
         )
 
-    @patch('sample.models.Book._clone_many_to_many_fields', new_callable=PropertyMock)
+    @patch("sample.models.Book._clone_many_to_many_fields", new_callable=PropertyMock)
     def test_cloning_with_explicit__clone_many_to_many_fields(
-        self,
-        _clone_many_to_many_fields_mock,
+        self, _clone_many_to_many_fields_mock,
     ):
         author_1 = Author.objects.create(
-            first_name='Opubo',
-            last_name='Jack',
-            age=24,
-            sex='F',
-            created_by=self.user
+            first_name="Opubo", last_name="Jack", age=24, sex="F", created_by=self.user
         )
 
         author_2 = Author.objects.create(
-            first_name='Nimabo',
-            last_name='Jack',
-            age=16,
-            sex='F',
-            created_by=self.user
+            first_name="Nimabo", last_name="Jack", age=16, sex="F", created_by=self.user
         )
-        _clone_many_to_many_fields_mock.return_value = ['authors']
+        _clone_many_to_many_fields_mock.return_value = ["authors"]
 
-        book = Book.objects.create(name='New Book', created_by=self.user)
+        book = Book.objects.create(name="New Book", created_by=self.user)
         book.authors.set([author_1, author_2])
 
         book_clone = book.make_clone()
 
         self.assertEqual(
-            list(book.authors.values_list('first_name', 'last_name')),
-            list(book_clone.authors.values_list('first_name', 'last_name')),
+            list(book.authors.values_list("first_name", "last_name")),
+            list(book_clone.authors.values_list("first_name", "last_name")),
         )
         _clone_many_to_many_fields_mock.assert_called_once()
 
     def test_cloning_unique_fields_is_valid(self):
-        first_name = 'Ruby'
+        first_name = "Ruby"
         author = Author.objects.create(
-            first_name=first_name,
-            last_name='Jack',
-            age=26,
-            sex='F',
-            created_by=self.user
+            first_name=first_name, last_name="Jack", age=26, sex="F", created_by=self.user
         )
 
         author_clone = author.make_clone()
@@ -133,51 +111,40 @@ class CloneMixinTestCase(TestCase):
         self.assertNotEqual(author.pk, author_clone.pk)
         self.assertEqual(
             author_clone.first_name,
-            '{} {} {}'.format(first_name, Author.UNIQUE_DUPLICATE_SUFFIX, 1),
+            "{} {} {}".format(first_name, Author.UNIQUE_DUPLICATE_SUFFIX, 1),
         )
 
-    @patch('sample.models.Author.USE_UNIQUE_DUPLICATE_SUFFIX', new_callable=PropertyMock)
+    @patch("sample.models.Author.USE_UNIQUE_DUPLICATE_SUFFIX", new_callable=PropertyMock)
     def test_cloning_unique_field_with_use_unique_duplicate_suffix_set_to_False(
-        self,
-        use_unique_duplicate_suffix_mock,
+        self, use_unique_duplicate_suffix_mock,
     ):
         use_unique_duplicate_suffix_mock.return_value = False
-        first_name = 'Ruby'
+        first_name = "Ruby"
 
         author = Author.objects.create(
-            first_name=first_name,
-            last_name='Jack',
-            age=26,
-            sex='F',
-            created_by=self.user
+            first_name=first_name, last_name="Jack", age=26, sex="F", created_by=self.user
         )
         with self.assertRaises(IntegrityError):
             author.make_clone()
 
         use_unique_duplicate_suffix_mock.assert_called_once()
 
-    @patch('sample.models.Author.UNIQUE_DUPLICATE_SUFFIX', new_callable=PropertyMock)
+    @patch("sample.models.Author.UNIQUE_DUPLICATE_SUFFIX", new_callable=PropertyMock)
     def test_cloning_unique_field_with_a_custom_unique_duplicate_suffix(
-        self,
-        unique_duplicate_suffix_mock,
+        self, unique_duplicate_suffix_mock,
     ):
-        unique_duplicate_suffix_mock.return_value = 'new'
-        first_name = 'Ruby'
+        unique_duplicate_suffix_mock.return_value = "new"
+        first_name = "Ruby"
 
         author = Author.objects.create(
-            first_name=first_name,
-            last_name='Jack',
-            age=26,
-            sex='F',
-            created_by=self.user
+            first_name=first_name, last_name="Jack", age=26, sex="F", created_by=self.user
         )
 
         author_clone = author.make_clone()
 
         self.assertNotEqual(author.pk, author_clone.pk)
         self.assertEqual(
-            author_clone.first_name,
-            '{} {} {}'.format(first_name, 'new', 1),
+            author_clone.first_name, "{} {} {}".format(first_name, "new", 1),
         )
 
     def test_cloning_unique_fields_max_length(self):
@@ -187,67 +154,51 @@ class CloneMixinTestCase(TestCase):
         and test to append the [ copy count]
         """
         first_name = (
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, '
-            'sed diam nonumy eirmod tempor invidunt ut labore et dolore '
-            'magna aliquyam erat, sed diam voluptua. At vero eos et accusam '
-            'et justo duo dolores '
+            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, "
+            "sed diam nonumy eirmod tempor invidunt ut labore et dolore "
+            "magna aliquyam erat, sed diam voluptua. At vero eos et accusam "
+            "et justo duo dolores "
         )
         author = Author.objects.create(
-            first_name=first_name,
-            last_name='Jack',
-            age=26,
-            sex='F',
-            created_by=self.user
+            first_name=first_name, last_name="Jack", age=26, sex="F", created_by=self.user
         )
 
         author_clone = author.make_clone()
 
         self.assertEqual(
-            len(author_clone.first_name),
-            Author._meta.get_field('first_name').max_length,
+            len(author_clone.first_name), Author._meta.get_field("first_name").max_length,
         )
         self.assertNotEqual(author.pk, author_clone.pk)
         self.assertEqual(
             author_clone.first_name,
-            '{} {} {}'.format(first_name[:193],
-                              Author.UNIQUE_DUPLICATE_SUFFIX, 1),
+            "{} {} {}".format(first_name[:193], Author.UNIQUE_DUPLICATE_SUFFIX, 1),
         )
 
     def test_cloning_instances_in_an_atomic_transaction_with_auto_commit_on_raises_errors(
         self,
     ):
         first_name = (
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, '
-            'sed diam nonumy eirmod tempor invidunt ut labore et dolore '
-            'magna aliquyam erat, sed diam voluptua. At vero eos et accusam '
-            'et justo duo dolores '
+            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, "
+            "sed diam nonumy eirmod tempor invidunt ut labore et dolore "
+            "magna aliquyam erat, sed diam voluptua. At vero eos et accusam "
+            "et justo duo dolores "
         )
         author = Author.objects.create(
-            first_name=first_name,
-            last_name='Jack',
-            age=26,
-            sex='F',
-            created_by=self.user
+            first_name=first_name, last_name="Jack", age=26, sex="F", created_by=self.user
         )
 
         with self.assertRaises(TransactionManagementError):
             author.bulk_clone(1000, auto_commit=True)
 
-    def test_cloning_instances_in_an_atomic_transaction_with_auto_commit_off_is_valid(
-        self,
-    ):
+    def test_cloning_instances_in_an_atomic_transaction_with_auto_commit_off_is_valid(self,):
         first_name = (
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, '
-            'sed diam nonumy eirmod tempor invidunt ut labore et dolore '
-            'magna aliquyam erat, sed diam voluptua. At vero eos et accusam '
-            'et justo duo dolores '
+            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, "
+            "sed diam nonumy eirmod tempor invidunt ut labore et dolore "
+            "magna aliquyam erat, sed diam voluptua. At vero eos et accusam "
+            "et justo duo dolores "
         )
         author = Author.objects.create(
-            first_name=first_name,
-            last_name='Jack',
-            age=26,
-            sex='F',
-            created_by=self.user
+            first_name=first_name, last_name="Jack", age=26, sex="F", created_by=self.user
         )
 
         clones = author.bulk_clone(1000)
@@ -257,31 +208,23 @@ class CloneMixinTestCase(TestCase):
         for clone in clones:
             self.assertNotEqual(author.pk, clone.pk)
             self.assertRegexpMatches(
-                clone.first_name,
-                r'{}\s[\d]'.format(Author.UNIQUE_DUPLICATE_SUFFIX),
+                clone.first_name, r"{}\s[\d]".format(Author.UNIQUE_DUPLICATE_SUFFIX),
             )
 
     @patch(
-        'sample.models.Book._clone_many_to_one_or_one_to_many_fields',
+        "sample.models.Book._clone_many_to_one_or_one_to_many_fields",
         new_callable=PropertyMock,
     )
     def test_cloning_one_to_many_many_to_one(
-        self,
-        _clone_many_to_one_or_one_to_many_fields_mock,
+        self, _clone_many_to_one_or_one_to_many_fields_mock,
     ):
-        _clone_many_to_one_or_one_to_many_fields_mock.return_value = ['pages']
+        _clone_many_to_one_or_one_to_many_fields_mock.return_value = ["pages"]
 
-        name = 'New Book'
+        name = "New Book"
         book = Book.objects.create(name=name, created_by=self.user)
 
-        page_1 = Page.objects.create(
-            content="Page 1 content",
-            book=book
-        )
-        page_2 = Page.objects.create(
-            content="Page 2 content",
-            book=book
-        )
+        page_1 = Page.objects.create(content="Page 1 content", book=book)
+        page_2 = Page.objects.create(content="Page 2 content", book=book)
 
         book.pages.set([page_1, page_2])
         book_clone = book.make_clone()
@@ -289,12 +232,11 @@ class CloneMixinTestCase(TestCase):
         self.assertEqual(book.name, name)
         self.assertEqual(book_clone.name, name)
         self.assertEqual(
-            list(book.pages.values_list('content')),
-            list(book_clone.pages.values_list('content')),
+            list(book.pages.values_list("content")),
+            list(book_clone.pages.values_list("content")),
         )
         self.assertNotEqual(
-            list(book.pages.values_list('id')),
-            list(book_clone.pages.values_list('id')),
+            list(book.pages.values_list("id")), list(book_clone.pages.values_list("id")),
         )
         _clone_many_to_one_or_one_to_many_fields_mock.assert_called_once()
 
@@ -303,17 +245,13 @@ class CloneMixinTransactionTestCase(TransactionTestCase):
     def test_cloning_multiple_instances_doesnt_exceed_the_max_length(self):
         user = User.objects.create()
         first_name = (
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, '
-            'sed diam nonumy eirmod tempor invidunt ut labore et dolore '
-            'magna aliquyam erat, sed diam voluptua. At vero eos et accusam '
-            'et justo duo dolores '
+            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, "
+            "sed diam nonumy eirmod tempor invidunt ut labore et dolore "
+            "magna aliquyam erat, sed diam voluptua. At vero eos et accusam "
+            "et justo duo dolores "
         )
         author = Author.objects.create(
-            first_name=first_name,
-            last_name='Jack',
-            age=26,
-            sex='F',
-            created_by=user
+            first_name=first_name, last_name="Jack", age=26, sex="F", created_by=user
         )
 
         clones = author.bulk_clone(1000)
@@ -323,24 +261,19 @@ class CloneMixinTransactionTestCase(TransactionTestCase):
         for clone in clones:
             self.assertNotEqual(author.pk, clone.pk)
             self.assertRegexpMatches(
-                clone.first_name,
-                r'{}\s[\d]'.format(Author.UNIQUE_DUPLICATE_SUFFIX),
+                clone.first_name, r"{}\s[\d]".format(Author.UNIQUE_DUPLICATE_SUFFIX),
             )
 
     def test_cloning_multiple_instances_with_autocommit_is_valid(self):
         user = User.objects.create()
         first_name = (
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, '
-            'sed diam nonumy eirmod tempor invidunt ut labore et dolore '
-            'magna aliquyam erat, sed diam voluptua. At vero eos et accusam '
-            'et justo duo dolores 2'
+            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, "
+            "sed diam nonumy eirmod tempor invidunt ut labore et dolore "
+            "magna aliquyam erat, sed diam voluptua. At vero eos et accusam "
+            "et justo duo dolores 2"
         )
         author = Author.objects.create(
-            first_name=first_name,
-            last_name='Jack',
-            age=26,
-            sex='F',
-            created_by=user
+            first_name=first_name, last_name="Jack", age=26, sex="F", created_by=user
         )
 
         clones = author.bulk_clone(1000, auto_commit=True)
@@ -350,6 +283,5 @@ class CloneMixinTransactionTestCase(TransactionTestCase):
         for clone in clones:
             self.assertNotEqual(author.pk, clone.pk)
             self.assertRegexpMatches(
-                clone.first_name,
-                r'{}\s[\d]'.format(Author.UNIQUE_DUPLICATE_SUFFIX),
+                clone.first_name, r"{}\s[\d]".format(Author.UNIQUE_DUPLICATE_SUFFIX),
             )
