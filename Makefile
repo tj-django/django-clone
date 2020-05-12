@@ -89,7 +89,8 @@ clean-test-all: clean-build  ## Clean build and test assets.
 
 
 # -----------------------------------------------------------
-# --------- Run autopep8 ------------------------------------
+# --------- Run black ------------------------------------
 # -----------------------------------------------------------
-run-autopep8:  ## Run autopep8 with inplace for model_clone package. 
-	@autopep8 -ri model_clone
+run-black:  ## Run black with inplace for model_clone and sample/models.py.
+	@pip install black
+	@black model_clone sample/models.py  --line-length=95
