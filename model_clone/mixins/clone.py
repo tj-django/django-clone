@@ -75,7 +75,7 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
         _clone_excluded_one_to_one_fields (list): Excluded one to one fields.
     """
 
-    # TODO: Move these to use succient
+    # TODO: Move these to use succinct
     # names m2m_clone_fields -> many_to_many, m2o_o2m_clone_fields = []
 
     # Included fields

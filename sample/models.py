@@ -98,8 +98,8 @@ class Assignment(CloneMixin, models.Model):
     def __str__(self):
         return self.title
 
-    # Model clone settings
-    _clone_excluded_many_to_many_fields = ["has_applied", "chosen_driver"]
+    # Model clone settings # TODO: Add m2m fields
+    # _clone_excluded_many_to_many_fields = ["has_applied", "chosen_driver"]
 
     class Meta:
         verbose_name = _("Assigment")
