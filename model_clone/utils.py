@@ -66,7 +66,7 @@ def create_copy_of_instance(instance, exclude=(), save_new=True, attrs=None):
     exclude = exclude or [
         f.name
         for f in instance._meta.fields
-        if any([f.name not in defaults, f.has_default(), f.null,])
+        if any([f.name not in defaults, f.has_default(), f.null])
     ]
 
     try:

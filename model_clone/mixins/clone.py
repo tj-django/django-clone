@@ -207,10 +207,11 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                 Error(
                     "Conflicting configuration.",
                     hint=(
-                        'Please provide either "_clone_many_to_one_or_one_to_many_fields"'
-                        + 'or "_clone_excluded_many_to_one_or_one_to_many_fields" for {}'.format(
-                            cls.__name__
-                        )
+                        "Please provide either "
+                        + '"_clone_many_to_one_or_one_to_many_fields"'
+                        + "or "
+                        + '"_clone_excluded_many_to_one'
+                        + '_or_one_to_many_fields" for {}'.format(cls.__name__)
                     ),
                     obj=cls,
                     id="{}.E002".format(ModelCloneConfig.name),
