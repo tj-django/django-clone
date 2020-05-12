@@ -96,7 +96,7 @@ jobs:
       - restore_cache:
           keys:
             - v1-py2-tox-dependencies-{{ checksum "tox.ini" }}
-            - v1-py2-dependencies-{{ checksum "setup.py" }}
+            - v1-py2-pyenv-dependencies-{{ checksum "setup.py" }}-{{ checksum "tox.ini" }}
 
       - run:
           name: install dependencies
@@ -117,7 +117,7 @@ jobs:
           paths:
             - ~/.pyenv/versions/venv
           key: |
-            v1-py2-dependencies-{{ checksum "setup.py" }}-{{ checksum "tox.ini" }}
+            v1-py2-pyenv-dependencies-{{ checksum "setup.py" }}-{{ checksum "tox.ini" }}
 
       # run tests!
       # this example uses Django's built-in test-runner
