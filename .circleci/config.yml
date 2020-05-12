@@ -110,7 +110,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.pyenv/versions/venv
-          key: v1-py2-dependencies-{{ checksum "setup.py" }}
+          key: v1-py2-dependencies-{{ checksum "setup.py" }}-{{ checksum "tox.ini" }}
 
       # run tests!
       # this example uses Django's built-in test-runner
