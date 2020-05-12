@@ -91,5 +91,5 @@ clean-test-all: clean-build  ## Clean build and test assets.
 # -----------------------------------------------------------
 # --------- Run autopep8 ------------------------------------
 # -----------------------------------------------------------
-run-autopep8:  ## Run autopep8 with inplace for model_clone package. 
-	@autopep8 -ri model_clone
+run-autopep8:  ## Run autopep8 with inplace for model_clone package.
+	@autopep8 -ri model_clone sample/models.py --max-line-length=95

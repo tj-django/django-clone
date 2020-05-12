@@ -58,7 +58,8 @@ class Library(CloneModel):
 class Assignment(CloneMixin, models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
-    title = models.CharField(max_length=100, null=True, blank=True, verbose_name=_("Job title"))
+    title = models.CharField(max_length=100, null=True, blank=True,
+                             verbose_name=_("Job title"))
     assignment_date = models.DateField(blank=True, null=True)
 
     ASSIGNMENT_STATUS = [
@@ -81,12 +82,14 @@ class Assignment(CloneMixin, models.Model):
         (1, 'Large'),
         (2, 'Small'),
     ]
-    car_type = models.CharField(max_length=2, choices=CAR_TYPES, null=True, verbose_name=_("Car type"))
+    car_type = models.CharField(max_length=2, choices=CAR_TYPES,
+                                null=True, verbose_name=_("Car type"))
     compensation = models.DecimalField(null=True, max_digits=5, decimal_places=2,
                                        verbose_name=_("Compensation"))
     hours = models.IntegerField(null=True, verbose_name=_("Amount of hours"))
     spots_available = models.IntegerField(null=True, verbose_name=_("Spots available"))
-    description = models.TextField(null=True, blank=True, verbose_name=_("Assignment description"))
+    description = models.TextField(
+        null=True, blank=True, verbose_name=_("Assignment description"))
 
     def __str__(self):
         return self.title
