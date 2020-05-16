@@ -70,9 +70,7 @@ class Assignment(models.Model, CloneMixin):
         related_name="driver_applications",
     )
     chosen_drivers = models.ManyToManyField(
-        "sample_driver.Driver",
-        blank=True,
-        verbose_name=_("Chosen drivers"),
+        "sample_driver.Driver", blank=True, verbose_name=_("Chosen drivers"),
     )
 
     contract = models.ForeignKey(
