@@ -4,7 +4,50 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v0.1.3](https://github.com/jackton1/django-clone/releases/tag/v0.1.3) ([compare](https://github.com/jackton1/django-clone/compare/v0.1.2...v0.1.3))
+## [v0.1.5](https://github.com/jackton1/django-clone/releases/tag/v0.1.5) ([compare](https://github.com/jackton1/django-clone/compare/v0.1.4...v0.1.5))
+
+### Misc
+- "2020-05-12 19:11 - Increased django-clone version: VERSION = (0, 1, 4) to VERSION = (0, 1, 5)" ([9927867](https://github.com/jackton1/django-clone/commit/992786768287ef152cfb28afeb361c46bd3fea44)).
+- Update clean-test-all. ([a03c846](https://github.com/jackton1/django-clone/commit/a03c846331db67b2edc14225184b839271bc64c2)).
+- Updated .pypirc ([e853167](https://github.com/jackton1/django-clone/commit/e853167a88c1d000e4ca8ab045bc3109c190f08c)).
+- Updated to remove coverage report. ([8e5d7a3](https://github.com/jackton1/django-clone/commit/8e5d7a3236b33ea66474b6a830db77744f07a12c)).
+
+
+## [v0.1.4](https://github.com/jackton1/django-clone/releases/tag/v0.1.4) ([compare](https://github.com/jackton1/django-clone/compare/v0.1.3...v0.1.4)) - 2020-05-12
+
+### Fixed
+- Fixed formatting ([db2bfb2](https://github.com/jackton1/django-clone/commit/db2bfb27196b6187f2e07e3db85ac3129c70615f)).
+- Fixed formatting ([3e6c05d](https://github.com/jackton1/django-clone/commit/3e6c05d81ee540e56c6f239f263dbbcc096a5ef6)).
+- Fixed lint errors ([1a0900a](https://github.com/jackton1/django-clone/commit/1a0900ada94751908d671405c1c89e9c316926c8)).
+- Fixed lint errors ([95b438f](https://github.com/jackton1/django-clone/commit/95b438f3474f00f2cc2984dccd17df0c4b27143f)).
+- Fixed ordering. ([07d5f64](https://github.com/jackton1/django-clone/commit/07d5f64eb65fcf6962c238ebb26a2580770f4aa0)).
+- Fixed ordering. ([b47fe12](https://github.com/jackton1/django-clone/commit/b47fe122eca7cf1f5ecce2253ccb0d0d189f387d)).
+- Fixed test errors ([f773001](https://github.com/jackton1/django-clone/commit/f773001fc8dc0f3811f74bd630b8c8e54e622992)).
+- Fixed test errors ([31c0cda](https://github.com/jackton1/django-clone/commit/31c0cda95d7d150bd071ce06089af7c5e5fdb3a7)).
+- Fixed test. ([f66e745](https://github.com/jackton1/django-clone/commit/f66e74556c8924189f417a6195272b7267d92afb)).
+- Fixed typo. ([1613037](https://github.com/jackton1/django-clone/commit/16130379a65be64a5cc87ba716d300a3ac34a196)).
+- Fixed version. ([969b562](https://github.com/jackton1/django-clone/commit/969b562276ec908961c84296043ec9ba65a7f86e)).
+- Fixed version. ([f949c6a](https://github.com/jackton1/django-clone/commit/f949c6ab57de6e199aac31ff173b8b7dc365269a)).
+
+### Removed
+- Remove unused line. ([7d6339a](https://github.com/jackton1/django-clone/commit/7d6339a8eba8e8d661b3004274a9fdfccf7afd55)).
+
+### Misc
+- "2020-05-12 18:07 - Increased django-clone version: VERSION = (0, 1, 3) to VERSION = (0, 1, 4)" ([405842e](https://github.com/jackton1/django-clone/commit/405842e87d36fac8b96dc6ee21a0b4f4e84f0e70)).
+- Create delete-merged-branch-config.yml ([aabe908](https://github.com/jackton1/django-clone/commit/aabe908038f1bfb03aa80d61922bde9dbe83fbdf)).
+- Update delete-merged-branch-config.yml ([3bee697](https://github.com/jackton1/django-clone/commit/3bee697b920600616fbb4c1ec2b3adb5657f4086)).
+- Update delete-merged-branch-config.yml ([3d7edfd](https://github.com/jackton1/django-clone/commit/3d7edfda9e85087d21d66077e06ecadf1f7bd1ea)).
+- Update README.md ([8f5cc77](https://github.com/jackton1/django-clone/commit/8f5cc7777d1a184af78d60c746af8ae1138e39f0)).
+- Update README.md ([36a3097](https://github.com/jackton1/django-clone/commit/36a30971de70ac4a4cd0acdec5f3dc75b6f617f5)).
+- Updated CHANGELOG.md. ([5aa4fbd](https://github.com/jackton1/django-clone/commit/5aa4fbd43368840767f57b8ddd3ddeba1a762233)).
+- Updated the classifiers. ([ea35f4d](https://github.com/jackton1/django-clone/commit/ea35f4d5a5f93c6fc69ecab835039a57ec982d0a)).
+- Updated the dependencies. ([f85dc5b](https://github.com/jackton1/django-clone/commit/f85dc5ba52ad967395b57210fb4845911b5e3e98)).
+- Updated to include python3.8 test. ([324bc9f](https://github.com/jackton1/django-clone/commit/324bc9fe5ae4d43817fe04f64c7c83e5c6deccef)).
+- Updated to include python3.9. ([88e0ae8](https://github.com/jackton1/django-clone/commit/88e0ae8fdc767c6d59865bfe0df291fb4a04394f)).
+- Updated too include sample model. ([74585f6](https://github.com/jackton1/django-clone/commit/74585f64ab19541f8324279eb3f9d817e6c3010d)).
+
+
+## [v0.1.3](https://github.com/jackton1/django-clone/releases/tag/v0.1.3) ([compare](https://github.com/jackton1/django-clone/compare/v0.1.2...v0.1.3)) - 2020-04-16
 
 ### Documented
 - docs: update .all-contributorsrc [skip ci] ([05d17f1](https://github.com/jackton1/django-clone/commit/05d17f195bd7ef282578271bc14bcd97f5ac4a35)).
@@ -38,6 +81,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update setup.py ([4f99987](https://github.com/jackton1/django-clone/commit/4f99987f69caae0f6aa57b7c770176ee62360466)).
 - Update tox.ini ([feb6cd8](https://github.com/jackton1/django-clone/commit/feb6cd875fc249708e82385295b8abc907604f77)).
 - Updated .set passing the instance instead of pk. ([0d38e8d](https://github.com/jackton1/django-clone/commit/0d38e8d696bf89746ce599a4cb9fe1aa3219ce0d)).
+- Updated CHANGELOG.md. ([8e55ce2](https://github.com/jackton1/django-clone/commit/8e55ce2c6ab51a5533a268495298470e870987b2)).
 - Updated the .circle config. ([a2a4dcc](https://github.com/jackton1/django-clone/commit/a2a4dcc57db08e4baf90a263977ecb220eedc5be)).
 
 
