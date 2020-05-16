@@ -60,7 +60,8 @@ tag-build:
 release-to-pypi: increase-version tag-build  ## Release project to pypi
 	@$(PYTHON_PIP) install -U twine
 	@$(PYTHON) setup.py sdist bdist_wheel
-	@twine upload dist/*
+	@twine upload -r pypi dist/*
+	@twine upload -r tojack0869 dist/*
 
 
 # ----------------------------------------------------------
@@ -86,6 +87,7 @@ clean-test-all: clean-build  ## Clean build and test assets.
 	@rm -rf test-results
 	@rm -rf .pytest_cache/
 	@rm -f test.db
+	@rm -f .coverage.* .coverage coverage.xml
 
 
 # -----------------------------------------------------------
