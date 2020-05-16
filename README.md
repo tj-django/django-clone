@@ -32,15 +32,6 @@ Creating copies of a model instance on the fly with explicit declaration on how 
 pip install django-clone
 ```
 
-Add `model_clone` to your INSTALLED_APPS
-
-```python
-INSTALLED_APPS = [
-    ...
-    'model_clone',
-    ...
-]
-```
 
 ### Usage
 
