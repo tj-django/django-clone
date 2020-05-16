@@ -49,13 +49,40 @@ class Library(CloneModel):
         return _(self.name)
 
 
-class Assignment(CloneMixin, models.Model):
+class Assignment(models.Model, CloneMixin):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
     title = models.CharField(
         max_length=100, null=True, blank=True, verbose_name=_("Job title")
     )
     assignment_date = models.DateField(blank=True, null=True)
+    company = models.ForeignKey(
+        "sample_company.CompanyDepot",
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        verbose_name=_("Company"),
+    )
+    applied_drivers = models.ManyToManyField(
+        "sample_driver.Driver",
+        blank=True,
+        verbose_name=_("Driver applications"),
+        related_name="driver_applications",
+    )
+    chosen_drivers = models.ManyToManyField(
+        "sample_driver.Driver",
+        blank=True,
+        verbose_name=_("Chosen drivers"),
+    )
+
+    contract = models.ForeignKey(
+        "sample_assignment.Contract",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        verbose_name=_("Choose contract"),
+        related_name="assignment_contracts",
+    )
 
     ASSIGNMENT_STATUS = [
         (1, "Complete"),
@@ -95,12 +122,12 @@ class Assignment(CloneMixin, models.Model):
         null=True, blank=True, verbose_name=_("Assignment description")
     )
 
-    def __str__(self):
-        return self.title
-
-    # Model clone settings # TODO: Add m2m fields
-    # _clone_excluded_many_to_many_fields = ["has_applied", "chosen_driver"]
+    # Model clone settings
+    _clone_excluded_many_to_many_fields = ["applied_drivers", "chosen_drivers"]
 
     class Meta:
         verbose_name = _("Assigment")
         verbose_name_plural = _("Assignments")
+
+    def __str__(self):
+        return self.title
