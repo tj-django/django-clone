@@ -40,6 +40,6 @@ class Migration(migrations.Migration):
                 'verbose_name': 'Assigment',
                 'verbose_name_plural': 'Assignments',
             },
-            bases=(models.Model, model_clone.mixins.clone.CloneMixin),
+            bases=(model_clone.mixins.clone.CloneMixin, models.Model),
         ),
     ]
