@@ -49,7 +49,7 @@ class Library(CloneModel):
         return _(self.name)
 
 
-class Assignment(models.Model, CloneMixin):
+class Assignment(CloneMixin, models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
     title = models.CharField(
