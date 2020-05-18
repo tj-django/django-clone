@@ -23,6 +23,6 @@ class Migration(migrations.Migration):
                 ("name", models.CharField(max_length=255)),
                 ("age", models.SmallIntegerField()),
             ],
-            bases=(models.Model, model_clone.mixins.clone.CloneMixin),
+            bases=(model_clone.mixins.clone.CloneMixin, models.Model),
         ),
     ]
