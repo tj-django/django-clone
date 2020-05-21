@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'sample',
+    'sample_assignment',
+    'sample_company',
+    'sample_driver',
 ]
 
 
