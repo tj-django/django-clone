@@ -21,7 +21,7 @@ class Command(BaseCommand):
             self.stdout.write('Created superuser.')
         else:
             self.stderr.write('User already exists.')
-    
+
     @staticmethod
     def _get_credentials():
         email = os.getenv('ADMIN_EMAIL', 'admin@admin.com')
