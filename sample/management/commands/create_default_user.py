@@ -9,7 +9,7 @@ User = get_user_model()
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        email, password = self._get_admin_creds()
+        email, password = self._get_credentials()
         if not User.objects.filter(email=email).exists():
             User.objects.create_superuser(
                 username=email,
@@ -22,7 +22,8 @@ class Command(BaseCommand):
         else:
             self.stderr.write('User already exists.')
 
-    def _get_admin_creds(self):
+    @staticmethod
+    def _get_credentials():
         email = os.getenv('ADMIN_EMAIL', 'admin@admin.com')
         password = os.getenv('ADMIN_PASSWORD', 'admin')
         return email, password
