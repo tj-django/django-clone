@@ -18,7 +18,7 @@ test_requires = [
 ]
 
 deploy_requires = [
-    'bump2version==0.5.11',
+    'bump2version==1.0.0',
     'readme_renderer[md]',
     'changes==0.7.0',
     'git-changelog==0.1.0',
