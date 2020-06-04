@@ -4,7 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v0.2.0](https://github.com/jackton1/django-clone/releases/tag/v0.2.0) ([compare](https://github.com/jackton1/django-clone/compare/v0.1.5...v0.2.0))
+## [v0.1.7](https://github.com/jackton1/django-clone/releases/tag/v0.1.7) ([compare](https://github.com/jackton1/django-clone/compare/v0.1.6...v0.1.7))
+
+### Removed
+- Removed unused code. ([6f3f515](https://github.com/jackton1/django-clone/commit/6f3f5158d8b21ab24d8743cc4b33823aa347aa44)).
+
+### Misc
+- "2020-06-03 23:53 - Increased django-clone version: VERSION = (0, 1, 6) to VERSION = (0, 2, 0)" ([59b02e5](https://github.com/jackton1/django-clone/commit/59b02e54f2c935c414a246eec38957eece687631)).
+
+
+## [v0.1.6](https://github.com/jackton1/django-clone/releases/tag/v0.1.6) ([compare](https://github.com/jackton1/django-clone/compare/v0.1.5...v0.1.6)) - 2020-06-04
 
 ### Added
 - Add renovate.json ([99d54b5](https://github.com/jackton1/django-clone/commit/99d54b5e5ff9eb3a759edf0d3610f1d587f69429)).
@@ -34,6 +43,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update README.md ([845b4e0](https://github.com/jackton1/django-clone/commit/845b4e05ca18b981db7fe0b36a4e5fc5a847c824)).
 - Update README.md ([4043561](https://github.com/jackton1/django-clone/commit/404356185cf53c49227ede2fec87e9086d35c6fb)).
 - Updated action. ([892ce86](https://github.com/jackton1/django-clone/commit/892ce86594289c087aaa3ebf24527fd556982607)).
+- Updated CHANGELOG.md. ([8298fdf](https://github.com/jackton1/django-clone/commit/8298fdf3174f475c4f7079c59511e2e9775e6255)).
 
 
 ## [v0.1.5](https://github.com/jackton1/django-clone/releases/tag/v0.1.5) ([compare](https://github.com/jackton1/django-clone/compare/v0.1.4...v0.1.5)) - 2020-05-12
