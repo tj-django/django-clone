@@ -83,7 +83,7 @@ def create_copy_of_instance(instance, exclude=(), save_new=True, attrs=None):
 
 def clean_value(value, suffix):
     # type: (str, str) -> str
-    return re.sub(r"{}\s[\d]$".format(suffix), "", value, flags=re.I)
+    return re.sub(r"\s{}\s[\d]$".format(suffix), "", value, flags=re.I)
 
 
 @contextlib.contextmanager
@@ -117,7 +117,7 @@ def get_value(value, suffix, max_length, index):
 
     if total_length > max_length:
         # Truncate the value to max_length - suffix length.
-        value = value[: max_length - len(duplicate_suffix)]
+        value = value[:max_length - len(duplicate_suffix)]
 
     return "{}{}".format(value, duplicate_suffix)
 
@@ -134,13 +134,13 @@ def generate_value(value, suffix, max_length, max_attempts):
 
 
 def get_unique_value(obj, fname, value, suffix, max_length, max_attempts):
-    qs = obj.__class__._default_manager.exclude(pk=obj.pk)
+    qs = obj.__class__._default_manager.all()
     it = generate_value(value, suffix, max_length, max_attempts)
 
     new = six.next(it)
     kwargs = {fname: new}
 
-    while not new or qs.filter(**kwargs):
+    while qs.filter(**kwargs).exists():
         new = six.next(it)
         kwargs[fname] = new
 

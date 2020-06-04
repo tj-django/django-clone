@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
+from django.forms import ALL_FIELDS
 
 from model_clone import CloneModelAdmin
 from sample.models import Book, Author
@@ -13,4 +14,4 @@ class BookAdmin(CloneModelAdmin):
 
 @admin.register(Author)
 class AuthorAdmin(CloneModelAdmin):
-    pass
+    list_display = ['first_name', 'last_name', 'sex', 'age']
