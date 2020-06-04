@@ -4,13 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v0.1.7](https://github.com/jackton1/django-clone/releases/tag/v0.1.7) ([compare](https://github.com/jackton1/django-clone/compare/v0.1.6...v0.1.7))
+## [v0.2.0](https://github.com/jackton1/django-clone/releases/tag/v0.2.0) ([compare](https://github.com/jackton1/django-clone/compare/v0.1.6...v0.2.0)) - 2020-06-04
 
 ### Removed
 - Removed unused code. ([6f3f515](https://github.com/jackton1/django-clone/commit/6f3f5158d8b21ab24d8743cc4b33823aa347aa44)).
 
 ### Misc
 - "2020-06-03 23:53 - Increased django-clone version: VERSION = (0, 1, 6) to VERSION = (0, 2, 0)" ([59b02e5](https://github.com/jackton1/django-clone/commit/59b02e54f2c935c414a246eec38957eece687631)).
+- Updated CHANGELOG.md. ([32fdd7e](https://github.com/jackton1/django-clone/commit/32fdd7e9238f1ca91dfab543ed75393b71e85e75)).
 
 
 ## [v0.1.6](https://github.com/jackton1/django-clone/releases/tag/v0.1.6) ([compare](https://github.com/jackton1/django-clone/compare/v0.1.5...v0.1.6)) - 2020-06-04
