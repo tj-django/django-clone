@@ -23,6 +23,10 @@ class Author(CloneModel):
     def __str__(self):
         return _("{} {}".format(self.first_name, self.last_name))
 
+    @property
+    def full_name(self):
+        return "{} {}".format(self.first_name, self.last_name)
+
 
 class Book(CloneModel):
     name = models.CharField(max_length=2000)

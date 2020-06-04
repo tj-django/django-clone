@@ -58,7 +58,7 @@ class CloneModelAdmin(ModelAdmin):
                 _("Successfully created: {} new duplicates".format(len(clone_obj_ids))),
             )
 
-    make_clone.short_description = "Duplicate selected objects"
+    make_clone.short_description = "Duplicate selected %(verbose_name_plural)s"
 
     def _get_base_actions(self):
         """Return the list of actions, prior to any request-based filtering."""
