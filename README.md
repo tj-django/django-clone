@@ -59,29 +59,29 @@ class Tags(models.Model):
 ```python
 In [1]: test_obj = TestModel.objects.create(title='New')
 
-In [2]: test_obj.tags.create(name='men')
+In [2]: test_obj.pk
+Out[2]: 1
 
-In [3]: test_obj.tags.create(name='women')
+In [3]: test_obj.title
+Out[3]: 'New'
 
-In [4]: clone = test_obj.make_clone(attrs={'title': 'Updated title'})
+In [4]: test_obj.tags.create(name='men')
 
-In [5]: test_obj.pk
-Out[5]: 1
+In [4]: test_obj.tags.create(name='women')
 
-In [6]: test_obj.title
-Out[6]: 'New'
+In [5]: test_obj.tags.all()
+Out[5]: <QuerySet [<Tag: men>, <Tag: women>]>
 
-In [7]: test_obj.tags.all()
-Out[7]: <QuerySet [<Tag: men>, <Tag: women>]>
+In [6]: clone = test_obj.make_clone(attrs={'title': 'Updated title'})
 
-In [8]: clone.pk
-Out[8]: 2
+In [7]: clone.pk
+Out[7]: 2
 
-In [9]: clone.title
-Out[9]: 'Updated title'
+In [8]: clone.title
+Out[8]: 'Updated title'
 
-In [10]: clone.tags.all()
-Out[10]: <QuerySet [<Tag: men>, <Tag: women>]>
+In [9]: clone.tags.all()
+Out[9]: <QuerySet [<Tag: men>, <Tag: women>]>
 ```
 
 #### CloneMixin attributes
@@ -115,20 +115,20 @@ In [1]: from model_clone import create_copy_of_instance
 
 In [2]: test_obj = TestModel.objects.create(title='New')
 
-In [3]: test_obj.tags.create(name='men')
+In [3]: test_obj.pk
+Out[3]: 1
 
-In [4]: test_obj.tags.create(name='women')
+In [4]: test_obj.title
+Out[4]: 'New'
 
-In [5]: clone = create_copy_of_instance(test_obj, attrs={'title': 'Updated title'})
+In [5]: test_obj.tags.create(name='men')
 
-In [6]: test_obj.pk
-Out[6]: 1
+In [6]: test_obj.tags.create(name='women')
 
-In [7]: test_obj.title
-Out[7]: 'New'
+In [7]: test_obj.tags.all()
+Out[7]: <QuerySet [<Tag: men>, <Tag: women>]>
 
-In [8]: test_obj.tags.all()
-Out[8]: <QuerySet [<Tag: men>, <Tag: women>]>
+In [8]: clone = create_copy_of_instance(test_obj, attrs={'title': 'Updated title'})
 
 In [9]: clone.pk
 Out[9]: 2
