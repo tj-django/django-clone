@@ -1,8 +1,6 @@
 from django.contrib import admin
 
 # Register your models here.
-from django.forms import ALL_FIELDS
-
 from model_clone import CloneModelAdmin
 from sample.models import Book, Author
 
