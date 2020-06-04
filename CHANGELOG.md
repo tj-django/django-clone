@@ -4,12 +4,45 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v0.1.5](https://github.com/jackton1/django-clone/releases/tag/v0.1.5) ([compare](https://github.com/jackton1/django-clone/compare/v0.1.4...v0.1.5))
+## [v0.2.0](https://github.com/jackton1/django-clone/releases/tag/v0.2.0) ([compare](https://github.com/jackton1/django-clone/compare/v0.1.5...v0.2.0))
+
+### Added
+- Add renovate.json ([99d54b5](https://github.com/jackton1/django-clone/commit/99d54b5e5ff9eb3a759edf0d3610f1d587f69429)).
+
+### Fixed
+- Fixed bug with index. ([dcd6256](https://github.com/jackton1/django-clone/commit/dcd625685b3b921d09526901a7458ac56389dda1)).
+- Fixed lint errors. ([888d88d](https://github.com/jackton1/django-clone/commit/888d88d5605fb8ba7ebf19fd91d4cd1eca318e13)).
+- Fixed test. ([ac7af5f](https://github.com/jackton1/django-clone/commit/ac7af5f973a54f2f4c59df403edf26dc38d51bd5)).
+- Fixed unused imports. ([14e40e2](https://github.com/jackton1/django-clone/commit/14e40e2d42a9f016a9520f88e52f03ac40cd8768)).
+
+### Removed
+- Remove the information for updating INSTALLED_APPS ([4a4aa8c](https://github.com/jackton1/django-clone/commit/4a4aa8c0ef3a6943b8cfe43fae96c522d6126111)).
+
+### Misc
+- "2020-06-03 23:48 - Increased django-clone version: VERSION = (0, 1, 5) to VERSION = (0, 1, 6)" ([9df58d5](https://github.com/jackton1/django-clone/commit/9df58d55aa366bf3740cd3114979652b55ae14ef)).
+- Replicate model errors ([5ad54a0](https://github.com/jackton1/django-clone/commit/5ad54a01d81a0dcd308374c2349c596fb4453661)).
+- Update 0001_initial.py ([5a63058](https://github.com/jackton1/django-clone/commit/5a630581b5d573e69dba50590bbd1ab795a52ff4)).
+- Update 0006_assignment.py ([fab7e4b](https://github.com/jackton1/django-clone/commit/fab7e4b4bf0065bec6c5b962e8e252488d6c9136)).
+- Update admin.py ([3ebe56c](https://github.com/jackton1/django-clone/commit/3ebe56ccdba02aa9fe19ffc52c3c229fa99209b7)).
+- Update create_default_user.py ([379db05](https://github.com/jackton1/django-clone/commit/379db05ce2ffb7a4c6ae4c49281497d730297d9d)).
+- Update create_default_user.py ([a3f3722](https://github.com/jackton1/django-clone/commit/a3f3722241d7760df13681279847a4af6d8bf6f0)).
+- Update dependency bump2version to v1 ([ac5f5f1](https://github.com/jackton1/django-clone/commit/ac5f5f1fceee6cbbb4ea1a4ba95b01e5c0867a39)).
+- Update dependency future to v0.18.2 ([2a99582](https://github.com/jackton1/django-clone/commit/2a99582cfdebbaee649fc8ea0acdb2ffa6939bee)).
+- Update dependency isort to v4.3.21 ([8d2ca84](https://github.com/jackton1/django-clone/commit/8d2ca84d348347d5cbb998183facb43c2681422f)).
+- Update models.py ([e702663](https://github.com/jackton1/django-clone/commit/e702663e79131bc819d77b41816da3bdaa26e903)).
+- Update models.py ([790fdf8](https://github.com/jackton1/django-clone/commit/790fdf8a35d7cff0c6b5f6b28fe37cc650d29031)).
+- Update README.md ([845b4e0](https://github.com/jackton1/django-clone/commit/845b4e05ca18b981db7fe0b36a4e5fc5a847c824)).
+- Update README.md ([4043561](https://github.com/jackton1/django-clone/commit/404356185cf53c49227ede2fec87e9086d35c6fb)).
+- Updated action. ([892ce86](https://github.com/jackton1/django-clone/commit/892ce86594289c087aaa3ebf24527fd556982607)).
+
+
+## [v0.1.5](https://github.com/jackton1/django-clone/releases/tag/v0.1.5) ([compare](https://github.com/jackton1/django-clone/compare/v0.1.4...v0.1.5)) - 2020-05-12
 
 ### Misc
 - "2020-05-12 19:11 - Increased django-clone version: VERSION = (0, 1, 4) to VERSION = (0, 1, 5)" ([9927867](https://github.com/jackton1/django-clone/commit/992786768287ef152cfb28afeb361c46bd3fea44)).
 - Update clean-test-all. ([a03c846](https://github.com/jackton1/django-clone/commit/a03c846331db67b2edc14225184b839271bc64c2)).
 - Updated .pypirc ([e853167](https://github.com/jackton1/django-clone/commit/e853167a88c1d000e4ca8ab045bc3109c190f08c)).
+- Updated CHANGELOG.md. ([fc87103](https://github.com/jackton1/django-clone/commit/fc87103014e3f07f44963f72afb5c21c00085a06)).
 - Updated to remove coverage report. ([8e5d7a3](https://github.com/jackton1/django-clone/commit/8e5d7a3236b33ea66474b6a830db77744f07a12c)).
 
 
