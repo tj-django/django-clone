@@ -34,7 +34,7 @@ lint_requires = [
 local_dev_requires = [
     'Django>=1.11.18',
     'pip-tools==5.0.0',
-    'check-manifest==0.37',
+    'check-manifest==0.42',
 ]
 
 extras_require = {
