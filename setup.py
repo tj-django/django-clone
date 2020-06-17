@@ -83,7 +83,7 @@ setup(
         'django duplication',
     ],
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'License :: OSI Approved :: Apache Software License',
@@ -107,5 +107,5 @@ setup(
     install_requires=install_requires,
     tests_require=['coverage'],
     extras_require=extras_require,
-    packages=find_packages(exclude=['*.tests', '*.tests.*', 'tests.*', 'tests', 'demo']),
+    packages=find_packages(exclude=['tests.*', 'tests', 'demo']),
 )
