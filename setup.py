@@ -13,7 +13,7 @@ test_requires = [
     'tox==3.8.6',
     'pluggy>=0.7',
     'mock==2.0.0',
-    'unittest-xml-reporting==2.5.2',
+    'unittest-xml-reporting==3.0.2',
     'codacy-coverage==1.3.11',
 ]
 
