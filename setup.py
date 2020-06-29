@@ -10,7 +10,7 @@ install_requires = [
 ]
 
 test_requires = [
-    'tox==3.8.6',
+    'tox==3.16.0',
     'pluggy>=0.7',
     'mock==2.0.0',
     'unittest-xml-reporting==2.5.2',
