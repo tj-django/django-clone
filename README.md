@@ -28,8 +28,9 @@ Creating copies of a model instance with explicit control on how the instance sh
 
 ### Installation
 
-```bash
-pip install django-clone
+Run 
+```bash script
+$ pip install django-clone
 ```
 
 
