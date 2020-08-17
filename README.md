@@ -214,11 +214,13 @@ Thanks goes to these wonderful people:
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="http://gerritneven.nl"><img src="https://avatars1.githubusercontent.com/u/2500973?v=4" width="100px;" alt="Gerben Neven"/><br /><sub><b>Gerben Neven</b></sub></a><br /><a href="https://github.com/jackton1/django-clone/issues?q=author%3Agerbyzation" title="Bug reports">🐛</a> <a href="https://github.com/jackton1/django-clone/commits?author=gerbyzation" title="Tests">⚠️</a> <a href="https://github.com/jackton1/django-clone/commits?author=gerbyzation" title="Code">💻</a></td>
-    <td align="center"><a href="http://sebastian-kindt.com"><img src="https://avatars1.githubusercontent.com/u/2536081?v=4" width="100px;" alt="Sebastian Kapunkt"/><br /><sub><b>Sebastian Kapunkt</b></sub></a><br /><a href="https://github.com/jackton1/django-clone/commits?author=SebastianKapunkt" title="Code">💻</a> <a href="https://github.com/jackton1/django-clone/issues?q=author%3ASebastianKapunkt" title="Bug reports">🐛</a> <a href="https://github.com/jackton1/django-clone/commits?author=SebastianKapunkt" title="Tests">⚠️</a></td>
-    <td align="center"><a href="https://github.com/andresp99999"><img src="https://avatars0.githubusercontent.com/u/1036725?v=4" width="100px;" alt="Andrés Portillo"/><br /><sub><b>Andrés Portillo</b></sub></a><br /><a href="https://github.com/jackton1/django-clone/issues?q=author%3Aandresp99999" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="http://gerritneven.nl"><img src="https://avatars1.githubusercontent.com/u/2500973?v=4" width="100px;" alt=""/><br /><sub><b>Gerben Neven</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/issues?q=author%3Agerbyzation" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=gerbyzation" title="Tests">⚠️</a> <a href="https://github.com/tj-django/django-clone/commits?author=gerbyzation" title="Code">💻</a></td>
+    <td align="center"><a href="http://sebastian-kindt.com"><img src="https://avatars1.githubusercontent.com/u/2536081?v=4" width="100px;" alt=""/><br /><sub><b>Sebastian Kapunkt</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/commits?author=SebastianKapunkt" title="Code">💻</a> <a href="https://github.com/tj-django/django-clone/issues?q=author%3ASebastianKapunkt" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=SebastianKapunkt" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://github.com/andresp99999"><img src="https://avatars0.githubusercontent.com/u/1036725?v=4" width="100px;" alt=""/><br /><sub><b>Andrés Portillo</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/issues?q=author%3Aandresp99999" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://renovate.whitesourcesoftware.com"><img src="https://avatars0.githubusercontent.com/u/25180681?v=4" width="100px;" alt=""/><br /><sub><b>WhiteSource Renovate</b></sub></a><br /><a href="#maintenance-renovate-bot" title="Maintenance">🚧</a></td>
   </tr>
 </table>
+
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
