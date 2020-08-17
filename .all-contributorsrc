@@ -35,11 +35,20 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "renovate-bot",
+      "name": "WhiteSource Renovate",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/25180681?v=4",
+      "profile": "https://renovate.whitesourcesoftware.com",
+      "contributions": [
+        "maintenance"
+      ]
     }
   ],
   "contributorsPerLine": 7,
   "projectName": "django-clone",
-  "projectOwner": "jackton1",
+  "projectOwner": "tj-django",
   "repoType": "github",
   "repoHost": "https://github.com",
   "skipCi": true
