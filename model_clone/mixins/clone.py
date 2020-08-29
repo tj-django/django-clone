@@ -133,7 +133,8 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                 ]
             ):
                 value = getattr(instance, f.attname, f.get_default())
-                if f.attname in unique_fields and isinstance(f, models.CharField):
+                # Do not try to get unique value for enum type field
+                if f.attname in unique_fields and isinstance(f, models.CharField) and not f.choices:
                     value = clean_value(value, cls.UNIQUE_DUPLICATE_SUFFIX)
                     if cls.USE_UNIQUE_DUPLICATE_SUFFIX:
                         value = get_unique_value(
@@ -331,9 +332,11 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
             items = []
             for item in getattr(self, field.related_name).all():
                 try:
-                    item_clone = item.make_clone()
+                    item_clone = item.make_clone(attrs={field.remote_field.name: duplicate})
                 except IntegrityError:
-                    item_clone = item.make_clone(sub_clone=True)
+                    item_clone = item.make_clone(
+                        attrs={field.remote_field.name: duplicate}, sub_clone=True
+                    )
                 items.append(item_clone)
 
             getattr(duplicate, field.related_name).set(items)
