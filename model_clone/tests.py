@@ -152,7 +152,7 @@ class CloneMixinTestCase(TestCase):
         last_name = "Jack"
 
         author = Author.objects.create(
-            first_name=first_name, last_name="Jack", age=26, sex="F", created_by=self.user
+            first_name=first_name, last_name=last_name, age=26, sex="F", created_by=self.user
         )
 
         author_clone = author.make_clone()
