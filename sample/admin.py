@@ -12,4 +12,4 @@ class BookAdmin(CloneModelAdmin):
 
 @admin.register(Author)
 class AuthorAdmin(CloneModelAdmin):
-    list_display = ['first_name', 'last_name', 'sex', 'age']
+    list_display = ["first_name", "last_name", "sex", "age"]
