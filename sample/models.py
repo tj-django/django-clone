@@ -27,6 +27,9 @@ class Author(CloneModel):
     def full_name(self):
         return "{} {}".format(self.first_name, self.last_name)
 
+    class Meta:
+        unique_together = (("first_name", "last_name", "sex"),)
+
 
 class Book(CloneModel):
     name = models.CharField(max_length=2000)
