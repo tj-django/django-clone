@@ -60,3 +60,5 @@ jobs:
         auto_fix: true
     - name: Test
       run: make tox
+      env:
+        CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
