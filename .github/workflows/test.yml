@@ -48,7 +48,7 @@ jobs:
           ${{ runner.os }}-tox-${{ matrix.python-version }}-
     - name: Install dependencies
       run: |
-        pip install -U pip tox>3.8.0
+        pip install -U pip tox>3.8.0 flake8 black
     - name: Run Lint
       uses: samuelmeuli/lint-action@v1
       with:
