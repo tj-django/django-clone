@@ -5,8 +5,8 @@ try:
 except ImportError:
     from django.conf.urls import url as path
 
-app_name = 'sample'
+app_name = "sample"
 
 urlpatterns = [
-    path('^admin/', admin.site.urls),
+    path("^admin/", admin.site.urls),
 ]

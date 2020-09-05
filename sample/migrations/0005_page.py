@@ -8,19 +8,34 @@ import model_clone.mixins.clone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sample', '0004_auto_20191122_0848'),
+        ("sample", "0004_auto_20191122_0848"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Page',
+            name="Page",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content', models.CharField(max_length=20000)),
-                ('book', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='pages', to='sample.Book')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("content", models.CharField(max_length=20000)),
+                (
+                    "book",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="pages",
+                        to="sample.Book",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
             bases=(model_clone.mixins.clone.CloneMixin, models.Model),
         ),
