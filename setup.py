@@ -75,7 +75,7 @@ setup(
     author_email='jtonye@ymail.com',
     maintainer='Tonye Jack',
     maintainer_email='jtonye@ymail.com',
-    url='https://github.com/jackton1/django-clone.git',
+    url='https://github.com/tj-django/django-clone.git',
     license='MIT/Apache-2.0',
     keywords=[
         'django', 'django-clone', 'django clone', 'django object clone',
