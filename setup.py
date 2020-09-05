@@ -44,6 +44,7 @@ extras_require = {
         test_requires,
         lint_requires,
     ],
+    'development:python_version >= "3.6"': ['black'],
     'test': test_requires,
     'lint': lint_requires,
     'deploy': deploy_requires,
