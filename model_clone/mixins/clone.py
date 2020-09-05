@@ -1,5 +1,6 @@
 import abc
 from itertools import repeat
+from typing import List, Optional, Dict
 
 import six
 from conditional import conditional
@@ -330,7 +331,7 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
         for field in one_to_one_fields:
             rel_object = getattr(self, field.related_name, None)
             if rel_object:
-                if hasattr(rel_object, "make_clone"):
+                if hasattr(rel_object, "make_clone") and callable(rel_object.make_clone):
                     rel_object.make_clone(
                         attrs={field.remote_field.name: duplicate}, sub_clone=True
                     )
