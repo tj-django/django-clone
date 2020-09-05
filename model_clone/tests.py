@@ -127,7 +127,7 @@ class CloneMixinTestCase(TestCase):
         with self.assertRaises(IntegrityError):
             author.make_clone()
 
-        use_unique_duplicate_suffix_mock.assert_called_once()
+        use_unique_duplicate_suffix_mock.assert_called()
 
     @patch("sample.models.Author.UNIQUE_DUPLICATE_SUFFIX", new_callable=PropertyMock)
     def test_cloning_unique_field_with_a_custom_unique_duplicate_suffix(
@@ -145,6 +145,27 @@ class CloneMixinTestCase(TestCase):
         self.assertNotEqual(author.pk, author_clone.pk)
         self.assertEqual(
             author_clone.first_name, "{} {} {}".format(first_name, "new", 1),
+        )
+
+    def test_cloning_unique_together_fields_with_enum_field(self):
+        first_name = "Ruby"
+        last_name = "Jack"
+
+        author = Author.objects.create(
+            first_name=first_name, last_name=last_name, age=26, sex="F", created_by=self.user
+        )
+
+        author_clone = author.make_clone()
+
+        self.assertNotEqual(author.pk, author_clone.pk)
+        self.assertEqual(author.sex, author_clone.sex)
+        self.assertEqual(
+            author_clone.first_name,
+            "{} {} {}".format(first_name, Author.UNIQUE_DUPLICATE_SUFFIX, 1),
+        )
+        self.assertEqual(
+            author_clone.last_name,
+            "{} {} {}".format(last_name, Author.UNIQUE_DUPLICATE_SUFFIX, 1),
         )
 
     def test_cloning_unique_fields_max_length(self):
