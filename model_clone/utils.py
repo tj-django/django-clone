@@ -117,7 +117,7 @@ def get_value(value, suffix, max_length, index):
 
     if total_length > max_length:
         # Truncate the value to max_length - suffix length.
-        value = value[:max_length - len(duplicate_suffix)]
+        value = value[: max_length - len(duplicate_suffix)]
 
     return "{}{}".format(value, duplicate_suffix)
 
@@ -129,7 +129,9 @@ def generate_value(value, suffix, max_length, max_attempts):
         yield get_value(value, suffix, max_length, i)
 
     raise StopIteration(
-        "CloneError: max unique attempts for {} exceeded ({})".format(value, max_attempts)
+        "CloneError: max unique attempts for {} exceeded ({})".format(
+            value, max_attempts
+        )
     )
 
 

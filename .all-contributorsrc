@@ -44,6 +44,17 @@
       "contributions": [
         "maintenance"
       ]
+    },
+    {
+      "login": "yuekui",
+      "name": "Yuekui",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/2561450?v=4",
+      "profile": "https://github.com/yuekui",
+      "contributions": [
+        "code",
+        "bug",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,

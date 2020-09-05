@@ -14,16 +14,16 @@ class Command(BaseCommand):
             User.objects.create_superuser(
                 username=email,
                 email=email,
-                first_name='admin',
-                last_name='admin',
+                first_name="admin",
+                last_name="admin",
                 password=password,
             )
-            self.stdout.write('Created superuser.')
+            self.stdout.write("Created superuser.")
         else:
-            self.stderr.write('User already exists.')
+            self.stderr.write("User already exists.")
 
     @staticmethod
     def _get_credentials():
-        email = os.getenv('ADMIN_EMAIL', 'admin@admin.com')
-        password = os.getenv('ADMIN_PASSWORD', 'admin')
+        email = os.getenv("ADMIN_EMAIL", "admin@admin.com")
+        password = os.getenv("ADMIN_PASSWORD", "admin")
         return email, password
