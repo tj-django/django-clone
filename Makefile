@@ -74,6 +74,9 @@ increase-version: clean-build guard-PART  ## Bump the project version (using the
 	@git commit -am "Updated CHANGELOG.md."
 	@git push --tags
 	@git push
+	@git-changelog . > CHANGELOG.md
+	@git commit -am "Updated CHANGELOG.md."
+	@git push
 
 # ----------------------------------------------------------
 # --------- Run project Test -------------------------------
