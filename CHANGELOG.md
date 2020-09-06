@@ -4,9 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v0.3.0](https://github.com/jackton1/django-clone/releases/tag/v0.3.0) - 2020-09-05
+## [v1.0.0](https://github.com/jackton1/django-clone/releases/tag/v1.0.0) - 2020-09-05
 
-<small>[Compare with v0.2.0](https://github.com/jackton1/django-clone/compare/v0.2.0...v0.3.0)</small>
+<small>[Compare with v0.2.0](https://github.com/jackton1/django-clone/compare/v0.2.0...v1.0.0)</small>
 
 ### Added
 - Add migrations ([1d9c68e](https://github.com/jackton1/django-clone/commit/1d9c68e84793f02415139ae7bac1f0c18da82a71) by Yuekui Li).
