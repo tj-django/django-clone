@@ -56,10 +56,6 @@ update-requirements:  ## Updates the requirement.txt adding missing package depe
 
 tag-build:
 	@git tag v$(PACKAGE_VERSION)
-	@git-changelog . > CHANGELOG.md
-	@git add .
-	@[ -z "`git status --porcelain`" ] && echo "No changes found." || git commit -am "Updated CHANGELOG.md."
-	@git push
 
 release-to-pypi: increase-version tag-build  ## Release project to pypi
 	@$(PYTHON_PIP) install -U twine
