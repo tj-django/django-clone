@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [v1.1.5](https://github.com/jackton1/django-clone/releases/tag/v1.1.5) - 2020-09-07
+
+<small>[Compare with v1.1.4](https://github.com/jackton1/django-clone/compare/v1.1.4...v1.1.5)</small>
+
+### Fixed
+- Fixed issues with sdist. ([ca59c86](https://github.com/jackton1/django-clone/commit/ca59c866ce2fb09822c3a6aa723bf1bf2dc18d9a) by Tonye Jack).
+
+
 ## [v1.1.4](https://github.com/jackton1/django-clone/releases/tag/v1.1.4) - 2020-09-07
 
 <small>[Compare with v1.1.3](https://github.com/jackton1/django-clone/compare/v1.1.3...v1.1.4)</small>

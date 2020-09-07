@@ -57,6 +57,7 @@ update-requirements:  ## Updates the requirement.txt adding missing package depe
 tag-build:
 	@git tag v$(PACKAGE_VERSION)
 	@git-changelog . > CHANGELOG.md
+	@git add .
 	@[ -z "$(git status --porcelain)" ] && echo "No changes found." || git commit -am "Updated CHANGELOG.md."
 	@git push
 
@@ -64,8 +65,6 @@ release-to-pypi: increase-version tag-build  ## Release project to pypi
 	@$(PYTHON_PIP) install -U twine
 	@$(PYTHON) setup.py sdist bdist_wheel
 	@twine upload -r pypi dist/*
-	@[ -z "$(git status --porcelain)" ] && echo "No changes found." || git commit -am "Updated CHANGELOG.md."
-	@git push
 
 # ----------------------------------------------------------
 # ---------- Upgrade project version (bumpversion)  --------
@@ -77,6 +76,7 @@ increase-version: clean-build guard-PART  ## Bump the project version (using the
 	@$(PYTHON_PIP) install -q -e .'[deploy]'
 	@bumpversion --verbose $(PART)
 	@git-changelog . > CHANGELOG.md
+	@git add .
 	@[ -z "$(git status --porcelain)" ] && echo "No changes found." || git commit -am "Updated CHANGELOG.md."
 	@git push --tags
 	@git push
