@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Added missing changes. ([64ec246](https://github.com/jackton1/django-clone/commit/64ec24661615d8d143081d2ad43ad4d9c97b1e1a) by Tonye Jack).
 
+### Fixed
+- Fixed makefile. ([9815226](https://github.com/jackton1/django-clone/commit/9815226ab63c363dfc09e450b93b917ced9828ff) by Tonye Jack).
+
 
 ## [v1.1.0](https://github.com/jackton1/django-clone/releases/tag/v1.1.0) - 2020-09-07
 
