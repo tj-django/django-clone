@@ -64,6 +64,8 @@ release-to-pypi: increase-version tag-build  ## Release project to pypi
 	@$(PYTHON_PIP) install -U twine
 	@$(PYTHON) setup.py sdist bdist_wheel
 	@twine upload -r pypi dist/*
+	@[ -z "$(git status --porcelain)" ] && echo "No changes found." || git commit -am "Updated CHANGELOG.md."
+	@git push
 
 # ----------------------------------------------------------
 # ---------- Upgrade project version (bumpversion)  --------
