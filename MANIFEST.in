@@ -1,8 +1,18 @@
 recursive-include model_clone *.py *.html
 recursive-exclude sample *
 recursive-include model_clone/templates *.html
+prune django_clone
+prune sample_assignment
+prune sample_company
+prune sample_driver
+prune sample
+prune .github
+prune .circleci
 
 include *.md
+exclude *.example
+exclude *.json
+exclude .yamllint
 exclude *.png
 exclude *.egg-info
 include *.py
@@ -13,15 +23,5 @@ include LICENSE
 exclude Makefile
 exclude tox.ini
 exclude .tox
-exclude sample
-exclude django_clone
-exclude sample_assignment
-exclude sample_company
-exclude sample_driver
 exclude .all-contributorsrc
-exclude .circleci
-exclude .circleci/config.yml
-exclude .github
-exclude .github/ISSUE_TEMPLATE
-exclude .github/ISSUE_TEMPLATE/feature_request.md
 exclude .pypirc
