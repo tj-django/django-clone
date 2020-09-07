@@ -6,7 +6,7 @@ from setuptools import find_packages, setup
 install_requires = [
     "future>=0.17.1",
     "conditional>=1.3",
-    "six==1.13.0",
+    "six",
 ]
 
 test_requires = [
