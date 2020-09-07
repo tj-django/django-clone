@@ -1,6 +1,5 @@
-recursive-include model_clone *.py *.html
-recursive-exclude sample *
-recursive-include model_clone/templates *.html
+graft model_clone
+recursive-exclude model_clone *.pyc
 prune django_clone
 prune sample_assignment
 prune sample_company
