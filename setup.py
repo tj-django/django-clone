@@ -6,35 +6,35 @@ from setuptools import find_packages, setup
 install_requires = [
     "future>=0.17.1",
     "conditional>=1.3",
-    "six==1.13.0",
+    "six",
 ]
 
 test_requires = [
-    "tox==3.8.6",
+    "tox",
     "pluggy>=0.7",
-    "mock==2.0.0",
-    "unittest-xml-reporting==2.5.2",
-    "codacy-coverage==1.3.11",
+    "mock",
+    "unittest-xml-reporting",
+    "codacy-coverage",
 ]
 
 deploy_requires = [
-    "bump2version==1.0.0",
+    "bump2version",
     "readme_renderer[md]",
-    "changes==0.7.0",
-    "git-changelog==0.4.0",
-    "twine==3.2.0",
+    "changes",
+    "git-changelog",
+    "twine",
 ]
 
 lint_requires = [
-    "flake8==3.8.3",
-    "yamllint==1.10.0",
-    "isort==4.3.21",
+    "flake8",
+    "yamllint",
+    "isort",
 ]
 
 local_dev_requires = [
     "Django>=1.11.18",
-    "pip-tools==5.3.1",
-    "check-manifest==0.37",
+    "pip-tools",
+    "check-manifest",
 ]
 
 extras_require = {
