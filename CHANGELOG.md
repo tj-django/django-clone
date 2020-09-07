@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [v1.0.1](https://github.com/jackton1/django-clone/releases/tag/v1.0.1) - 2020-09-06
+
+<small>[Compare with v1.0.0](https://github.com/jackton1/django-clone/compare/v1.0.0...v1.0.1)</small>
+
+
 ## [v1.0.0](https://github.com/jackton1/django-clone/releases/tag/v1.0.0) - 2020-09-05
 
 <small>[Compare with v0.2.0](https://github.com/jackton1/django-clone/compare/v0.2.0...v1.0.0)</small>
