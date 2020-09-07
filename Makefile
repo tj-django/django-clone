@@ -73,7 +73,7 @@ increase-version: clean-build guard-PART  ## Bump the project version (using the
 	@$(PYTHON_PIP) install -q -e .'[deploy]'
 	@bumpversion --verbose $(PART)
 	@git-changelog . > CHANGELOG.md
-	@git commit -am "Updated CHANGELOG.md."
+	@if [[ ]git diff-index --quiet HEAD -- ]]; then git commit -am "Updated CHANGELOG.md." fi
 	@git push --tags
 	@git push
 
