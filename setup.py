@@ -78,6 +78,8 @@ setup(
     maintainer_email="jtonye@ymail.com",
     url="https://github.com/tj-django/django-clone.git",
     license="MIT/Apache-2.0",
+    zip_safe=False,
+    include_package_data=True,
     keywords=[
         "django",
         "django-clone",

@@ -1,5 +1,5 @@
-graft model_clone
-recursive-exclude model_clone *.pyc
+recursive-include model_clone/templates *.html
+recursive-include model_clone *.py
 prune django_clone
 prune sample_assignment
 prune sample_company
@@ -7,6 +7,8 @@ prune sample_driver
 prune sample
 prune .github
 prune .circleci
+global-exclude __pycache__
+global-exclude *.py[co]
 
 include *.md
 exclude *.example
