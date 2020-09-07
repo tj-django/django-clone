@@ -114,5 +114,5 @@ setup(
     install_requires=install_requires,
     tests_require=["coverage"],
     extras_require=extras_require,
-    packages=find_packages(exclude=["tests.*", "tests", "demo"]),
+    packages=find_packages(include=['model_clone'], exclude=["tests.*", "tests", "demo"]),
 )
