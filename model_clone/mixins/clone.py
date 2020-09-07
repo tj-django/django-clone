@@ -1,13 +1,11 @@
 from itertools import repeat
 from typing import List, Optional, Dict
 
-import six
 from conditional import conditional
 from django.core.checks import Error
 from django.core.exceptions import ValidationError
 from django.db import transaction, models, IntegrityError, connections
 from django.db.models import SlugField
-from django.db.models.base import ModelBase
 from django.utils.text import slugify
 
 from model_clone.apps import ModelCloneConfig
