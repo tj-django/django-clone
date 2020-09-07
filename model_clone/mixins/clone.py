@@ -55,7 +55,6 @@ class CloneMixin(object):
             _clone_excluded_many_to_one_or_one_to_many_fields = ['user']
             ...
 
-
     Attributes:
         _clone_model_fields (list): Restricted list of fields to copy from the instance.
         _clone_many_to_many_fields (list): Many to many fields (i.e TestModel.tags).
