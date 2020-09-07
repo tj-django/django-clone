@@ -1,4 +1,3 @@
-import abc
 from itertools import repeat
 from typing import List, Optional, Dict
 
@@ -20,11 +19,7 @@ from model_clone.utils import (
 )
 
 
-class CloneMetaClass(abc.ABCMeta, ModelBase):
-    pass
-
-
-class CloneMixin(six.with_metaclass(CloneMetaClass)):
+class CloneMixin(object):
     """
     CloneMixin mixin to duplicate an object using the model cls.
 
