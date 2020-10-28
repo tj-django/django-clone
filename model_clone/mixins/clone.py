@@ -305,7 +305,12 @@ class CloneMixin(object):
             ):
                 many_to_one_or_one_to_many_fields.append(f)
 
-            elif all([f.many_to_many, f.name in self._clone_many_to_many_fields,]):
+            elif all(
+                [
+                    f.many_to_many,
+                    f.name in self._clone_many_to_many_fields,
+                ]
+            ):
                 many_to_many_fields.append(f)
 
             elif all(
@@ -377,7 +382,12 @@ class CloneMixin(object):
                 field_name = field.m2m_field_name()
                 source = getattr(self, field.attname)
                 destination = getattr(duplicate, field.attname)
-            if all([through, not through._meta.auto_created,]):
+            if all(
+                [
+                    through,
+                    not through._meta.auto_created,
+                ]
+            ):
                 objs = through.objects.filter(**{field_name: self.pk})
                 for item in objs:
                     if hasattr(through, "make_clone"):

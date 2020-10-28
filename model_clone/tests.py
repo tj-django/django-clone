@@ -106,7 +106,8 @@ class CloneMixinTestCase(TestCase):
 
     @patch("sample.models.Author._clone_many_to_many_fields", new_callable=PropertyMock)
     def test_cloning_with_explicit_related__clone_many_to_many_fields(
-        self, _clone_many_to_many_fields_mock,
+        self,
+        _clone_many_to_many_fields_mock,
     ):
         author = Author.objects.create(
             first_name="Opubo", last_name="Jack", age=24, sex="F", created_by=self.user
