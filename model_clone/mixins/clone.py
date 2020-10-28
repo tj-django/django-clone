@@ -1,13 +1,11 @@
-import abc
 from itertools import repeat
+from typing import List, Optional, Dict
 
-import six
 from conditional import conditional
 from django.core.checks import Error
 from django.core.exceptions import ValidationError
 from django.db import transaction, models, IntegrityError, connections
 from django.db.models import SlugField
-from django.db.models.base import ModelBase
 from django.utils.text import slugify
 
 from model_clone.apps import ModelCloneConfig
@@ -19,11 +17,7 @@ from model_clone.utils import (
 )
 
 
-class CloneMetaClass(abc.ABCMeta, ModelBase):
-    pass
-
-
-class CloneMixin(six.with_metaclass(CloneMetaClass)):
+class CloneMixin(object):
     """
     CloneMixin mixin to duplicate an object using the model cls.
 
@@ -60,7 +54,6 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
             # Clones all other fk fields excluding "user".
             _clone_excluded_many_to_one_or_one_to_many_fields = ['user']
             ...
-
 
     Attributes:
         _clone_model_fields (list): Restricted list of fields to copy from the instance.
@@ -113,7 +106,8 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                 fields.append(f)
 
         unique_field_names = cls.unpack_unique_together(
-            opts=instance._meta, only_fields=[f.attname for f in fields],
+            opts=instance._meta,
+            only_fields=[f.attname for f in fields],
         )
 
         unique_fields = [
@@ -134,7 +128,11 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
             ):
                 value = getattr(instance, f.attname, f.get_default())
                 # Do not try to get unique value for enum type field
-                if f.attname in unique_fields and isinstance(f, models.CharField) and not f.choices:
+                if (
+                    f.attname in unique_fields
+                    and isinstance(f, models.CharField)
+                    and not f.choices
+                ):
                     value = clean_value(value, cls.UNIQUE_DUPLICATE_SUFFIX)
                     if cls.USE_UNIQUE_DUPLICATE_SUFFIX:
                         value = get_unique_value(
@@ -176,14 +174,18 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                     "Conflicting configuration.",
                     hint=(
                         'Please provide either "_clone_model_fields"'
-                        + 'or "_clone_excluded_model_fields" for {}'.format(cls.__name__)
+                        + 'or "_clone_excluded_model_fields" for {}'.format(
+                            cls.__name__
+                        )
                     ),
                     obj=cls,
                     id="{}.E002".format(ModelCloneConfig.name),
                 )
             )
 
-        if all([cls._clone_many_to_many_fields, cls._clone_excluded_many_to_many_fields]):
+        if all(
+            [cls._clone_many_to_many_fields, cls._clone_excluded_many_to_many_fields]
+        ):
             errors.append(
                 Error(
                     "Conflicting configuration.",
@@ -225,7 +227,9 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                     "Conflicting configuration.",
                     hint=(
                         'Please provide either "_clone_one_to_one_fields"'
-                        + 'or "_clone_excluded_one_to_one_fields" for {}'.format(cls.__name__)
+                        + 'or "_clone_excluded_one_to_one_fields" for {}'.format(
+                            cls.__name__
+                        )
                     ),
                     obj=cls,
                     id="{}.E002".format(ModelCloneConfig.name),
@@ -295,7 +299,8 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
                     any([f.many_to_one, f.one_to_many]),
                     self._clone_excluded_many_to_one_or_one_to_many_fields,
                     f not in many_to_one_or_one_to_many_fields,
-                    f.name not in self._clone_excluded_many_to_one_or_one_to_many_fields,
+                    f.name
+                    not in self._clone_excluded_many_to_one_or_one_to_many_fields,
                 ]
             ):
                 many_to_one_or_one_to_many_fields.append(f)
@@ -332,7 +337,9 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
         for field in one_to_one_fields:
             rel_object = getattr(self, field.related_name, None)
             if rel_object:
-                if hasattr(rel_object, "make_clone"):
+                if hasattr(rel_object, "make_clone") and callable(
+                    rel_object.make_clone
+                ):
                     rel_object.make_clone(
                         attrs={field.remote_field.name: duplicate}, sub_clone=True
                     )
@@ -346,7 +353,9 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
             items = []
             for item in getattr(self, field.related_name).all():
                 try:
-                    item_clone = item.make_clone(attrs={field.remote_field.name: duplicate})
+                    item_clone = item.make_clone(
+                        attrs={field.remote_field.name: duplicate}
+                    )
                 except IntegrityError:
                     item_clone = item.make_clone(
                         attrs={field.remote_field.name: duplicate}, sub_clone=True
@@ -405,12 +414,17 @@ class CloneMixin(six.with_metaclass(CloneMetaClass)):
         batch_size = batch_size or max(ops.bulk_batch_size([], list(objs)), 1)
 
         with conditional(
-            auto_commit, transaction_autocommit(using=self.__class__._default_manager.db),
+            auto_commit,
+            transaction_autocommit(using=self.__class__._default_manager.db),
         ):
             # If count exceeds the MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS
             with conditional(
                 self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS < count,
-                context_mutable_attribute(self, "MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS", count,),
+                context_mutable_attribute(
+                    self,
+                    "MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS",
+                    count,
+                ),
             ):
                 if not self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS >= count:
                     raise AssertionError(
