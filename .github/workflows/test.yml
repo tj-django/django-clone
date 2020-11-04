@@ -54,7 +54,7 @@ jobs:
         pip install -U pip
         make install-dev
     - name: Run Lint
-      uses: wearerequired/lint-action@feature/pull_request_target
+      uses: wearerequired/lint-action@v1.6.0
       with:
         github_token: ${{ secrets.github_token }}
         black: ${{ matrix.python-version != '2.7' && matrix.python-version != '3.5' }}
