@@ -5,9 +5,6 @@ on:
     branches:
       - master
   pull_request:
-    branches:
-      - master
-  pull_request_target:
     branches: 
       - master
 
@@ -53,15 +50,15 @@ jobs:
       run: |
         pip install -U pip
         make install-dev
-#     - name: Run Lint
-#       uses: samuelmeuli/lint-action@v1
-#       if: ${{ github.event_name != 'pull_request_target' }}
-#       with:
-#         github_token: ${{ secrets.github_token }}
-#         black: ${{ matrix.python-version != '2.7' && matrix.python-version != '3.5' }}
-#         flake8: true
-#         git_email: "lint-action@django-clone.com"
-#         auto_fix: ${{ github.event_name != 'pull_request_target' }}
+    - name: Run Lint
+      uses: wearerequired/lint-action@v1
+      if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.owner.login == github.repository_owner }}
+      with:
+        github_token: ${{ secrets.github_token }}
+        black: ${{ matrix.python-version != '2.7' && matrix.python-version != '3.5' }}
+        flake8: true
+        git_email: "lint-action@django-clone.com"
+        auto_fix: true
     - name: Test
       run: make tox
       env:
