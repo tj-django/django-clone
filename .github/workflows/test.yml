@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-  pull_request_target:
+  pull_request:
     branches: 
       - master
 
@@ -52,6 +52,7 @@ jobs:
         make install-dev
     - name: Run Lint
       uses: wearerequired/lint-action@feature/pull_request_target
+      if: ${{ secrets.github_token != '' }}
       with:
         github_token: ${{ secrets.github_token }}
         black: ${{ matrix.python-version != '2.7' && matrix.python-version != '3.5' }}
