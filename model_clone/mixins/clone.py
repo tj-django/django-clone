@@ -305,6 +305,25 @@ class CloneMixin(object):
             ):
                 many_to_one_or_one_to_many_fields.append(f)
 
+            elif all(
+                [
+                    f.many_to_many,
+                    f.name in self._clone_many_to_many_fields,
+                ]
+            ):
+                many_to_many_fields.append(f)
+
+            elif all(
+                [
+                    f.many_to_many,
+                    not self._clone_many_to_many_fields,
+                    self._clone_excluded_many_to_many_fields,
+                    f not in many_to_many_fields,
+                    f.name not in self._clone_excluded_many_to_many_fields,
+                ]
+            ):
+                many_to_many_fields.append(f)
+
         for f in self._meta.many_to_many:
             if not sub_clone:
                 if f.name in self._clone_many_to_many_fields:
@@ -352,27 +371,32 @@ class CloneMixin(object):
 
         # Clone many to many fields
         for field in many_to_many_fields:
-            if all(
-                [
-                    field.remote_field.through,
-                    not field.remote_field.through._meta.auto_created,
-                ]
-            ):
-                objs = field.remote_field.through.objects.filter(
-                    **{field.m2m_field_name(): self.pk}
-                )
-                for item in objs:
-                    if hasattr(field.remote_field.through, "make_clone"):
-                        item.make_clone(
-                            attrs={field.m2m_field_name(): duplicate}, sub_clone=True
-                        )
-                    else:
-                        item.pk = None
-                        setattr(item, field.m2m_field_name(), duplicate)
-                        item.save()
+            if hasattr(field, "field"):
+                # ManyToManyRel
+                field_name = field.field.m2m_reverse_field_name()
+                through = field.through
+                source = getattr(self, field.related_name)
+                destination = getattr(duplicate, field.related_name)
             else:
+                through = field.remote_field.through
+                field_name = field.m2m_field_name()
                 source = getattr(self, field.attname)
                 destination = getattr(duplicate, field.attname)
+            if all(
+                [
+                    through,
+                    not through._meta.auto_created,
+                ]
+            ):
+                objs = through.objects.filter(**{field_name: self.pk})
+                for item in objs:
+                    if hasattr(through, "make_clone"):
+                        item.make_clone(attrs={field_name: duplicate}, sub_clone=True)
+                    else:
+                        item.pk = None
+                        setattr(item, field_name, duplicate)
+                        item.save()
+            else:
                 destination.set(source.all())
         return duplicate
 
