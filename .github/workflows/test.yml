@@ -16,24 +16,9 @@ jobs:
       - uses: rokroskar/workflow-run-cleanup-action@v0.2.2
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          
-  checksecret:
-    name: check if github_token is set in github secrets
-    runs-on: ubuntu-latest
-    outputs:
-      is_github_token_set: ${{ steps.checksecret_job.outputs.is_github_token_set }}
-    steps:
-      - name: Check whether unity activation requests should be done
-        id: checksecret_job
-        env:
-            github_token: ${{ secrets.github_token }}
-        run: |
-            echo "is_github_token_set: ${{ env.github_token != '' }}"
-            echo "::set-output name=is_github_token_set::${{ env.github_token != '' }}"
 
   build:
     runs-on: ubuntu-latest
-    needs: [checksecret]
     strategy:
       fail-fast: true
       matrix:
@@ -67,7 +52,7 @@ jobs:
         make install-dev
     - name: Run Lint
       uses: wearerequired/lint-action@feature/pull_request_target
-      if: needs.checksecret.outputs.is_github_token_set == 'true'
+      if: ${{ github.event.repository.full_name == github.repository }}
       with:
         github_token: ${{ secrets.github_token }}
         black: ${{ matrix.python-version != '2.7' && matrix.python-version != '3.5' }}
