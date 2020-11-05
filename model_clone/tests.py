@@ -103,6 +103,28 @@ class CloneMixinTestCase(TestCase):
             list(book.authors.values_list("first_name", "last_name")),
             list(book_clone.authors.values_list("first_name", "last_name")),
         )
+
+    @patch("sample.models.Author._clone_many_to_many_fields", new_callable=PropertyMock)
+    def test_cloning_with_explicit_related__clone_many_to_many_fields(
+        self,
+        _clone_many_to_many_fields_mock,
+    ):
+        author = Author.objects.create(
+            first_name="Opubo", last_name="Jack", age=24, sex="F", created_by=self.user
+        )
+
+        _clone_many_to_many_fields_mock.return_value = ["books"]
+
+        book_1 = Book.objects.create(name="New Book 1", created_by=self.user)
+        book_2 = Book.objects.create(name="New Book 2", created_by=self.user)
+        author.books.set([book_1, book_2])
+
+        author_clone = author.make_clone()
+
+        self.assertEqual(
+            list(author.books.values_list("name")),
+            list(author_clone.books.values_list("name")),
+        )
         _clone_many_to_many_fields_mock.assert_called_once()
 
     def test_cloning_unique_fields_is_valid(self):
