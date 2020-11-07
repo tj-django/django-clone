@@ -129,7 +129,9 @@ def generate_value(value, suffix, max_length, max_attempts):
         yield get_value(value, suffix, max_length, i)
 
     raise StopIteration(
-        "CloneError: max unique attempts for {} exceeded ({})".format(value, max_attempts)
+        "CloneError: max unique attempts for {} exceeded ({})".format(
+            value, max_attempts
+        )
     )
 
 

@@ -106,7 +106,8 @@ class CloneMixin(object):
                 fields.append(f)
 
         unique_field_names = cls.unpack_unique_together(
-            opts=instance._meta, only_fields=[f.attname for f in fields],
+            opts=instance._meta,
+            only_fields=[f.attname for f in fields],
         )
 
         unique_fields = [
@@ -173,14 +174,18 @@ class CloneMixin(object):
                     "Conflicting configuration.",
                     hint=(
                         'Please provide either "_clone_model_fields"'
-                        + 'or "_clone_excluded_model_fields" for {}'.format(cls.__name__)
+                        + 'or "_clone_excluded_model_fields" for {}'.format(
+                            cls.__name__
+                        )
                     ),
                     obj=cls,
                     id="{}.E002".format(ModelCloneConfig.name),
                 )
             )
 
-        if all([cls._clone_many_to_many_fields, cls._clone_excluded_many_to_many_fields]):
+        if all(
+            [cls._clone_many_to_many_fields, cls._clone_excluded_many_to_many_fields]
+        ):
             errors.append(
                 Error(
                     "Conflicting configuration.",
@@ -222,7 +227,9 @@ class CloneMixin(object):
                     "Conflicting configuration.",
                     hint=(
                         'Please provide either "_clone_one_to_one_fields"'
-                        + 'or "_clone_excluded_one_to_one_fields" for {}'.format(cls.__name__)
+                        + 'or "_clone_excluded_one_to_one_fields" for {}'.format(
+                            cls.__name__
+                        )
                     ),
                     obj=cls,
                     id="{}.E002".format(ModelCloneConfig.name),
@@ -292,12 +299,18 @@ class CloneMixin(object):
                     any([f.many_to_one, f.one_to_many]),
                     self._clone_excluded_many_to_one_or_one_to_many_fields,
                     f not in many_to_one_or_one_to_many_fields,
-                    f.name not in self._clone_excluded_many_to_one_or_one_to_many_fields,
+                    f.name
+                    not in self._clone_excluded_many_to_one_or_one_to_many_fields,
                 ]
             ):
                 many_to_one_or_one_to_many_fields.append(f)
 
-            elif all([f.many_to_many, f.name in self._clone_many_to_many_fields]):
+            elif all(
+                [
+                    f.many_to_many,
+                    f.name in self._clone_many_to_many_fields,
+                ]
+            ):
                 many_to_many_fields.append(f)
 
             elif all(
@@ -329,7 +342,9 @@ class CloneMixin(object):
         for field in one_to_one_fields:
             rel_object = getattr(self, field.related_name, None)
             if rel_object:
-                if hasattr(rel_object, "make_clone") and callable(rel_object.make_clone):
+                if hasattr(rel_object, "make_clone") and callable(
+                    rel_object.make_clone
+                ):
                     rel_object.make_clone(
                         attrs={field.remote_field.name: duplicate}, sub_clone=True
                     )
@@ -343,7 +358,9 @@ class CloneMixin(object):
             items = []
             for item in getattr(self, field.related_name).all():
                 try:
-                    item_clone = item.make_clone(attrs={field.remote_field.name: duplicate})
+                    item_clone = item.make_clone(
+                        attrs={field.remote_field.name: duplicate}
+                    )
                 except IntegrityError:
                     item_clone = item.make_clone(
                         attrs={field.remote_field.name: duplicate}, sub_clone=True
@@ -365,7 +382,12 @@ class CloneMixin(object):
                 field_name = field.m2m_field_name()
                 source = getattr(self, field.attname)
                 destination = getattr(duplicate, field.attname)
-            if all([through, not through._meta.auto_created]):
+            if all(
+                [
+                    through,
+                    not through._meta.auto_created,
+                ]
+            ):
                 objs = through.objects.filter(**{field_name: self.pk})
                 for item in objs:
                     if hasattr(through, "make_clone"):
@@ -402,12 +424,17 @@ class CloneMixin(object):
         batch_size = batch_size or max(ops.bulk_batch_size([], list(objs)), 1)
 
         with conditional(
-            auto_commit, transaction_autocommit(using=self.__class__._default_manager.db),
+            auto_commit,
+            transaction_autocommit(using=self.__class__._default_manager.db),
         ):
             # If count exceeds the MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS
             with conditional(
                 self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS < count,
-                context_mutable_attribute(self, "MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS", count,),
+                context_mutable_attribute(
+                    self,
+                    "MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS",
+                    count,
+                ),
             ):
                 if not self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS >= count:
                     raise AssertionError(
