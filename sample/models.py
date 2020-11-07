@@ -18,7 +18,10 @@ class Author(CloneModel):
         ("M", "Male"),
     ]
     sex = models.CharField(choices=SEX_CHOICES, max_length=1)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT,)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT,
+    )
 
     def __str__(self):
         return _("{} {}".format(self.first_name, self.last_name))
@@ -34,7 +37,10 @@ class Author(CloneModel):
 class Book(CloneModel):
     name = models.CharField(max_length=2000)
     authors = models.ManyToManyField(Author, related_name="books")
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT,)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT,
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -77,7 +83,9 @@ class Assignment(CloneMixin, models.Model):
         related_name="driver_applications",
     )
     chosen_drivers = models.ManyToManyField(
-        "sample_driver.Driver", blank=True, verbose_name=_("Chosen drivers"),
+        "sample_driver.Driver",
+        blank=True,
+        verbose_name=_("Chosen drivers"),
     )
 
     contract = models.ForeignKey(
