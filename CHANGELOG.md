@@ -4,9 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v1.2.0](https://github.com/tj-django/django-clone/releases/tag/v1.2.0) - 2020-11-07
+## [v1.1.8](https://github.com/tj-django/django-clone/releases/tag/v1.1.8) - 2020-11-07
 
-<small>[Compare with v1.1.6](https://github.com/tj-django/django-clone/compare/v1.1.6...v1.2.0)</small>
+<small>[Compare with v1.1.6](https://github.com/tj-django/django-clone/compare/v1.1.6...v1.1.8)</small>
 
 ### Added
 - Add support for running workflow on forks ([a40a22e](https://github.com/tj-django/django-clone/commit/a40a22e0966916537109bbd4262edffe64052c73) by Tonye Jack).
