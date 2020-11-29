@@ -1,5 +1,11 @@
 extends: default
 
 rules:
+  document-start: disable
+  colons: disable
+  truthy: disable
+  comments-indentation: disable
+  comments: disable
+
   line-length:
-    max: 95
+    max: 136
