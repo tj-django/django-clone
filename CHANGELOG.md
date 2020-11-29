@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [v1.1.9](https://github.com/tj-django/django-clone/releases/tag/v1.1.9) - 2020-11-29
+
+<small>[Compare with v1.1.8](https://github.com/tj-django/django-clone/compare/v1.1.8...v1.1.9)</small>
+
+### Fixed
+- Fixed lint errors. ([c93a953](https://github.com/tj-django/django-clone/commit/c93a953001137b73b555c6df9bc652f7ad2f2169) by Tonye Jack).
+
+
 ## [v1.1.8](https://github.com/tj-django/django-clone/releases/tag/v1.1.8) - 2020-11-07
 
 <small>[Compare with v1.1.6](https://github.com/tj-django/django-clone/compare/v1.1.6...v1.1.8)</small>
