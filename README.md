@@ -114,7 +114,7 @@ Out[9]: <QuerySet [<Tag: men>, <Tag: women>]>
 
 ```python
 
-In [1]: from model_clone import create_copy_of_instance
+In [1]: from model_clone.utils import create_copy_of_instance
 
 In [2]: test_obj = TestModel.objects.create(title='New')
 
