@@ -2,12 +2,12 @@ name: Test
 
 on:
   push:
-    paths-ignore: 
+    paths-ignore:
       - 'README.md'
     branches:
       - master
   pull_request:
-    paths-ignore: 
+    paths-ignore:
       - 'README.md'
     branches:
       - master
