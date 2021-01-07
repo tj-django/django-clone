@@ -1,4 +1,4 @@
 - flake8
 # - pydocstyle
-- bandit
+# - bandit TODO: Switch to use github action
 # - isort
