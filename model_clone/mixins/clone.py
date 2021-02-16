@@ -99,8 +99,6 @@ class CloneMixin(object):
                     valid = f.name in cls._clone_model_fields
                 elif cls._clone_excluded_model_fields:
                     valid = f.name not in cls._clone_excluded_model_fields
-                elif not getattr(f, "editable", False):
-                    valid = False
                 else:
                     valid = True
 
@@ -115,44 +113,41 @@ class CloneMixin(object):
         unique_fields = [
             f.name
             for f in fields
-            if all(
-                [
-                    not f.auto_created,
-                    f.editable,
-                    (f.unique or f.name in unique_field_names),
-                ]
-            )
+            if not f.auto_created and (f.unique or f.name in unique_field_names)
         ]
 
         for f in fields:
-            if any(
+            if all(
                 [
+                    not f.auto_created,
+                    f.concrete,
+                    f.editable,
+                    not getattr(f, 'auto_now', False),
+                    not getattr(f, 'auto_now_add', False),
                     f not in instance._meta.related_objects,
                     f not in instance._meta.many_to_many,
                 ]
             ):
-                continue
-
-            value = getattr(instance, f.attname, f.get_default())
-            # Do not try to get unique value for enum type field
-            if (
-                f.attname in unique_fields
-                and isinstance(f, models.CharField)
-                and not f.choices
-            ):
-                value = clean_value(value, cls.UNIQUE_DUPLICATE_SUFFIX)
-                if cls.USE_UNIQUE_DUPLICATE_SUFFIX:
-                    value = get_unique_value(
-                        instance,
-                        f.attname,
-                        value,
-                        cls.UNIQUE_DUPLICATE_SUFFIX,
-                        f.max_length,
-                        cls.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS,
-                    )
-                if isinstance(f, SlugField):
-                    value = slugify(value)
-            defaults[f.attname] = value
+                value = getattr(instance, f.attname, f.get_default())
+                # Do not try to get unique value for enum type field
+                if (
+                    f.attname in unique_fields
+                    and isinstance(f, models.CharField)
+                    and not f.choices
+                ):
+                    value = clean_value(value, cls.UNIQUE_DUPLICATE_SUFFIX)
+                    if cls.USE_UNIQUE_DUPLICATE_SUFFIX:
+                        value = get_unique_value(
+                            instance,
+                            f.attname,
+                            value,
+                            cls.UNIQUE_DUPLICATE_SUFFIX,
+                            f.max_length,
+                            cls.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS,
+                        )
+                    if isinstance(f, SlugField):
+                        value = slugify(value)
+                defaults[f.attname] = value
 
         return cls(**defaults)
 
