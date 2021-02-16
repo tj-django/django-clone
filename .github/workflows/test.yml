@@ -57,7 +57,7 @@ jobs:
           pip install -U pip
           make install-dev
       - name: Run Lint
-        uses: wearerequired/lint-action@v3
+        uses: wearerequired/lint-action@v1.7.0
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.owner.login == github.repository_owner }}
         with:
           github_token: ${{ secrets.PAT_TOKEN }}
