@@ -99,7 +99,7 @@ class CloneMixin(object):
                     valid = f.name in cls._clone_model_fields
                 elif cls._clone_excluded_model_fields:
                     valid = f.name not in cls._clone_excluded_model_fields
-                elif not getattr(f, "editable", False) or not f.concrete:
+                elif not getattr(f, "editable", False):
                     valid = False
                 else:
                     valid = True
@@ -120,13 +120,17 @@ class CloneMixin(object):
                     not f.auto_created,
                     f.editable,
                     (f.unique or f.name in unique_field_names),
-                    f not in instance._meta.related_objects,
-                    f not in instance._meta.many_to_many,
                 ]
             )
         ]
 
         for f in fields:
+            if any([
+                f not in instance._meta.related_objects,
+                f not in instance._meta.many_to_many
+            ]):
+                continue
+
             value = getattr(instance, f.attname, f.get_default())
             # Do not try to get unique value for enum type field
             if (
