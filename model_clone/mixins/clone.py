@@ -122,6 +122,8 @@ class CloneMixin(object):
                     not f.auto_created,
                     f.concrete,
                     f.editable,
+                    not getattr(f, "auto_now", False),
+                    not getattr(f, "auto_now_add", False),
                     f not in instance._meta.related_objects,
                     f not in instance._meta.many_to_many,
                 ]

@@ -23,10 +23,11 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.platform }}
     strategy:
       fail-fast: true
       matrix:
+        platform: [ubuntu-latest, macos-latest]  #  TODO: Add windows-latest
         python-version: [2.7, 3.5, 3.6, 3.7, 3.8, 3.9]
 
     steps:
@@ -55,16 +56,18 @@ jobs:
         run: |
           pip install -U pip
           make install-dev
+
       - name: Run Lint
-        uses: wearerequired/lint-action@v1
+        uses: wearerequired/lint-action@v1.7.0
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.owner.login == github.repository_owner }}
         with:
           github_token: ${{ secrets.github_token }}
           black: ${{ matrix.python-version != '2.7' && matrix.python-version != '3.5' }}
           flake8: true
           git_email: "lint-action@django-clone.com"
-          auto_fix: true
+          auto_fix: ${{ matrix.python-version != '2.7' && matrix.python-version != '3.5' }}
       - name: Test
         run: make tox
         env:
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          PLATFORM: ${{ matrix.platform }}

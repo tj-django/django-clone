@@ -11,6 +11,7 @@ install_requires = [
 
 test_requires = [
     "tox",
+    "tox-gh-actions",
     "pluggy>=0.7",
     "mock",
     "unittest-xml-reporting",
