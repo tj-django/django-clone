@@ -125,10 +125,12 @@ class CloneMixin(object):
         ]
 
         for f in fields:
-            if any([
-                f not in instance._meta.related_objects,
-                f not in instance._meta.many_to_many
-            ]):
+            if any(
+                [
+                    f not in instance._meta.related_objects,
+                    f not in instance._meta.many_to_many,
+                ]
+            ):
                 continue
 
             value = getattr(instance, f.attname, f.get_default())
