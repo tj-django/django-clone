@@ -64,7 +64,7 @@ jobs:
           black: ${{ matrix.python-version != '2.7' && matrix.python-version != '3.5' }}
           flake8: true
           git_email: "lint-action@django-clone.com"
-          auto_fix: true
+          auto_fix: ${{ matrix.python-version != '2.7' && matrix.python-version != '3.5' }}
       - name: Test
         run: make tox
         env:
