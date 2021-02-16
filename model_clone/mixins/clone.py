@@ -113,39 +113,37 @@ class CloneMixin(object):
         unique_fields = [
             f.name
             for f in fields
-            if not f.auto_created and (f.unique or f.name in unique_field_names)
+            if all([
+                not f.auto_created,
+                f.editable,
+                f.concrete,
+                (f.unique or f.name in unique_field_names),
+                f not in instance._meta.related_objects,
+                f not in instance._meta.many_to_many,
+            ])
         ]
 
         for f in fields:
-            if all(
-                [
-                    not f.auto_created,
-                    f.concrete,
-                    f.editable,
-                    f not in instance._meta.related_objects,
-                    f not in instance._meta.many_to_many,
-                ]
+            value = getattr(instance, f.attname, f.get_default())
+            # Do not try to get unique value for enum type field
+            if (
+                f.attname in unique_fields
+                and isinstance(f, models.CharField)
+                and not f.choices
             ):
-                value = getattr(instance, f.attname, f.get_default())
-                # Do not try to get unique value for enum type field
-                if (
-                    f.attname in unique_fields
-                    and isinstance(f, models.CharField)
-                    and not f.choices
-                ):
-                    value = clean_value(value, cls.UNIQUE_DUPLICATE_SUFFIX)
-                    if cls.USE_UNIQUE_DUPLICATE_SUFFIX:
-                        value = get_unique_value(
-                            instance,
-                            f.attname,
-                            value,
-                            cls.UNIQUE_DUPLICATE_SUFFIX,
-                            f.max_length,
-                            cls.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS,
-                        )
-                    if isinstance(f, SlugField):
-                        value = slugify(value)
-                defaults[f.attname] = value
+                value = clean_value(value, cls.UNIQUE_DUPLICATE_SUFFIX)
+                if cls.USE_UNIQUE_DUPLICATE_SUFFIX:
+                    value = get_unique_value(
+                        instance,
+                        f.attname,
+                        value,
+                        cls.UNIQUE_DUPLICATE_SUFFIX,
+                        f.max_length,
+                        cls.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS,
+                    )
+                if isinstance(f, SlugField):
+                    value = slugify(value)
+            defaults[f.attname] = value
 
         return cls(**defaults)
 
