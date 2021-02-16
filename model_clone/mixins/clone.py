@@ -119,6 +119,7 @@ class CloneMixin(object):
                 [
                     not f.auto_created,
                     f.editable,
+                    (f.unique or f.name in unique_field_names),
                     f not in instance._meta.related_objects,
                     f not in instance._meta.many_to_many,
                 ]
@@ -126,9 +127,6 @@ class CloneMixin(object):
         ]
 
         for f in fields:
-            if f.unique or f.name in unique_field_names:
-                continue
-
             value = getattr(instance, f.attname, f.get_default())
             # Do not try to get unique value for enum type field
             if (
