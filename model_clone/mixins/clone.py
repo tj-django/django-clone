@@ -113,14 +113,16 @@ class CloneMixin(object):
         unique_fields = [
             f.name
             for f in fields
-            if all([
-                not f.auto_created,
-                f.editable,
-                f.concrete,
-                (f.unique or f.name in unique_field_names),
-                f not in instance._meta.related_objects,
-                f not in instance._meta.many_to_many,
-            ])
+            if all(
+                [
+                    not f.auto_created,
+                    f.editable,
+                    f.concrete,
+                    (f.unique or f.name in unique_field_names),
+                    f not in instance._meta.related_objects,
+                    f not in instance._meta.many_to_many,
+                ]
+            )
         ]
 
         for f in fields:
