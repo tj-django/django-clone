@@ -193,11 +193,11 @@ class TestModelAdmin(CloneModelAdmin):
 
 #### List View
 
-![Screenshot](Duplicate-action.png)
+![Screenshot](./static/Duplicate-action.png)
 
 #### Change View
 
-![Screenshot](Duplicate-button.png)
+![Screenshot](./static/Duplicate-button.png)
 
 ##### CLONE MODEL ADMIN CLASS PROPERTIES
 
