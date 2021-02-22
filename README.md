@@ -32,7 +32,7 @@ Create copies of a model instance with explicit control on how the instance shou
 
 Run 
 ```bash script
-$ pip install django-clone
+pip install django-clone
 ```
 
 
