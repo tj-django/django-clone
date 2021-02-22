@@ -96,8 +96,14 @@ clean-test-all: clean-build  ## Clean build and test assets.
 
 
 # -----------------------------------------------------------
-# --------- Run black ------------------------------------
+# --------- Run black ---------------------------------------
 # -----------------------------------------------------------
 run-black:  ## Run black with inplace for model_clone and sample/models.py.
 	@pip install black
 	@black model_clone sample/models.py sample_driver sample_assignment sample_company --line-length=95
+
+# -----------------------------------------------------------
+# --------- Docs ---------------------------------------
+# -----------------------------------------------------------
+serve-docs:
+	@npx docsify serve ./docs
