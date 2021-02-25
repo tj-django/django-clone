@@ -26,7 +26,7 @@ Create copies of a model instance with explicit control on how the instance shou
 
 -   [Duplicating Models from Django Admin view](#duplicating-models-from-django-admin-view)
 
--   [Change Log](./CHANGELOG.md)
+-   [CHANGELOG](./CHANGELOG.md)
 
 ### Installation
 
