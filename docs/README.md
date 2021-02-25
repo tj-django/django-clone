@@ -26,13 +26,13 @@ Create copies of a model instance with explicit control on how the instance shou
 
 -   [Duplicating Models from Django Admin view](#duplicating-models-from-django-admin-view)
 
--   [Change Log](./CHANGELOG.md)
+-   [CHANGELOG](./CHANGELOG.md)
 
 ### Installation
 
 Run 
 ```bash script
-$ pip install django-clone
+pip install django-clone
 ```
 
 
@@ -172,11 +172,11 @@ class TestModelAdmin(CloneModelAdmin):
 
 #### List View
 
-![Screenshot](./static/Duplicate-action.png)
+![Screenshot](Duplicate-action.png)
 
 #### Change View
 
-![Screenshot](./static/Duplicate-button.png)
+![Screenshot](Duplicate-button.png)
 
 ##### CLONE MODEL ADMIN CLASS PROPERTIES
 
