@@ -23,8 +23,7 @@ Create copies of a model instance with explicit control on how the instance shou
     -   [Duplicate a Model Instance](#duplicating-a-model-instance)
     -   [Using the CloneMixin](#clonemixin-attributes)
     -   [Creating clones without subclassing `CloneMixin`](#creating-clones-without-subclassing-clonemixin)
-
--   [Duplicating Models from Django Admin view](#duplicating-models-from-django-admin-view)
+    -   [Duplicating Models from Django Admin view](#duplicating-models-from-django-admin-view)
 
 -   [CHANGELOG](./CHANGELOG.md)
 
