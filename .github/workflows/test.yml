@@ -58,7 +58,7 @@ jobs:
           make install-dev
 
       - name: Run Lint
-        uses: wearerequired/lint-action@v1.8.0
+        uses: wearerequired/lint-action@v1.9.0
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.owner.login == github.repository_owner }}
         with:
           github_token: ${{ secrets.github_token }}
