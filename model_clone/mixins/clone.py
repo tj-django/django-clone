@@ -76,7 +76,7 @@ class CloneMixin(object):
     _clone_many_to_many_fields = []
     _clone_many_to_one_or_one_to_many_fields = []
     _clone_one_to_one_fields = []
-    
+
     # succinct field names
     _clone_fields = []
     _clone_m2m_fields = []
