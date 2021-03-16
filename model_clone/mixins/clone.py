@@ -51,13 +51,13 @@ class CloneMixin(object):
 
             # Clones any other m2m field excluding "audiences".
             _clone_excluded_many_to_many_fields = ['audiences']
-            # Clones all other fk fields excluding "user".
+            # Clones all other many to one or one to many fields excluding "user".
             _clone_excluded_many_to_one_or_one_to_many_fields = ['user']
             ...
 
     Attributes:
         _clone_model_fields (list): Restricted list of fields to copy from the instance.
-        _clone_many_to_many_fields (list): Many to many fields (i.e TestModel.tags).
+        _clone_many_to_many_fields (list): Many to many fields (Example: TestModel.tags).
         _clone_many_to_one_or_one_to_many_fields (list): Many to one/One to many fields.
         _clone_one_to_one_fields (list): One to One fields.
 
@@ -76,12 +76,24 @@ class CloneMixin(object):
     _clone_many_to_many_fields = []
     _clone_many_to_one_or_one_to_many_fields = []
     _clone_one_to_one_fields = []
+    
+    # succinct field names
+    _clone_fields = []
+    _clone_m2m_fields = []
+    _clone_m2o_or_otm_fields = []
+    _clone_o2o_fields = []
 
     # Excluded fields
     _clone_excluded_model_fields = []
     _clone_excluded_many_to_many_fields = []
     _clone_excluded_many_to_one_or_one_to_many_fields = []
     _clone_excluded_one_to_one_fields = []
+
+    # succinct field names
+    _clone_excluded_fields = []
+    _clone_excluded_m2m_fields = []
+    _clone_excluded_m2o_or_o2m_fields = []
+    _clone_excluded_o2o_fields = []
 
     UNIQUE_DUPLICATE_SUFFIX = "copy"
     USE_UNIQUE_DUPLICATE_SUFFIX = True
