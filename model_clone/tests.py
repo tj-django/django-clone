@@ -113,9 +113,9 @@ class CloneMixinTestCase(TestCase):
             first_name="Opubo", last_name="Jack", age=24, sex="F", created_by=self.user
         )
         _clone_excluded_fields_mock.return_value = ["last_name"]
-    
+
         author_clone = author.make_clone()
-    
+
         self.assertNotEqual(author.last_name, author_clone.last_name)
 
     @patch("sample.models.Author._clone_m2m_fields", new_callable=PropertyMock)
