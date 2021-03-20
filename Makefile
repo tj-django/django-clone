@@ -30,6 +30,9 @@ clean-build: ## Clean project build artifacts.
 	@rm -rf dist/
 	@rm -rf *.egg-info
 
+migrations:
+	@$(MANAGE_PY) makemigrations
+
 migrate:
 	@$(MANAGE_PY) migrate
 

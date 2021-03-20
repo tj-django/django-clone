@@ -55,8 +55,9 @@ class Page(CloneModel):
 class Library(CloneModel):
     id = models.UUIDField(primary_key=True, default=uuid4)
     name = models.CharField(max_length=100)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
-    _clone_fields = ["id"]
+    _clone_fields = ["id", "user"]
 
     def __str__(self):
         return _(self.name)

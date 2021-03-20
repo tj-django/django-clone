@@ -21,7 +21,7 @@ class CloneMixin(object):
     """
     CloneMixin mixin to duplicate an object using the model cls.
 
-    :param _clone_fields: List of fields to copy from the instance.
+    :param _clone_fields: Restricted List of fields to copy from the instance.
     :type _clone_fields`collections.Iterable`
     :param _clone_m2m_fields: Many to many fields (Example: TestModel.tags).
     :type _clone_m2m_fields`collections.Iterable`
