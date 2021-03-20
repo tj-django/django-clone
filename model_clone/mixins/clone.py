@@ -39,7 +39,7 @@ class CloneMixin(object):
     :type _clone_excluded_m2o_or_o2m_fields`collections.Iterable`
     :param _clone_excluded_o2o_fields: Excluded one to one fields.
     :type _clone_excluded_o2o_fields: `collections.Iterable`
-        
+
     :Example:
     >>> # Using explicit fields
     >>>
@@ -95,7 +95,7 @@ class CloneMixin(object):
     def __unpack_unique_together(opts, only_fields=()):
         """
         Unpack unique together fields.
-        
+
         :param opts: Model options
         :type opts: `django.db.models.options.Options`
         :param only_fields: Fields that should be considered.
@@ -115,7 +115,7 @@ class CloneMixin(object):
     def _create_copy_of_instance(cls, instance):
         """
         Create a copy of an instance
-        
+
         :param instance: The instance to be duplicated.
         :type instance: `django.db.models.Model`
         :return: A new transient instance.
@@ -149,10 +149,7 @@ class CloneMixin(object):
         ]
 
         for f in fields:
-            if any([
-                getattr(f, "auto_now", False),
-                getattr(f, "auto_now_add", False)
-            ]):
+            if any([getattr(f, "auto_now", False), getattr(f, "auto_now_add", False)]):
                 defaults[f.attname] = f.pre_save(instance, False)
             if all(
                 [
