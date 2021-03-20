@@ -86,11 +86,11 @@ class CloneMixinTestCase(TestCase):
         _clone_m2m_fields_mock,
     ):
         author_1 = Author.objects.create(
-            first_name="Opubo", last_name="Jack", age=24, sex="F", created_by=self.user
+            first_name="Opubo", last_name="Jack", age=24, sex="M", created_by=self.user
         )
 
         author_2 = Author.objects.create(
-            first_name="Nimabo", last_name="Jack", age=16, sex="F", created_by=self.user
+            first_name="Nimabo", last_name="Jack", age=16, sex="M", created_by=self.user
         )
         _clone_m2m_fields_mock.return_value = ["authors"]
 
@@ -110,7 +110,7 @@ class CloneMixinTestCase(TestCase):
         _clone_excluded_fields_mock,
     ):
         author = Author.objects.create(
-            first_name="Opubo", last_name="Jack", age=24, sex="F", created_by=self.user
+            first_name="Opubo", last_name="Jack", age=24, sex="M", created_by=self.user
         )
         _clone_excluded_fields_mock.return_value = ["last_name"]
 
@@ -124,7 +124,7 @@ class CloneMixinTestCase(TestCase):
         _clone_m2m_fields_mock,
     ):
         author = Author.objects.create(
-            first_name="Opubo", last_name="Jack", age=24, sex="F", created_by=self.user
+            first_name="Opubo", last_name="Jack", age=24, sex="M", created_by=self.user
         )
 
         _clone_m2m_fields_mock.return_value = ["books"]

@@ -97,15 +97,15 @@ In [4]: test_obj.tags.create(name='women')
 In [5]: test_obj.tags.all()
 Out[5]: <QuerySet [<Tag: men>, <Tag: women>]>
 
-In [6]: clone = test_obj.make_clone(attrs={'title': 'Updated title'})
+In [6]: test_obj_clone = test_obj.make_clone()
 
-In [7]: clone.pk
+In [7]: test_obj_clone.pk
 Out[7]: 2
 
-In [8]: clone.title
-Out[8]: 'Updated title'
+In [8]: test_obj_clone.title
+Out[8]: 'New copy 1'
 
-In [9]: clone.tags.all()
+In [9]: test_obj_clone.tags.all()
 Out[9]: <QuerySet [<Tag: men>, <Tag: women>]>
 ```
 
@@ -153,15 +153,15 @@ In [6]: test_obj.tags.create(name='women')
 In [7]: test_obj.tags.all()
 Out[7]: <QuerySet [<Tag: men>, <Tag: women>]>
 
-In [8]: clone = create_copy_of_instance(test_obj, attrs={'title': 'Updated title'})
+In [8]: test_obj_clone = create_copy_of_instance(test_obj, attrs={'title': 'Updated title'})
 
-In [9]: clone.pk
+In [9]: test_obj_clone.pk
 Out[9]: 2
 
-In [10]: clone.title
+In [10]: test_obj_clone.title
 Out[10]: 'Updated title'
 
-In [11]: clone.tags.all()
+In [11]: test_obj_clone.tags.all()
 Out[11]: <QuerySet []>
 ```
 
