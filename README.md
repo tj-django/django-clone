@@ -109,6 +109,44 @@ In [9]: test_obj_clone.tags.all()
 Out[9]: <QuerySet [<Tag: men>, <Tag: women>]>
 ```
 
+#### Bulk cloning a model
+
+```python
+In [1]: test_obj = TestModel.objects.create(title='New')
+
+In [2]: test_obj.pk
+Out[2]: 1
+
+In [3]: test_obj.title
+Out[3]: 'New'
+
+In [4]: test_obj.tags.create(name='men')
+
+In [4]: test_obj.tags.create(name='women')
+
+In [5]: test_obj.tags.all()
+Out[5]: <QuerySet [<Tag: men>, <Tag: women>]>
+
+In [6]: test_obj_clones = test_obj.bulk_clone(1000)
+
+In [7]: len(test_obj_clones)
+Out[7]: 1000
+
+In [8]: len(test_obj_clones)
+Out[8]: 1000
+
+In [6]: test_obj_clone = test_obj_clones[0]
+
+In [7]: test_obj_clone.pk
+Out[7]: 2
+
+In [9]: test_obj_clone.title
+Out[9]: 'New copy 1'
+
+In [10]: test_obj_clone.tags.all()
+Out[10]: <QuerySet [<Tag: men>, <Tag: women>]>
+```
+
 ### CloneMixin attributes
 
 #### Explicit
