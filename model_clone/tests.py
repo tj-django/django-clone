@@ -29,7 +29,7 @@ class CloneMixinTestCase(TestCase):
         self.assertNotEqual(instance.pk, clone.pk)
         self.assertNotEqual(instance.name, clone.name)
 
-    def test_cloning_with_field_overriden(self):
+    def test_cloning_with_field_overridden(self):
         name = "New Library"
         instance = Library.objects.create(name=name)
         new_name = "My New Library"
@@ -103,6 +103,20 @@ class CloneMixinTestCase(TestCase):
             list(book.authors.values_list("first_name", "last_name")),
             list(book_clone.authors.values_list("first_name", "last_name")),
         )
+
+    @patch("sample.models.Author._clone_excluded_fields", new_callable=PropertyMock)
+    def test_cloning_with_clone_excluded_fields(
+        self,
+        _clone_excluded_fields_mock,
+    ):
+        author = Author.objects.create(
+            first_name="Opubo", last_name="Jack", age=24, sex="F", created_by=self.user
+        )
+        _clone_excluded_fields_mock.return_value = ["last_name"]
+    
+        author_clone = author.make_clone()
+    
+        self.assertNotEqual(author.last_name, author_clone.last_name)
 
     @patch("sample.models.Author._clone_m2m_fields", new_callable=PropertyMock)
     def test_cloning_with_explicit_related_clone_m2m_fields(
