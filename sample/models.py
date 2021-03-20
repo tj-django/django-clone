@@ -66,9 +66,7 @@ class Library(CloneModel):
 class Assignment(CloneMixin, models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
-    title = models.CharField(
-        max_length=100, default="", blank=True, verbose_name=_("Job title")
-    )
+    title = models.CharField(max_length=100, default="", blank=True, verbose_name=_("Job title"))
     assignment_date = models.DateField(blank=True, null=True)
     company = models.ForeignKey(
         "sample_company.CompanyDepot",
@@ -130,7 +128,7 @@ class Assignment(CloneMixin, models.Model):
     compensation = models.DecimalField(
         null=True, max_digits=5, decimal_places=2, verbose_name=_("Compensation")
     )
-    hours = models.IntegerField(null=True, verbose_name=_("Amount of hours"))
+    hours = models.IntegerField(verbose_name=_("Amount of hours"))
     spots_available = models.IntegerField(null=True, verbose_name=_("Spots available"))
     description = models.TextField(blank=True, verbose_name=_("Assignment description"))
 

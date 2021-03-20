@@ -79,7 +79,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "hours",
-                    models.IntegerField(null=True, verbose_name="Amount of hours"),
+                    models.IntegerField(verbose_name="Amount of hours"),
                 ),
                 (
                     "spots_available",
