@@ -53,7 +53,7 @@ class CloneMixinTestCase(TestCase):
 
         self.assertNotEqual(instance.created_at, clone.created_at)
 
-    def test_cloning_without_explicit__clone_many_to_many_fields(self):
+    def test_cloning_without_explicit_clone_m2m_fields(self):
         author_1 = Author.objects.create(
             first_name="Ruby", last_name="Jack", age=26, sex="F", created_by=self.user
         )
@@ -80,10 +80,10 @@ class CloneMixinTestCase(TestCase):
             list(book_clone.authors.values_list("first_name", "last_name")),
         )
 
-    @patch("sample.models.Book._clone_many_to_many_fields", new_callable=PropertyMock)
-    def test_cloning_with_explicit__clone_many_to_many_fields(
+    @patch("sample.models.Book._clone_m2m_fields", new_callable=PropertyMock)
+    def test_cloning_with_explicit_clone_m2m_fields(
         self,
-        _clone_many_to_many_fields_mock,
+        _clone_m2m_fields_mock,
     ):
         author_1 = Author.objects.create(
             first_name="Opubo", last_name="Jack", age=24, sex="F", created_by=self.user
@@ -92,7 +92,7 @@ class CloneMixinTestCase(TestCase):
         author_2 = Author.objects.create(
             first_name="Nimabo", last_name="Jack", age=16, sex="F", created_by=self.user
         )
-        _clone_many_to_many_fields_mock.return_value = ["authors"]
+        _clone_m2m_fields_mock.return_value = ["authors"]
 
         book = Book.objects.create(name="New Book", created_by=self.user)
         book.authors.set([author_1, author_2])
@@ -104,16 +104,16 @@ class CloneMixinTestCase(TestCase):
             list(book_clone.authors.values_list("first_name", "last_name")),
         )
 
-    @patch("sample.models.Author._clone_many_to_many_fields", new_callable=PropertyMock)
-    def test_cloning_with_explicit_related__clone_many_to_many_fields(
+    @patch("sample.models.Author._clone_m2m_fields", new_callable=PropertyMock)
+    def test_cloning_with_explicit_related_clone_m2m_fields(
         self,
-        _clone_many_to_many_fields_mock,
+        _clone_m2m_fields_mock,
     ):
         author = Author.objects.create(
             first_name="Opubo", last_name="Jack", age=24, sex="F", created_by=self.user
         )
 
-        _clone_many_to_many_fields_mock.return_value = ["books"]
+        _clone_m2m_fields_mock.return_value = ["books"]
 
         book_1 = Book.objects.create(name="New Book 1", created_by=self.user)
         book_2 = Book.objects.create(name="New Book 2", created_by=self.user)
@@ -125,7 +125,7 @@ class CloneMixinTestCase(TestCase):
             list(author.books.values_list("name")),
             list(author_clone.books.values_list("name")),
         )
-        _clone_many_to_many_fields_mock.assert_called_once()
+        _clone_m2m_fields_mock.assert_called_once()
 
     def test_cloning_unique_fields_is_valid(self):
         first_name = "Ruby"
@@ -145,9 +145,7 @@ class CloneMixinTestCase(TestCase):
             "{} {} {}".format(first_name, Author.UNIQUE_DUPLICATE_SUFFIX, 1),
         )
 
-    @patch(
-        "sample.models.Author.USE_UNIQUE_DUPLICATE_SUFFIX", new_callable=PropertyMock
-    )
+    @patch("sample.models.Author.USE_UNIQUE_DUPLICATE_SUFFIX", new_callable=PropertyMock)
     def test_cloning_unique_field_with_use_unique_duplicate_suffix_set_to_False(
         self,
         use_unique_duplicate_suffix_mock,
@@ -297,14 +295,14 @@ class CloneMixinTestCase(TestCase):
             )
 
     @patch(
-        "sample.models.Book._clone_many_to_one_or_one_to_many_fields",
+        "sample.models.Book._clone_m2m_or_o2m_fields",
         new_callable=PropertyMock,
     )
     def test_cloning_one_to_many_many_to_one(
         self,
-        _clone_many_to_one_or_one_to_many_fields_mock,
+        _clone_m2m_or_o2m_fields_mock,
     ):
-        _clone_many_to_one_or_one_to_many_fields_mock.return_value = ["pages"]
+        _clone_m2m_or_o2m_fields_mock.return_value = ["pages"]
 
         name = "New Book"
         book = Book.objects.create(name=name, created_by=self.user)
@@ -325,7 +323,7 @@ class CloneMixinTestCase(TestCase):
             list(book.pages.values_list("id")),
             list(book_clone.pages.values_list("id")),
         )
-        _clone_many_to_one_or_one_to_many_fields_mock.assert_called_once()
+        _clone_m2m_or_o2m_fields_mock.assert_called_once()
 
 
 class CloneMixinTransactionTestCase(TransactionTestCase):

@@ -56,7 +56,7 @@ class Library(CloneModel):
     id = models.UUIDField(primary_key=True, default=uuid4)
     name = models.CharField(max_length=100)
 
-    _clone_model_fields = ["id"]
+    _clone_fields = ["id"]
 
     def __str__(self):
         return _(self.name)
@@ -136,7 +136,7 @@ class Assignment(CloneMixin, models.Model):
     )
 
     # Model clone settings
-    _clone_excluded_many_to_many_fields = ["applied_drivers", "chosen_drivers"]
+    _clone_excluded_m2m_fields = ["applied_drivers", "chosen_drivers"]
 
     class Meta:
         verbose_name = _("Assigment")

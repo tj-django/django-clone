@@ -33,8 +33,8 @@ class CloneMixin(object):
                 on_delete=models.CASCADE,
             )
 
-            _clone_many_to_many_fields = ['tags', 'audiences']
-            _clone_many_to_one_or_one_to_many_fields = ['user']
+            _clone_m2m_fields = ['tags', 'audiences']
+            _clone_m2m_or_o2m_fields = ['user']
             ...
 
         Using implicit all except fields.
@@ -50,46 +50,31 @@ class CloneMixin(object):
             )
 
             # Clones any other m2m field excluding "audiences".
-            _clone_excluded_many_to_many_fields = ['audiences']
+            _clone_excluded_m2m_fields = ['audiences']
             # Clones all other many to one or one to many fields excluding "user".
-            _clone_excluded_many_to_one_or_one_to_many_fields = ['user']
+            _clone_excluded_m2o_or_o2m_fields = ['user']
             ...
 
     Attributes:
-        _clone_model_fields (list): Restricted list of fields to copy from the instance.
-        _clone_many_to_many_fields (list): Many to many fields (Example: TestModel.tags).
-        _clone_many_to_one_or_one_to_many_fields (list): Many to one/One to many fields.
-        _clone_one_to_one_fields (list): One to One fields.
+        _clone_fields (list): List of fields to copy from the instance.
+        _clone_m2m_fields (list): Many to many fields (Example: TestModel.tags).
+        _clone_m2m_or_o2m_fields (list): Many to one/One to many fields.
+        _clone_o2o_fields (list): One to One fields.
 
-        _clone_excluded_model_fields (list): Excluded model fields.
-        _clone_excluded_many_to_many_fields (list): Excluded many to many fields.
-        _clone_excluded_many_to_one_or_one_to_many_fields (list): Excluded m2m and
-            o2m fields.
-        _clone_excluded_one_to_one_fields (list): Excluded one to one fields.
+        _clone_excluded_fields (list): Excluded model fields.
+        _clone_excluded_m2m_fields (list): Excluded many to many fields.
+        _clone_excluded_m2o_or_o2m_fields (list): Excluded many to many
+            and one to many fields.
+        _clone_excluded_o2o_fields (list): Excluded one to one fields.
     """
 
-    # TODO: Move these to use succinct
-    # names m2m_clone_fields -> many_to_many, m2o_o2m_clone_fields = []
-
     # Included fields
-    _clone_model_fields = []
-    _clone_many_to_many_fields = []
-    _clone_many_to_one_or_one_to_many_fields = []
-    _clone_one_to_one_fields = []
-
-    # succinct field names
     _clone_fields = []
     _clone_m2m_fields = []
-    _clone_m2o_or_otm_fields = []
+    _clone_m2m_or_o2m_fields = []
     _clone_o2o_fields = []
 
     # Excluded fields
-    _clone_excluded_model_fields = []
-    _clone_excluded_many_to_many_fields = []
-    _clone_excluded_many_to_one_or_one_to_many_fields = []
-    _clone_excluded_one_to_one_fields = []
-
-    # succinct field names
     _clone_excluded_fields = []
     _clone_excluded_m2m_fields = []
     _clone_excluded_m2o_or_o2m_fields = []
@@ -99,6 +84,17 @@ class CloneMixin(object):
     USE_UNIQUE_DUPLICATE_SUFFIX = True
     MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS = 100
 
+    @staticmethod
+    def __unpack_unique_together(opts, only_fields=()):
+        fields = []
+        for field in opts.unique_together:
+            if isinstance(field, str):
+                if field in only_fields:
+                    fields.append(field)
+            else:
+                fields.extend(list([f for f in field if f in only_fields]))
+        return fields
+
     @classmethod
     def _create_copy_of_instance(cls, instance):
         defaults = {}
@@ -107,17 +103,17 @@ class CloneMixin(object):
         for f in instance._meta.concrete_fields:
             valid = False
             if not f.primary_key:
-                if cls._clone_model_fields:
-                    valid = f.name in cls._clone_model_fields
-                elif cls._clone_excluded_model_fields:
-                    valid = f.name not in cls._clone_excluded_model_fields
+                if cls._clone_fields:
+                    valid = f.name in cls._clone_fields
+                elif cls._clone_excluded_fields:
+                    valid = f.name not in cls._clone_excluded_fields
                 else:
                     valid = True
 
             if valid:
                 fields.append(f)
 
-        unique_field_names = cls.unpack_unique_together(
+        unique_field_names = cls.__unpack_unique_together(
             opts=instance._meta,
             only_fields=[f.attname for f in fields],
         )
@@ -170,10 +166,10 @@ class CloneMixin(object):
         if cls.USE_UNIQUE_DUPLICATE_SUFFIX and not cls.UNIQUE_DUPLICATE_SUFFIX:
             errors.append(
                 Error(
-                    "UNIQUE_DUPLICATE_SUFFIX is reqiured.",
+                    "UNIQUE_DUPLICATE_SUFFIX is required.",
                     hint=(
                         "Please provide UNIQUE_DUPLICATE_SUFFIX"
-                        + "for {} or set USE_UNIQUE_DUPLICATE_SUFFIX=False".format(
+                        + " for {} or set USE_UNIQUE_DUPLICATE_SUFFIX=False".format(
                             cls.__name__
                         )
                     ),
@@ -182,30 +178,46 @@ class CloneMixin(object):
                 )
             )
 
-        if all([cls._clone_model_fields, cls._clone_excluded_model_fields]):
+        if all([cls._clone_fields, cls._clone_excluded_fields]):
             errors.append(
                 Error(
                     "Conflicting configuration.",
                     hint=(
-                        'Please provide either "_clone_model_fields"'
-                        + 'or "_clone_excluded_model_fields" for {}'.format(
-                            cls.__name__
-                        )
+                        'Please provide either "_clone_fields"'
+                        + ' or "_clone_excluded_fields" for model {}'.format(cls.__name__)
                     ),
                     obj=cls,
                     id="{}.E002".format(ModelCloneConfig.name),
                 )
             )
 
-        if all(
-            [cls._clone_many_to_many_fields, cls._clone_excluded_many_to_many_fields]
+        if (
+            all([cls._clone_m2m_fields, cls._clone_excluded_m2m_fields])
+            or all(
+                [
+                    cls._clone_m2m_fields,
+                    cls._clone_excluded_m2m_fields,
+                ]
+            )
+            or all(
+                [
+                    cls._clone_m2m_fields,
+                    cls._clone_excluded_m2m_fields,
+                ]
+            )
+            or all(
+                [
+                    cls._clone_excluded_m2m_fields,
+                    cls._clone_m2m_fields,
+                ]
+            )
         ):
             errors.append(
                 Error(
                     "Conflicting configuration.",
                     hint=(
-                        'Please provide either "_clone_many_to_many_fields"'
-                        + 'or "_clone_excluded_many_to_many_fields" for {}'.format(
+                        'Please provide either "_clone_m2m_fields"'
+                        + ' or "_clone_excluded_m2m_fields" for model {}'.format(
                             cls.__name__
                         )
                     ),
@@ -216,8 +228,8 @@ class CloneMixin(object):
 
         if all(
             [
-                cls._clone_many_to_one_or_one_to_many_fields,
-                cls._clone_excluded_many_to_one_or_one_to_many_fields,
+                cls._clone_m2m_or_o2m_fields,
+                cls._clone_excluded_m2o_or_o2m_fields,
             ]
         ):
             errors.append(
@@ -225,8 +237,8 @@ class CloneMixin(object):
                     "Conflicting configuration.",
                     hint=(
                         "Please provide either "
-                        + '"_clone_many_to_one_or_one_to_many_fields"'
-                        + "or "
+                        + '"_clone_m2m_or_o2m_fields"'
+                        + " or "
                         + '"_clone_excluded_many_to_one'
                         + '_or_one_to_many_fields" for {}'.format(cls.__name__)
                     ),
@@ -235,15 +247,13 @@ class CloneMixin(object):
                 )
             )
 
-        if all([cls._clone_one_to_one_fields, cls._clone_excluded_one_to_one_fields]):
+        if all([cls._clone_o2o_fields, cls._clone_excluded_o2o_fields]):
             errors.append(
                 Error(
                     "Conflicting configuration.",
                     hint=(
-                        'Please provide either "_clone_one_to_one_fields"'
-                        + 'or "_clone_excluded_one_to_one_fields" for {}'.format(
-                            cls.__name__
-                        )
+                        'Please provide either "_clone_o2o_fields"'
+                        + ' or "_clone_excluded_o2o_fields" for {}'.format(cls.__name__)
                     ),
                     obj=cls,
                     id="{}.E002".format(ModelCloneConfig.name),
@@ -285,16 +295,16 @@ class CloneMixin(object):
         many_to_many_fields = []
 
         for f in self._meta.related_objects:
-            if f.one_to_one and f.name in self._clone_one_to_one_fields:
+            if f.one_to_one and f.name in self._clone_o2o_fields:
                 one_to_one_fields.append(f)
 
             elif all(
                 [
-                    not self._clone_one_to_one_fields,
+                    not self._clone_o2o_fields,
                     f.one_to_one,
-                    self._clone_excluded_one_to_one_fields,
+                    self._clone_excluded_o2o_fields,
                     f not in one_to_one_fields,
-                    f.name not in self._clone_excluded_one_to_one_fields,
+                    f.name not in self._clone_excluded_o2o_fields,
                 ]
             ):
                 one_to_one_fields.append(f)
@@ -302,19 +312,18 @@ class CloneMixin(object):
             elif all(
                 [
                     any([f.many_to_one, f.one_to_many]),
-                    f.name in self._clone_many_to_one_or_one_to_many_fields,
+                    f.name in self._clone_m2m_or_o2m_fields,
                 ]
             ):
                 many_to_one_or_one_to_many_fields.append(f)
 
             elif all(
                 [
-                    not self._clone_many_to_one_or_one_to_many_fields,
+                    not self._clone_m2m_or_o2m_fields,
                     any([f.many_to_one, f.one_to_many]),
-                    self._clone_excluded_many_to_one_or_one_to_many_fields,
+                    self._clone_excluded_m2o_or_o2m_fields,
                     f not in many_to_one_or_one_to_many_fields,
-                    f.name
-                    not in self._clone_excluded_many_to_one_or_one_to_many_fields,
+                    f.name not in self._clone_excluded_m2o_or_o2m_fields,
                 ]
             ):
                 many_to_one_or_one_to_many_fields.append(f)
@@ -322,7 +331,7 @@ class CloneMixin(object):
             elif all(
                 [
                     f.many_to_many,
-                    f.name in self._clone_many_to_many_fields,
+                    f.name in self._clone_m2m_fields,
                 ]
             ):
                 many_to_many_fields.append(f)
@@ -330,23 +339,23 @@ class CloneMixin(object):
             elif all(
                 [
                     f.many_to_many,
-                    not self._clone_many_to_many_fields,
-                    self._clone_excluded_many_to_many_fields,
+                    not self._clone_m2m_fields,
+                    self._clone_excluded_m2m_fields,
                     f not in many_to_many_fields,
-                    f.name not in self._clone_excluded_many_to_many_fields,
+                    f.name not in self._clone_excluded_m2m_fields,
                 ]
             ):
                 many_to_many_fields.append(f)
 
         for f in self._meta.many_to_many:
             if not sub_clone:
-                if f.name in self._clone_many_to_many_fields:
+                if f.name in self._clone_m2m_fields:
                     many_to_many_fields.append(f)
                 elif all(
                     [
-                        not self._clone_many_to_many_fields,
-                        self._clone_excluded_many_to_many_fields,
-                        f.name not in self._clone_excluded_many_to_many_fields,
+                        not self._clone_m2m_fields,
+                        self._clone_excluded_m2m_fields,
+                        f.name not in self._clone_excluded_m2m_fields,
                         f not in many_to_many_fields,
                     ]
                 ):
@@ -356,9 +365,7 @@ class CloneMixin(object):
         for field in one_to_one_fields:
             rel_object = getattr(self, field.related_name, None)
             if rel_object:
-                if hasattr(rel_object, "make_clone") and callable(
-                    rel_object.make_clone
-                ):
+                if hasattr(rel_object, "make_clone") and callable(rel_object.make_clone):
                     rel_object.make_clone(
                         attrs={field.remote_field.name: duplicate}, sub_clone=True
                     )
@@ -372,9 +379,7 @@ class CloneMixin(object):
             items = []
             for item in getattr(self, field.related_name).all():
                 try:
-                    item_clone = item.make_clone(
-                        attrs={field.remote_field.name: duplicate}
-                    )
+                    item_clone = item.make_clone(attrs={field.remote_field.name: duplicate})
                 except IntegrityError:
                     item_clone = item.make_clone(
                         attrs={field.remote_field.name: duplicate}, sub_clone=True
@@ -413,17 +418,6 @@ class CloneMixin(object):
             else:
                 destination.set(source.all())
         return duplicate
-
-    @staticmethod
-    def unpack_unique_together(opts, only_fields=()):
-        fields = []
-        for field in opts.unique_together:
-            if isinstance(field, str):
-                if field in only_fields:
-                    fields.append(field)
-            else:
-                fields.extend(list([f for f in field if f in only_fields]))
-        return fields
 
     @classmethod
     def bulk_clone_multi(cls, objs, attrs=None, batch_size=None):
