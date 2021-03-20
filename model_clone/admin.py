@@ -4,7 +4,7 @@ from django.contrib.admin.options import TO_FIELD_VAR
 from django.contrib.admin.utils import unquote
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _, ungettext_lazy
 
 from model_clone import CloneMixin
 
@@ -59,8 +59,11 @@ class CloneModelAdmin(ModelAdmin):
                 request,
                 _("Successfully created: {} new duplicates".format(len(clone_obj_ids))),
             )
-
-    make_clone.short_description = "Duplicate selected %(verbose_name_plural)s"
+    
+    make_clone.short_description = ungettext_lazy(
+        "Duplicate selected %(verbose_name)s",
+        "Duplicate selected %(verbose_name_plural)s",
+    )
 
     def _get_base_actions(self):
         """Return the list of actions, prior to any request-based filtering."""
