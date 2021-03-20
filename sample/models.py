@@ -66,7 +66,9 @@ class Library(CloneModel):
 class Assignment(CloneMixin, models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
-    title = models.CharField(max_length=100, default="", blank=True, verbose_name=_("Job title"))
+    title = models.CharField(
+        max_length=100, default="", blank=True, verbose_name=_("Job title")
+    )
     assignment_date = models.DateField(blank=True, null=True)
     company = models.ForeignKey(
         "sample_company.CompanyDepot",

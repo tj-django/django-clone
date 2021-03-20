@@ -17,11 +17,15 @@ class CloneModelAdmin(ModelAdmin):
 
     def change_view(self, request, object_id, form_url="", extra_context=None):
         extra_context = extra_context or {}
-        extra_context["include_duplicate_object_link"] = self.include_duplicate_object_link
+        extra_context[
+            "include_duplicate_object_link"
+        ] = self.include_duplicate_object_link
         if self.include_duplicate_object_link:
             to_field = request.POST.get(TO_FIELD_VAR, request.GET.get(TO_FIELD_VAR))
             if to_field and not self.to_field_allowed(request, to_field):
-                raise DisallowedModelAdminToField("The field %s cannot be referenced." % to_field)
+                raise DisallowedModelAdminToField(
+                    "The field %s cannot be referenced." % to_field
+                )
 
             obj = self.get_object(request, unquote(object_id), to_field)
 
@@ -33,7 +37,9 @@ class CloneModelAdmin(ModelAdmin):
                     _("Duplication successful, redirected to cloned: {}".format(clone)),
                 )
                 cloned_admin_url = reverse(
-                    "admin:{0}_{1}_change".format(clone._meta.app_label, clone._meta.model_name),
+                    "admin:{0}_{1}_change".format(
+                        clone._meta.app_label, clone._meta.model_name
+                    ),
                     args=(clone.pk,),
                 )
                 return HttpResponseRedirect(cloned_admin_url)
