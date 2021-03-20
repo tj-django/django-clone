@@ -21,51 +21,58 @@ class CloneMixin(object):
     """
     CloneMixin mixin to duplicate an object using the model cls.
 
-    Examples:
-        Using explicit fields
+    :param _clone_fields: List of fields to copy from the instance.
+    :type _clone_fields`collections.Iterable`
+    :param _clone_m2m_fields: Many to many fields (Example: TestModel.tags).
+    :type _clone_m2m_fields`collections.Iterable`
+    :param _clone_m2m_or_o2m_fields: Many to one/One to many fields.
+    :type _clone_m2m_or_o2m_fields`collections.Iterable`
+    :param _clone_o2o_fields: One to One fields.
+    :type _clone_o2o_fields`collections.Iterable`
 
-        class TestModel(CloneMixin, models.Model):
-            field_1 = models.CharField(max_length=200)
-            tags =  models.ManyToManyField(Tags)
-            audiences = models.ManyToManyField(Audience)
-            user = models.ForiegnKey(
-                settings.AUTH_USER_MODEL,
-                on_delete=models.CASCADE,
-            )
+    :param _clone_excluded_fields: Excluded model fields.
+    :type _clone_excluded_fields`collections.Iterable`
+    :param _clone_excluded_m2m_fields: Excluded many to many fields.
+    :type _clone_excluded_m2m_fields`collections.Iterable`
+    :param _clone_excluded_m2o_or_o2m_fields: Excluded many to many
+        and one to many fields.
+    :type _clone_excluded_m2o_or_o2m_fields`collections.Iterable`
+    :param _clone_excluded_o2o_fields: Excluded one to one fields.
+    :type _clone_excluded_o2o_fields: `collections.Iterable`
+        
+    :Example:
+    >>> # Using explicit fields
+    >>>
+    >>> class TestModel(CloneMixin, models.Model):
+    >>>     field_1 = models.CharField(max_length=200)
+    >>>     tags =  models.ManyToManyField(Tags)
+    >>>     audiences = models.ManyToManyField(Audience)
+    >>>     user = models.ForiegnKey(
+    >>>         settings.AUTH_USER_MODEL,
+    >>>         on_delete=models.CASCADE,
+    >>>     )
 
-            _clone_m2m_fields = ['tags', 'audiences']
-            _clone_m2m_or_o2m_fields = ['user']
-            ...
+    >>>     _clone_m2m_fields = ['tags', 'audiences']
+    >>>     _clone_m2m_or_o2m_fields = ['user']
+    >>>     ...
 
-        Using implicit all except fields.
+    >>> # Using implicit all except fields.
 
-        class TestModel(CloneMixin, models.Model):
-            field_1 = models.CharField(max_length=200)
-            tags =  models.ManyToManyField(Tags)
-            audiences = models.ManyToManyField(Audience)
-            user = models.ForiegnKey(
-                settings.AUTH_USER_MODEL,
-                on_delete=models.CASCADE,
-                null=True,
-            )
+    >>> class TestModel(CloneMixin, models.Model):
+    >>>     field_1 = models.CharField(max_length=200)
+    >>>     tags =  models.ManyToManyField(Tags)
+    >>>     audiences = models.ManyToManyField(Audience)
+    >>>     user = models.ForiegnKey(
+    >>>         settings.AUTH_USER_MODEL,
+    >>>         on_delete=models.CASCADE,
+    >>>         null=True,
+    >>>     )
 
-            # Clones any other m2m field excluding "audiences".
-            _clone_excluded_m2m_fields = ['audiences']
-            # Clones all other many to one or one to many fields excluding "user".
-            _clone_excluded_m2o_or_o2m_fields = ['user']
-            ...
-
-    Attributes:
-        _clone_fields (list): List of fields to copy from the instance.
-        _clone_m2m_fields (list): Many to many fields (Example: TestModel.tags).
-        _clone_m2m_or_o2m_fields (list): Many to one/One to many fields.
-        _clone_o2o_fields (list): One to One fields.
-
-        _clone_excluded_fields (list): Excluded model fields.
-        _clone_excluded_m2m_fields (list): Excluded many to many fields.
-        _clone_excluded_m2o_or_o2m_fields (list): Excluded many to many
-            and one to many fields.
-        _clone_excluded_o2o_fields (list): Excluded one to one fields.
+    >>>     # Clones any other m2m field excluding "audiences".
+    >>>     _clone_excluded_m2m_fields = ['audiences']
+    >>>     # Clones all other many to one or one to many fields excluding "user".
+    >>>     _clone_excluded_m2o_or_o2m_fields = ['user']
+    >>>     ...
     """
 
     # Included fields
@@ -86,6 +93,15 @@ class CloneMixin(object):
 
     @staticmethod
     def __unpack_unique_together(opts, only_fields=()):
+        """
+        Unpack unique together fields.
+        
+        :param opts: Model options
+        :type opts: `django.db.models.options.Options`
+        :param only_fields: Fields that should be considered.
+        :type only_fields: `collections.Iterable`
+        :return: Flat list of fields.
+        """
         fields = []
         for field in opts.unique_together:
             if isinstance(field, str):
@@ -97,6 +113,14 @@ class CloneMixin(object):
 
     @classmethod
     def _create_copy_of_instance(cls, instance):
+        """
+        Create a copy of an instance
+        
+        :param instance: The instance to be duplicated.
+        :type instance: `django.db.models.Model`
+        :return: A new transient instance.
+        :rtype: `django.db.models.Model`
+        """
         defaults = {}
         fields = []
 
@@ -125,6 +149,11 @@ class CloneMixin(object):
         ]
 
         for f in fields:
+            if any([
+                getattr(f, "auto_now", False),
+                getattr(f, "auto_now_add", False)
+            ]):
+                defaults[f.attname] = f.pre_save(instance, False)
             if all(
                 [
                     not f.auto_created,
