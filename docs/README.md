@@ -235,7 +235,7 @@ class TestModelAdmin(CloneModelAdmin):
 
 ![Screenshot](Duplicate-button.png)
 
-##### CloneModelAdmin class attributes
+### CloneModelAdmin class attributes
 
 ```python
 
