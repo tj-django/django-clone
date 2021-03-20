@@ -66,7 +66,9 @@ class Library(CloneModel):
 class Assignment(CloneMixin, models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
-    title = models.CharField(max_length=100, default="", blank=True, verbose_name=_("Job title"))
+    title = models.CharField(
+        max_length=100, default="", blank=True, verbose_name=_("Job title")
+    )
     assignment_date = models.DateField(blank=True, null=True)
     company = models.ForeignKey(
         "sample_company.CompanyDepot",
@@ -130,7 +132,9 @@ class Assignment(CloneMixin, models.Model):
     )
     hours = models.IntegerField(null=True, verbose_name=_("Amount of hours"))
     spots_available = models.IntegerField(null=True, verbose_name=_("Spots available"))
-    description = models.TextField(null=True, blank=True, verbose_name=_("Assignment description"))
+    description = models.TextField(
+        null=True, blank=True, verbose_name=_("Assignment description")
+    )
 
     # Model clone settings
     _clone_excluded_m2m_fields = ["applied_drivers", "chosen_drivers"]
