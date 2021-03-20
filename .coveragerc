@@ -1,3 +1,5 @@
 [run]
 source = model_clone
-omit = model_clone/test*
+omit =
+    model_clone/test*,
+    model_clone/admin*
