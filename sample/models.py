@@ -108,7 +108,7 @@ class Assignment(CloneMixin, models.Model):
         verbose_name=_("Assignment status"),
         blank=True,
     )
-    location = models.CharField(max_length=25, null=True, verbose_name=_("Location"))
+    location = models.CharField(max_length=25, default="", verbose_name=_("Location"))
 
     DRIVER_TYPES = [
         (1, "Commercial"),
@@ -116,21 +116,21 @@ class Assignment(CloneMixin, models.Model):
     ]
 
     driver_type = models.CharField(
-        max_length=2, choices=DRIVER_TYPES, null=True, verbose_name=_("Driver type")
+        max_length=2, choices=DRIVER_TYPES, default="", verbose_name=_("Driver type")
     )
     CAR_TYPES = [
         (1, "Large"),
         (2, "Small"),
     ]
     car_type = models.CharField(
-        max_length=2, choices=CAR_TYPES, null=True, verbose_name=_("Car type")
+        max_length=2, choices=CAR_TYPES, default="", verbose_name=_("Car type")
     )
     compensation = models.DecimalField(
         null=True, max_digits=5, decimal_places=2, verbose_name=_("Compensation")
     )
     hours = models.IntegerField(null=True, verbose_name=_("Amount of hours"))
     spots_available = models.IntegerField(null=True, verbose_name=_("Spots available"))
-    description = models.TextField(null=True, blank=True, verbose_name=_("Assignment description"))
+    description = models.TextField(blank=True, verbose_name=_("Assignment description"))
 
     # Model clone settings
     _clone_excluded_m2m_fields = ["applied_drivers", "chosen_drivers"]

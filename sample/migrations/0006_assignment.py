@@ -48,14 +48,14 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "location",
-                    models.CharField(max_length=25, null=True, verbose_name="Location"),
+                    models.CharField(max_length=25, default='', verbose_name="Location"),
                 ),
                 (
                     "driver_type",
                     models.CharField(
                         choices=[(1, "Commercial"), (2, "Residential")],
                         max_length=2,
-                        null=True,
+                        default='',
                         verbose_name="Driver type",
                     ),
                 ),
@@ -64,7 +64,7 @@ class Migration(migrations.Migration):
                     models.CharField(
                         choices=[(1, "Large"), (2, "Small")],
                         max_length=2,
-                        null=True,
+                        default='',
                         verbose_name="Car type",
                     ),
                 ),
@@ -88,7 +88,7 @@ class Migration(migrations.Migration):
                 (
                     "description",
                     models.TextField(
-                        blank=True, null=True, verbose_name="Assignment description"
+                        blank=True, verbose_name="Assignment description"
                     ),
                 ),
                 (
