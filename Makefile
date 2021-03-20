@@ -30,6 +30,13 @@ clean-build: ## Clean project build artifacts.
 	@rm -rf dist/
 	@rm -rf *.egg-info
 
+migrate:
+	@$(MANAGE_PY) migrate
+
+run: migrate
+	@echo "Starting server..."
+	@$(MANAGE_PY) runserver
+
 test:
 	@echo "Running `$(PYTHON_VERSION)` test..."
 	@$(MANAGE_PY) test
