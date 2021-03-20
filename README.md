@@ -12,7 +12,7 @@ Create copies of a model instance with explicit control on how the instance shou
 
 | Test | Vulnerabilities | Coverage | Code Quality  | Contributors  |  Code Style  |
 |:----:|:---------------:|:--------:|:-------------:|:-------------:| :------------:|
-| [![Test](https://github.com/tj-django/django-clone/workflows/Test/badge.svg)](https://github.com/tj-django/django-clone/actions?query=workflow%3ATest) | [![Known Vulnerabilities](https://snyk.io/test/github/tj-django/django-clone/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/tj-django/django-clone?targetFile=requirements.txt) | [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/b33dd02dbb034d7fa9886a99f5383ea6)](https://www.codacy.com/gh/tj-django/django-clone?utm_source=github.com&utm_medium=referral&utm_content=tj-django/django-clone&utm_campaign=Badge_Coverage) | [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b33dd02dbb034d7fa9886a99f5383ea6)](https://www.codacy.com/gh/tj-django/django-clone?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tj-django/django-clone&amp;utm_campaign=Badge_Grade) | [![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors) | [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) 
+| [![Test](https://github.com/tj-django/django-clone/workflows/Test/badge.svg)](https://github.com/tj-django/django-clone/actions?query=workflow%3ATest) | [![Known Vulnerabilities](https://snyk.io/test/github/tj-django/django-clone/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/tj-django/django-clone?targetFile=requirements.txt) | [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/b33dd02dbb034d7fa9886a99f5383ea6)](https://www.codacy.com/gh/tj-django/django-clone?utm_source=github.com&utm_medium=referral&utm_content=tj-django/django-clone&utm_campaign=Badge_Coverage) <br/> [![codecov](https://codecov.io/gh/tj-django/django-clone/branch/master/graph/badge.svg?token=2NE21Oe50Q)](https://codecov.io/gh/tj-django/django-clone)| [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b33dd02dbb034d7fa9886a99f5383ea6)](https://www.codacy.com/gh/tj-django/django-clone?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tj-django/django-clone&amp;utm_campaign=Badge_Grade) | [![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors) | [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) 
 
 
 ## Table of contents
@@ -20,15 +20,14 @@ Create copies of a model instance with explicit control on how the instance shou
 -   [Installation](#Installation)
 
 -   [Usage](#Usage)
-    -   [Duplicate a Model Instance](#duplicating-a-model-instance)
+    -   [Duplicating a Model Instance](#duplicating-a-model-instance)
     -   [Using the CloneMixin](#clonemixin-attributes)
     -   [Creating clones without subclassing `CloneMixin`](#creating-clones-without-subclassing-clonemixin)
-
--   [Duplicating Models from Django Admin view](#duplicating-models-from-django-admin-view)
+    -   [Duplicating Models from Django Admin view](#duplicating-models-from-django-admin-view)
 
 -   [CHANGELOG](./CHANGELOG.md)
 
-### Installation
+## Installation
 
 Run 
 ```bash script
@@ -36,7 +35,30 @@ pip install django-clone
 ```
 
 
-### Usage
+## Usage
+
+#### Subclassing the `CloneModel`
+
+```python
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+from model_clone import CloneModel
+
+class TestModel(CloneModel):
+    title = models.CharField(max_length=200)
+    tags =  models.ManyToManyField('Tags')
+
+    _clone_many_to_many_fields = ['tags']
+    
+
+class Tags(models.Model):  #  To enable cloning tags directly use `CloneModel` as shown above.
+    name = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return _(self.name)
+```
+
+#### Using the `CloneMixin`
 
 ```python
 from django.db import models
@@ -47,17 +69,17 @@ class TestModel(CloneMixin, models.Model):
     title = models.CharField(max_length=200)
     tags =  models.ManyToManyField('Tags')
 
-    _clone_many_to_many_fields = ['tags']
+    _clone_m2m_fields = ['tags']
     
 
-class Tags(models.Model):
+class Tags(models.Model):  #  To enable cloning tags directly use `CloneMixin` as shown above.
     name = models.CharField(max_length=255)
     
     def __str__(self):
         return _(self.name)
 ```
 
-#### Duplicating a model instance
+### Duplicating a model instance
 
 ```python
 In [1]: test_obj = TestModel.objects.create(title='New')
@@ -75,42 +97,42 @@ In [4]: test_obj.tags.create(name='women')
 In [5]: test_obj.tags.all()
 Out[5]: <QuerySet [<Tag: men>, <Tag: women>]>
 
-In [6]: clone = test_obj.make_clone(attrs={'title': 'Updated title'})
+In [6]: test_obj_clone = test_obj.make_clone()
 
-In [7]: clone.pk
+In [7]: test_obj_clone.pk
 Out[7]: 2
 
-In [8]: clone.title
-Out[8]: 'Updated title'
+In [8]: test_obj_clone.title
+Out[8]: 'New copy 1'
 
-In [9]: clone.tags.all()
+In [9]: test_obj_clone.tags.all()
 Out[9]: <QuerySet [<Tag: men>, <Tag: women>]>
 ```
 
-#### CloneMixin attributes
+### CloneMixin attributes
 
-##### Explicit
+#### Explicit
 
 |    Field Names        |  Description |
 |:------------------------------:|:------------:|
-| `_clone_model_fields` | Restrict the list of fields to copy from the instance (By default: Copies all fields excluding auto-created/non editable model fields) |
-`_clone_many_to_many_fields` | Restricted Many to many fields (i.e Test.tags) |
-`_clone_many_to_one_or_one_to_many_fields` | Restricted Many to One/One to Many fields | 
-`_clone_one_to_one_fields` | Restricted One to One fields |
+| `_clone_fields` | Restrict the list of fields to copy from the instance (By default: Copies all fields excluding auto-created/non editable model fields) |
+`_clone_m2m_fields` | Restricted Many to many fields (i.e Test.tags) |
+`_clone_m2m_or_o2m_fields` | Restricted Many to One/One to Many fields | 
+`_clone_o2o_fields` | Restricted One to One fields |
 
-##### Implicit
+#### Implicit
 
 |  Field Names (include all except these fields.) | Description |
 |:--------------------:|:-----------:|
-| `_clone_excluded_model_fields` | Excluded model fields. |
-`_clone_excluded_many_to_many_fields` | Excluded many to many fields. |
-`_clone_excluded_many_to_one_or_one_to_many_fields` |  Excluded Many to One/One to Many fields. |
-`_clone_excluded_one_to_one_fields` | Excluded one to one fields. |
+| `_clone_excluded_fields` | Excluded model fields. |
+`_clone_excluded_m2m_fields` | Excluded many to many fields. |
+`_clone_excluded_m2o_or_o2m_fields` |  Excluded Many to One/One to Many fields. |
+`_clone_excluded_o2o_fields` | Excluded one to one fields. |
 
 
 > :warning: NOTE: Ensure to either set `_clone_excluded_*` or `_clone_*`. Using both would raise errors. 
 
-#### Creating clones without subclassing `CloneMixin`.
+### Creating clones without subclassing `CloneMixin`.
 
 ```python
 
@@ -131,15 +153,15 @@ In [6]: test_obj.tags.create(name='women')
 In [7]: test_obj.tags.all()
 Out[7]: <QuerySet [<Tag: men>, <Tag: women>]>
 
-In [8]: clone = create_copy_of_instance(test_obj, attrs={'title': 'Updated title'})
+In [8]: test_obj_clone = create_copy_of_instance(test_obj, attrs={'title': 'Updated title'})
 
-In [9]: clone.pk
+In [9]: test_obj_clone.pk
 Out[9]: 2
 
-In [10]: clone.title
+In [10]: test_obj_clone.title
 Out[10]: 'Updated title'
 
-In [11]: clone.tags.all()
+In [11]: test_obj_clone.tags.all()
 Out[11]: <QuerySet []>
 ```
 
@@ -178,7 +200,7 @@ class TestModelAdmin(CloneModelAdmin):
 
 ![Screenshot](Duplicate-button.png)
 
-##### CLONE MODEL ADMIN CLASS PROPERTIES
+##### CloneModelAdmin class attributes
 
 ```python
 
