@@ -50,7 +50,6 @@ extras_require = {
     "lint": lint_requires,
     'lint:python_version >= "3.6"': ["black"],
     "deploy": deploy_requires,
-    "tox": local_dev_requires,
 }
 
 BASE_DIR = os.path.dirname(__file__)
