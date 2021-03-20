@@ -21,9 +21,7 @@ class CloneModelAdmin(ModelAdmin):
             "include_duplicate_object_link"
         ] = self.include_duplicate_object_link
         if self.include_duplicate_object_link:
-            to_field = request.POST.get(
-                TO_FIELD_VAR, request.GET.get(TO_FIELD_VAR)
-            )
+            to_field = request.POST.get(TO_FIELD_VAR, request.GET.get(TO_FIELD_VAR))
             if to_field and not self.to_field_allowed(request, to_field):
                 raise DisallowedModelAdminToField(
                     "The field %s cannot be referenced." % to_field
@@ -72,8 +70,6 @@ class CloneModelAdmin(ModelAdmin):
         actions = list(super()._get_base_actions())
         # Add the make clone action
         if self.include_duplicate_action and issubclass(self.model, CloneMixin):
-            actions.extend(
-                self.get_action(action) for action in ["make_clone"]
-            )
+            actions.extend(self.get_action(action) for action in ["make_clone"])
 
         return actions
