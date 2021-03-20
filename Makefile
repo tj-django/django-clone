@@ -110,8 +110,8 @@ clean-test-all: clean-build  ## Clean build and test assets.
 # -----------------------------------------------------------
 lint-fix:  ## Run black with inplace for model_clone and sample/models.py.
 	@pip install black autopep8
-	@black model_clone sample/models.py sample_driver sample_assignment sample_company --line-length=100
-	@autopep8 -ir model_clone sample/models.py sample_driver sample_assignment sample_company --max-line-length=100
+	@black model_clone sample/models.py sample_driver sample_assignment sample_company --line-length=95
+	@autopep8 -ir model_clone sample/models.py sample_driver sample_assignment sample_company --max-line-length=95
 
 # -----------------------------------------------------------
 # --------- Docs ---------------------------------------
