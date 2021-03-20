@@ -193,9 +193,7 @@ class CloneMixin(object):
                 )
             )
 
-        if (
-            all([cls._clone_m2m_fields, cls._clone_excluded_m2m_fields])
-        ):
+        if all([cls._clone_m2m_fields, cls._clone_excluded_m2m_fields]):
             errors.append(
                 Error(
                     "Conflicting configuration.",
