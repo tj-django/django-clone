@@ -20,14 +20,14 @@ Create copies of a model instance with explicit control on how the instance shou
 -   [Installation](#Installation)
 
 -   [Usage](#Usage)
-    -   [Duplicate a Model Instance](#duplicating-a-model-instance)
+    -   [Duplicating a Model Instance](#duplicating-a-model-instance)
     -   [Using the CloneMixin](#clonemixin-attributes)
     -   [Creating clones without subclassing `CloneMixin`](#creating-clones-without-subclassing-clonemixin)
     -   [Duplicating Models from Django Admin view](#duplicating-models-from-django-admin-view)
 
 -   [CHANGELOG](./CHANGELOG.md)
 
-### Installation
+## Installation
 
 Run 
 ```bash script
@@ -35,7 +35,30 @@ pip install django-clone
 ```
 
 
-### Usage
+## Usage
+
+#### Subclassing the `CloneModel`
+
+```python
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+from model_clone import CloneModel
+
+class TestModel(CloneModel):
+    title = models.CharField(max_length=200)
+    tags =  models.ManyToManyField('Tags')
+
+    _clone_many_to_many_fields = ['tags']
+    
+
+class Tags(models.Model):  #  To enable cloning tags directly use `CloneModel` as shown above.
+    name = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return _(self.name)
+```
+
+#### Using the `CloneMixin`
 
 ```python
 from django.db import models
@@ -49,14 +72,14 @@ class TestModel(CloneMixin, models.Model):
     _clone_m2m_fields = ['tags']
     
 
-class Tags(models.Model):
+class Tags(models.Model):  #  To enable cloning tags directly use `CloneMixin` as shown above.
     name = models.CharField(max_length=255)
     
     def __str__(self):
         return _(self.name)
 ```
 
-#### Duplicating a model instance
+### Duplicating a model instance
 
 ```python
 In [1]: test_obj = TestModel.objects.create(title='New')
@@ -86,9 +109,9 @@ In [9]: clone.tags.all()
 Out[9]: <QuerySet [<Tag: men>, <Tag: women>]>
 ```
 
-#### CloneMixin attributes
+### CloneMixin attributes
 
-##### Explicit
+#### Explicit
 
 |    Field Names        |  Description |
 |:------------------------------:|:------------:|
@@ -97,7 +120,7 @@ Out[9]: <QuerySet [<Tag: men>, <Tag: women>]>
 `_clone_m2m_or_o2m_fields` | Restricted Many to One/One to Many fields | 
 `_clone_o2o_fields` | Restricted One to One fields |
 
-##### Implicit
+#### Implicit
 
 |  Field Names (include all except these fields.) | Description |
 |:--------------------:|:-----------:|
@@ -109,7 +132,7 @@ Out[9]: <QuerySet [<Tag: men>, <Tag: women>]>
 
 > :warning: NOTE: Ensure to either set `_clone_excluded_*` or `_clone_*`. Using both would raise errors. 
 
-#### Creating clones without subclassing `CloneMixin`.
+### Creating clones without subclassing `CloneMixin`.
 
 ```python
 
@@ -177,7 +200,7 @@ class TestModelAdmin(CloneModelAdmin):
 
 ![Screenshot](Duplicate-button.png)
 
-##### CLONE MODEL ADMIN CLASS PROPERTIES
+##### CloneModelAdmin class attributes
 
 ```python
 
