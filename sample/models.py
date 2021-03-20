@@ -55,8 +55,9 @@ class Page(CloneModel):
 class Library(CloneModel):
     id = models.UUIDField(primary_key=True, default=uuid4)
     name = models.CharField(max_length=100)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
-    _clone_model_fields = ["id"]
+    _clone_fields = ["id", "user"]
 
     def __str__(self):
         return _(self.name)
@@ -66,7 +67,7 @@ class Assignment(CloneMixin, models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
     title = models.CharField(
-        max_length=100, null=True, blank=True, verbose_name=_("Job title")
+        max_length=100, default="", blank=True, verbose_name=_("Job title")
     )
     assignment_date = models.DateField(blank=True, null=True)
     company = models.ForeignKey(
@@ -109,7 +110,7 @@ class Assignment(CloneMixin, models.Model):
         verbose_name=_("Assignment status"),
         blank=True,
     )
-    location = models.CharField(max_length=25, null=True, verbose_name=_("Location"))
+    location = models.CharField(max_length=25, default="", verbose_name=_("Location"))
 
     DRIVER_TYPES = [
         (1, "Commercial"),
@@ -117,26 +118,24 @@ class Assignment(CloneMixin, models.Model):
     ]
 
     driver_type = models.CharField(
-        max_length=2, choices=DRIVER_TYPES, null=True, verbose_name=_("Driver type")
+        max_length=2, choices=DRIVER_TYPES, default="", verbose_name=_("Driver type")
     )
     CAR_TYPES = [
         (1, "Large"),
         (2, "Small"),
     ]
     car_type = models.CharField(
-        max_length=2, choices=CAR_TYPES, null=True, verbose_name=_("Car type")
+        max_length=2, choices=CAR_TYPES, default="", verbose_name=_("Car type")
     )
     compensation = models.DecimalField(
         null=True, max_digits=5, decimal_places=2, verbose_name=_("Compensation")
     )
-    hours = models.IntegerField(null=True, verbose_name=_("Amount of hours"))
+    hours = models.IntegerField(verbose_name=_("Amount of hours"))
     spots_available = models.IntegerField(null=True, verbose_name=_("Spots available"))
-    description = models.TextField(
-        null=True, blank=True, verbose_name=_("Assignment description")
-    )
+    description = models.TextField(blank=True, verbose_name=_("Assignment description"))
 
     # Model clone settings
-    _clone_excluded_many_to_many_fields = ["applied_drivers", "chosen_drivers"]
+    _clone_excluded_m2m_fields = ["applied_drivers", "chosen_drivers"]
 
     class Meta:
         verbose_name = _("Assigment")

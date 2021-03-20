@@ -12,28 +12,43 @@ User = get_user_model()
 class CloneMixinTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.user = User.objects.create()
+        cls.user1 = User.objects.create(username="user 1")
+        cls.user2 = User.objects.create(username="user 2")
 
     def test_cloning_model_with_custom_id(self):
-        instance = Library.objects.create(name="First library")
-        clone = instance.make_clone()
+        instance = Library.objects.create(name="First library", user=self.user1)
+        clone = instance.make_clone({"user": self.user2})
         self.assertNotEqual(instance.pk, clone.pk)
 
     def test_cloning_explict_fields(self):
         name = "New Library"
-        instance = Library.objects.create(name=name)
-        clone = instance.make_clone()
+        instance = Library.objects.create(name=name, user=self.user1)
+        clone = instance.make_clone({"user": self.user2})
 
         self.assertEqual(instance.name, name)
 
         self.assertNotEqual(instance.pk, clone.pk)
         self.assertNotEqual(instance.name, clone.name)
 
-    def test_cloning_with_field_overriden(self):
+    def test_cloning_unique_fk_field(self):
         name = "New Library"
-        instance = Library.objects.create(name=name)
+        instance = Library.objects.create(name=name, user=self.user1)
+        clone = instance.make_clone({"user": self.user2})
+
+        self.assertNotEqual(instance.pk, clone.pk)
+        self.assertNotEqual(instance.user, clone.user)
+
+    def test_cloning_unique_fk_field_without_a_fallback_value_is_invalid(self):
+        name = "New Library"
+        instance = Library.objects.create(name=name, user=self.user1)
+        with self.assertRaises(IntegrityError):
+            instance.make_clone()
+
+    def test_cloning_with_field_overridden(self):
+        name = "New Library"
+        instance = Library.objects.create(name=name, user=self.user1)
         new_name = "My New Library"
-        clone = instance.make_clone(attrs={"name": new_name})
+        clone = instance.make_clone(attrs={"name": new_name, "user": self.user2})
 
         self.assertEqual(instance.name, name)
 
@@ -44,7 +59,7 @@ class CloneMixinTestCase(TestCase):
 
     def test_cloning_using_auto_now_field_is_updated(self):
         name = "New Book"
-        instance = Book.objects.create(name=name, created_by=self.user)
+        instance = Book.objects.create(name=name, created_by=self.user1)
         new_name = "My New Book"
         clone = instance.make_clone(attrs={"name": new_name})
 
@@ -53,9 +68,9 @@ class CloneMixinTestCase(TestCase):
 
         self.assertNotEqual(instance.created_at, clone.created_at)
 
-    def test_cloning_without_explicit__clone_many_to_many_fields(self):
+    def test_cloning_without_explicit_clone_m2m_fields(self):
         author_1 = Author.objects.create(
-            first_name="Ruby", last_name="Jack", age=26, sex="F", created_by=self.user
+            first_name="Ruby", last_name="Jack", age=26, sex="F", created_by=self.user1
         )
 
         author_2 = Author.objects.create(
@@ -63,11 +78,11 @@ class CloneMixinTestCase(TestCase):
             last_name="Jack",
             age=19,
             sex="F",
-            created_by=self.user,
+            created_by=self.user1,
         )
 
         name = "New Book"
-        book = Book.objects.create(name=name, created_by=self.user)
+        book = Book.objects.create(name=name, created_by=self.user1)
 
         book.authors.set([author_1, author_2])
 
@@ -80,21 +95,25 @@ class CloneMixinTestCase(TestCase):
             list(book_clone.authors.values_list("first_name", "last_name")),
         )
 
-    @patch("sample.models.Book._clone_many_to_many_fields", new_callable=PropertyMock)
-    def test_cloning_with_explicit__clone_many_to_many_fields(
+    @patch("sample.models.Book._clone_m2m_fields", new_callable=PropertyMock)
+    def test_cloning_with_explicit_clone_m2m_fields(
         self,
-        _clone_many_to_many_fields_mock,
+        _clone_m2m_fields_mock,
     ):
         author_1 = Author.objects.create(
-            first_name="Opubo", last_name="Jack", age=24, sex="F", created_by=self.user
+            first_name="Opubo", last_name="Jack", age=24, sex="M", created_by=self.user1
         )
 
         author_2 = Author.objects.create(
-            first_name="Nimabo", last_name="Jack", age=16, sex="F", created_by=self.user
+            first_name="Nimabo",
+            last_name="Jack",
+            age=16,
+            sex="M",
+            created_by=self.user1,
         )
-        _clone_many_to_many_fields_mock.return_value = ["authors"]
+        _clone_m2m_fields_mock.return_value = ["authors"]
 
-        book = Book.objects.create(name="New Book", created_by=self.user)
+        book = Book.objects.create(name="New Book", created_by=self.user1)
         book.authors.set([author_1, author_2])
 
         book_clone = book.make_clone()
@@ -104,19 +123,33 @@ class CloneMixinTestCase(TestCase):
             list(book_clone.authors.values_list("first_name", "last_name")),
         )
 
-    @patch("sample.models.Author._clone_many_to_many_fields", new_callable=PropertyMock)
-    def test_cloning_with_explicit_related__clone_many_to_many_fields(
+    @patch("sample.models.Author._clone_excluded_fields", new_callable=PropertyMock)
+    def test_cloning_with_clone_excluded_fields(
         self,
-        _clone_many_to_many_fields_mock,
+        _clone_excluded_fields_mock,
     ):
         author = Author.objects.create(
-            first_name="Opubo", last_name="Jack", age=24, sex="F", created_by=self.user
+            first_name="Opubo", last_name="Jack", age=24, sex="M", created_by=self.user1
+        )
+        _clone_excluded_fields_mock.return_value = ["last_name"]
+
+        author_clone = author.make_clone()
+
+        self.assertNotEqual(author.last_name, author_clone.last_name)
+
+    @patch("sample.models.Author._clone_m2m_fields", new_callable=PropertyMock)
+    def test_cloning_with_explicit_related_clone_m2m_fields(
+        self,
+        _clone_m2m_fields_mock,
+    ):
+        author = Author.objects.create(
+            first_name="Opubo", last_name="Jack", age=24, sex="M", created_by=self.user1
         )
 
-        _clone_many_to_many_fields_mock.return_value = ["books"]
+        _clone_m2m_fields_mock.return_value = ["books"]
 
-        book_1 = Book.objects.create(name="New Book 1", created_by=self.user)
-        book_2 = Book.objects.create(name="New Book 2", created_by=self.user)
+        book_1 = Book.objects.create(name="New Book 1", created_by=self.user1)
+        book_2 = Book.objects.create(name="New Book 2", created_by=self.user1)
         author.books.set([book_1, book_2])
 
         author_clone = author.make_clone()
@@ -125,7 +158,7 @@ class CloneMixinTestCase(TestCase):
             list(author.books.values_list("name")),
             list(author_clone.books.values_list("name")),
         )
-        _clone_many_to_many_fields_mock.assert_called_once()
+        _clone_m2m_fields_mock.assert_called_once()
 
     def test_cloning_unique_fields_is_valid(self):
         first_name = "Ruby"
@@ -134,7 +167,7 @@ class CloneMixinTestCase(TestCase):
             last_name="Jack",
             age=26,
             sex="F",
-            created_by=self.user,
+            created_by=self.user1,
         )
 
         author_clone = author.make_clone()
@@ -160,7 +193,7 @@ class CloneMixinTestCase(TestCase):
             last_name="Jack",
             age=26,
             sex="F",
-            created_by=self.user,
+            created_by=self.user1,
         )
         with self.assertRaises(IntegrityError):
             author.make_clone()
@@ -180,7 +213,7 @@ class CloneMixinTestCase(TestCase):
             last_name="Jack",
             age=26,
             sex="F",
-            created_by=self.user,
+            created_by=self.user1,
         )
 
         author_clone = author.make_clone()
@@ -200,7 +233,7 @@ class CloneMixinTestCase(TestCase):
             last_name=last_name,
             age=26,
             sex="F",
-            created_by=self.user,
+            created_by=self.user1,
         )
 
         author_clone = author.make_clone()
@@ -233,7 +266,7 @@ class CloneMixinTestCase(TestCase):
             last_name="Jack",
             age=26,
             sex="F",
-            created_by=self.user,
+            created_by=self.user1,
         )
 
         author_clone = author.make_clone()
@@ -262,7 +295,7 @@ class CloneMixinTestCase(TestCase):
             last_name="Jack",
             age=26,
             sex="F",
-            created_by=self.user,
+            created_by=self.user1,
         )
 
         with self.assertRaises(TransactionManagementError):
@@ -282,7 +315,7 @@ class CloneMixinTestCase(TestCase):
             last_name="Jack",
             age=26,
             sex="F",
-            created_by=self.user,
+            created_by=self.user1,
         )
 
         clones = author.bulk_clone(1000)
@@ -297,17 +330,17 @@ class CloneMixinTestCase(TestCase):
             )
 
     @patch(
-        "sample.models.Book._clone_many_to_one_or_one_to_many_fields",
+        "sample.models.Book._clone_m2m_or_o2m_fields",
         new_callable=PropertyMock,
     )
     def test_cloning_one_to_many_many_to_one(
         self,
-        _clone_many_to_one_or_one_to_many_fields_mock,
+        _clone_m2m_or_o2m_fields_mock,
     ):
-        _clone_many_to_one_or_one_to_many_fields_mock.return_value = ["pages"]
+        _clone_m2m_or_o2m_fields_mock.return_value = ["pages"]
 
         name = "New Book"
-        book = Book.objects.create(name=name, created_by=self.user)
+        book = Book.objects.create(name=name, created_by=self.user1)
 
         page_1 = Page.objects.create(content="Page 1 content", book=book)
         page_2 = Page.objects.create(content="Page 2 content", book=book)
@@ -325,7 +358,7 @@ class CloneMixinTestCase(TestCase):
             list(book.pages.values_list("id")),
             list(book_clone.pages.values_list("id")),
         )
-        _clone_many_to_one_or_one_to_many_fields_mock.assert_called_once()
+        _clone_m2m_or_o2m_fields_mock.assert_called_once()
 
 
 class CloneMixinTransactionTestCase(TransactionTestCase):

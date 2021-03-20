@@ -2,13 +2,9 @@ name: Test
 
 on:
   push:
-    paths-ignore:
-      - 'README.md'
     branches:
       - master
   pull_request:
-    paths-ignore:
-      - 'README.md'
     branches:
       - master
       - '**'
@@ -24,10 +20,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
+
       - uses: actions/cache@v2
         id: pip-cache
         with:
@@ -35,6 +33,7 @@ jobs:
           key: ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-${{ matrix.python-version }}-
+
       - uses: actions/cache@v2
         id: tox-cache
         with:
@@ -44,10 +43,12 @@ jobs:
           key: ${{ runner.os }}-tox-${{ matrix.python-version }}-${{ hashFiles('requirements.txt') }}-{{ hashFiles('tox.ini') }}
           restore-keys: |
             ${{ runner.os }}-tox-${{ matrix.python-version }}-
+
       - name: Install dependencies
         run: |
           pip install -U pip
-          make install-dev
+          make install-test
+          make install-lint
 
       - name: Run Lint
         uses: wearerequired/lint-action@v1.9.0
@@ -58,6 +59,7 @@ jobs:
           flake8: true
           git_email: "lint-action@django-clone.com"
           auto_fix: ${{ matrix.python-version != '2.7' && matrix.python-version != '3.5' }}
+
       - name: Test
         run: make tox
         env:

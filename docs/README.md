@@ -69,7 +69,7 @@ class TestModel(CloneMixin, models.Model):
     title = models.CharField(max_length=200)
     tags =  models.ManyToManyField('Tags')
 
-    _clone_many_to_many_fields = ['tags']
+    _clone_m2m_fields = ['tags']
     
 
 class Tags(models.Model):  #  To enable cloning tags directly use `CloneMixin` as shown above.
@@ -115,19 +115,19 @@ Out[9]: <QuerySet [<Tag: men>, <Tag: women>]>
 
 |    Field Names        |  Description |
 |:------------------------------:|:------------:|
-| `_clone_model_fields` | Restrict the list of fields to copy from the instance (By default: Copies all fields excluding auto-created/non editable model fields) |
-`_clone_many_to_many_fields` | Restricted Many to many fields (i.e Test.tags) |
-`_clone_many_to_one_or_one_to_many_fields` | Restricted Many to One/One to Many fields | 
-`_clone_one_to_one_fields` | Restricted One to One fields |
+| `_clone_fields` | Restrict the list of fields to copy from the instance (By default: Copies all fields excluding auto-created/non editable model fields) |
+`_clone_m2m_fields` | Restricted Many to many fields (i.e Test.tags) |
+`_clone_m2m_or_o2m_fields` | Restricted Many to One/One to Many fields | 
+`_clone_o2o_fields` | Restricted One to One fields |
 
 #### Implicit
 
 |  Field Names (include all except these fields.) | Description |
 |:--------------------:|:-----------:|
-| `_clone_excluded_model_fields` | Excluded model fields. |
-`_clone_excluded_many_to_many_fields` | Excluded many to many fields. |
-`_clone_excluded_many_to_one_or_one_to_many_fields` |  Excluded Many to One/One to Many fields. |
-`_clone_excluded_one_to_one_fields` | Excluded one to one fields. |
+| `_clone_excluded_fields` | Excluded model fields. |
+`_clone_excluded_m2m_fields` | Excluded many to many fields. |
+`_clone_excluded_m2o_or_o2m_fields` |  Excluded Many to One/One to Many fields. |
+`_clone_excluded_o2o_fields` | Excluded one to one fields. |
 
 
 > :warning: NOTE: Ensure to either set `_clone_excluded_*` or `_clone_*`. Using both would raise errors. 

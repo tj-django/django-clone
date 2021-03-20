@@ -30,6 +30,9 @@ clean-build: ## Clean project build artifacts.
 	@rm -rf dist/
 	@rm -rf *.egg-info
 
+migrations:
+	@$(MANAGE_PY) makemigrations
+
 migrate:
 	@$(MANAGE_PY) migrate
 
@@ -103,11 +106,12 @@ clean-test-all: clean-build  ## Clean build and test assets.
 
 
 # -----------------------------------------------------------
-# --------- Run black ---------------------------------------
+# --------- Fix lint errors ---------------------------------
 # -----------------------------------------------------------
-run-black:  ## Run black with inplace for model_clone and sample/models.py.
-	@pip install black
+lint-fix:  ## Run black with inplace for model_clone and sample/models.py.
+	@pip install black autopep8
 	@black model_clone sample/models.py sample_driver sample_assignment sample_company --line-length=95
+	@autopep8 -ir model_clone sample/models.py sample_driver sample_assignment sample_company --max-line-length=95
 
 # -----------------------------------------------------------
 # --------- Docs ---------------------------------------
