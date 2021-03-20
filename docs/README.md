@@ -12,7 +12,7 @@ Create copies of a model instance with explicit control on how the instance shou
 
 | Test | Vulnerabilities | Coverage | Code Quality  | Contributors  |  Code Style  |
 |:----:|:---------------:|:--------:|:-------------:|:-------------:| :------------:|
-| [![Test](https://github.com/tj-django/django-clone/workflows/Test/badge.svg)](https://github.com/tj-django/django-clone/actions?query=workflow%3ATest) | [![Known Vulnerabilities](https://snyk.io/test/github/tj-django/django-clone/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/tj-django/django-clone?targetFile=requirements.txt) | [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/b33dd02dbb034d7fa9886a99f5383ea6)](https://www.codacy.com/gh/tj-django/django-clone?utm_source=github.com&utm_medium=referral&utm_content=tj-django/django-clone&utm_campaign=Badge_Coverage) | [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b33dd02dbb034d7fa9886a99f5383ea6)](https://www.codacy.com/gh/tj-django/django-clone?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tj-django/django-clone&amp;utm_campaign=Badge_Grade) | [![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors) | [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) 
+| [![Test](https://github.com/tj-django/django-clone/workflows/Test/badge.svg)](https://github.com/tj-django/django-clone/actions?query=workflow%3ATest) | [![Known Vulnerabilities](https://snyk.io/test/github/tj-django/django-clone/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/tj-django/django-clone?targetFile=requirements.txt) | [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/b33dd02dbb034d7fa9886a99f5383ea6)](https://www.codacy.com/gh/tj-django/django-clone?utm_source=github.com&utm_medium=referral&utm_content=tj-django/django-clone&utm_campaign=Badge_Coverage) <br/> [![codecov](https://codecov.io/gh/tj-django/django-clone/branch/master/graph/badge.svg?token=2NE21Oe50Q)](https://codecov.io/gh/tj-django/django-clone)| [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b33dd02dbb034d7fa9886a99f5383ea6)](https://www.codacy.com/gh/tj-django/django-clone?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tj-django/django-clone&amp;utm_campaign=Badge_Grade) | [![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors) | [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) 
 
 
 ## Table of contents
@@ -97,15 +97,15 @@ In [4]: test_obj.tags.create(name='women')
 In [5]: test_obj.tags.all()
 Out[5]: <QuerySet [<Tag: men>, <Tag: women>]>
 
-In [6]: clone = test_obj.make_clone(attrs={'title': 'Updated title'})
+In [6]: test_obj_clone = test_obj.make_clone()
 
-In [7]: clone.pk
+In [7]: test_obj_clone.pk
 Out[7]: 2
 
-In [8]: clone.title
-Out[8]: 'Updated title'
+In [8]: test_obj_clone.title
+Out[8]: 'New copy 1'
 
-In [9]: clone.tags.all()
+In [9]: test_obj_clone.tags.all()
 Out[9]: <QuerySet [<Tag: men>, <Tag: women>]>
 ```
 
@@ -153,15 +153,15 @@ In [6]: test_obj.tags.create(name='women')
 In [7]: test_obj.tags.all()
 Out[7]: <QuerySet [<Tag: men>, <Tag: women>]>
 
-In [8]: clone = create_copy_of_instance(test_obj, attrs={'title': 'Updated title'})
+In [8]: test_obj_clone = create_copy_of_instance(test_obj, attrs={'title': 'Updated title'})
 
-In [9]: clone.pk
+In [9]: test_obj_clone.pk
 Out[9]: 2
 
-In [10]: clone.title
+In [10]: test_obj_clone.title
 Out[10]: 'Updated title'
 
-In [11]: clone.tags.all()
+In [11]: test_obj_clone.tags.all()
 Out[11]: <QuerySet []>
 ```
 
