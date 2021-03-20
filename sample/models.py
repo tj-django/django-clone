@@ -132,7 +132,9 @@ class Assignment(CloneMixin, models.Model):
     )
     hours = models.IntegerField(null=True, verbose_name=_("Amount of hours"))
     spots_available = models.IntegerField(null=True, verbose_name=_("Spots available"))
-    description = models.TextField(null=True, blank=True, verbose_name=_("Assignment description"))
+    description = models.TextField(
+        null=True, blank=True, verbose_name=_("Assignment description")
+    )
 
     # Model clone settings
     _clone_excluded_m2m_fields = ["applied_drivers", "chosen_drivers"]
