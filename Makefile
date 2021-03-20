@@ -75,6 +75,7 @@ release-to-pypi: increase-version tag-build  ## Release project to pypi
 	@git add .
 	@[ -z "`git status --porcelain`" ] && echo "No changes found." || git commit -am "Updated CHANGELOG.md."
 	@git push
+	@git push --tags
 
 # ----------------------------------------------------------
 # ---------- Upgrade project version (bumpversion)  --------
