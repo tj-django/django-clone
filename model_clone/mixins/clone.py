@@ -164,11 +164,7 @@ class CloneMixin(object):
             ):
                 value = getattr(instance, f.attname, f.get_default())
                 # Do not try to get unique value for enum type field
-                if (
-                    f.attname in unique_fields
-                    and isinstance(f, models.CharField)
-                    and not f.choices
-                ):
+                if f.attname in unique_fields and isinstance(f, models.CharField) and not f.choices:
                     value = clean_value(value, cls.UNIQUE_DUPLICATE_SUFFIX)
                     if cls.USE_UNIQUE_DUPLICATE_SUFFIX:
                         value = get_unique_value(
@@ -195,9 +191,7 @@ class CloneMixin(object):
                     "UNIQUE_DUPLICATE_SUFFIX is required.",
                     hint=(
                         "Please provide UNIQUE_DUPLICATE_SUFFIX"
-                        + " for {} or set USE_UNIQUE_DUPLICATE_SUFFIX=False".format(
-                            cls.__name__
-                        )
+                        + " for {} or set USE_UNIQUE_DUPLICATE_SUFFIX=False".format(cls.__name__)
                     ),
                     obj=cls,
                     id="{}.E001".format(ModelCloneConfig.name),
