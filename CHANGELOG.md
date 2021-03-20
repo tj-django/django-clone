@@ -4,9 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v1.2.0](https://github.com/tj-django/django-clone/releases/tag/v1.2.0) - 2021-03-20
+## [v2.0.0](https://github.com/tj-django/django-clone/releases/tag/v2.0.0) - 2021-03-20
 
-<small>[Compare with v1.1.10](https://github.com/tj-django/django-clone/compare/v1.1.10...v1.2.0)</small>
+<small>[Compare with v1.1.10](https://github.com/tj-django/django-clone/compare/v1.1.10...v2.0.0)</small>
 
 ### Added
 - Added spacing. ([af86ae6](https://github.com/tj-django/django-clone/commit/af86ae6b570cb2c1101d59814e7dadb3b897eb9e) by Tonye Jack).
