@@ -12,29 +12,29 @@ User = get_user_model()
 class CloneMixinTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.user1 = User.objects.create(username='user 1')
-        cls.user2 = User.objects.create(username='user 2')
+        cls.user1 = User.objects.create(username="user 1")
+        cls.user2 = User.objects.create(username="user 2")
 
     def test_cloning_model_with_custom_id(self):
         instance = Library.objects.create(name="First library", user=self.user1)
-        clone = instance.make_clone({'user': self.user2})
+        clone = instance.make_clone({"user": self.user2})
         self.assertNotEqual(instance.pk, clone.pk)
 
     def test_cloning_explict_fields(self):
         name = "New Library"
         instance = Library.objects.create(name=name, user=self.user1)
-        clone = instance.make_clone({'user': self.user2})
+        clone = instance.make_clone({"user": self.user2})
 
         self.assertEqual(instance.name, name)
 
         self.assertNotEqual(instance.pk, clone.pk)
         self.assertNotEqual(instance.name, clone.name)
-        
+
     def test_cloning_unique_fk_field(self):
         name = "New Library"
         instance = Library.objects.create(name=name, user=self.user1)
-        clone = instance.make_clone({'user': self.user2})
-    
+        clone = instance.make_clone({"user": self.user2})
+
         self.assertNotEqual(instance.pk, clone.pk)
         self.assertNotEqual(instance.user, clone.user)
 
@@ -48,7 +48,7 @@ class CloneMixinTestCase(TestCase):
         name = "New Library"
         instance = Library.objects.create(name=name, user=self.user1)
         new_name = "My New Library"
-        clone = instance.make_clone(attrs={"name": new_name, 'user': self.user2})
+        clone = instance.make_clone(attrs={"name": new_name, "user": self.user2})
 
         self.assertEqual(instance.name, name)
 
@@ -105,7 +105,11 @@ class CloneMixinTestCase(TestCase):
         )
 
         author_2 = Author.objects.create(
-            first_name="Nimabo", last_name="Jack", age=16, sex="M", created_by=self.user1
+            first_name="Nimabo",
+            last_name="Jack",
+            age=16,
+            sex="M",
+            created_by=self.user1,
         )
         _clone_m2m_fields_mock.return_value = ["authors"]
 
