@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
                 (
                     "title",
                     models.CharField(
-                        blank=True, max_length=100, null=True, verbose_name="Job title"
+                        blank=True, default='', max_length=100, verbose_name='Job title'
                     ),
                 ),
                 ("assignment_date", models.DateField(blank=True, null=True)),
