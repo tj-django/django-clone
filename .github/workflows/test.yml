@@ -47,7 +47,8 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -U pip
-          make install-dev
+          make install-test
+          make install-lint
 
       - name: Run Lint
         uses: wearerequired/lint-action@v1.9.0
