@@ -59,7 +59,7 @@ class CloneModelAdmin(ModelAdmin):
                 request,
                 _("Successfully created: {} new duplicates".format(len(clone_obj_ids))),
             )
-    
+
     make_clone.short_description = ungettext_lazy(
         "Duplicate selected %(verbose_name)s",
         "Duplicate selected %(verbose_name_plural)s",
