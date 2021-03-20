@@ -49,7 +49,7 @@ jobs:
         uses: wearerequired/lint-action@v1.9.0
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.owner.login == github.repository_owner }}
         with:
-          github_token: ${{ secrets.PAT_TOKEN }}
+          github_token: ${{ secrets.github_token }}
           black: ${{ matrix.python-version != '2.7' && matrix.python-version != '3.5' }}
           flake8: true
           git_email: "lint-action@django-clone.com"
