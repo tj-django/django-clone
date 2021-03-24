@@ -172,7 +172,7 @@ class CloneMixin(object):
                             obj=instance,
                             fname=f.attname,
                             value=value,
-                            transform=slugify if isinstance(f, SlugField) else str,
+                            transform=(slugify if isinstance(f, SlugField) else str),
                             suffix=cls.UNIQUE_DUPLICATE_SUFFIX,
                             max_length=f.max_length,
                             max_attempts=cls.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS,
@@ -206,7 +206,9 @@ class CloneMixin(object):
                     "Conflicting configuration.",
                     hint=(
                         'Please provide either "_clone_fields"'
-                        + ' or "_clone_excluded_fields" for model {}'.format(cls.__name__)
+                        + ' or "_clone_excluded_fields" for model {}'.format(
+                            cls.__name__
+                        )
                     ),
                     obj=cls,
                     id="{}.E002".format(ModelCloneConfig.name),
@@ -219,7 +221,9 @@ class CloneMixin(object):
                     "Conflicting configuration.",
                     hint=(
                         'Please provide either "_clone_m2m_fields"'
-                        + ' or "_clone_excluded_m2m_fields" for model {}'.format(cls.__name__)
+                        + ' or "_clone_excluded_m2m_fields" for model {}'.format(
+                            cls.__name__
+                        )
                     ),
                     obj=cls,
                     id="{}.E002".format(ModelCloneConfig.name),
@@ -239,7 +243,9 @@ class CloneMixin(object):
                         "Please provide either "
                         + '"_clone_m2o_or_o2m_fields"'
                         + " or "
-                        + '"_clone_excluded_m2o_or_o2m_fields" for {}'.format(cls.__name__)
+                        + '"_clone_excluded_m2o_or_o2m_fields" for {}'.format(
+                            cls.__name__
+                        )
                     ),
                     obj=cls,
                     id="{}.E002".format(ModelCloneConfig.name),
@@ -364,7 +370,9 @@ class CloneMixin(object):
         for field in one_to_one_fields:
             rel_object = getattr(self, field.related_name, None)
             if rel_object:
-                if hasattr(rel_object, "make_clone") and callable(rel_object.make_clone):
+                if hasattr(rel_object, "make_clone") and callable(
+                    rel_object.make_clone
+                ):
                     rel_object.make_clone(
                         attrs={field.remote_field.name: duplicate}, sub_clone=True
                     )
@@ -380,7 +388,9 @@ class CloneMixin(object):
             items = []
             for item in getattr(self, field.related_name).all():
                 try:
-                    item_clone = item.make_clone(attrs={field.remote_field.name: duplicate})
+                    item_clone = item.make_clone(
+                        attrs={field.remote_field.name: duplicate}
+                    )
                 except IntegrityError:
                     item_clone = item.make_clone(
                         attrs={field.remote_field.name: duplicate}, sub_clone=True
