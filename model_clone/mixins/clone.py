@@ -77,20 +77,20 @@ class CloneMixin(object):
     """
 
     # Included fields
-    _clone_fields: List[str] = []
-    _clone_m2m_fields: List[str] = []
-    _clone_m2o_or_o2m_fields: List[str] = []
-    _clone_o2o_fields: List[str] = []
+    _clone_fields = []  # type: List[str]
+    _clone_m2m_fields = []  # type: List[str]
+    _clone_m2o_or_o2m_fields = []  # type: List[str]
+    _clone_o2o_fields = []  # type: List[str]
 
     # Excluded fields
-    _clone_excluded_fields: List[str] = []
-    _clone_excluded_m2m_fields: List[str] = []
-    _clone_excluded_m2o_or_o2m_fields: List[str] = []
-    _clone_excluded_o2o_fields: List[str] = []
+    _clone_excluded_fields = []  # type: List[str]
+    _clone_excluded_m2m_fields = []  # type: List[str]
+    _clone_excluded_m2o_or_o2m_fields = []  # type: List[str]
+    _clone_excluded_o2o_fields = []  # type: List[str]
 
-    UNIQUE_DUPLICATE_SUFFIX: str = "copy"
-    USE_UNIQUE_DUPLICATE_SUFFIX: bool = True
-    MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS: int = 100
+    UNIQUE_DUPLICATE_SUFFIX = "copy"  # type: str
+    USE_UNIQUE_DUPLICATE_SUFFIX = True  # type: bool
+    MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS = 100  # type: int
 
     @staticmethod
     def __unpack_unique_together(opts, only_fields=()):
