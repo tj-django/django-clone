@@ -337,13 +337,6 @@ class CloneMixinTestCase(TestCase):
                 return self.__val > other
 
         max_unique_query_attempts_mock.return_value = InvalidNumber(100)
-
-        first_name = (
-            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, "
-            "sed diam nonumy eirmod tempor invidunt ut labore et dolore "
-            "magna aliquyam erat, sed diam voluptua. At vero eos et accusam "
-            "et justo duo dolores "
-        )
         name = "New Book"
         book = Book.objects.create(name=name, created_by=self.user1, slug=slugify(name))
 

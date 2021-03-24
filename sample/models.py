@@ -2,7 +2,6 @@ from uuid import uuid4
 
 from django.conf import settings
 from django.db import models
-from django.utils.text import slugify
 from django.utils.translation import gettext as _
 
 from model_clone import CloneMixin
