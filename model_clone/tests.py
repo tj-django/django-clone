@@ -259,7 +259,8 @@ class CloneMixinTestCase(TestCase):
         )
 
     def test_cloning_unique_fields_max_length(self):
-        """Max unique field length handling
+        """
+        Max unique field length handling
 
         Set the initial value for the unique field to max length
         and test to append the [ copy count]
@@ -319,7 +320,9 @@ class CloneMixinTestCase(TestCase):
         max_unique_query_attempts_mock,
     ):
         class InvalidNumber(object):
-            """Return False for a number that should always be less than the compared value."""
+            """
+            Return False for a number that should always be less than the compared value.
+            """
 
             def __init__(self, val):
                 self.__val = val
