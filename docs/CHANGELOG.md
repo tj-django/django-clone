@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [v2.0.2](https://github.com/tj-django/django-clone/releases/tag/v2.0.2) - 2021-03-24
+
+<small>[Compare with v2.0.1](https://github.com/tj-django/django-clone/compare/v2.0.1...v2.0.2)</small>
+
+### Fixed
+- Fix code style issues with black ([1a450ef](https://github.com/tj-django/django-clone/commit/1a450ef545aa04d17de1db74720d4e110e476a98) by Lint Action).
+- Fixed test ([34a77e6](https://github.com/tj-django/django-clone/commit/34a77e68133c1f417947f408818decafd074ada6) by Tonye Jack).
+- Fixed lint errors. ([5f4b4ea](https://github.com/tj-django/django-clone/commit/5f4b4eae1c313565cad43efea6d38c2c41e8671b) by Tonye Jack).
+- Fixed bug with cloning slugs. ([bdb6029](https://github.com/tj-django/django-clone/commit/bdb60295f84359ed9f43fea31af2f0c076c5d623) by Tonye Jack).
+- Fixed short description. ([64ce104](https://github.com/tj-django/django-clone/commit/64ce104f03c5718a1e5b95e256b5d50700ff8803) by Tonye Jack).
+- Fixed migrations. ([4ede994](https://github.com/tj-django/django-clone/commit/4ede9947c2a6528598766a7b3cec04fb105d03b6) by Tonye Jack).
+- Fixed type hints. ([afae2d7](https://github.com/tj-django/django-clone/commit/afae2d7f9dd46f3394015a142f9a85d4d45e0ea8) by Tonye Jack).
+- Fixed clean. ([3ead462](https://github.com/tj-django/django-clone/commit/3ead462bc16c79594609539de73aa89a51019f5a) by Tonye Jack).
+- Fixed imports. ([5e04253](https://github.com/tj-django/django-clone/commit/5e042538055ed9860cd2bd9d78cd7683dc4cd376) by Tonye Jack).
+
+
 ## [v2.0.1](https://github.com/tj-django/django-clone/releases/tag/v2.0.1) - 2021-03-24
 
 <small>[Compare with v2.0.0](https://github.com/tj-django/django-clone/compare/v2.0.0...v2.0.1)</small>
