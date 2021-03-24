@@ -83,7 +83,7 @@ def create_copy_of_instance(instance, exclude=(), save_new=True, attrs=None):
 
 def clean_value(value, suffix):
     # type: (str, str) -> str
-    return re.sub(r"\s{}\s[\d]$".format(suffix), "", value, flags=re.I)
+    return re.sub(r"([\s-]?){}[\s-][\d]$".format(suffix), "", value, flags=re.I)
 
 
 @contextlib.contextmanager
@@ -111,7 +111,7 @@ def context_mutable_attribute(obj, key, value):
             setattr(obj, key, default)
 
 
-def get_value(value, suffix, max_length, index):
+def get_value(value, suffix, transform, max_length, index):
     duplicate_suffix = " {} {}".format(suffix, index)
     total_length = len(value + duplicate_suffix)
 
@@ -119,14 +119,14 @@ def get_value(value, suffix, max_length, index):
         # Truncate the value to max_length - suffix length.
         value = value[: max_length - len(duplicate_suffix)]
 
-    return "{}{}".format(value, duplicate_suffix)
+    return transform("{}{}".format(value, duplicate_suffix))
 
 
-def generate_value(value, suffix, max_length, max_attempts):
-    yield get_value(value, suffix, max_length, 1)
+def generate_value(value, suffix, transform, max_length, max_attempts):
+    yield get_value(value, suffix, transform, max_length, 1)
 
     for i in range(1, max_attempts):
-        yield get_value(value, suffix, max_length, i)
+        yield get_value(value, suffix, transform, max_length, i)
 
     raise StopIteration(
         "CloneError: max unique attempts for {} exceeded ({})".format(
@@ -135,9 +135,9 @@ def generate_value(value, suffix, max_length, max_attempts):
     )
 
 
-def get_unique_value(obj, fname, value, suffix, max_length, max_attempts):
+def get_unique_value(obj, fname, value, transform, suffix, max_length, max_attempts):
     qs = obj.__class__._default_manager.all()
-    it = generate_value(value, suffix, max_length, max_attempts)
+    it = generate_value(value, suffix, transform, max_length, max_attempts)
 
     new = six.next(it)
     kwargs = {fname: new}
