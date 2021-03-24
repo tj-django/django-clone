@@ -11,28 +11,30 @@ def create_copy_of_instance(instance, exclude=(), save_new=True, attrs=None):
     """
     Clone an instance of `django.db.models.Model`.
 
-    Args:
-        instance(django.db.models.Model): The model instance to clone.
-        exclude(list|set): List or set of fields to exclude from unique validation.
-        save_new(bool): Save the model instance after duplication calling .save().
-        attrs(dict): Kwargs of field and value to set on the duplicated instance.
+    :param instance: The model instance to clone.
+    :type instance: django.db.models.Model
+    :param exclude: List or set of fields to exclude from unique validation.
+    :type exclude: list|set
+    :param save_new: Save the model instance after duplication calling .save().
+    :type save_new: bool
+    :param attrs: Kwargs of field and value to set on the duplicated instance.
+    :type attrs: dict
+    :return: The new duplicated instance.
+    :rtype: django.db.models.Model
 
-    Returns:
-        (django.db.models.Model): The new duplicated instance.
-
-    Examples:
-        >>> from django.contrib.auth import get_user_model
-        >>> from sample.models import Book
-        >>> instance = Book.objects.create(name='The Beautiful Life')
-        >>> instance.pk
-        1
-        >>> instance.name
-        "The Beautiful Life"
-        >>> duplicate = instance.make_clone(attrs={'name': 'Duplicate Book 2'})
-        >>> duplicate.pk
-        2
-        >>> duplicate.name
-        "Duplicate Book 2"
+    :example:
+    >>> from django.contrib.auth import get_user_model
+    >>> from sample.models import Book
+    >>> instance = Book.objects.create(name='The Beautiful Life')
+    >>> instance.pk
+    1
+    >>> instance.name
+    "The Beautiful Life"
+    >>> duplicate = instance.make_clone(attrs={'name': 'Duplicate Book 2'})
+    >>> duplicate.pk
+    2
+    >>> duplicate.name
+    "Duplicate Book 2"
     """
 
     defaults = {}
@@ -52,13 +54,17 @@ def create_copy_of_instance(instance, exclude=(), save_new=True, attrs=None):
         if all(
             [
                 not f.auto_created,
+                not f.primary_key,
                 f.concrete,
                 f.editable,
                 f not in instance.__class__._meta.related_objects,
                 f not in instance.__class__._meta.many_to_many,
             ]
         ):
-            defaults[f.attname] = getattr(instance, f.attname, f.get_default())
+            # Prevent duplicates
+            if f.name not in attrs:
+                defaults[f.attname] = getattr(instance, f.attname, f.get_default())
+
     defaults.update(attrs)
 
     new_obj = instance.__class__(**defaults)
@@ -66,7 +72,7 @@ def create_copy_of_instance(instance, exclude=(), save_new=True, attrs=None):
     exclude = exclude or [
         f.name
         for f in instance._meta.fields
-        if any([f.name not in defaults, f.has_default(), f.null])
+        if any([all([f.name not in defaults, f.attname not in defaults]), f.has_default(), f.null])
     ]
 
     try:
