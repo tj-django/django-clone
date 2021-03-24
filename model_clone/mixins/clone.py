@@ -1,4 +1,4 @@
-from itertools import repeat
+from itertools import repeat, chain
 from typing import List, Optional, Dict
 
 from conditional import conditional
@@ -18,6 +18,7 @@ from model_clone.utils import (
 
 
 class CloneMixin(object):
+
     """
     CloneMixin mixin to duplicate an object using the model cls.
 
@@ -76,20 +77,20 @@ class CloneMixin(object):
     """
 
     # Included fields
-    _clone_fields = []
-    _clone_m2m_fields = []
-    _clone_m2o_or_o2m_fields = []
-    _clone_o2o_fields = []
+    _clone_fields: List[str] = []
+    _clone_m2m_fields: List[str] = []
+    _clone_m2o_or_o2m_fields: List[str] = []
+    _clone_o2o_fields: List[str] = []
 
     # Excluded fields
-    _clone_excluded_fields = []
-    _clone_excluded_m2m_fields = []
-    _clone_excluded_m2o_or_o2m_fields = []
-    _clone_excluded_o2o_fields = []
+    _clone_excluded_fields: List[str] = []
+    _clone_excluded_m2m_fields: List[str] = []
+    _clone_excluded_m2o_or_o2m_fields: List[str] = []
+    _clone_excluded_o2o_fields: List[str] = []
 
-    UNIQUE_DUPLICATE_SUFFIX = "copy"
-    USE_UNIQUE_DUPLICATE_SUFFIX = True
-    MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS = 100
+    UNIQUE_DUPLICATE_SUFFIX: str = "copy"
+    USE_UNIQUE_DUPLICATE_SUFFIX: bool = True
+    MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS: int = 100
 
     @staticmethod
     def __unpack_unique_together(opts, only_fields=()):
@@ -104,11 +105,7 @@ class CloneMixin(object):
         """
         fields = []
         for field in opts.unique_together:
-            if isinstance(field, str):
-                if field in only_fields:
-                    fields.append(field)
-            else:
-                fields.extend(list([f for f in field if f in only_fields]))
+            fields.extend(list([f for f in field if f in only_fields]))
         return fields
 
     @classmethod
@@ -381,9 +378,14 @@ class CloneMixin(object):
                         attrs={field.remote_field.name: duplicate}, sub_clone=True
                     )
                 else:
-                    rel_object.pk = None
-                    setattr(rel_object, field.remote_field.name, duplicate)
-                    rel_object.save()
+                    try:
+                        rel_object.pk = None
+                        setattr(rel_object, field.remote_field.name, duplicate)
+                        rel_object.save()
+                    except IntegrityError:
+                        # Possibly Monkey patch make_clone
+                        # Case where the unique fields has an object with unique constraints.
+                        raise
 
         # Clone one to many/many to one fields
         for field in many_to_one_or_one_to_many_fields:
@@ -459,7 +461,7 @@ class CloneMixin(object):
             ):
                 if not self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS >= count:
                     raise AssertionError(
-                        "An Unknown error has occured: Expected ({}) >= ({})".format(
+                        "An Unknown error has occurred: Expected ({}) >= ({})".format(
                             self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS, count
                         ),
                     )

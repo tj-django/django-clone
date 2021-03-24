@@ -2,6 +2,7 @@ from uuid import uuid4
 
 from django.conf import settings
 from django.db import models
+from django.utils.text import slugify
 from django.utils.translation import gettext as _
 
 from model_clone import CloneMixin
@@ -36,6 +37,7 @@ class Author(CloneModel):
 
 class Book(CloneModel):
     name = models.CharField(max_length=2000)
+    slug = models.SlugField(unique=True)
     authors = models.ManyToManyField(Author, related_name="books")
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
