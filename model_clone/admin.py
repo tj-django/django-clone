@@ -6,11 +6,11 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _, ungettext_lazy
 
-from model_clone import CloneMixin
+from model_clone.mixins.clone import CloneMixin
 
 
-class CloneModelAdmin(ModelAdmin):
-    """Admin to handle duplication of models."""
+class CloneModelAdminMixin(object):
+    """Mixin to handle duplication of models."""
 
     include_duplicate_action = True
     include_duplicate_object_link = True
@@ -73,3 +73,7 @@ class CloneModelAdmin(ModelAdmin):
             actions.extend(self.get_action(action) for action in ["make_clone"])
 
         return actions
+
+
+class CloneModelAdmin(CloneModelAdminMixin, ModelAdmin):
+    """Clone model admin view."""

@@ -36,6 +36,7 @@ class Author(CloneModel):
 
 class Book(CloneModel):
     name = models.CharField(max_length=2000)
+    slug = models.SlugField(unique=True)
     authors = models.ManyToManyField(Author, related_name="books")
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,

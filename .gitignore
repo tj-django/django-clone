@@ -17,3 +17,5 @@ coverage.*
 .envrc
 htmlcov/
 test-reports/
+
+.mypy_cache

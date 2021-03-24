@@ -57,6 +57,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("name", models.CharField(max_length=2000)),
+                ("slug", models.SlugField(unique=True)),
                 (
                     "authors",
                     models.ManyToManyField(related_name="books", to="sample.Author"),

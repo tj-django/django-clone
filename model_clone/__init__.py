@@ -1,5 +1,8 @@
+"""
+Duplicate instances of a model using the following mixin and admin view.
+"""
+
+from model_clone.admin import CloneModelAdmin, CloneModelAdminMixin
 from model_clone.mixins.clone import CloneMixin
-from model_clone.admin import CloneModelAdmin
 
-
-__all__ = ["CloneMixin", "CloneModelAdmin"]
+__all__ = ["CloneMixin", "CloneModelAdmin", "CloneModelAdminMixin"]
