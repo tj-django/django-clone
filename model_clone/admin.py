@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _, ungettext_lazy
 
-from model_clone import CloneMixin
+from model_clone.mixins.clone import CloneMixin
 
 
 class CloneModelAdmin(ModelAdmin):
