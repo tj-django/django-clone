@@ -169,15 +169,14 @@ class CloneMixin(object):
                     value = clean_value(value, cls.UNIQUE_DUPLICATE_SUFFIX)
                     if cls.USE_UNIQUE_DUPLICATE_SUFFIX:
                         value = get_unique_value(
-                            instance,
-                            f.attname,
-                            value,
-                            cls.UNIQUE_DUPLICATE_SUFFIX,
-                            f.max_length,
-                            cls.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS,
+                            obj=instance,
+                            fname=f.attname,
+                            value=value,
+                            transform=(slugify if isinstance(f, SlugField) else str),
+                            suffix=cls.UNIQUE_DUPLICATE_SUFFIX,
+                            max_length=f.max_length,
+                            max_attempts=cls.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS,
                         )
-                    if isinstance(f, SlugField):
-                        value = slugify(value)
                 defaults[f.attname] = value
 
         return cls(**defaults)
