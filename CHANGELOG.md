@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [v2.0.0](https://github.com/tj-django/django-clone/releases/tag/v2.0.0) - 2021-03-20
+
+<small>[Compare with v1.1.10](https://github.com/tj-django/django-clone/compare/v1.1.10...v2.0.0)</small>
+
+### Added
+- Added spacing. ([af86ae6](https://github.com/tj-django/django-clone/commit/af86ae6b570cb2c1101d59814e7dadb3b897eb9e) by Tonye Jack).
+- Added docs. ([a35d976](https://github.com/tj-django/django-clone/commit/a35d976f0fdeead88736bd9c2395434ed5aa2c3a) by Tonye Jack).
+
+### Fixed
+- Fix code style issues with black ([fb1377f](https://github.com/tj-django/django-clone/commit/fb1377f704b1bce4f69286e484eac0b6515b6f63) by Lint Action).
+- Fixed lint errors. ([43f9887](https://github.com/tj-django/django-clone/commit/43f9887e61c13607bdd80212f0c37fd1919671f4) by Tonye Jack).
+- Fixed token. ([237b2f1](https://github.com/tj-django/django-clone/commit/237b2f173cc69a80125f1c67712d82d43b17ff19) by Tonye Jack).
+
+### Removed
+- Removed unused code ([18943b6](https://github.com/tj-django/django-clone/commit/18943b69227340e7dddc2e1416c058db48d5b34f) by Tonye Jack).
+- Remove parallel ([8929f85](https://github.com/tj-django/django-clone/commit/8929f855f7e77ae8ff7223ec5d4f0adf21db0b47) by Tonye Jack).
+
+
 ## [v1.1.10](https://github.com/tj-django/django-clone/releases/tag/v1.1.10) - 2020-12-05
 
 <small>[Compare with v1.1.9](https://github.com/tj-django/django-clone/compare/v1.1.9...v1.1.10)</small>
