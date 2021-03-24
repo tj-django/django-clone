@@ -330,14 +330,14 @@ class CloneMixinTestCase(TestCase):
             )
 
     @patch(
-        "sample.models.Book._clone_m2m_or_o2m_fields",
+        "sample.models.Book._clone_m2o_or_o2m_fields",
         new_callable=PropertyMock,
     )
     def test_cloning_one_to_many_many_to_one(
         self,
-        _clone_m2m_or_o2m_fields_mock,
+        _clone_m2o_or_o2m_fields_mock,
     ):
-        _clone_m2m_or_o2m_fields_mock.return_value = ["pages"]
+        _clone_m2o_or_o2m_fields_mock.return_value = ["pages"]
 
         name = "New Book"
         book = Book.objects.create(name=name, created_by=self.user1)
@@ -358,7 +358,7 @@ class CloneMixinTestCase(TestCase):
             list(book.pages.values_list("id")),
             list(book_clone.pages.values_list("id")),
         )
-        _clone_m2m_or_o2m_fields_mock.assert_called_once()
+        _clone_m2o_or_o2m_fields_mock.assert_called_once()
 
 
 class CloneMixinTransactionTestCase(TransactionTestCase):
