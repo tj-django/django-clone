@@ -259,7 +259,8 @@ class CloneMixinTestCase(TestCase):
         )
 
     def test_cloning_unique_fields_max_length(self):
-        """Max unique field length handling.
+        """
+        Max unique field length handling.
 
         Set the initial value for the unique field to max length
         and test to append the [ copy count]
