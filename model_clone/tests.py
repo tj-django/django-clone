@@ -257,6 +257,36 @@ class CloneMixinTestCase(TestCase):
             author_clone.last_name,
             "{} {} {}".format(last_name, Author.UNIQUE_DUPLICATE_SUFFIX, 1),
         )
+        
+    def test_cloning_unique_slug_field(self):
+        name = "New Book"
+        book = Book.objects.create(name=name, created_by=self.user1, slug=slugify(name))
+    
+        book_clone = book.make_clone()
+
+        self.assertEqual(
+            book_clone.slug,
+            slugify("{} {} {}".format(book.slug, Book.UNIQUE_DUPLICATE_SUFFIX, 1)),
+        )
+
+    def test_making_sub_clones_of_a_unique_slug_field(self):
+        name = "New Book"
+        book = Book.objects.create(name=name, created_by=self.user1, slug=slugify(name))
+    
+        book_clone = book.make_clone()
+    
+        self.assertEqual(
+            book_clone.slug,
+            slugify("{} {} {}".format(book.slug, Book.UNIQUE_DUPLICATE_SUFFIX, 1)),
+        )
+        
+        for i in range(2, 7):
+            book_clone = book_clone.make_clone()
+    
+            self.assertEqual(
+                book_clone.slug,
+                slugify("{} {} {}".format(book.slug, Book.UNIQUE_DUPLICATE_SUFFIX, i)),
+            )
 
     def test_cloning_unique_fields_max_length(self):
         """
