@@ -32,7 +32,9 @@ class CreateCopyOfInstanceTestCase(TestCase):
 
     def test_cloning_excluded_field_without_a_fallback_value_is_invalid(self):
         name = "New Library"
-        instance = Book.objects.create(name=name, created_by=self.user1, slug=slugify(name))
+        instance = Book.objects.create(
+            name=name, created_by=self.user1, slug=slugify(name)
+        )
 
         with self.assertRaises(IntegrityError):
             create_copy_of_instance(
