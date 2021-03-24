@@ -378,14 +378,11 @@ class CloneMixin(object):
                         attrs={field.remote_field.name: duplicate}, sub_clone=True
                     )
                 else:
-                    try:
-                        rel_object.pk = None
-                        setattr(rel_object, field.remote_field.name, duplicate)
-                        rel_object.save()
-                    except IntegrityError:
-                        # Possibly Monkey patch make_clone
-                        # Case where the unique fields has an object with unique constraints.
-                        raise
+                    # Possibly Monkey patch make_clone
+                    # Case where the unique fields has an object with unique constraints.
+                    rel_object.pk = None
+                    setattr(rel_object, field.remote_field.name, duplicate)
+                    rel_object.save()
 
         # Clone one to many/many to one fields
         for field in many_to_one_or_one_to_many_fields:
