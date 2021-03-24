@@ -48,7 +48,7 @@ class TestModel(CloneModel):
     title = models.CharField(max_length=200)
     tags =  models.ManyToManyField('Tags')
 
-    _clone_many_to_many_fields = ['tags']
+    _clone_m2m_fields = ['tags']
     
 
 class Tags(models.Model):  #  To enable cloning tags directly use `CloneModel` as shown above.
@@ -235,7 +235,7 @@ class TestModelAdmin(CloneModelAdmin):
 
 ![Screenshot](Duplicate-button.png)
 
-##### CloneModelAdmin class attributes
+### CloneModelAdmin class attributes
 
 ```python
 
