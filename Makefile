@@ -103,7 +103,7 @@ clean-test-all: clean-build  ## Clean build and test assets.
 	@rm -rf test-results
 	@rm -rf .pytest_cache/
 	@rm -f test.db
-	@rm -f .coverage.* .coverage coverage.xml
+	@rm -f ".coverage.*" .coverage coverage.xml
 
 
 # -----------------------------------------------------------
