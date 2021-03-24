@@ -91,7 +91,6 @@ class CloneMixin(object):
     UNIQUE_DUPLICATE_SUFFIX = "copy"  # type: str
     USE_UNIQUE_DUPLICATE_SUFFIX = True  # type: bool
     MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS = 100  # type: int
-    SLUG_FUNCTION = slugify
 
     @staticmethod
     def __unpack_unique_together(opts, only_fields=()):
@@ -173,7 +172,7 @@ class CloneMixin(object):
                             obj=instance,
                             fname=f.attname,
                             value=value,
-                            transform=cls.SLUG_FUNCTION if isinstance(f, SlugField) else str,
+                            transform=slugify if isinstance(f, SlugField) else str,
                             suffix=cls.UNIQUE_DUPLICATE_SUFFIX,
                             max_length=f.max_length,
                             max_attempts=cls.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS,
