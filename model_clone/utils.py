@@ -72,7 +72,9 @@ def create_copy_of_instance(instance, exclude=(), save_new=True, attrs=None):
     exclude = exclude or [
         f.name
         for f in instance._meta.fields
-        if any([all([f.name not in defaults, f.attname not in defaults]), f.has_default(), f.null])
+        if any(
+            [all([f.name not in defaults, f.attname not in defaults]), f.has_default(), f.null]
+        )
     ]
 
     try:
@@ -135,9 +137,7 @@ def generate_value(value, suffix, transform, max_length, max_attempts):
         yield get_value(value, suffix, transform, max_length, i)
 
     raise StopIteration(
-        "CloneError: max unique attempts for {} exceeded ({})".format(
-            value, max_attempts
-        )
+        "CloneError: max unique attempts for {} exceeded ({})".format(value, max_attempts)
     )
 
 

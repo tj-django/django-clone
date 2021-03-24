@@ -7,6 +7,8 @@ from model_clone.mixins.clone import CloneMixin
 from model_clone.utils import create_copy_of_instance
 
 __all__ = [
-    "CloneMixin", "CloneModelAdmin", "CloneModelAdminMixin",
+    "CloneMixin",
+    "CloneModelAdmin",
+    "CloneModelAdminMixin",
     "create_copy_of_instance",
 ]

@@ -19,22 +19,22 @@ class CreateCopyOfInstanceTestCase(TestCase):
     def test_cloning_model_with_custom_id(self):
         instance = Library.objects.create(name="First library", user=self.user1)
         clone = create_copy_of_instance(instance, attrs={"user": self.user2})
-        
+
         self.assertNotEqual(instance.pk, clone.pk)
         self.assertEqual(clone.user, self.user2)
-    
+
     def test_cloning_unique_fk_field_without_a_fallback_value_is_invalid(self):
         name = "New Library"
         instance = Library.objects.create(name=name, user=self.user1)
-        
+
         with self.assertRaises(ValidationError):
             create_copy_of_instance(instance)
 
     def test_cloning_excluded_field_without_a_fallback_value_is_invalid(self):
         name = "New Library"
-        instance = Book.objects.create(
-            name=name, created_by=self.user1, slug=slugify(name)
-        )
-    
+        instance = Book.objects.create(name=name, created_by=self.user1, slug=slugify(name))
+
         with self.assertRaises(IntegrityError):
-            create_copy_of_instance(instance, exclude={'slug'}, attrs={"created_by": self.user2})
+            create_copy_of_instance(
+                instance, exclude={"slug"}, attrs={"created_by": self.user2}
+            )
