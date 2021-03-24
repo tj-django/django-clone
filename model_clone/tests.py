@@ -60,7 +60,9 @@ class CloneMixinTestCase(TestCase):
 
     def test_cloning_using_auto_now_field_is_updated(self):
         name = "New Book"
-        instance = Book.objects.create(name=name, created_by=self.user1, slug=slugify(name))
+        instance = Book.objects.create(
+            name=name, created_by=self.user1, slug=slugify(name)
+        )
         new_name = "My New Book"
         clone = instance.make_clone(attrs={"name": new_name})
 
@@ -114,7 +116,9 @@ class CloneMixinTestCase(TestCase):
         )
         _clone_m2m_fields_mock.return_value = ["authors"]
 
-        book = Book.objects.create(name="New Book", created_by=self.user1, slug=slugify("New Book"))
+        book = Book.objects.create(
+            name="New Book", created_by=self.user1, slug=slugify("New Book")
+        )
         book.authors.set([author_1, author_2])
 
         book_clone = book.make_clone()
@@ -149,8 +153,12 @@ class CloneMixinTestCase(TestCase):
 
         _clone_m2m_fields_mock.return_value = ["books"]
 
-        book_1 = Book.objects.create(name="New Book 1", created_by=self.user1, slug=slugify("New Book 1"))
-        book_2 = Book.objects.create(name="New Book 2", created_by=self.user1, slug=slugify("New Book 2"))
+        book_1 = Book.objects.create(
+            name="New Book 1", created_by=self.user1, slug=slugify("New Book 1")
+        )
+        book_2 = Book.objects.create(
+            name="New Book 2", created_by=self.user1, slug=slugify("New Book 2")
+        )
         author.books.set([book_1, book_2])
 
         author_clone = author.make_clone()
@@ -301,31 +309,35 @@ class CloneMixinTestCase(TestCase):
 
         with self.assertRaises(TransactionManagementError):
             author.bulk_clone(1000, auto_commit=True)
-            
-    @patch("sample.models.Book.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS", new_callable=PropertyMock)
+
+    @patch(
+        "sample.models.Book.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS",
+        new_callable=PropertyMock,
+    )
     def test_bulk_cloning_instances_that_exceed_the_max_unique_count_raises_an_error(
         self,
         max_unique_query_attempts_mock,
     ):
         class InvalidNumber(object):
             """Return False for a number that should always be less than the compared value."""
+
             def __init__(self, val):
                 self.__val = val
-        
+
             def __get__(self, instance, owner):
                 return self.__val
-        
+
             def __lt__(self, other):
                 return False
-        
+
             def __gt__(self, other):
                 return self.__val > other
-            
+
             def __ge__(self, other):
                 return self.__val > other
-        
+
         max_unique_query_attempts_mock.return_value = InvalidNumber(100)
-        
+
         first_name = (
             "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, "
             "sed diam nonumy eirmod tempor invidunt ut labore et dolore "
@@ -334,7 +346,7 @@ class CloneMixinTestCase(TestCase):
         )
         name = "New Book"
         book = Book.objects.create(name=name, created_by=self.user1, slug=slugify(name))
-        
+
         with self.assertRaises(AssertionError):
             book.bulk_clone(1000)
 
