@@ -178,7 +178,9 @@ class CloneMixinTestCase(TestCase):
             "{} {} {}".format(first_name, Author.UNIQUE_DUPLICATE_SUFFIX, 1),
         )
 
-    @patch("sample.models.Author.USE_UNIQUE_DUPLICATE_SUFFIX", new_callable=PropertyMock)
+    @patch(
+        "sample.models.Author.USE_UNIQUE_DUPLICATE_SUFFIX", new_callable=PropertyMock
+    )
     def test_cloning_unique_field_with_use_unique_duplicate_suffix_set_to_False(
         self,
         use_unique_duplicate_suffix_mock,
