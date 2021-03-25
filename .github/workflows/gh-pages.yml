@@ -1,11 +1,9 @@
 name: Github pages
 
 on:
-  release:
-    types: [published]
   push:
-    tags:
-      - '*'
+    branches:
+      - master
 
 jobs:
   deploy:
