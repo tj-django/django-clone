@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css"/>
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/style.min.css" title="docsify-darklight-theme" type="text/css" />
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />
 </head>
 <body>
 <div id="app">Please wait...</div>
@@ -16,6 +17,13 @@
         name: 'django-clone',
         repo: 'https://github.com/jackton1/django-clone',
         themeColor: "#42b983",
+        loadNavbar: true,
+        loadSidebar: true,
+        alias: {
+          '/.*/_sidebar.md': '/_sidebar.md',
+        },
+        subMaxLevel: 7,
+        sidebarDisplayLevel: 2, // set sidebar display level
         share: {
             reddit: {
                 url: "https://github.com/jackton1/django-clone",
@@ -67,5 +75,6 @@
 <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-django.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
 </body>
 </html>
