@@ -4,9 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v2.0.3](https://github.com/tj-django/django-clone/releases/tag/v2.0.3) - 2021-03-24
+## [v2.1.0](https://github.com/tj-django/django-clone/releases/tag/v2.1.0) - 2021-03-25
 
-<small>[Compare with v2.0.2](https://github.com/tj-django/django-clone/compare/v2.0.2...v2.0.3)</small>
+<small>[Compare with v2.0.2](https://github.com/tj-django/django-clone/compare/v2.0.2...v2.1.0)</small>
 
 ### Fixed
 - Fix code style issues with black ([08f6a3c](https://github.com/tj-django/django-clone/commit/08f6a3c8e3e733392eabec6693ad6b3a6969394f) by Lint Action).
