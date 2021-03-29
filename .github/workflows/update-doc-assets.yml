@@ -13,12 +13,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Copy README
+      - name: Copy doc assets
         run: |
           cp -f README.md docs/README.md
-      - name: Copy CHANGELOG
-        run: |
           cp -f CHANGELOG.md docs/CHANGELOG.md
+          cp -f *.png docs
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
