@@ -281,6 +281,7 @@ INSTALLED_APPS = [
 ]
 ```
 
+
 ## Found a Bug?
 
 To file a bug or submit a patch, please head over to [django-clone on github](https://github.com/jackton1/django-clone/issues).
