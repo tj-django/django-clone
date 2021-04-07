@@ -60,7 +60,7 @@ jobs:
           git_email: "lint-action@django-clone.com"
           auto_fix: ${{ matrix.python-version != '2.7' && matrix.python-version != '3.5' }}
 
-      - name: Run tox
+      - name: Run test
         run: make tox
         env:
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
