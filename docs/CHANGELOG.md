@@ -4,6 +4,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [v2.2.2](https://github.com/tj-django/django-clone/releases/tag/v2.2.2) - 2021-04-07
+
+<small>[Compare with v2.2.1](https://github.com/tj-django/django-clone/compare/v2.2.1...v2.2.2)</small>
+
+
+## [v2.2.1](https://github.com/tj-django/django-clone/releases/tag/v2.2.1) - 2021-04-07
+
+<small>[Compare with v2.2.0](https://github.com/tj-django/django-clone/compare/v2.2.0...v2.2.1)</small>
+
+### Fixed
+- Fixed typo with filename. ([30b9a92](https://github.com/tj-django/django-clone/commit/30b9a928206f918dfb2bea1c6cb7b102ac61fd86) by Tonye Jack).
+
+
+## [v2.2.0](https://github.com/tj-django/django-clone/releases/tag/v2.2.0) - 2021-04-07
+
+<small>[Compare with v2.1.1](https://github.com/tj-django/django-clone/compare/v2.1.1...v2.2.0)</small>
+
+### Added
+- Added migration. ([c938488](https://github.com/tj-django/django-clone/commit/c938488abc8e8a7476e0da86a3db1128b15255d9) by Tonye Jack).
+- Added .github/workflows/sync-release-version.yml ([6bdce7c](https://github.com/tj-django/django-clone/commit/6bdce7cc5a834040a84441880231c71a576f5e86) by Tonye Jack).
+- Added .github/auto-approve.yml ([47538b5](https://github.com/tj-django/django-clone/commit/47538b54bdd89b277539451c346a26ed57608323) by Tonye Jack).
+- Added .github/workflows/auto-approve.yml ([8f4bba0](https://github.com/tj-django/django-clone/commit/8f4bba0ee8b50008544baa204719b461ce2d823b) by Tonye Jack).
+
+### Fixed
+- Fix code style issues with black ([b295af9](https://github.com/tj-django/django-clone/commit/b295af98c5208a45dba0680604d7ccf8b5e0649a) by Lint Action).
+- Fixed bug using pre_save. ([bc1ec5f](https://github.com/tj-django/django-clone/commit/bc1ec5f98b468cf8adac4956218f4d36ccde04e2) by Tonye Jack).
+- Fixed saving date/datetime fields. ([13b5959](https://github.com/tj-django/django-clone/commit/13b5959e4f89e6e0e46fe284f693ed1aff7022ca) by Tonye Jack).
+
+### Removed
+- Remove whitespace. ([e60b52a](https://github.com/tj-django/django-clone/commit/e60b52a5ebc4eb7e0040092e8f62b35989b1c6ca) by Tonye Jack).
+
+
 ## [v2.1.1](https://github.com/tj-django/django-clone/releases/tag/v2.1.1) - 2021-03-25
 
 <small>[Compare with v2.1.0](https://github.com/tj-django/django-clone/compare/v2.1.0...v2.1.1)</small>
