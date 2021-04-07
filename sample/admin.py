@@ -20,7 +20,6 @@ class AuthorAdmin(CloneModelAdmin):
     list_display = ["first_name", "last_name", "sex", "age"]
 
 
-
 @admin.register(Library)
 class LibraryAdmin(CloneModelAdmin):
     model = Library
