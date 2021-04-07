@@ -144,13 +144,19 @@ class CloneMixin(object):
             for f in fields
             if not f.auto_created and (f.unique or f.name in unique_field_names)
         ]
+        
+        new_instance = cls()
 
         for f in fields:
             if isinstance(f, (models.DateTimeField, models.DateField)):
                 if f.auto_now or f.auto_now_add:
-                    defaults[f.attname] = f.pre_save(instance, True)
+                    f.pre_save(new_instance, True)
                 else:
-                    defaults[f.attname] = getattr(instance, f.attname, f.get_default())
+                    setattr(
+                        new_instance,
+                        f.attname,
+                        getattr(instance, f.attname, f.get_default()),
+                    )
             if all(
                 [
                     not f.auto_created,
@@ -179,9 +185,9 @@ class CloneMixin(object):
                             max_length=f.max_length,
                             max_attempts=cls.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS,
                         )
-                defaults[f.attname] = value
+                setattr(new_instance, f.attname, value)
 
-        return cls(**defaults)
+        return new_instance
 
     @classmethod
     def check(cls, **kwargs):
