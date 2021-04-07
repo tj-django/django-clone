@@ -302,7 +302,9 @@ class CloneMixin(object):
             for name, value in attrs.items():
                 setattr(duplicate, name, value)
 
-        one_to_one_fields = [f for f in self._meta.concrete_fields if getattr(f, 'one_to_one', False)]
+        one_to_one_fields = [
+            f for f in self._meta.concrete_fields if getattr(f, "one_to_one", False)
+        ]
         many_to_one_or_one_to_many_fields = []
         many_to_many_fields = []
 
@@ -383,7 +385,9 @@ class CloneMixin(object):
                 ):
                     new_rel_object = rel_object.make_clone(sub_clone=True)
                 else:
-                    new_rel_object = CloneMixin._create_copy_of_instance(rel_object, force=True)
+                    new_rel_object = CloneMixin._create_copy_of_instance(
+                        rel_object, force=True
+                    )
                     new_rel_object.save()
 
             setattr(duplicate, field.name, new_rel_object)
