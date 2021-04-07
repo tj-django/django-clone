@@ -60,7 +60,10 @@ class Library(CloneModel):
     name = models.CharField(max_length=100)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
-    _clone_fields = ["id", "user"]
+    _clone_fields = ["user"]
+
+    class Meta:
+        verbose_name_plural = _("libraries")
 
     def __str__(self):
         return _(self.name)
