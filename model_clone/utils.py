@@ -1,6 +1,5 @@
 import contextlib
 import re
-from typing import Any
 
 import six
 from django.core.exceptions import ValidationError
