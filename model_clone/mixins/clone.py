@@ -148,9 +148,9 @@ class CloneMixin(object):
         for f in fields:
             if isinstance(f, (models.DateTimeField, models.DateField)):
                 if f.auto_now or f.auto_now_add:
-                    continue
-                else:
                     defaults[f.attname] = f.pre_save(instance, True)
+                else:
+                    defaults[f.attname] = getattr(instance, f.attname, f.get_default())
             if all(
                 [
                     not f.auto_created,
