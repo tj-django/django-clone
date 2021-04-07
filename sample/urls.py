@@ -9,6 +9,6 @@ except ImportError:
 app_name = "sample"
 
 urlpatterns = [
-    path("^admin/", admin.site.urls, name='admin'),
-    path("", RedirectView.as_view(pattern_name='admin:index')),
+    path("^admin/", admin.site.urls, name="admin"),
+    path("", RedirectView.as_view(pattern_name="admin:index")),
 ]
