@@ -62,13 +62,9 @@ if os.path.isfile(README_PATH):
 else:
     LONG_DESCRIPTION = ""
 
-VERSION = (2, 2, 0)
-
-version = ".".join(map(str, VERSION))
-
 setup(
     name="django-clone",
-    version=version,
+    version="2.2.0",
     description="Create a clone of a django model instance.",
     python_requires=">=2.6",
     long_description=LONG_DESCRIPTION,

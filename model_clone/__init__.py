@@ -1,6 +1,8 @@
-"""
-Duplicate instances of a model using the following mixin and admin view.
-"""
+"""Top-level package for django-clone."""
+
+__author__ = """Tonye Jack"""
+__email__ = "jtonye@ymail.com"
+__version__ = "2.2.0"
 
 from model_clone.admin import CloneModelAdmin, CloneModelAdminMixin
 from model_clone.mixins.clone import CloneMixin

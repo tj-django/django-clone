@@ -64,10 +64,7 @@ update-requirements:  ## Updates the requirement.txt adding missing package depe
 	@echo "Syncing the package requirements.txt..."
 	@$(PIP_COMPILE)
 
-tag-build:
-	@git tag v$(PACKAGE_VERSION)
-
-release-to-pypi: increase-version tag-build  ## Release project to pypi
+release-to-pypi: increase-version  ## Release project to pypi
 	@$(PYTHON_PIP) install -U twine
 	@$(PYTHON) setup.py sdist bdist_wheel
 	@twine upload -r pypi dist/*
