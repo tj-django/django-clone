@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.views.generic import RedirectView
 
 try:
     from django.urls import re_path as path
@@ -8,5 +9,6 @@ except ImportError:
 app_name = "sample"
 
 urlpatterns = [
-    path("^admin/", admin.site.urls),
+    path("^admin/", admin.site.urls, name="admin"),
+    path("", RedirectView.as_view(pattern_name="admin:index")),
 ]

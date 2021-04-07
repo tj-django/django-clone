@@ -118,7 +118,6 @@ class CloneMixin(object):
         :return: A new transient instance.
         :rtype: `django.db.models.Model`
         """
-        defaults = {}
         fields = []
 
         for f in instance._meta.concrete_fields:
@@ -145,16 +144,24 @@ class CloneMixin(object):
             if not f.auto_created and (f.unique or f.name in unique_field_names)
         ]
 
+        new_instance = cls()
+
         for f in fields:
-            if any([getattr(f, "auto_now", False), getattr(f, "auto_now_add", False)]):
-                defaults[f.attname] = f.pre_save(instance, False)
+            if isinstance(f, (models.DateTimeField, models.DateField)):
+                if f.auto_now or f.auto_now_add:
+                    f.pre_save(new_instance, True)
+                else:
+                    setattr(
+                        new_instance,
+                        f.attname,
+                        getattr(instance, f.attname, f.get_default()),
+                    )
             if all(
                 [
                     not f.auto_created,
                     f.concrete,
                     f.editable,
-                    not getattr(f, "auto_now", False),
-                    not getattr(f, "auto_now_add", False),
+                    not isinstance(f, (models.DateTimeField, models.DateField)),
                     f not in instance._meta.related_objects,
                     f not in instance._meta.many_to_many,
                 ]
@@ -177,9 +184,9 @@ class CloneMixin(object):
                             max_length=f.max_length,
                             max_attempts=cls.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS,
                         )
-                defaults[f.attname] = value
+                setattr(new_instance, f.attname, value)
 
-        return cls(**defaults)
+        return new_instance
 
     @classmethod
     def check(cls, **kwargs):
