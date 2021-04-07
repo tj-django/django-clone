@@ -118,7 +118,6 @@ class CloneMixin(object):
         :return: A new transient instance.
         :rtype: `django.db.models.Model`
         """
-        defaults = {}
         fields = []
 
         for f in instance._meta.concrete_fields:

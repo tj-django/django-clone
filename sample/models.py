@@ -3,6 +3,7 @@ from uuid import uuid4
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext as _
+from django.utils import timezone
 
 from model_clone import CloneMixin
 from model_clone.models import CloneModel
@@ -51,6 +52,7 @@ class Book(CloneModel):
 class Page(CloneModel):
     content = models.CharField(max_length=20000)
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="pages")
+    created_at = models.DateTimeField(default=timezone.now)
 
 
 class Library(CloneModel):
