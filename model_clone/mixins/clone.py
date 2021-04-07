@@ -144,7 +144,7 @@ class CloneMixin(object):
             for f in fields
             if not f.auto_created and (f.unique or f.name in unique_field_names)
         ]
-        
+
         new_instance = cls()
 
         for f in fields:
