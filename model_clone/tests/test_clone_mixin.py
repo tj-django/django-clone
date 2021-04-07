@@ -24,9 +24,10 @@ class CloneMixinTestCase(TestCase):
     def test_cloning_explict_fields(self):
         name = "New Library"
         instance = Library.objects.create(name=name, user=self.user1)
-        clone = instance.make_clone({"user": self.user2, "name": "New name"})
+        clone = instance.make_clone({"user": self.user2})
 
         self.assertEqual(instance.name, name)
+
         self.assertNotEqual(instance.pk, clone.pk)
         self.assertNotEqual(instance.name, clone.name)
 
@@ -38,12 +39,11 @@ class CloneMixinTestCase(TestCase):
         self.assertNotEqual(instance.pk, clone.pk)
         self.assertNotEqual(instance.user, clone.user)
 
-    def test_cloning_unique_o2o_field_without_a_fallback_value_is_valid(self):
+    def test_cloning_unique_fk_field_without_a_fallback_value_is_invalid(self):
         name = "New Library"
         instance = Library.objects.create(name=name, user=self.user1)
-        clone = instance.make_clone()
-
-        self.assertNotEqual(instance.pk, clone.pk)
+        with self.assertRaises(IntegrityError):
+            instance.make_clone()
 
     def test_cloning_with_field_overridden(self):
         name = "New Library"
