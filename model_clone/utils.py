@@ -37,12 +37,12 @@ def create_copy_of_instance(instance, exclude=(), save_new=True, attrs=None):
     "Duplicate Book 2"
     """
 
+    if not isinstance(instance, models.Model):
+        raise ValueError("Invalid: Expected an instance of django.db.models.Model")
+
     defaults = {}
     attrs = attrs or {}
     fields = instance.__class__._meta.concrete_fields
-
-    if not isinstance(instance, models.Model):
-        raise ValueError("Invalid: Expected an instance of django.db.models.Model")
 
     if not isinstance(attrs, dict):
         try:
@@ -91,6 +91,22 @@ def create_copy_of_instance(instance, exclude=(), save_new=True, attrs=None):
         new_obj.save()
 
     return new_obj
+
+
+def unpack_unique_together(opts, only_fields=()):
+    """
+    Unpack unique together fields.
+
+    :param opts: Model options
+    :type opts: `django.db.models.options.Options`
+    :param only_fields: Fields that should be considered.
+    :type only_fields: `collections.Iterable`
+    :return: Flat list of fields.
+    """
+    fields = []
+    for field in opts.unique_together:
+        fields.extend(list([f for f in field if f in only_fields]))
+    return fields
 
 
 def clean_value(value, suffix):
