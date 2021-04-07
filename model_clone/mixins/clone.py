@@ -14,7 +14,6 @@ from model_clone.utils import (
     transaction_autocommit,
     get_unique_value,
     context_mutable_attribute,
-    unpack_unique_together,
 )
 
 
@@ -94,52 +93,47 @@ class CloneMixin(object):
     MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS = 100  # type: int
 
     @staticmethod
-    def _create_copy_of_instance(instance, force=False):
+    def __unpack_unique_together(opts, only_fields=()):
+        """
+        Unpack unique together fields.
+
+        :param opts: Model options
+        :type opts: `django.db.models.options.Options`
+        :param only_fields: Fields that should be considered.
+        :type only_fields: `collections.Iterable`
+        :return: Flat list of fields.
+        """
+        fields = []
+        for field in opts.unique_together:
+            fields.extend(list([f for f in field if f in only_fields]))
+        return fields
+
+    @classmethod
+    def _create_copy_of_instance(cls, instance):
         """
         Create a copy of an instance
 
         :param instance: The instance to be duplicated.
         :type instance: `django.db.models.Model`
-        :param force: Flag to skip using the current model clone declared attributes.
-        :type force: bool
         :return: A new transient instance.
         :rtype: `django.db.models.Model`
         """
-        cls = instance.__class__
-        clone_fields = getattr(cls, "_clone_fields", CloneMixin._clone_fields)
-        clone_excluded_fields = getattr(
-            cls, "_clone_excluded_fields", CloneMixin._clone_excluded_fields
-        )
-        unique_duplicate_suffix = getattr(
-            cls, "UNIQUE_DUPLICATE_SUFFIX", CloneMixin.UNIQUE_DUPLICATE_SUFFIX
-        )
-        use_unique_duplicate_suffix = getattr(
-            cls,
-            "USE_UNIQUE_DUPLICATE_SUFFIX",
-            CloneMixin.USE_UNIQUE_DUPLICATE_SUFFIX,
-        )
-        max_unique_duplicate_query_attempts = getattr(
-            cls,
-            "MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS",
-            CloneMixin.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS,
-        )
-
         fields = []
 
         for f in instance._meta.concrete_fields:
             valid = False
             if not f.primary_key:
-                if clone_fields and not force:
-                    valid = f.name in clone_fields
-                elif clone_excluded_fields and not force:
-                    valid = f.name not in clone_excluded_fields
+                if cls._clone_fields:
+                    valid = f.name in cls._clone_fields
+                elif cls._clone_excluded_fields:
+                    valid = f.name not in cls._clone_excluded_fields
                 else:
                     valid = True
 
             if valid:
                 fields.append(f)
 
-        unique_field_names = unpack_unique_together(
+        unique_field_names = cls.__unpack_unique_together(
             opts=instance._meta,
             only_fields=[f.attname for f in fields],
         )
@@ -153,12 +147,15 @@ class CloneMixin(object):
         new_instance = cls()
 
         for f in fields:
-            value = getattr(instance, f.attname, f.get_default())
-
             if isinstance(f, (models.DateTimeField, models.DateField)):
                 if f.auto_now or f.auto_now_add:
-                    value = f.pre_save(new_instance, True)
-
+                    f.pre_save(new_instance, True)
+                else:
+                    setattr(
+                        new_instance,
+                        f.attname,
+                        getattr(instance, f.attname, f.get_default()),
+                    )
             if all(
                 [
                     not f.auto_created,
@@ -167,26 +164,27 @@ class CloneMixin(object):
                     not isinstance(f, (models.DateTimeField, models.DateField)),
                     f not in instance._meta.related_objects,
                     f not in instance._meta.many_to_many,
-                    f.name in unique_fields,
                 ]
             ):
                 value = getattr(instance, f.attname, f.get_default())
-
                 # Do not try to get unique value for enum type field
-                if isinstance(f, models.CharField) and not f.choices:
-                    value = clean_value(value, unique_duplicate_suffix)
-                    if use_unique_duplicate_suffix:
+                if (
+                    f.attname in unique_fields
+                    and isinstance(f, models.CharField)
+                    and not f.choices
+                ):
+                    value = clean_value(value, cls.UNIQUE_DUPLICATE_SUFFIX)
+                    if cls.USE_UNIQUE_DUPLICATE_SUFFIX:
                         value = get_unique_value(
                             obj=instance,
                             fname=f.attname,
                             value=value,
                             transform=(slugify if isinstance(f, SlugField) else str),
-                            suffix=unique_duplicate_suffix,
+                            suffix=cls.UNIQUE_DUPLICATE_SUFFIX,
                             max_length=f.max_length,
-                            max_attempts=max_unique_duplicate_query_attempts,
+                            max_attempts=cls.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS,
                         )
-
-            setattr(new_instance, f.attname, value)
+                setattr(new_instance, f.attname, value)
 
         return new_instance
 
@@ -302,9 +300,9 @@ class CloneMixin(object):
             for name, value in attrs.items():
                 setattr(duplicate, name, value)
 
-        one_to_one_fields = [
-            f for f in self._meta.concrete_fields if getattr(f, "one_to_one", False)
-        ]
+        duplicate.save()
+
+        one_to_one_fields = []
         many_to_one_or_one_to_many_fields = []
         many_to_many_fields = []
 
@@ -377,22 +375,20 @@ class CloneMixin(object):
 
         # Clone one to one fields
         for field in one_to_one_fields:
-            rel_object = getattr(self, field.name, None)
-            new_rel_object = None
+            rel_object = getattr(self, field.related_name, None)
             if rel_object:
                 if hasattr(rel_object, "make_clone") and callable(
                     rel_object.make_clone
                 ):
-                    new_rel_object = rel_object.make_clone(sub_clone=True)
-                else:
-                    new_rel_object = CloneMixin._create_copy_of_instance(
-                        rel_object, force=True
+                    rel_object.make_clone(
+                        attrs={field.remote_field.name: duplicate}, sub_clone=True
                     )
-                    new_rel_object.save()
-
-            setattr(duplicate, field.name, new_rel_object)
-
-        duplicate.save()
+                else:
+                    # Possibly Monkey patch make_clone
+                    # Case where the unique fields has an object with unique constraints.
+                    rel_object.pk = None
+                    setattr(rel_object, field.remote_field.name, duplicate)
+                    rel_object.save()
 
         # Clone one to many/many to one fields
         for field in many_to_one_or_one_to_many_fields:
