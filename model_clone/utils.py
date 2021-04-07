@@ -38,12 +38,12 @@ def create_copy_of_instance(instance, exclude=(), save_new=True, attrs=None):
     "Duplicate Book 2"
     """
 
+    if not isinstance(instance, models.Model):
+        raise ValueError("Invalid: Expected an instance of django.db.models.Model")
+
     defaults = {}
     attrs = attrs or {}
     fields = instance.__class__._meta.concrete_fields
-
-    if not isinstance(instance, models.Model):
-        raise ValueError("Invalid: Expected an instance of django.db.models.Model")
 
     if not isinstance(attrs, dict):
         try:

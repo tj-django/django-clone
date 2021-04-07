@@ -1,4 +1,4 @@
-from itertools import repeat
+from itertools import repeat, chain
 from typing import List, Optional, Dict
 
 from conditional import conditional
@@ -186,16 +186,6 @@ class CloneMixin(object):
                             max_attempts=max_unique_duplicate_query_attempts,
                         )
 
-                if isinstance(f, models.OneToOneField):
-                    current = getattr(instance, f.name, None)
-
-                    if current:
-                        o2o_instance = CloneMixin._create_copy_of_instance(
-                            current, force=True
-                        )
-                        o2o_instance.save()
-                        value = o2o_instance.pk
-
             setattr(new_instance, f.attname, value)
 
         return new_instance
@@ -312,9 +302,7 @@ class CloneMixin(object):
             for name, value in attrs.items():
                 setattr(duplicate, name, value)
 
-        duplicate.save()
-
-        one_to_one_fields = []
+        one_to_one_fields = [f for f in self._meta.concrete_fields if getattr(f, 'one_to_one', False)]
         many_to_one_or_one_to_many_fields = []
         many_to_many_fields = []
 
@@ -387,20 +375,20 @@ class CloneMixin(object):
 
         # Clone one to one fields
         for field in one_to_one_fields:
-            rel_object = getattr(self, field.related_name, None)
+            rel_object = getattr(self, field.name, None)
+            new_rel_object = None
             if rel_object:
                 if hasattr(rel_object, "make_clone") and callable(
                     rel_object.make_clone
                 ):
-                    rel_object.make_clone(
-                        attrs={field.remote_field.name: duplicate}, sub_clone=True
-                    )
+                    new_rel_object = rel_object.make_clone(sub_clone=True)
                 else:
-                    # Possibly Monkey patch make_clone
-                    # Case where the unique fields has an object with unique constraints.
-                    rel_object.pk = None
-                    setattr(rel_object, field.remote_field.name, duplicate)
-                    rel_object.save()
+                    new_rel_object = CloneMixin._create_copy_of_instance(rel_object, force=True)
+                    new_rel_object.save()
+
+            setattr(duplicate, field.name, new_rel_object)
+
+        duplicate.save()
 
         # Clone one to many/many to one fields
         for field in many_to_one_or_one_to_many_fields:

@@ -40,3 +40,19 @@ class CreateCopyOfInstanceTestCase(TestCase):
             create_copy_of_instance(
                 instance, exclude={"slug"}, attrs={"created_by": self.user2}
             )
+            
+    def test_raises_error_when_create_copy_of_instance_uses_an_invalid_attrs_value(self):
+        instance = Library.objects.create(name="First library", user=self.user1)
+    
+        with self.assertRaises(ValueError):
+            create_copy_of_instance(instance, attrs="user")
+            
+    def test_cloning_an_invalid_object_is_invalid(self):
+        class InvalidObj:
+            def __init__(self):
+                pass
+        
+        instance = InvalidObj()
+    
+        with self.assertRaises(ValueError):
+            create_copy_of_instance(instance, attrs={"created_by": self.user2})
