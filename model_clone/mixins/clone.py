@@ -106,20 +106,24 @@ class CloneMixin(object):
         :rtype: `django.db.models.Model`
         """
         cls = instance.__class__
-        clone_fields = getattr(cls, '_clone_fields', CloneMixin._clone_fields)
-        clone_excluded_fields = getattr(cls, '_clone_excluded_fields', CloneMixin._clone_excluded_fields)
-        unique_duplicate_suffix = getattr(cls, 'UNIQUE_DUPLICATE_SUFFIX', CloneMixin.UNIQUE_DUPLICATE_SUFFIX)
+        clone_fields = getattr(cls, "_clone_fields", CloneMixin._clone_fields)
+        clone_excluded_fields = getattr(
+            cls, "_clone_excluded_fields", CloneMixin._clone_excluded_fields
+        )
+        unique_duplicate_suffix = getattr(
+            cls, "UNIQUE_DUPLICATE_SUFFIX", CloneMixin.UNIQUE_DUPLICATE_SUFFIX
+        )
         use_unique_duplicate_suffix = getattr(
             cls,
-            'USE_UNIQUE_DUPLICATE_SUFFIX',
+            "USE_UNIQUE_DUPLICATE_SUFFIX",
             CloneMixin.USE_UNIQUE_DUPLICATE_SUFFIX,
         )
         max_unique_duplicate_query_attempts = getattr(
             cls,
-            'MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS',
+            "MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS",
             CloneMixin.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS,
         )
-        
+
         fields = []
 
         for f in instance._meta.concrete_fields:
@@ -150,7 +154,7 @@ class CloneMixin(object):
 
         for f in fields:
             value = getattr(instance, f.attname, f.get_default())
-            
+
             if isinstance(f, (models.DateTimeField, models.DateField)):
                 if f.auto_now or f.auto_now_add:
                     value = f.pre_save(new_instance, True)
@@ -181,15 +185,17 @@ class CloneMixin(object):
                             max_length=f.max_length,
                             max_attempts=max_unique_duplicate_query_attempts,
                         )
-                
+
                 if isinstance(f, models.OneToOneField):
                     current = getattr(instance, f.name, None)
-                    
+
                     if current:
-                        o2o_instance = CloneMixin._create_copy_of_instance(current, force=True)
+                        o2o_instance = CloneMixin._create_copy_of_instance(
+                            current, force=True
+                        )
                         o2o_instance.save()
                         value = o2o_instance.pk
-    
+
             setattr(new_instance, f.attname, value)
 
         return new_instance
