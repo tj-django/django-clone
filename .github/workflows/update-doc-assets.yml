@@ -3,7 +3,7 @@ name: Sync doc assets
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   sync-doc-assets:
@@ -26,7 +26,7 @@ jobs:
           committer: github-actions[bot] <github-actions[bot]@users.noreply@github.com>
           author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
           branch: chore/update-docs
-          base: master
+          base: main
           delete-branch: true
           title: Updated docs
           body: |
