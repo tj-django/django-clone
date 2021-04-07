@@ -146,15 +146,17 @@ class CloneMixin(object):
         ]
 
         for f in fields:
-            if any([getattr(f, "auto_now", False), getattr(f, "auto_now_add", False)]):
-                defaults[f.attname] = f.pre_save(instance, False)
+            if isinstance(f, (models.DateTimeField, models.DateField)):
+                if f.auto_now or f.auto_now_add:
+                    continue
+                else:
+                    defaults[f.attname] = f.pre_save(instance, True)
             if all(
                 [
                     not f.auto_created,
                     f.concrete,
                     f.editable,
-                    not getattr(f, "auto_now", False),
-                    not getattr(f, "auto_now_add", False),
+                    not isinstance(f, (models.DateTimeField, models.DateField)),
                     f not in instance._meta.related_objects,
                     f not in instance._meta.many_to_many,
                 ]
