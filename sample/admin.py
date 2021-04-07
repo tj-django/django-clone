@@ -7,7 +7,7 @@ from sample.models import Book, Author, Page, Library
 
 class PageInline(admin.StackedInline):
     model = Page
-    fields = ['content']
+    fields = ["content"]
 
 
 @admin.register(Book)
@@ -23,4 +23,4 @@ class AuthorAdmin(CloneModelAdmin):
 @admin.register(Library)
 class LibraryAdmin(CloneModelAdmin):
     model = Library
-    fields = ['name', 'user']
+    fields = ["name", "user"]
