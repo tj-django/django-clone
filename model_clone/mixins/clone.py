@@ -157,7 +157,8 @@ class CloneMixin(object):
 
             if isinstance(f, (models.DateTimeField, models.DateField)):
                 if f.auto_now or f.auto_now_add:
-                    value = f.pre_save(new_instance, True)
+                    f.pre_save(new_instance, add=True)
+                    continue
 
             if all(
                 [
