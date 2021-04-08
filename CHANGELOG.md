@@ -4,9 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v2.2.2](https://github.com/tj-django/django-clone/releases/tag/v2.2.2) - 2021-04-07
+## [v2.3.0](https://github.com/tj-django/django-clone/releases/tag/v2.3.0) - 2021-04-08
 
-<small>[Compare with v2.2.1](https://github.com/tj-django/django-clone/compare/v2.2.1...v2.2.2)</small>
+<small>[Compare with v2.2.1](https://github.com/tj-django/django-clone/compare/v2.2.1...v2.3.0)</small>
+
+### Fixed
+- Fix bug with o2o fields (#255) ([cdd3d0a](https://github.com/tj-django/django-clone/commit/cdd3d0a0ceee3a6ed098a8319f190eae02ea6633) by Tonye Jack).
+- Fixed bug with cloning o2o fields (#252) ([342eca8](https://github.com/tj-django/django-clone/commit/342eca8a2bfad5b90432c733c7ff777cef8f50bd) by Tonye Jack).
+- Fix code style issues with black ([197d0a4](https://github.com/tj-django/django-clone/commit/197d0a4b9ecd62c5032b8aad4a2990e8c6ff18a2) by Lint Action).
 
 
 ## [v2.2.1](https://github.com/tj-django/django-clone/releases/tag/v2.2.1) - 2021-04-07
