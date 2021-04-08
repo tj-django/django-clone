@@ -2,12 +2,11 @@ name: Create New Release
 
 on:
   push:
-    tags:
-      - '**'
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
     steps:
       - name: Checkout
         uses: actions/checkout@v2
