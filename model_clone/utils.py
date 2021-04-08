@@ -30,7 +30,7 @@ def create_copy_of_instance(instance, exclude=(), save_new=True, attrs=None):
     1
     >>> instance.name
     "The Beautiful Life"
-    >>> duplicate = instance.make_clone(attrs={'name': 'Duplicate Book 2'})
+    >>> duplicate = create_copy_of_instance(instance, attrs={'name': 'Duplicate Book 2'})
     >>> duplicate.pk
     2
     >>> duplicate.name
@@ -110,12 +110,24 @@ def unpack_unique_together(opts, only_fields=()):
 
 
 def clean_value(value, suffix):
+    """
+    Strip out copy suffix from a string value.
+
+    :param value: Current value e.g "Test Copy" or "test-copy" for slug fields.
+    :type value: `str`
+    :param suffix: The suffix value to be replaced with an empty string.
+    :type suffix: `str`
+    :return: Stripped string without the suffix.
+    """
     # type: (str, str) -> str
     return re.sub(r"([\s-]?){}[\s-][\d]$".format(suffix), "", value, flags=re.I)
 
 
 @contextlib.contextmanager
 def transaction_autocommit(using=None):
+    """
+    Context manager with autocommit enabled.
+    """
     try:
         transaction.set_autocommit(True, using=using)
         yield
@@ -125,6 +137,9 @@ def transaction_autocommit(using=None):
 
 @contextlib.contextmanager
 def context_mutable_attribute(obj, key, value):
+    """
+    Context manager that modifies an obj temporarily.
+    """
     default = None
     is_set = hasattr(obj, key)
     if is_set:
@@ -140,6 +155,10 @@ def context_mutable_attribute(obj, key, value):
 
 
 def get_value(value, suffix, transform, max_length, index):
+    """
+    Append a suffix to a string value and apply a pass directly to a
+    transformation function.
+    """
     duplicate_suffix = " {} {}".format(suffix, index)
     total_length = len(value + duplicate_suffix)
 
@@ -151,6 +170,9 @@ def get_value(value, suffix, transform, max_length, index):
 
 
 def generate_value(value, suffix, transform, max_length, max_attempts):
+    """
+    Given a fixed max attempt generate a unique value.
+    """
     yield get_value(value, suffix, transform, max_length, 1)
 
     for i in range(1, max_attempts):
@@ -164,6 +186,10 @@ def generate_value(value, suffix, transform, max_length, max_attempts):
 
 
 def get_unique_value(obj, fname, value, transform, suffix, max_length, max_attempts):
+    """
+    Generate a unique value using current value and query the model
+    for existing objects with the new value.
+    """
     qs = obj.__class__._default_manager.all()
     it = generate_value(value, suffix, transform, max_length, max_attempts)
 
