@@ -184,7 +184,7 @@ Out[11]: <QuerySet [<Tag: men>, <Tag: women>]>
 `_clone_excluded_m2o_or_o2m_fields` |  Excluded Many to One/One to Many fields. |
 `_clone_excluded_o2o_fields` | Excluded one to one fields. |
 
-> :warning: **NOTE:** :warning:
+> **NOTE:** :warning:
 > - Ensure to either set `_clone_excluded_*` or `_clone_*`. Using both would raise errors.
 
 ### Creating clones without subclassing `CloneMixin`.
@@ -220,7 +220,7 @@ In [11]: test_obj_clone.tags.all()
 Out[11]: <QuerySet []>
 ```
 
-> :warning: **NOTE:** :warning:
+> **NOTE:** :warning:
 >
 > *   This method won't copy over related objects like Many to Many/One to Many relationships.
 > *   Ensure that required fields skipped from being cloned are passed in using the `attrs` dictionary.
@@ -272,7 +272,7 @@ class TestModelAdmin(CloneModelAdmin):
     include_duplicate_object_link = True
 ```
 
-> :warning: **NOTE:** :warning:
+> **NOTE:** :warning:
 > - Ensure that `model_clone` is placed before `django.contrib.admin`
 
 ```python
