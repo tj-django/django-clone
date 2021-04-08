@@ -7,6 +7,7 @@ prune sample_driver
 prune sample
 prune .github
 prune .circleci
+prune manage.py
 global-exclude __pycache__
 global-exclude *.py[co]
 
