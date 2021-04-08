@@ -126,7 +126,7 @@ def clean_value(value, suffix):
 @contextlib.contextmanager
 def transaction_autocommit(using=None):
     """
-    Context manager to with autocommit enabled.
+    Context manager with autocommit enabled.
     """
     try:
         transaction.set_autocommit(True, using=using)
