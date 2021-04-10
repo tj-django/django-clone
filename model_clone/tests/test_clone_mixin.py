@@ -1,11 +1,12 @@
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.db.transaction import TransactionManagementError
 from django.test import TestCase, TransactionTestCase
 from django.utils.text import slugify
 from mock import patch, PropertyMock
 
-from sample.models import Library, Book, Author, Page
+from sample.models import Library, Book, Author, Page, House, Room, Furniture
 
 User = get_user_model()
 
@@ -15,6 +16,12 @@ class CloneMixinTestCase(TestCase):
     def setUpTestData(cls):
         cls.user1 = User.objects.create(username="user 1")
         cls.user2 = User.objects.create(username="user 2")
+        
+    def test_cloning_a_transient_instance_is_invalid(self):
+        instance = Library()
+        
+        with self.assertRaises(ValidationError):
+            instance.make_clone()
 
     def test_cloning_model_with_custom_id(self):
         instance = Library.objects.create(name="First library", user=self.user1)
@@ -436,6 +443,20 @@ class CloneMixinTestCase(TestCase):
             list(book_clone.pages.values_list("id")),
         )
         _clone_m2o_or_o2m_fields_mock.assert_called_once()
+        
+    def test_cloning_complex_model_relationships(self):
+        house = House.objects.create(name="My House")
+        
+        room_1 = Room.objects.create(name="Room 1 in house", house=house)
+        room_2 = Room.objects.create(name="Room 2 in house", house=house)
+        
+        Furniture.objects.create(name='Chair for room 1', room=room_1)
+        Furniture.objects.create(name='Chair for room 2', room=room_2)
+        
+        clone_house = house.make_clone()
+        
+        self.assertEqual(house.name, clone_house.name)
+        self.assertEqual(house.rooms.count(), clone_house.rooms.count())
 
 
 class CloneMixinTransactionTestCase(TransactionTestCase):
