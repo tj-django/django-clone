@@ -27,3 +27,9 @@ exclude tox.ini
 exclude .tox
 exclude .all-contributorsrc
 exclude .pypirc
+
+exclude *.yml
+recursive-exclude docs *.html
+recursive-exclude docs *.md
+recursive-exclude docs *.nojekyll
+recursive-exclude docs *.png
