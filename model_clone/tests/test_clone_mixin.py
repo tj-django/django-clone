@@ -69,9 +69,7 @@ class CloneMixinTestCase(TestCase):
         self.assertEqual(instance.name, name)
         self.assertEqual(clone.created_by, instance.created_by)
 
-        self.assertNotEqual(
-            instance.created_at.isoformat(), clone.created_at.isoformat()
-        )
+        self.assertNotEqual(instance.created_at.time(), clone.created_at.time())
 
     def test_cloning_without_explicit_clone_m2m_fields(self):
         author_1 = Author.objects.create(
