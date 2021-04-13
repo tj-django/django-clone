@@ -71,21 +71,17 @@ class CloneMixinTestCase(TestCase):
 
         self.assertEqual(instance.name, name)
         self.assertEqual(clone.created_by, instance.created_by)
-        
+
         instance_created_at_total_seconds = (
-            (
-                 make_naive(instance.created_at) - datetime.datetime(1970,1,1)
-            ).total_seconds()
-        )
-        
+            make_naive(instance.created_at) - datetime.datetime(1970, 1, 1)
+        ).total_seconds()
+
         clone_created_at_total_seconds = (
-            (
-                make_naive(clone.created_at) - datetime.datetime(1970,1,1)
-            ).total_seconds()
-        )
+            make_naive(clone.created_at) - datetime.datetime(1970, 1, 1)
+        ).total_seconds()
 
         self.assertNotEqual(
-            instance_created_at_total_seconds, 
+            instance_created_at_total_seconds,
             clone_created_at_total_seconds,
         )
 
