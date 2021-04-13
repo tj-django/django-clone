@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             name='Cover',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content', models.CharField(max_length=20000)),
+                ('content', models.CharField(max_length=200)),
                 ('book', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='sample.book')),
             ],
             options={
@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
             name='BackCover',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content', models.CharField(max_length=20000)),
+                ('content', models.CharField(max_length=200)),
                 ('book', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='sample.book')),
             ],
         ),
