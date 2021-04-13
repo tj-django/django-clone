@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 from django.db.transaction import TransactionManagementError
@@ -68,8 +70,19 @@ class CloneMixinTestCase(TestCase):
 
         self.assertEqual(instance.name, name)
         self.assertEqual(clone.created_by, instance.created_by)
+        
+        instance_created_at_total_seconds = (
+            (instance.created_at - datetime.datetime(1970,1,1)).total_seconds()
+        )
+        
+        clone_created_at_total_seconds = (
+            (clone.created_at - datetime.datetime(1970,1,1)).total_seconds()
+        )
 
-        self.assertNotEqual(instance.created_at.time(), clone.created_at.time())
+        self.assertNotEqual(
+            instance_created_at_total_seconds, 
+            clone_created_at_total_seconds,
+        )
 
     def test_cloning_without_explicit_clone_m2m_fields(self):
         author_1 = Author.objects.create(
