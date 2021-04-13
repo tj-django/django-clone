@@ -1,4 +1,5 @@
 import datetime
+import time
 
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
@@ -66,6 +67,7 @@ class CloneMixinTestCase(TestCase):
         instance = Book.objects.create(
             name=name, created_by=self.user1, slug=slugify(name)
         )
+        time.sleep(1)
         new_name = "My New Book"
         clone = instance.make_clone(attrs={"name": new_name})
 
