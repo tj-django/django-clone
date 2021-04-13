@@ -61,7 +61,8 @@ class CloneMixinTestCase(TestCase):
             self.assertEqual(cover.content, clone.content)
 
         with patch(
-            "sample.models.Book._clone_o2o_fields", PropertyMock(return_value=["cover", "backcover"])
+            "sample.models.Book._clone_o2o_fields",
+            PropertyMock(return_value=["cover", "backcover"]),
         ):
             book = Book.objects.create(
                 name="New Book 2", created_by=self.user1, slug=slugify("New Book 2")
@@ -72,7 +73,7 @@ class CloneMixinTestCase(TestCase):
             self.assertNotEqual(book.pk, clone.pk)
             self.assertNotEqual(cover.pk, clone.cover.pk)
             self.assertEqual(cover.content, clone.cover.content)
-            
+
             book = Book.objects.create(
                 name="New Book 3", created_by=self.user1, slug=slugify("New Book 3")
             )

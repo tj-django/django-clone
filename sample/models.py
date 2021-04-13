@@ -58,6 +58,7 @@ class BackCover(models.Model):
     content = models.CharField(max_length=200)
     book = models.OneToOneField(Book, on_delete=models.CASCADE)
 
+
 class Page(CloneModel):
     content = models.CharField(max_length=20000)
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="pages")

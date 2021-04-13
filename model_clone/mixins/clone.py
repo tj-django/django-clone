@@ -319,7 +319,7 @@ class CloneMixin(object):
                     ]
                 ):
                     one_to_one_fields.append(f)
-                
+
         for f in self._meta.related_objects:
             if f.one_to_one and f.name in self._clone_o2o_fields:
                 one_to_one_fields.append(f)
@@ -421,7 +421,6 @@ class CloneMixin(object):
                     )
                     setattr(new_rel_object, field.remote_field.name, duplicate)
                     new_rel_object.save()
-
 
         # Clone one to many/many to one fields
         for field in many_to_one_or_one_to_many_fields:
