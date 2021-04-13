@@ -80,6 +80,7 @@ class CloneMixinTestCase(TestCase):
             make_naive(clone.created_at) - datetime.datetime(1970, 1, 1)
         ).total_seconds()
 
+
         self.assertNotEqual(
             instance_created_at_total_seconds,
             clone_created_at_total_seconds,
