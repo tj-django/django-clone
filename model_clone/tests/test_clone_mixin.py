@@ -16,10 +16,10 @@ class CloneMixinTestCase(TestCase):
     def setUpTestData(cls):
         cls.user1 = User.objects.create(username="user 1")
         cls.user2 = User.objects.create(username="user 2")
-        
+
     def test_cloning_a_transient_instance_is_invalid(self):
         instance = Library()
-        
+
         with self.assertRaises(ValidationError):
             instance.make_clone()
 
@@ -443,18 +443,18 @@ class CloneMixinTestCase(TestCase):
             list(book_clone.pages.values_list("id")),
         )
         _clone_m2o_or_o2m_fields_mock.assert_called()
-        
+
     def test_cloning_complex_model_relationships(self):
         house = House.objects.create(name="My House")
-        
+
         room_1 = Room.objects.create(name="Room 1 in house", house=house)
         room_2 = Room.objects.create(name="Room 2 in house", house=house)
-        
-        Furniture.objects.create(name='Chair for room 1', room=room_1)
-        Furniture.objects.create(name='Chair for room 2', room=room_2)
-        
+
+        Furniture.objects.create(name="Chair for room 1", room=room_1)
+        Furniture.objects.create(name="Chair for room 2", room=room_2)
+
         clone_house = house.make_clone()
-        
+
         self.assertEqual(house.name, clone_house.name)
         self.assertEqual(house.rooms.count(), clone_house.rooms.count())
 

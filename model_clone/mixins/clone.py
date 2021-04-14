@@ -280,21 +280,25 @@ class CloneMixin(object):
     def __duplicate_o2o_fields(self, duplicate):
         """
         Duplicate the one to one fields.
-        
+
         :param duplicate: The transient instance that should be duplicated.
         :type duplicate: `django.db.models.Model`
         :return: The duplicate instance with all the one to one fields duplicated.
         """
         fields = set()
-        
+
         if self._clone_o2o_fields or self._clone_excluded_o2o_fields:
             for f in chain(self._meta.related_objects, self._meta.concrete_fields):
-                if any([
-                    f.one_to_one and f.name in self._clone_o2o_fields,
-                    f.one_to_one and self._clone_excluded_o2o_fields and f.name not in self._clone_excluded_o2o_fields,
-                ]):
+                if any(
+                    [
+                        f.one_to_one and f.name in self._clone_o2o_fields,
+                        f.one_to_one
+                        and self._clone_excluded_o2o_fields
+                        and f.name not in self._clone_excluded_o2o_fields,
+                    ]
+                ):
                     fields.add(f)
-    
+
         # Clone one to one fields
         for field in fields:
             rel_object = getattr(self, field.name, field.get_default())
@@ -312,25 +316,27 @@ class CloneMixin(object):
                     )
                     new_rel_object.save()
                 setattr(duplicate, field.name, new_rel_object)
-        
+
         return duplicate
 
     def __duplicate_o2m_m2o_fields(self, duplicate):
         """
         Duplicate many to one or one to many fields.
-        
+
         :param duplicate: The transient instance that should be duplicated.
         :type duplicate: `django.db.models.Model`
         :return: The duplicate instance with all the many to one or one to many fields duplicated.
         """
         fields = set()
-        
+
         if self._clone_m2o_or_o2m_fields or self._clone_excluded_m2o_or_o2m_fields:
             for f in self._meta.related_objects:
                 if any(
                     [
-                        any([f.many_to_one, f.one_to_many]) and f.name in self._clone_m2o_or_o2m_fields,
-                        any([f.many_to_one, f.one_to_many]) and f.name not in self._clone_excluded_m2o_or_o2m_fields,
+                        any([f.many_to_one, f.one_to_many])
+                        and f.name in self._clone_m2o_or_o2m_fields,
+                        any([f.many_to_one, f.one_to_many])
+                        and f.name not in self._clone_excluded_m2o_or_o2m_fields,
                     ]
                 ):
                     fields.add(f)
@@ -356,7 +362,7 @@ class CloneMixin(object):
     def __duplicate_m2m_fields(self, duplicate, sub_clone):
         """
         Duplicate many to many fields.
-        
+
         :param duplicate: The transient instance that should be duplicated.
         :type duplicate: `django.db.models.Model`
         :param sub_clone: Boolean indicating that the instance is a sub instance
@@ -364,17 +370,18 @@ class CloneMixin(object):
         :return: The duplicate instance with all the many to many fields duplicated.
         """
         fields = set()
-        
+
         # Duplicating sub instance many to many fields not currently supported.
         if sub_clone:
             return duplicate
-        
+
         if self._clone_m2m_fields or self._clone_excluded_m2m_fields:
             for f in chain(self._meta.related_objects, self._meta.many_to_many):
                 if any(
                     [
                         f.many_to_many and f.name in self._clone_m2m_fields,
-                        f.many_to_many and f.name not in self._clone_excluded_m2m_fields
+                        f.many_to_many
+                        and f.name not in self._clone_excluded_m2m_fields,
                     ]
                 ):
                     fields.add(f)
@@ -408,9 +415,8 @@ class CloneMixin(object):
                         item.save()
             else:
                 destination.set(source.all())
-                
-        return duplicate
 
+        return duplicate
 
     @transaction.atomic
     def make_clone(self, attrs=None, sub_clone=False):
