@@ -176,7 +176,7 @@ class CloneMixinTestCase(TestCase):
             list(author.books.values_list("name")),
             list(author_clone.books.values_list("name")),
         )
-        _clone_m2m_fields_mock.assert_called_once()
+        _clone_m2m_fields_mock.assert_called()
 
     def test_cloning_unique_fields_is_valid(self):
         first_name = "Ruby"
@@ -213,7 +213,7 @@ class CloneMixinTestCase(TestCase):
             sex="F",
             created_by=self.user1,
         )
-        with self.assertRaises(IntegrityError):
+        with self.assertRaises(ValidationError):
             author.make_clone()
 
         use_unique_duplicate_suffix_mock.assert_called()
@@ -442,7 +442,7 @@ class CloneMixinTestCase(TestCase):
             list(book.pages.values_list("id")),
             list(book_clone.pages.values_list("id")),
         )
-        _clone_m2o_or_o2m_fields_mock.assert_called_once()
+        _clone_m2o_or_o2m_fields_mock.assert_called()
         
     def test_cloning_complex_model_relationships(self):
         house = House.objects.create(name="My House")
