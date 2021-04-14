@@ -14,7 +14,7 @@ from model_clone.utils import (
     transaction_autocommit,
     get_unique_value,
     context_mutable_attribute,
-    unpack_unique_together,
+    unpack_unique_together, get_excluded_fields,
 )
 
 
@@ -301,7 +301,7 @@ class CloneMixin(object):
 
         # Clone one to one fields
         for field in fields:
-            rel_object = getattr(self, field.name, field.get_default())
+            rel_object = getattr(self, field.name, None)
             if rel_object:
                 if hasattr(rel_object, "make_clone") and callable(
                     rel_object.make_clone

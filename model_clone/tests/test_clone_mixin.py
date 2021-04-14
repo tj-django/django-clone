@@ -6,7 +6,7 @@ from django.test import TestCase, TransactionTestCase
 from django.utils.text import slugify
 from mock import patch, PropertyMock
 
-from sample.models import Library, Book, Author, Page, House, Room, Furniture
+from sample.models import Library, Book, Author, Page, House, Room, Furniture, Cover, BackCover
 
 User = get_user_model()
 
@@ -51,6 +51,47 @@ class CloneMixinTestCase(TestCase):
         clone = instance.make_clone()
 
         self.assertNotEqual(instance.pk, clone.pk)
+        self.assertNotEqual(instance.user.pk, clone.user.pk)
+
+    def test_cloning_related_unique_o2o_field_without_a_fallback_value_is_valid(self):
+        with patch(
+            "sample.models.Cover._clone_o2o_fields", PropertyMock(return_value=["book"])
+        ):
+            book = Book.objects.create(
+                name="New Book 1", created_by=self.user1, slug=slugify("New Book 1")
+            )
+            cover = Cover.objects.create(content="New Cover", book=book)
+            clone = cover.make_clone()
+        
+            self.assertNotEqual(cover.pk, clone.pk)
+            self.assertNotEqual(cover.book.pk, clone.book.pk)
+            self.assertEqual(cover.content, clone.content)
+        
+        # TODO: Fix test
+        # with patch(
+        #     "sample.models.Book._clone_o2o_fields",
+        #     PropertyMock(return_value=["cover", "backcover"]),
+        # ):
+        #     book = Book.objects.create(
+        #         name="New Book 2", created_by=self.user1, slug=slugify("New Book 2")
+        #     )
+        #     cover = Cover.objects.create(content="New Cover", book=book)
+        #     clone = book.make_clone()
+        #
+        #     self.assertNotEqual(book.pk, clone.pk)
+        #     self.assertNotEqual(cover.pk, clone.cover.pk)
+        #     self.assertEqual(cover.content, clone.cover.content)
+        #
+        #
+        #     book = Book.objects.create(
+        #         name="New Book 3", created_by=self.user1, slug=slugify("New Book 3")
+        #     )
+        #     backcover = BackCover.objects.create(content="New Back Cover", book=book)
+        #     clone = book.make_clone()
+        #
+        #     self.assertNotEqual(book.pk, clone.pk)
+        #     self.assertNotEqual(backcover.pk, clone.backcover.pk)
+        #     self.assertEqual(backcover.content, clone.backcover.content)
 
     def test_cloning_with_field_overridden(self):
         name = "New Library"

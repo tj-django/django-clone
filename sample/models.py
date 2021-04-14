@@ -183,3 +183,13 @@ class Furniture(CloneMixin, models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Cover(CloneModel):
+    content = models.CharField(max_length=200)
+    book = models.OneToOneField(Book, on_delete=models.CASCADE)
+
+
+class BackCover(models.Model):
+    content = models.CharField(max_length=200)
+    book = models.OneToOneField(Book, on_delete=models.CASCADE)
