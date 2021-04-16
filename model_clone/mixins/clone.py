@@ -14,8 +14,7 @@ from model_clone.utils import (
     transaction_autocommit,
     get_unique_value,
     context_mutable_attribute,
-    unpack_unique_together, get_excluded_fields,
-)
+    unpack_unique_together, )
 
 
 class CloneMixin(object):
@@ -302,8 +301,6 @@ class CloneMixin(object):
         :type duplicate: `django.db.models.Model`
         :return: The duplicate instance with all the one to one fields duplicated.
         """
-        fields = set()
-
         if self._clone_o2o_fields or self._clone_excluded_o2o_fields:
             for f in self._meta.related_objects:
                 if any(
