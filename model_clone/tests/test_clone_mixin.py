@@ -35,7 +35,7 @@ class CloneMixinTestCase(TestCase):
 
         with self.assertRaises(ValidationError):
             instance.make_clone()
-    
+
     def test_cloning_a_transient_instance_is_invalid(self):
         instance = Book()
 
