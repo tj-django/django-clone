@@ -1,6 +1,5 @@
 import contextlib
 import re
-from itertools import chain
 
 import six
 from django.core.exceptions import ValidationError
