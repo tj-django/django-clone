@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [v2.4.1](https://github.com/tj-django/django-clone/releases/tag/v2.4.1) - 2021-04-15
+
+<small>[Compare with v2.4.0](https://github.com/tj-django/django-clone/compare/v2.4.0...v2.4.1)</small>
+
+
 ## [v2.4.0](https://github.com/tj-django/django-clone/releases/tag/v2.4.0) - 2021-04-16
 
 <small>[Compare with v2.3.3](https://github.com/tj-django/django-clone/compare/v2.3.3...v2.4.0)</small>
