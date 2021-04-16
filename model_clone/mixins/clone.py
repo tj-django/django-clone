@@ -20,8 +20,7 @@ from model_clone.utils import (
 
 class CloneMixin(object):
 
-    """
-    CloneMixin mixin to duplicate an object using the model cls.
+    """CloneMixin mixin to duplicate an object using the model cls.
 
     :param _clone_fields: Restricted List of fields to copy from the instance.
     :type _clone_fields: collections.Iterable
@@ -181,8 +180,7 @@ class CloneMixin(object):
 
     @transaction.atomic
     def make_clone(self, attrs=None, sub_clone=False):
-        """
-        Creates a clone of the django model instance.
+        """Creates a clone of the django model instance.
 
         :param attrs: Dictionary of attributes to be replaced on the cloned object.
         :type attrs: dict
@@ -263,8 +261,7 @@ class CloneMixin(object):
 
     @staticmethod
     def _create_copy_of_instance(instance, force=False, sub_clone=False):
-        """
-        Create a copy of an instance
+        """Create a copy of an instance
 
         :param instance: The instance to be duplicated.
         :type instance: `django.db.models.Model`
@@ -391,8 +388,7 @@ class CloneMixin(object):
         return duplicate
 
     def __duplicate_o2m_m2o_fields(self, duplicate):
-        """
-        Duplicate many to one or one to many fields.
+        """Duplicate many to one or one to many fields.
 
         :param duplicate: The transient instance that should be duplicated.
         :type duplicate: `django.db.models.Model`
@@ -431,8 +427,7 @@ class CloneMixin(object):
         return duplicate
 
     def __duplicate_m2m_fields(self, duplicate, sub_clone):
-        """
-        Duplicate many to many fields.
+        """Duplicate many to many fields.
 
         :param duplicate: The transient instance that should be duplicated.
         :type duplicate: `django.db.models.Model`
