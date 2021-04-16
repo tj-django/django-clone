@@ -8,28 +8,54 @@ import model_clone.mixins.clone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sample', '0011_auto_20210414_1744'),
+        ("sample", "0011_auto_20210414_1744"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Cover',
+            name="Cover",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content', models.CharField(max_length=200)),
-                ('book', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='sample.book')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("content", models.CharField(max_length=200)),
+                (
+                    "book",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE, to="sample.book"
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
             bases=(model_clone.mixins.clone.CloneMixin, models.Model),
         ),
         migrations.CreateModel(
-            name='BackCover',
+            name="BackCover",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content', models.CharField(max_length=200)),
-                ('book', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='sample.book')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("content", models.CharField(max_length=200)),
+                (
+                    "book",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE, to="sample.book"
+                    ),
+                ),
             ],
         ),
     ]

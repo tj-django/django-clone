@@ -14,7 +14,8 @@ from model_clone.utils import (
     transaction_autocommit,
     get_unique_value,
     context_mutable_attribute,
-    unpack_unique_together, )
+    unpack_unique_together,
+)
 
 
 class CloneMixin(object):
@@ -136,13 +137,21 @@ class CloneMixin(object):
         for f in instance._meta.concrete_fields:
             valid = False
             if not getattr(f, "primary_key", False):
-                if clone_fields and not force and not getattr(f, 'one_to_one', False):
+                if clone_fields and not force and not getattr(f, "one_to_one", False):
                     valid = f.name in clone_fields
-                elif clone_excluded_fields and not force and not getattr(f, 'one_to_one', False):
+                elif (
+                    clone_excluded_fields
+                    and not force
+                    and not getattr(f, "one_to_one", False)
+                ):
                     valid = f.name not in clone_excluded_fields
-                elif clone_o2o_fields and not force and getattr(f, 'one_to_one', False):
+                elif clone_o2o_fields and not force and getattr(f, "one_to_one", False):
                     valid = f.name in clone_o2o_fields
-                elif clone_excluded_o2o_fields and not force and getattr(f, 'one_to_one', False):
+                elif (
+                    clone_excluded_o2o_fields
+                    and not force
+                    and getattr(f, "one_to_one", False)
+                ):
                     valid = f.name not in clone_excluded_o2o_fields
                 else:
                     valid = True
@@ -195,10 +204,12 @@ class CloneMixin(object):
 
                 elif isinstance(f, models.OneToOneField) and not sub_clone:
                     sub_instance = getattr(instance, f.name, f.get_default())
-                    
+
                     if sub_instance is not None:
                         sub_instance = CloneMixin._create_copy_of_instance(
-                            sub_instance, force=True, sub_clone=True,
+                            sub_instance,
+                            force=True,
+                            sub_clone=True,
                         )
                         sub_instance.save()
                         value = sub_instance.pk
@@ -305,7 +316,9 @@ class CloneMixin(object):
             for f in self._meta.related_objects:
                 if any(
                     [
-                        f.one_to_one and f.name in self._clone_o2o_fields and not f in self._meta.concrete_fields,
+                        f.one_to_one
+                        and f.name in self._clone_o2o_fields
+                        and not f in self._meta.concrete_fields,
                         f.one_to_one
                         and self._clone_excluded_o2o_fields
                         and f.name not in self._clone_excluded_o2o_fields
@@ -315,7 +328,9 @@ class CloneMixin(object):
                     rel_object = getattr(self, f.name, None)
                     if rel_object:
                         new_rel_object = CloneMixin._create_copy_of_instance(
-                            rel_object, force=True, sub_clone=True,
+                            rel_object,
+                            force=True,
+                            sub_clone=True,
                         )
                         setattr(new_rel_object, f.remote_field.name, duplicate)
                         new_rel_object.save()
@@ -449,7 +464,7 @@ class CloneMixin(object):
 
         duplicate.full_clean()
         duplicate.save()
-        
+
         duplicate = self.__duplicate_o2o_fields(duplicate)
         duplicate = self.__duplicate_o2m_m2o_fields(duplicate)
         duplicate = self.__duplicate_m2m_fields(duplicate, sub_clone)
