@@ -2,14 +2,24 @@ import datetime
 import time
 
 from django.contrib.auth import get_user_model
-from django.db import IntegrityError
+from django.core.exceptions import ValidationError
 from django.db.transaction import TransactionManagementError
 from django.test import TestCase, TransactionTestCase
 from django.utils.text import slugify
 from django.utils.timezone import make_naive
 from mock import patch, PropertyMock
 
-from sample.models import Library, Book, Author, Page
+from sample.models import (
+    Library,
+    Book,
+    Author,
+    Page,
+    House,
+    Room,
+    Furniture,
+    Cover,
+    BackCover,
+)
 
 User = get_user_model()
 
@@ -19,6 +29,12 @@ class CloneMixinTestCase(TestCase):
     def setUpTestData(cls):
         cls.user1 = User.objects.create(username="user 1")
         cls.user2 = User.objects.create(username="user 2")
+
+    def test_cloning_a_transient_instance_is_invalid(self):
+        instance = Library()
+
+        with self.assertRaises(ValidationError):
+            instance.make_clone()
 
     def test_cloning_model_with_custom_id(self):
         instance = Library.objects.create(name="First library", user=self.user1)
@@ -48,6 +64,45 @@ class CloneMixinTestCase(TestCase):
         clone = instance.make_clone()
 
         self.assertNotEqual(instance.pk, clone.pk)
+        self.assertNotEqual(instance.user.pk, clone.user.pk)
+
+    def test_cloning_related_unique_o2o_field_without_a_fallback_value_is_valid(self):
+        with patch(
+            "sample.models.Cover._clone_o2o_fields", PropertyMock(return_value=["book"])
+        ):
+            book = Book.objects.create(
+                name="New Book 1", created_by=self.user1, slug=slugify("New Book 1")
+            )
+            cover = Cover.objects.create(content="New Cover", book=book)
+            clone = cover.make_clone()
+
+            self.assertNotEqual(cover.pk, clone.pk)
+            self.assertNotEqual(cover.book.pk, clone.book.pk)
+            self.assertEqual(cover.content, clone.content)
+
+        with patch(
+            "sample.models.Book._clone_o2o_fields",
+            PropertyMock(return_value=["cover", "backcover"]),
+        ):
+            book = Book.objects.create(
+                name="New Book 2", created_by=self.user1, slug=slugify("New Book 2")
+            )
+            cover = Cover.objects.create(content="New Cover", book=book)
+            clone = book.make_clone()
+
+            self.assertNotEqual(book.pk, clone.pk)
+            self.assertNotEqual(cover.pk, clone.cover.pk)
+            self.assertEqual(cover.content, clone.cover.content)
+
+            book = Book.objects.create(
+                name="New Book 3", created_by=self.user1, slug=slugify("New Book 3")
+            )
+            backcover = BackCover.objects.create(content="New Back Cover", book=book)
+            clone = book.make_clone()
+
+            self.assertNotEqual(book.pk, clone.pk)
+            self.assertNotEqual(backcover.pk, clone.backcover.pk)
+            self.assertEqual(backcover.content, clone.backcover.content)
 
     def test_cloning_with_field_overridden(self):
         name = "New Library"
@@ -183,7 +238,7 @@ class CloneMixinTestCase(TestCase):
             list(author.books.values_list("name")),
             list(author_clone.books.values_list("name")),
         )
-        _clone_m2m_fields_mock.assert_called_once()
+        _clone_m2m_fields_mock.assert_called()
 
     def test_cloning_unique_fields_is_valid(self):
         first_name = "Ruby"
@@ -220,7 +275,7 @@ class CloneMixinTestCase(TestCase):
             sex="F",
             created_by=self.user1,
         )
-        with self.assertRaises(IntegrityError):
+        with self.assertRaises(ValidationError):
             author.make_clone()
 
         use_unique_duplicate_suffix_mock.assert_called()
@@ -449,7 +504,21 @@ class CloneMixinTestCase(TestCase):
             list(book.pages.values_list("id")),
             list(book_clone.pages.values_list("id")),
         )
-        _clone_m2o_or_o2m_fields_mock.assert_called_once()
+        _clone_m2o_or_o2m_fields_mock.assert_called()
+
+    def test_cloning_complex_model_relationships(self):
+        house = House.objects.create(name="My House")
+
+        room_1 = Room.objects.create(name="Room 1 in house", house=house)
+        room_2 = Room.objects.create(name="Room 2 in house", house=house)
+
+        Furniture.objects.create(name="Chair for room 1", room=room_1)
+        Furniture.objects.create(name="Chair for room 2", room=room_2)
+
+        clone_house = house.make_clone()
+
+        self.assertEqual(house.name, clone_house.name)
+        self.assertEqual(house.rooms.count(), clone_house.rooms.count())
 
 
 class CloneMixinTransactionTestCase(TransactionTestCase):

@@ -10,8 +10,8 @@ from model_clone.models import CloneModel
 
 
 class Author(CloneModel):
-    first_name = models.CharField(max_length=200, unique=True)
-    last_name = models.CharField(max_length=200)
+    first_name = models.CharField(max_length=200, blank=True, unique=True)
+    last_name = models.CharField(max_length=200, blank=True)
     age = models.PositiveIntegerField()
 
     SEX_CHOICES = [
@@ -150,3 +150,46 @@ class Assignment(CloneMixin, models.Model):
 
     def __str__(self):
         return self.title
+
+
+class House(CloneMixin, models.Model):
+    name = models.CharField(max_length=255)
+
+    _clone_fields = ["name"]
+    _clone_m2o_or_o2m_fields = ["rooms"]
+
+    def __str__(self):
+        return self.name
+
+
+class Room(CloneMixin, models.Model):
+    name = models.CharField(max_length=255)
+
+    house = models.ForeignKey(House, related_name="rooms", on_delete=models.CASCADE)
+
+    _clone_fields = ["name"]
+    _clone_m2o_or_o2m_fields = ["furniture"]
+
+    def __str__(self):
+        return self.name
+
+
+class Furniture(CloneMixin, models.Model):
+    name = models.CharField(max_length=255)
+
+    room = models.ForeignKey(Room, related_name="furniture", on_delete=models.PROTECT)
+
+    _clone_fields = ["name"]
+
+    def __str__(self):
+        return self.name
+
+
+class Cover(CloneModel):
+    content = models.CharField(max_length=200)
+    book = models.OneToOneField(Book, on_delete=models.CASCADE)
+
+
+class BackCover(models.Model):
+    content = models.CharField(max_length=200)
+    book = models.OneToOneField(Book, on_delete=models.CASCADE)
