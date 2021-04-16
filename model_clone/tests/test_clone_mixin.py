@@ -30,13 +30,13 @@ class CloneMixinTestCase(TestCase):
         cls.user1 = User.objects.create(username="user 1")
         cls.user2 = User.objects.create(username="user 2")
 
-    def test_cloning_a_transient_instance_is_invalid(self):
+    def test_cloning_a_transient_instance_with_pk_is_invalid(self):
         instance = Library()
 
         with self.assertRaises(ValidationError):
             instance.make_clone()
     
-    def test_cloning_an_unsaved_instance_is_invalid(self):
+    def test_cloning_a_transient_instance_is_invalid(self):
         instance = Book()
 
         with self.assertRaises(ValidationError):
