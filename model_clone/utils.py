@@ -213,7 +213,7 @@ def get_fields_and_unique_fields_from_cls(
     clone_excluded_o2o_fields,
 ):
     """Get a list of all fields and unique fields from a model class.
-    
+
     Skip the clone_* properties if force is ``True``.
     """
     fields = []
