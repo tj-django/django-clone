@@ -49,7 +49,7 @@ class CloneMixinTestCase(TestCase):
 
     @patch("sample.models.Book._clone_excluded_fields", new_callable=PropertyMock)
     def test_cloning_model_with_excluded_fields(self, _clone_excluded_fields_mock):
-        _clone_excluded_fields_mock.return_value = ['name']
+        _clone_excluded_fields_mock.return_value = ["name"]
         instance = Library.objects.create(name="First library", user=self.user1)
         clone = instance.make_clone({"name": "New Library"})
         self.assertNotEqual(instance.pk, clone.pk)
