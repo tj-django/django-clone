@@ -94,7 +94,7 @@ class CloneMixin(object):
     MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS = 100  # type: int
 
     @staticmethod
-    def _create_copy_of_instance(instance, force=False):
+    def _create_copy_of_instance(instance, force=False, sub_clone=False):
         """
         Create a copy of an instance
 
@@ -102,6 +102,8 @@ class CloneMixin(object):
         :type instance: `django.db.models.Model`
         :param force: Flag to skip using the current model clone declared attributes.
         :type force: bool
+        :param sub_clone: Flag to skip cloning one to one fields for sub clones.
+        :type sub_clone: bool
         :return: A new transient instance.
         :rtype: `django.db.models.Model`
         """
@@ -109,6 +111,12 @@ class CloneMixin(object):
         clone_fields = getattr(cls, "_clone_fields", CloneMixin._clone_fields)
         clone_excluded_fields = getattr(
             cls, "_clone_excluded_fields", CloneMixin._clone_excluded_fields
+        )
+        clone_o2o_fields = getattr(
+            cls, "_clone_o2o_fields", CloneMixin._clone_o2o_fields
+        )
+        clone_excluded_o2o_fields = getattr(
+            cls, "_clone_excluded_o2o_fields", CloneMixin._clone_excluded_o2o_fields
         )
         unique_duplicate_suffix = getattr(
             cls, "UNIQUE_DUPLICATE_SUFFIX", CloneMixin.UNIQUE_DUPLICATE_SUFFIX
@@ -128,11 +136,15 @@ class CloneMixin(object):
 
         for f in instance._meta.concrete_fields:
             valid = False
-            if not f.primary_key:
-                if clone_fields and not force:
+            if not getattr(f, "primary_key", False):
+                if clone_fields and not force and not getattr(f, 'one_to_one', False):
                     valid = f.name in clone_fields
-                elif clone_excluded_fields and not force:
+                elif clone_excluded_fields and not force and not getattr(f, 'one_to_one', False):
                     valid = f.name not in clone_excluded_fields
+                elif clone_o2o_fields and not force and getattr(f, 'one_to_one', False):
+                    valid = f.name in clone_o2o_fields
+                elif clone_excluded_o2o_fields and not force and getattr(f, 'one_to_one', False):
+                    valid = f.name not in clone_excluded_o2o_fields
                 else:
                     valid = True
 
@@ -165,14 +177,9 @@ class CloneMixin(object):
                     not f.auto_created,
                     f.concrete,
                     f.editable,
-                    not isinstance(f, (models.DateTimeField, models.DateField)),
-                    f not in instance._meta.related_objects,
-                    f not in instance._meta.many_to_many,
                     f.name in unique_fields,
                 ]
             ):
-                value = getattr(instance, f.attname, f.get_default())
-
                 # Do not try to get unique value for enum type field
                 if isinstance(f, models.CharField) and not f.choices:
                     value = clean_value(value, unique_duplicate_suffix)
@@ -186,6 +193,16 @@ class CloneMixin(object):
                             max_length=f.max_length,
                             max_attempts=max_unique_duplicate_query_attempts,
                         )
+
+                elif isinstance(f, models.OneToOneField) and not sub_clone:
+                    sub_instance = getattr(instance, f.name, f.get_default())
+                    
+                    if sub_instance is not None:
+                        sub_instance = CloneMixin._create_copy_of_instance(
+                            sub_instance, force=True, sub_clone=True,
+                        )
+                        sub_instance.save()
+                        value = sub_instance.pk
 
             setattr(new_instance, f.attname, value)
 
@@ -288,34 +305,23 @@ class CloneMixin(object):
         fields = set()
 
         if self._clone_o2o_fields or self._clone_excluded_o2o_fields:
-            for f in chain(self._meta.related_objects, self._meta.concrete_fields):
+            for f in self._meta.related_objects:
                 if any(
                     [
-                        f.one_to_one and f.name in self._clone_o2o_fields,
+                        f.one_to_one and f.name in self._clone_o2o_fields and not f in self._meta.concrete_fields,
                         f.one_to_one
                         and self._clone_excluded_o2o_fields
-                        and f.name not in self._clone_excluded_o2o_fields,
+                        and f.name not in self._clone_excluded_o2o_fields
+                        and not f in self._meta.concrete_fields,
                     ]
                 ):
-                    fields.add(f)
-
-        # Clone one to one fields
-        for field in fields:
-            rel_object = getattr(self, field.name, None)
-            if rel_object:
-                if hasattr(rel_object, "make_clone") and callable(
-                    rel_object.make_clone
-                ):
-                    try:
-                        new_rel_object = rel_object.make_clone()
-                    except IntegrityError:
-                        new_rel_object = rel_object.make_clone(sub_clone=True)
-                else:
-                    new_rel_object = CloneMixin._create_copy_of_instance(
-                        rel_object, force=True
-                    )
-                    new_rel_object.save()
-                setattr(duplicate, field.name, new_rel_object)
+                    rel_object = getattr(self, f.name, None)
+                    if rel_object:
+                        new_rel_object = CloneMixin._create_copy_of_instance(
+                            rel_object, force=True, sub_clone=True,
+                        )
+                        setattr(new_rel_object, f.remote_field.name, duplicate)
+                        new_rel_object.save()
 
         return duplicate
 
@@ -444,10 +450,10 @@ class CloneMixin(object):
             for name, value in attrs.items():
                 setattr(duplicate, name, value)
 
-        duplicate = self.__duplicate_o2o_fields(duplicate)
         duplicate.full_clean()
         duplicate.save()
-
+        
+        duplicate = self.__duplicate_o2o_fields(duplicate)
         duplicate = self.__duplicate_o2m_m2o_fields(duplicate)
         duplicate = self.__duplicate_m2m_fields(duplicate, sub_clone)
         return duplicate
