@@ -232,7 +232,7 @@ def get_fields_and_unique_fields_from_cls(
     Skip the clone_* properties if force is ``True``.
     """
     fields = []
-    
+
     for f in cls._meta.concrete_fields:
         valid = False
         if not getattr(f, "primary_key", False):
@@ -254,19 +254,19 @@ def get_fields_and_unique_fields_from_cls(
                 valid = f.name not in clone_excluded_o2o_fields
             else:
                 valid = True
-        
+
         if valid:
             fields.append(f)
-    
+
     unique_field_names = unpack_unique_together(
         opts=cls._meta,
         only_fields=[f.attname for f in fields],
     )
-    
+
     unique_fields = [
         f.name
         for f in fields
         if not f.auto_created and (f.unique or f.name in unique_field_names)
     ]
-    
+
     return fields, unique_fields
