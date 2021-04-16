@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from model_clone.mixins.clone import CloneMixin
 
 
+
 class CloneModelAdminMixin(object):
     """Mixin to handle duplication of models."""
 
