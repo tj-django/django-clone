@@ -207,10 +207,13 @@ def get_unique_value(obj, fname, value, transform, suffix, max_length, max_attem
 def get_excluded_fields(obj):
     """
     Get a list of all excluded fields.
-    
+
     :param obj: The Django model
     :return: A list of all O2O, O2M and M2M fields.
     """
     return [
-        f.name for f in chain(obj._meta.related_objects, obj._meta.many_to_many, obj._meta.concrete_fields)
+        f.name
+        for f in chain(
+            obj._meta.related_objects, obj._meta.many_to_many, obj._meta.concrete_fields
+        )
     ]
