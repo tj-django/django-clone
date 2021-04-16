@@ -4,6 +4,7 @@ import io
 from setuptools import find_packages, setup
 
 install_requires = [
+    "django",
     "future>=0.17.1",
     "conditional>=1.3",
     "six",
