@@ -93,6 +93,174 @@ class CloneMixin(object):
     USE_UNIQUE_DUPLICATE_SUFFIX = True  # type: bool
     MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS = 100  # type: int
 
+    @classmethod
+    def check(cls, **kwargs):
+        errors = super(CloneMixin, cls).check(**kwargs)
+    
+        if cls.USE_UNIQUE_DUPLICATE_SUFFIX and not cls.UNIQUE_DUPLICATE_SUFFIX:
+            errors.append(
+                Error(
+                    "UNIQUE_DUPLICATE_SUFFIX is required.",
+                    hint=(
+                        "Please provide UNIQUE_DUPLICATE_SUFFIX"
+                        + " for {} or set USE_UNIQUE_DUPLICATE_SUFFIX=False".format(
+                        cls.__name__
+                    )
+                    ),
+                    obj=cls,
+                    id="{}.E001".format(ModelCloneConfig.name),
+                )
+            )
+    
+        if all([cls._clone_fields, cls._clone_excluded_fields]):
+            errors.append(
+                Error(
+                    "Conflicting configuration.",
+                    hint=(
+                        'Please provide either "_clone_fields"'
+                        + ' or "_clone_excluded_fields" for model {}'.format(
+                        cls.__name__
+                    )
+                    ),
+                    obj=cls,
+                    id="{}.E002".format(ModelCloneConfig.name),
+                )
+            )
+    
+        if all([cls._clone_m2m_fields, cls._clone_excluded_m2m_fields]):
+            errors.append(
+                Error(
+                    "Conflicting configuration.",
+                    hint=(
+                        'Please provide either "_clone_m2m_fields"'
+                        + ' or "_clone_excluded_m2m_fields" for model {}'.format(
+                        cls.__name__
+                    )
+                    ),
+                    obj=cls,
+                    id="{}.E002".format(ModelCloneConfig.name),
+                )
+            )
+    
+        if all(
+            [
+                cls._clone_m2o_or_o2m_fields,
+                cls._clone_excluded_m2o_or_o2m_fields,
+            ]
+        ):
+            errors.append(
+                Error(
+                    "Conflicting configuration.",
+                    hint=(
+                        "Please provide either "
+                        + '"_clone_m2o_or_o2m_fields"'
+                        + " or "
+                        + '"_clone_excluded_m2o_or_o2m_fields" for {}'.format(
+                        cls.__name__
+                    )
+                    ),
+                    obj=cls,
+                    id="{}.E002".format(ModelCloneConfig.name),
+                )
+            )
+    
+        if all([cls._clone_o2o_fields, cls._clone_excluded_o2o_fields]):
+            errors.append(
+                Error(
+                    "Conflicting configuration.",
+                    hint=(
+                        'Please provide either "_clone_o2o_fields"'
+                        + ' or "_clone_excluded_o2o_fields" for {}'.format(cls.__name__)
+                    ),
+                    obj=cls,
+                    id="{}.E002".format(ModelCloneConfig.name),
+                )
+            )
+    
+        return errors
+
+    @transaction.atomic
+    def make_clone(self, attrs=None, sub_clone=False):
+        """
+        Creates a clone of the django model instance.
+
+        :param attrs: Dictionary of attributes to be replaced on the cloned object.
+        :type attrs: dict
+        :param sub_clone: Internal boolean used to detect cloning sub objects.
+        :type sub_clone: bool
+        :rtype: :obj:`django.db.models.Model`
+        :return: The model instance that has been cloned.
+        """
+        attrs = attrs or {}
+        if not self.pk:
+            raise ValidationError(
+                "{}: Instance must be saved before it can be cloned.".format(
+                    self.__class__.__name__
+                )
+            )
+        if sub_clone:
+            duplicate = self
+            duplicate.pk = None
+        else:
+            duplicate = self._create_copy_of_instance(self)
+            # Supports only updating the attributes of the base instance.
+            for name, value in attrs.items():
+                setattr(duplicate, name, value)
+    
+        duplicate.full_clean()
+        duplicate.save()
+    
+        duplicate = self.__duplicate_o2o_fields(duplicate)
+        duplicate = self.__duplicate_o2m_m2o_fields(duplicate)
+        duplicate = self.__duplicate_m2m_fields(duplicate, sub_clone)
+        return duplicate
+
+    @classmethod
+    def bulk_clone_multi(cls, objs, attrs=None, batch_size=None):
+        # type: (List[models.Model], Optional[List[Dict]], Optional[int]) -> List[models.Model]
+        # TODO: Support bulk clones split by the batch_szie
+        pass
+
+    def bulk_clone(self, count, attrs=None, batch_size=None, auto_commit=False):
+        ops = connections[self.__class__._default_manager.db].ops
+        objs = range(count)
+        clones = []
+        batch_size = batch_size or max(ops.bulk_batch_size([], list(objs)), 1)
+    
+        with conditional(
+            auto_commit,
+            transaction_autocommit(using=self.__class__._default_manager.db),
+        ):
+            # If count exceeds the MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS
+            with conditional(
+                self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS < count,
+                context_mutable_attribute(
+                    self,
+                    "MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS",
+                    count,
+                ),
+            ):
+                if not self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS >= count:
+                    raise AssertionError(
+                        "An Unknown error has occurred: Expected ({}) >= ({})".format(
+                            self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS, count
+                        ),
+                    )
+                clones = list(repeat(self.make_clone(attrs=attrs), batch_size))
+    
+        return clones
+
+    def parallel_clone(self, count, attrs=None, batch_size=None, auto_commit=False):
+        # if this takes n time for t records
+        # t^n i.e 100 * 10ms = 1000ms to clone 100 objects.
+        # I'll like to reduce this down to max time to clone count/batch_size i.e
+        # If it take 100ms to clone 100 objects with a db of batch_size 100
+        # If it takes 10ms to clone 10 objects i'll like to keep this down to 10ms for
+        # max_num_of_threads i.e 10 threads for 100 objects.
+        # This should run in parallel
+        # Testing jit and cpython if they offer better API's.
+        pass
+
     @staticmethod
     def _create_copy_of_instance(instance, force=False, sub_clone=False):
         """
@@ -188,92 +356,6 @@ class CloneMixin(object):
             setattr(new_instance, f.attname, value)
 
         return new_instance
-
-    @classmethod
-    def check(cls, **kwargs):
-        errors = super(CloneMixin, cls).check(**kwargs)
-
-        if cls.USE_UNIQUE_DUPLICATE_SUFFIX and not cls.UNIQUE_DUPLICATE_SUFFIX:
-            errors.append(
-                Error(
-                    "UNIQUE_DUPLICATE_SUFFIX is required.",
-                    hint=(
-                        "Please provide UNIQUE_DUPLICATE_SUFFIX"
-                        + " for {} or set USE_UNIQUE_DUPLICATE_SUFFIX=False".format(
-                            cls.__name__
-                        )
-                    ),
-                    obj=cls,
-                    id="{}.E001".format(ModelCloneConfig.name),
-                )
-            )
-
-        if all([cls._clone_fields, cls._clone_excluded_fields]):
-            errors.append(
-                Error(
-                    "Conflicting configuration.",
-                    hint=(
-                        'Please provide either "_clone_fields"'
-                        + ' or "_clone_excluded_fields" for model {}'.format(
-                            cls.__name__
-                        )
-                    ),
-                    obj=cls,
-                    id="{}.E002".format(ModelCloneConfig.name),
-                )
-            )
-
-        if all([cls._clone_m2m_fields, cls._clone_excluded_m2m_fields]):
-            errors.append(
-                Error(
-                    "Conflicting configuration.",
-                    hint=(
-                        'Please provide either "_clone_m2m_fields"'
-                        + ' or "_clone_excluded_m2m_fields" for model {}'.format(
-                            cls.__name__
-                        )
-                    ),
-                    obj=cls,
-                    id="{}.E002".format(ModelCloneConfig.name),
-                )
-            )
-
-        if all(
-            [
-                cls._clone_m2o_or_o2m_fields,
-                cls._clone_excluded_m2o_or_o2m_fields,
-            ]
-        ):
-            errors.append(
-                Error(
-                    "Conflicting configuration.",
-                    hint=(
-                        "Please provide either "
-                        + '"_clone_m2o_or_o2m_fields"'
-                        + " or "
-                        + '"_clone_excluded_m2o_or_o2m_fields" for {}'.format(
-                            cls.__name__
-                        )
-                    ),
-                    obj=cls,
-                    id="{}.E002".format(ModelCloneConfig.name),
-                )
-            )
-
-        if all([cls._clone_o2o_fields, cls._clone_excluded_o2o_fields]):
-            errors.append(
-                Error(
-                    "Conflicting configuration.",
-                    hint=(
-                        'Please provide either "_clone_o2o_fields"'
-                        + ' or "_clone_excluded_o2o_fields" for {}'.format(cls.__name__)
-                    ),
-                    obj=cls,
-                    id="{}.E002".format(ModelCloneConfig.name),
-                )
-            )
-
-        return errors
 
     def __duplicate_o2o_fields(self, duplicate):
         """
@@ -406,85 +488,3 @@ class CloneMixin(object):
                 destination.set(source.all())
 
         return duplicate
-
-    @transaction.atomic
-    def make_clone(self, attrs=None, sub_clone=False):
-        """
-        Creates a clone of the django model instance.
-
-        :param attrs: Dictionary of attributes to be replaced on the cloned object.
-        :type attrs: dict
-        :param sub_clone: Internal boolean used to detect cloning sub objects.
-        :type sub_clone: bool
-        :rtype: :obj:`django.db.models.Model`
-        :return: The model instance that has been cloned.
-        """
-        attrs = attrs or {}
-        if not self.pk:
-            raise ValidationError(
-                "{}: Instance must be saved before it can be cloned.".format(
-                    self.__class__.__name__
-                )
-            )
-        if sub_clone:
-            duplicate = self
-            duplicate.pk = None
-        else:
-            duplicate = self._create_copy_of_instance(self)
-            # Supports only updating the attributes of the base instance.
-            for name, value in attrs.items():
-                setattr(duplicate, name, value)
-
-        duplicate.full_clean()
-        duplicate.save()
-
-        duplicate = self.__duplicate_o2o_fields(duplicate)
-        duplicate = self.__duplicate_o2m_m2o_fields(duplicate)
-        duplicate = self.__duplicate_m2m_fields(duplicate, sub_clone)
-        return duplicate
-
-    @classmethod
-    def bulk_clone_multi(cls, objs, attrs=None, batch_size=None):
-        # type: (List[models.Model], Optional[List[Dict]], Optional[int]) -> List[models.Model]
-        # TODO: Support bulk clones split by the batch_szie
-        pass
-
-    def bulk_clone(self, count, attrs=None, batch_size=None, auto_commit=False):
-        ops = connections[self.__class__._default_manager.db].ops
-        objs = range(count)
-        clones = []
-        batch_size = batch_size or max(ops.bulk_batch_size([], list(objs)), 1)
-
-        with conditional(
-            auto_commit,
-            transaction_autocommit(using=self.__class__._default_manager.db),
-        ):
-            # If count exceeds the MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS
-            with conditional(
-                self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS < count,
-                context_mutable_attribute(
-                    self,
-                    "MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS",
-                    count,
-                ),
-            ):
-                if not self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS >= count:
-                    raise AssertionError(
-                        "An Unknown error has occurred: Expected ({}) >= ({})".format(
-                            self.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS, count
-                        ),
-                    )
-                clones = list(repeat(self.make_clone(attrs=attrs), batch_size))
-
-        return clones
-
-    def parallel_clone(self, count, attrs=None, batch_size=None, auto_commit=False):
-        # if this takes n time for t records
-        # t^n i.e 100 * 10ms = 1000ms to clone 100 objects.
-        # I'll like to reduce this down to max time to clone count/batch_size i.e
-        # If it take 100ms to clone 100 objects with a db of batch_size 100
-        # If it takes 10ms to clone 10 objects i'll like to keep this down to 10ms for
-        # max_num_of_threads i.e 10 threads for 100 objects.
-        # This should run in parallel
-        # Testing jit and cpython if they offer better API's.
-        pass
