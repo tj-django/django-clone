@@ -204,21 +204,6 @@ def get_unique_value(obj, fname, value, transform, suffix, max_length, max_attem
     return new
 
 
-def get_excluded_fields(obj):
-    """
-    Get a list of all excluded fields.
-
-    :param obj: The Django model
-    :return: A list of all O2O, O2M and M2M fields.
-    """
-    return [
-        f.name
-        for f in chain(
-            obj._meta.related_objects, obj._meta.many_to_many, obj._meta.concrete_fields
-        )
-    ]
-
-
 def get_fields_and_unique_fields_from_cls(
     cls,
     force,
@@ -227,8 +212,8 @@ def get_fields_and_unique_fields_from_cls(
     clone_o2o_fields,
     clone_excluded_o2o_fields,
 ):
-    """
-    Get a list of all fields and unique fields from a model class.
+    """Get a list of all fields and unique fields from a model class.
+    
     Skip the clone_* properties if force is ``True``.
     """
     fields = []
