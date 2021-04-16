@@ -309,7 +309,7 @@ class CloneMixin(object):
                         f.one_to_one
                         and self._clone_excluded_o2o_fields
                         and f.name not in self._clone_excluded_o2o_fields
-                        and not f in self._meta.concrete_fields,
+                        and f not in self._meta.concrete_fields,
                     ]
                 ):
                     rel_object = getattr(self, f.name, None)
