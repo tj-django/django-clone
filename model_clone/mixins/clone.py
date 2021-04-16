@@ -96,7 +96,7 @@ class CloneMixin(object):
     @classmethod
     def check(cls, **kwargs):
         errors = super(CloneMixin, cls).check(**kwargs)
-    
+
         if cls.USE_UNIQUE_DUPLICATE_SUFFIX and not cls.UNIQUE_DUPLICATE_SUFFIX:
             errors.append(
                 Error(
@@ -104,14 +104,14 @@ class CloneMixin(object):
                     hint=(
                         "Please provide UNIQUE_DUPLICATE_SUFFIX"
                         + " for {} or set USE_UNIQUE_DUPLICATE_SUFFIX=False".format(
-                        cls.__name__
-                    )
+                            cls.__name__
+                        )
                     ),
                     obj=cls,
                     id="{}.E001".format(ModelCloneConfig.name),
                 )
             )
-    
+
         if all([cls._clone_fields, cls._clone_excluded_fields]):
             errors.append(
                 Error(
@@ -119,14 +119,14 @@ class CloneMixin(object):
                     hint=(
                         'Please provide either "_clone_fields"'
                         + ' or "_clone_excluded_fields" for model {}'.format(
-                        cls.__name__
-                    )
+                            cls.__name__
+                        )
                     ),
                     obj=cls,
                     id="{}.E002".format(ModelCloneConfig.name),
                 )
             )
-    
+
         if all([cls._clone_m2m_fields, cls._clone_excluded_m2m_fields]):
             errors.append(
                 Error(
@@ -134,14 +134,14 @@ class CloneMixin(object):
                     hint=(
                         'Please provide either "_clone_m2m_fields"'
                         + ' or "_clone_excluded_m2m_fields" for model {}'.format(
-                        cls.__name__
-                    )
+                            cls.__name__
+                        )
                     ),
                     obj=cls,
                     id="{}.E002".format(ModelCloneConfig.name),
                 )
             )
-    
+
         if all(
             [
                 cls._clone_m2o_or_o2m_fields,
@@ -156,14 +156,14 @@ class CloneMixin(object):
                         + '"_clone_m2o_or_o2m_fields"'
                         + " or "
                         + '"_clone_excluded_m2o_or_o2m_fields" for {}'.format(
-                        cls.__name__
-                    )
+                            cls.__name__
+                        )
                     ),
                     obj=cls,
                     id="{}.E002".format(ModelCloneConfig.name),
                 )
             )
-    
+
         if all([cls._clone_o2o_fields, cls._clone_excluded_o2o_fields]):
             errors.append(
                 Error(
@@ -176,7 +176,7 @@ class CloneMixin(object):
                     id="{}.E002".format(ModelCloneConfig.name),
                 )
             )
-    
+
         return errors
 
     @transaction.atomic
@@ -206,10 +206,10 @@ class CloneMixin(object):
             # Supports only updating the attributes of the base instance.
             for name, value in attrs.items():
                 setattr(duplicate, name, value)
-    
+
         duplicate.full_clean()
         duplicate.save()
-    
+
         duplicate = self.__duplicate_o2o_fields(duplicate)
         duplicate = self.__duplicate_o2m_m2o_fields(duplicate)
         duplicate = self.__duplicate_m2m_fields(duplicate, sub_clone)
@@ -226,7 +226,7 @@ class CloneMixin(object):
         objs = range(count)
         clones = []
         batch_size = batch_size or max(ops.bulk_batch_size([], list(objs)), 1)
-    
+
         with conditional(
             auto_commit,
             transaction_autocommit(using=self.__class__._default_manager.db),
@@ -247,7 +247,7 @@ class CloneMixin(object):
                         ),
                     )
                 clones = list(repeat(self.make_clone(attrs=attrs), batch_size))
-    
+
         return clones
 
     def parallel_clone(self, count, attrs=None, batch_size=None, auto_commit=False):
