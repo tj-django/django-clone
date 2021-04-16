@@ -217,3 +217,56 @@ def get_excluded_fields(obj):
             obj._meta.related_objects, obj._meta.many_to_many, obj._meta.concrete_fields
         )
     ]
+
+
+def get_fields_and_unique_fields_from_cls(
+    cls,
+    force,
+    clone_fields,
+    clone_excluded_fields,
+    clone_o2o_fields,
+    clone_excluded_o2o_fields,
+):
+    """
+    Get a list of all fields and unique fields from a model class.
+    Skip the clone_* properties if force is ``True``.
+    """
+    fields = []
+    
+    for f in cls._meta.concrete_fields:
+        valid = False
+        if not getattr(f, "primary_key", False):
+            if clone_fields and not force and not getattr(f, "one_to_one", False):
+                valid = f.name in clone_fields
+            elif (
+                clone_excluded_fields
+                and not force
+                and not getattr(f, "one_to_one", False)
+            ):
+                valid = f.name not in clone_excluded_fields
+            elif clone_o2o_fields and not force and getattr(f, "one_to_one", False):
+                valid = f.name in clone_o2o_fields
+            elif (
+                clone_excluded_o2o_fields
+                and not force
+                and getattr(f, "one_to_one", False)
+            ):
+                valid = f.name not in clone_excluded_o2o_fields
+            else:
+                valid = True
+        
+        if valid:
+            fields.append(f)
+    
+    unique_field_names = unpack_unique_together(
+        opts=cls._meta,
+        only_fields=[f.attname for f in fields],
+    )
+    
+    unique_fields = [
+        f.name
+        for f in fields
+        if not f.auto_created and (f.unique or f.name in unique_field_names)
+    ]
+    
+    return fields, unique_fields

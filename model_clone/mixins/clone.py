@@ -14,7 +14,7 @@ from model_clone.utils import (
     transaction_autocommit,
     get_unique_value,
     context_mutable_attribute,
-    unpack_unique_together,
+    get_fields_and_unique_fields_from_cls,
 )
 
 
@@ -132,43 +132,14 @@ class CloneMixin(object):
             CloneMixin.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS,
         )
 
-        fields = []
-
-        for f in instance._meta.concrete_fields:
-            valid = False
-            if not getattr(f, "primary_key", False):
-                if clone_fields and not force and not getattr(f, "one_to_one", False):
-                    valid = f.name in clone_fields
-                elif (
-                    clone_excluded_fields
-                    and not force
-                    and not getattr(f, "one_to_one", False)
-                ):
-                    valid = f.name not in clone_excluded_fields
-                elif clone_o2o_fields and not force and getattr(f, "one_to_one", False):
-                    valid = f.name in clone_o2o_fields
-                elif (
-                    clone_excluded_o2o_fields
-                    and not force
-                    and getattr(f, "one_to_one", False)
-                ):
-                    valid = f.name not in clone_excluded_o2o_fields
-                else:
-                    valid = True
-
-            if valid:
-                fields.append(f)
-
-        unique_field_names = unpack_unique_together(
-            opts=instance._meta,
-            only_fields=[f.attname for f in fields],
+        fields, unique_fields = get_fields_and_unique_fields_from_cls(
+            cls=cls,
+            force=force,
+            clone_fields=clone_fields,
+            clone_excluded_fields=clone_excluded_fields,
+            clone_o2o_fields=clone_o2o_fields,
+            clone_excluded_o2o_fields=clone_excluded_o2o_fields,
         )
-
-        unique_fields = [
-            f.name
-            for f in fields
-            if not f.auto_created and (f.unique or f.name in unique_field_names)
-        ]
 
         new_instance = cls()
 
