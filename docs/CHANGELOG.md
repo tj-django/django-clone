@@ -4,9 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v2.3.4](https://github.com/tj-django/django-clone/releases/tag/v2.3.4) - 2021-04-09
+## [v2.4.1](https://github.com/tj-django/django-clone/releases/tag/v2.4.1) - 2021-04-15
 
-<small>[Compare with v2.3.3](https://github.com/tj-django/django-clone/compare/v2.3.3...v2.3.4)</small>
+<small>[Compare with v2.4.0](https://github.com/tj-django/django-clone/compare/v2.4.0...v2.4.1)</small>
+
+
+## [v2.4.0](https://github.com/tj-django/django-clone/releases/tag/v2.4.0) - 2021-04-16
+
+<small>[Compare with v2.3.3](https://github.com/tj-django/django-clone/compare/v2.3.3...v2.4.0)</small>
+
+### Added
+- Add a delay to resolve inconsistency in windows (#266) ([59ab32d](https://github.com/tj-django/django-clone/commit/59ab32d318c1478da14965fe6dec8986dbe5ba55) by Tonye Jack).
+
+### Fixed
+- Fixed cloning one to one fields and cleaned up implementation (#267) ([df5ae2a](https://github.com/tj-django/django-clone/pull/267/commits/df5ae2abc99508dfffffe73753876d5e0e2e63a0) by Tonye Jack).
 
 
 ## [v2.3.3](https://github.com/tj-django/django-clone/releases/tag/v2.3.3) - 2021-04-09
