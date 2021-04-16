@@ -35,6 +35,12 @@ class CloneMixinTestCase(TestCase):
 
         with self.assertRaises(ValidationError):
             instance.make_clone()
+    
+    def test_cloning_an_unsaved_instance_is_invalid(self):
+        instance = Book()
+
+        with self.assertRaises(ValidationError):
+            instance.make_clone()
 
     def test_cloning_model_with_custom_id(self):
         instance = Library.objects.create(name="First library", user=self.user1)
