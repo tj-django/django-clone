@@ -5,7 +5,17 @@ from django.test import TestCase, TransactionTestCase
 from django.utils.text import slugify
 from mock import patch, PropertyMock
 
-from sample.models import Library, Book, Author, Page, House, Room, Furniture, Cover, BackCover
+from sample.models import (
+    Library,
+    Book,
+    Author,
+    Page,
+    House,
+    Room,
+    Furniture,
+    Cover,
+    BackCover,
+)
 
 User = get_user_model()
 
@@ -61,11 +71,11 @@ class CloneMixinTestCase(TestCase):
             )
             cover = Cover.objects.create(content="New Cover", book=book)
             clone = cover.make_clone()
-        
+
             self.assertNotEqual(cover.pk, clone.pk)
             self.assertNotEqual(cover.book.pk, clone.book.pk)
             self.assertEqual(cover.content, clone.content)
-        
+
         with patch(
             "sample.models.Book._clone_o2o_fields",
             PropertyMock(return_value=["cover", "backcover"]),
@@ -79,7 +89,6 @@ class CloneMixinTestCase(TestCase):
             self.assertNotEqual(book.pk, clone.pk)
             self.assertNotEqual(cover.pk, clone.cover.pk)
             self.assertEqual(cover.content, clone.cover.content)
-
 
             book = Book.objects.create(
                 name="New Book 3", created_by=self.user1, slug=slugify("New Book 3")
