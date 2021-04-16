@@ -24,23 +24,23 @@ class CloneMixin(object):
     CloneMixin mixin to duplicate an object using the model cls.
 
     :param _clone_fields: Restricted List of fields to copy from the instance.
-    :type _clone_fields`collections.Iterable`
+    :type _clone_fields: collections.Iterable
     :param _clone_m2m_fields: Many to many fields (Example: TestModel.tags).
-    :type _clone_m2m_fields`collections.Iterable`
+    :type _clone_m2m_fields: collections.Iterable
     :param _clone_m2o_or_o2m_fields: Many to one/One to many fields.
-    :type _clone_m2o_or_o2m_fields`collections.Iterable`
+    :type _clone_m2o_or_o2m_fields: collections.Iterable
     :param _clone_o2o_fields: One to One fields.
-    :type _clone_o2o_fields`collections.Iterable`
+    :type _clone_o2o_fields: collections.Iterable
 
     :param _clone_excluded_fields: Excluded model fields.
-    :type _clone_excluded_fields`collections.Iterable`
+    :type _clone_excluded_fields: collections.Iterable
     :param _clone_excluded_m2m_fields: Excluded many to many fields.
-    :type _clone_excluded_m2m_fields`collections.Iterable`
+    :type _clone_excluded_m2m_fields: collections.Iterable
     :param _clone_excluded_m2o_or_o2m_fields: Excluded many to many
         and one to many fields.
-    :type _clone_excluded_m2o_or_o2m_fields`collections.Iterable`
+    :type _clone_excluded_m2o_or_o2m_fields: collections.Iterable
     :param _clone_excluded_o2o_fields: Excluded one to one fields.
-    :type _clone_excluded_o2o_fields: `collections.Iterable`
+    :type _clone_excluded_o2o_fields: collections.Iterable
 
     :Example:
     >>> # Using explicit fields
@@ -412,8 +412,10 @@ class CloneMixin(object):
         """
         Creates a clone of the django model instance.
 
-        :param attrs (dict): Dictionary of attributes to be replaced on the cloned object.
-        :param sub_clone (bool): Internal boolean used to detect cloning sub objects.
+        :param attrs: Dictionary of attributes to be replaced on the cloned object.
+        :type attrs: dict
+        :param sub_clone: Internal boolean used to detect cloning sub objects.
+        :type sub_clone: bool
         :rtype: :obj:`django.db.models.Model`
         :return: The model instance that has been cloned.
         """
