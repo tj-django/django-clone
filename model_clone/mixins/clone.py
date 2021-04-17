@@ -178,6 +178,12 @@ class CloneMixin(object):
 
         return errors
 
+    @classmethod
+    def bulk_clone_multi(cls, objs, attrs=None, batch_size=None):
+        # type: (List[models.Model], Optional[List[Dict]], Optional[int]) -> List[models.Model]
+        # TODO: Support bulk clones split by the batch_szie
+        pass
+
     @transaction.atomic
     def make_clone(self, attrs=None, sub_clone=False):
         """Creates a clone of the django model instance.
@@ -212,12 +218,6 @@ class CloneMixin(object):
         duplicate = self.__duplicate_o2m_m2o_fields(duplicate)
         duplicate = self.__duplicate_m2m_fields(duplicate, sub_clone)
         return duplicate
-
-    @classmethod
-    def bulk_clone_multi(cls, objs, attrs=None, batch_size=None):
-        # type: (List[models.Model], Optional[List[Dict]], Optional[int]) -> List[models.Model]
-        # TODO: Support bulk clones split by the batch_szie
-        pass
 
     def bulk_clone(self, count, attrs=None, batch_size=None, auto_commit=False):
         ops = connections[self.__class__._default_manager.db].ops
