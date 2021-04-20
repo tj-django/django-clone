@@ -444,5 +444,3 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 - Fixed typo. ([1cfe037](https://github.com/tj-django/django-clone/commit/1cfe037e50c8fca6c31a31ecf4b36b7c88c39fbe) by Tonye Jack).
-
-
