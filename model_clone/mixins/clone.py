@@ -421,7 +421,6 @@ class CloneMixin(object):
 
         return duplicate
 
-
     def __duplicate_m2o_fields(self, duplicate):
         """Duplicate many to one fields.
 
