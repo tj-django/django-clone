@@ -10,6 +10,7 @@ from django.utils.timezone import make_naive
 from mock import patch, PropertyMock
 
 from sample.models import (
+    Edition,
     Library,
     Book,
     Author,
@@ -492,31 +493,58 @@ class CloneMixinTestCase(TestCase):
         "sample.models.Book._clone_m2o_or_o2m_fields",
         new_callable=PropertyMock,
     )
-    def test_cloning_one_to_many_many_to_one(
+    def test_cloning_one_to_many(
         self,
         _clone_m2o_or_o2m_fields_mock,
     ):
-        _clone_m2o_or_o2m_fields_mock.return_value = ["pages"]
+        _clone_m2o_or_o2m_fields_mock.return_value = ["page_set"]
 
         name = "New Book"
         book = Book.objects.create(name=name, created_by=self.user1, slug=slugify(name))
 
         page_1 = Page.objects.create(content="Page 1 content", book=book)
         page_2 = Page.objects.create(content="Page 2 content", book=book)
+        book.page_set.set([page_1, page_2])
 
-        book.pages.set([page_1, page_2])
+        Edition.objects.create(seq=1, book=book)
+        self.assertEqual(self.user1.book_set.count(), 1)
+
         book_clone = book.make_clone()
 
         self.assertEqual(book.name, name)
         self.assertEqual(book_clone.name, name)
         self.assertEqual(
-            list(book.pages.values_list("content")),
-            list(book_clone.pages.values_list("content")),
+            list(book.page_set.values_list("content")),
+            list(book_clone.page_set.values_list("content")),
         )
         self.assertNotEqual(
-            list(book.pages.values_list("id")),
-            list(book_clone.pages.values_list("id")),
+            list(book.page_set.values_list("id")),
+            list(book_clone.page_set.values_list("id")),
         )
+        self.assertNotEqual(book.editions.count(), book_clone.editions.count())
+        self.assertEqual(self.user1.book_set.count(), 2)
+        _clone_m2o_or_o2m_fields_mock.assert_called()
+
+    @patch(
+        "sample.models.Edition._clone_m2o_or_o2m_fields",
+        new_callable=PropertyMock,
+    )
+    def test_cloning_many_to_one(
+        self,
+        _clone_m2o_or_o2m_fields_mock,
+    ):
+        _clone_m2o_or_o2m_fields_mock.return_value = ["book"]
+
+        name = "New Book"
+        book = Book.objects.create(name=name, created_by=self.user1, slug=slugify(name))
+        page = Page.objects.create(content="Page 1 content", book=book)
+        edition = Edition.objects.create(seq=1, book=book)
+
+        book.page_set.set([page])
+        edition_clone = edition.make_clone()
+
+        self.assertNotEqual(edition.book.id, edition_clone.book.id)
+        self.assertEqual(edition.book.name, edition_clone.book.name)
         _clone_m2o_or_o2m_fields_mock.assert_called()
 
     def test_cloning_complex_model_relationships(self):

@@ -51,7 +51,13 @@ class Book(CloneModel):
 
 class Page(CloneModel):
     content = models.CharField(max_length=20000)
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="pages")
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now)
+
+
+class Edition(CloneModel):
+    seq = models.PositiveIntegerField()
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="editions")
     created_at = models.DateTimeField(default=timezone.now)
 
 
