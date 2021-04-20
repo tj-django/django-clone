@@ -411,9 +411,7 @@ class CloneMixin(object):
         for field in fields:
             for item in getattr(self, field.get_accessor_name()).all():
                 try:
-                    item.make_clone(
-                        attrs={field.remote_field.name: duplicate}
-                    )
+                    item.make_clone(attrs={field.remote_field.name: duplicate})
                 except IntegrityError:
                     item.make_clone(
                         attrs={field.remote_field.name: duplicate}, sub_clone=True
