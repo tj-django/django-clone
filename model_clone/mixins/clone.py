@@ -1,4 +1,4 @@
-from itertools import repeat, chain
+from itertools import repeat
 from typing import List, Optional, Dict
 
 from conditional import conditional
@@ -215,7 +215,8 @@ class CloneMixin(object):
         duplicate.save()
 
         duplicate = self.__duplicate_o2o_fields(duplicate)
-        duplicate = self.__duplicate_o2m_m2o_fields(duplicate)
+        duplicate = self.__duplicate_o2m_fields(duplicate)
+        duplicate = self.__duplicate_m2o_fields(duplicate)
         duplicate = self.__duplicate_m2m_fields(duplicate, sub_clone)
         return duplicate
 
@@ -362,15 +363,13 @@ class CloneMixin(object):
         :type duplicate: `django.db.models.Model`
         :return: The duplicate instance with all the one to one fields duplicated.
         """
-        if self._clone_o2o_fields or self._clone_excluded_o2o_fields:
-            for f in self._meta.related_objects:
+        for f in self._meta.related_objects:
+            if f.one_to_one:
                 if any(
                     [
-                        f.one_to_one
-                        and f.name in self._clone_o2o_fields
+                        f.name in self._clone_o2o_fields
                         and f not in self._meta.concrete_fields,
-                        f.one_to_one
-                        and self._clone_excluded_o2o_fields
+                        self._clone_excluded_o2o_fields
                         and f.name not in self._clone_excluded_o2o_fields
                         and f not in self._meta.concrete_fields,
                     ]
@@ -387,42 +386,70 @@ class CloneMixin(object):
 
         return duplicate
 
-    def __duplicate_o2m_m2o_fields(self, duplicate):
-        """Duplicate many to one or one to many fields.
+    def __duplicate_o2m_fields(self, duplicate):
+        """Duplicate one to many fields.
 
         :param duplicate: The transient instance that should be duplicated.
         :type duplicate: `django.db.models.Model`
-        :return: The duplicate instance with all the many to one or one to many fields duplicated.
+        :return: The duplicate instance with all the one to many fields duplicated.
         """
         fields = set()
 
-        if self._clone_m2o_or_o2m_fields or self._clone_excluded_m2o_or_o2m_fields:
-            for f in self._meta.related_objects:
+        for f in self._meta.related_objects:
+            if f.one_to_many:
                 if any(
                     [
-                        any([f.many_to_one, f.one_to_many])
-                        and f.name in self._clone_m2o_or_o2m_fields,
-                        any([f.many_to_one, f.one_to_many])
+                        f.get_accessor_name() in self._clone_m2o_or_o2m_fields,
+                        self._clone_excluded_m2o_or_o2m_fields
+                        and f.get_accessor_name()
+                        not in self._clone_excluded_m2o_or_o2m_fields,
+                    ]
+                ):
+                    fields.add(f)
+
+        # Clone one to many fields
+        for field in fields:
+            for item in getattr(self, field.get_accessor_name()).all():
+                try:
+                    item.make_clone(
+                        attrs={field.remote_field.name: duplicate}
+                    )
+                except IntegrityError:
+                    item.make_clone(
+                        attrs={field.remote_field.name: duplicate}, sub_clone=True
+                    )
+
+        return duplicate
+
+    def __duplicate_m2o_fields(self, duplicate):
+        """Duplicate many to one fields.
+
+        :param duplicate: The transient instance that should be duplicated.
+        :type duplicate: `django.db.models.Model`
+        :return: The duplicate instance with all the many to one fields duplicated.
+        """
+        fields = set()
+
+        for f in self._meta.concrete_fields:
+            if f.many_to_one:
+                if any(
+                    [
+                        f.name in self._clone_m2o_or_o2m_fields,
+                        self._clone_excluded_m2o_or_o2m_fields
                         and f.name not in self._clone_excluded_m2o_or_o2m_fields,
                     ]
                 ):
                     fields.add(f)
 
-        # Clone one to many/many to one fields
+        # Clone many to one fields
         for field in fields:
-            items = []
-            for item in getattr(self, field.related_name).all():
-                try:
-                    item_clone = item.make_clone(
-                        attrs={field.remote_field.name: duplicate}
-                    )
-                except IntegrityError:
-                    item_clone = item.make_clone(
-                        attrs={field.remote_field.name: duplicate}, sub_clone=True
-                    )
-                items.append(item_clone)
+            item = getattr(self, field.name)
+            try:
+                item_clone = item.make_clone()
+            except IntegrityError:
+                item_clone = item.make_clone(sub_clone=True)
 
-            getattr(duplicate, field.related_name).set(items)
+            setattr(duplicate, field.name, item_clone)
 
         return duplicate
 
@@ -441,13 +468,23 @@ class CloneMixin(object):
         if sub_clone:
             return duplicate
 
-        if self._clone_m2m_fields or self._clone_excluded_m2m_fields:
-            for f in chain(self._meta.related_objects, self._meta.many_to_many):
+        for f in self._meta.many_to_many:
+            if any(
+                [
+                    f.name in self._clone_m2m_fields,
+                    self._clone_excluded_m2m_fields
+                    and f.name not in self._clone_excluded_m2m_fields,
+                ]
+            ):
+                fields.add(f)
+        for f in self._meta.related_objects:
+            if f.many_to_many:
                 if any(
                     [
-                        f.many_to_many and f.name in self._clone_m2m_fields,
-                        f.many_to_many
-                        and f.name not in self._clone_excluded_m2m_fields,
+                        f.get_accessor_name() in self._clone_m2m_fields,
+                        self._clone_excluded_m2m_fields
+                        and f.get_accessor_name()
+                        not in self._clone_excluded_m2m_fields,
                     ]
                 ):
                     fields.add(f)
@@ -458,8 +495,8 @@ class CloneMixin(object):
                 # ManyToManyRel
                 field_name = field.field.m2m_reverse_field_name()
                 through = field.through
-                source = getattr(self, field.related_name)
-                destination = getattr(duplicate, field.related_name)
+                source = getattr(self, field.get_accessor_name())
+                destination = getattr(duplicate, field.get_accessor_name())
             else:
                 through = field.remote_field.through
                 field_name = field.m2m_field_name()

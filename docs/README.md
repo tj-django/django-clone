@@ -71,11 +71,11 @@ class TestModel(CloneModel):
     tags =  models.ManyToManyField('Tags')
 
     _clone_m2m_fields = ['tags']
-    
+
 
 class Tags(models.Model):  #  To enable cloning tags directly use `CloneModel` as shown above.
     name = models.CharField(max_length=255)
-    
+
     def __str__(self):
         return _(self.name)
 ```
@@ -92,11 +92,11 @@ class TestModel(CloneMixin, models.Model):
     tags =  models.ManyToManyField('Tags')
 
     _clone_m2m_fields = ['tags']
-    
+
 
 class Tags(models.Model):  #  To enable cloning tags directly use `CloneMixin` as shown above.
     name = models.CharField(max_length=255)
-    
+
     def __str__(self):
         return _(self.name)
 ```
