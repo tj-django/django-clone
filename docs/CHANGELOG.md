@@ -4,9 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v2.4.1](https://github.com/tj-django/django-clone/releases/tag/v2.4.1) - 2021-04-15
+## [v2.5.1](https://github.com/tj-django/django-clone/releases/tag/v2.5.1) - 2021-04-20
 
-<small>[Compare with v2.4.0](https://github.com/tj-django/django-clone/compare/v2.4.0...v2.4.1)</small>
+<small>[Compare with v2.5.0](https://github.com/tj-django/django-clone/compare/v2.5.0...v2.5.1)</small>
+
+
+## [v2.5.0](https://github.com/tj-django/django-clone/releases/tag/v2.5.0) - 2021-04-21
+
+<small>[Compare with v2.4.0](https://github.com/tj-django/django-clone/compare/v2.4.0...v2.5.0)</small>
+
+### Added
+- Added black pre-commit hook (#284) ([7d4a36b](https://github.com/tj-django/django-clone/commit/7d4a36be428b8431644b4f873ca51fe2011c5ddf) by Tonye Jack).
+
+### Fixed
+- Fix bugs for related_name and m2o clone (#281) ([53eb444](https://github.com/tj-django/django-clone/commit/53eb444e7e939f6c123c2b00ff0761c740955116) by Yuekui).
 
 
 ## [v2.4.0](https://github.com/tj-django/django-clone/releases/tag/v2.4.0) - 2021-04-16
@@ -15,9 +26,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Add a delay to resolve inconsistency in windows (#266) ([59ab32d](https://github.com/tj-django/django-clone/commit/59ab32d318c1478da14965fe6dec8986dbe5ba55) by Tonye Jack).
-
-### Fixed
-- Fixed cloning one to one fields and cleaned up implementation (#267) ([df5ae2a](https://github.com/tj-django/django-clone/pull/267/commits/df5ae2abc99508dfffffe73753876d5e0e2e63a0) by Tonye Jack).
 
 
 ## [v2.3.3](https://github.com/tj-django/django-clone/releases/tag/v2.3.3) - 2021-04-09
@@ -444,3 +452,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 - Fixed typo. ([1cfe037](https://github.com/tj-django/django-clone/commit/1cfe037e50c8fca6c31a31ecf4b36b7c88c39fbe) by Tonye Jack).
+
+
