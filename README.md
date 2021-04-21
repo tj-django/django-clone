@@ -3,6 +3,7 @@
 Create copies of a model instance with explicit control on how the instance should be duplicated (limiting fields or related objects) copied and unique field detection.
 
 
+
 |    PyPI                        |  Python   | Django  |  Downloads  |
 |:------------------------------:|:---------:|:-------:|:-----------:|
 | [![PyPI version](https://badge.fury.io/py/django-clone.svg)](https://badge.fury.io/py/django-clone) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django_clone.svg)](https://pypi.org/project/django-clone) | [![PyPI - Django Version](https://img.shields.io/pypi/djversions/django_clone.svg)](https://docs.djangoproject.com/en/3.0/releases/) | [![Downloads](https://pepy.tech/badge/django-clone)](https://pepy.tech/project/django-clone) |
