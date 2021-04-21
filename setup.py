@@ -65,7 +65,7 @@ else:
 
 setup(
     name="django-clone",
-    version="2.4.0",
+    version="2.5.0",
     description="Create a clone of a django model instance.",
     python_requires=">=2.6",
     long_description=LONG_DESCRIPTION,
