@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from django.db.transaction import TransactionManagementError
 from django.test import TestCase, TransactionTestCase
 from django.utils.text import slugify
+from django.db.utils import IntegrityError
 from django.utils.timezone import make_naive
 from mock import patch, PropertyMock
 
@@ -34,7 +35,7 @@ class CloneMixinTestCase(TestCase):
     def test_cloning_a_transient_instance_with_pk_is_invalid(self):
         instance = Library()
 
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(IntegrityError):
             instance.make_clone()
 
     def test_cloning_a_transient_instance_is_invalid(self):
@@ -289,7 +290,7 @@ class CloneMixinTestCase(TestCase):
             sex="F",
             created_by=self.user1,
         )
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(IntegrityError):
             author.make_clone()
 
         use_unique_duplicate_suffix_mock.assert_called()
