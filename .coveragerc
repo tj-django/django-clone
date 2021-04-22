@@ -3,3 +3,18 @@ source = model_clone
 omit =
     model_clone/test*,
     model_clone/admin*
+
+[report]
+precision = 1
+exclude_lines =
+    pragma: no cover
+    pass
+    def __repr__
+    if self.debug:
+    if settings.DEBUG
+    # Don't complain if tests don't hit defensive assertion code:
+    raise AssertionError
+    raise NotImplementedError
+    except ImportError
+    # Don't complain if non-runnable code isn't run:
+    if __name__ == .__main__.:
