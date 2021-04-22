@@ -20,7 +20,7 @@ from sample.models import (
     Room,
     Furniture,
     Cover,
-    BackCover,
+    BackCover, Tag,
 )
 
 User = get_user_model()
@@ -202,16 +202,33 @@ class CloneMixinTestCase(TestCase):
         )
         _clone_m2m_fields_mock.return_value = ["authors"]
 
-        book = Book.objects.create(
-            name="New Book", created_by=self.user1, slug=slugify("New Book")
+        book_1 = Book.objects.create(
+            name="New Book 1", created_by=self.user1, slug=slugify("New Book 1")
         )
-        book.authors.set([author_1, author_2])
+        book_1.authors.set([author_1, author_2])
 
-        book_clone = book.make_clone()
+        book_clone_1 = book_1.make_clone()
 
         self.assertEqual(
-            list(book.authors.values_list("first_name", "last_name")),
-            list(book_clone.authors.values_list("first_name", "last_name")),
+            list(book_1.authors.values_list("first_name", "last_name")),
+            list(book_clone_1.authors.values_list("first_name", "last_name")),
+        )
+
+        tag_1 = Tag.objects.create(name='test-tag-1')
+        tag_2 = Tag.objects.create(name='test-tag-2')
+
+        _clone_m2m_fields_mock.return_value = ["tags"]
+
+        book_2 = Book.objects.create(
+            name="New Book 2", created_by=self.user1, slug=slugify("New Book 2")
+        )
+        book_2.tags.set([tag_1, tag_2])
+
+        book_clone_2 = book_2.make_clone()
+
+        self.assertEqual(
+            list(book_2.tags.values_list("name")),
+            list(book_clone_2.tags.values_list("name")),
         )
 
     @patch("sample.models.Author._clone_excluded_fields", new_callable=PropertyMock)
