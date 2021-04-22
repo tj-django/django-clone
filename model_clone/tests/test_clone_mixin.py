@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from django.db.transaction import TransactionManagementError
 from django.test import TestCase, TransactionTestCase
 from django.utils.text import slugify
+from django.db.utils import IntegrityError
 from django.utils.timezone import make_naive
 from mock import patch, PropertyMock
 
@@ -20,6 +21,8 @@ from sample.models import (
     Furniture,
     Cover,
     BackCover,
+    BookTag,
+    Tag,
 )
 
 User = get_user_model()
@@ -34,7 +37,7 @@ class CloneMixinTestCase(TestCase):
     def test_cloning_a_transient_instance_with_pk_is_invalid(self):
         instance = Library()
 
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(IntegrityError):
             instance.make_clone()
 
     def test_cloning_a_transient_instance_is_invalid(self):
@@ -201,16 +204,34 @@ class CloneMixinTestCase(TestCase):
         )
         _clone_m2m_fields_mock.return_value = ["authors"]
 
-        book = Book.objects.create(
-            name="New Book", created_by=self.user1, slug=slugify("New Book")
+        book_1 = Book.objects.create(
+            name="New Book 1", created_by=self.user1, slug=slugify("New Book 1")
         )
-        book.authors.set([author_1, author_2])
+        book_1.authors.set([author_1, author_2])
 
-        book_clone = book.make_clone()
+        book_clone_1 = book_1.make_clone()
 
         self.assertEqual(
-            list(book.authors.values_list("first_name", "last_name")),
-            list(book_clone.authors.values_list("first_name", "last_name")),
+            list(book_1.authors.values_list("first_name", "last_name")),
+            list(book_clone_1.authors.values_list("first_name", "last_name")),
+        )
+
+        tag_1 = Tag.objects.create(name="test-tag-1")
+        tag_2 = Tag.objects.create(name="test-tag-2")
+
+        _clone_m2m_fields_mock.return_value = ["tags"]
+
+        book_2 = Book.objects.create(
+            name="New Book 2", created_by=self.user1, slug=slugify("New Book 2")
+        )
+        BookTag.objects.create(book=book_2, tag=tag_1)
+        BookTag.objects.create(book=book_2, tag=tag_2)
+
+        book_clone_2 = book_2.make_clone()
+
+        self.assertEqual(
+            list(book_2.tags.values_list("name")),
+            list(book_clone_2.tags.values_list("name")),
         )
 
     @patch("sample.models.Author._clone_excluded_fields", new_callable=PropertyMock)
@@ -289,7 +310,7 @@ class CloneMixinTestCase(TestCase):
             sex="F",
             created_by=self.user1,
         )
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(IntegrityError):
             author.make_clone()
 
         use_unique_duplicate_suffix_mock.assert_called()
