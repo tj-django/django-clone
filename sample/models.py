@@ -35,6 +35,13 @@ class Author(CloneModel):
         unique_together = (("first_name", "last_name", "sex"),)
 
 
+class Tag(CloneModel):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return _(self.name)
+
+
 class Book(CloneModel):
     name = models.CharField(max_length=2000)
     slug = models.SlugField(unique=True)
@@ -44,9 +51,20 @@ class Book(CloneModel):
         on_delete=models.PROTECT,
     )
     created_at = models.DateTimeField(auto_now_add=True)
+    tags = models.ManyToManyField(Tag, through="BookTag")
 
     def __str__(self):
         return _(self.name)
+
+
+class BookTag(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tag, on_delete=models.PROTECT)
+
+    class Meta:
+        unique_together = [
+            ("book", "tag"),
+        ]
 
 
 class Page(CloneModel):

@@ -211,7 +211,6 @@ class CloneMixin(object):
             for name, value in attrs.items():
                 setattr(duplicate, name, value)
 
-        duplicate.full_clean()
         duplicate.save()
 
         duplicate = self.__duplicate_o2o_fields(duplicate)
