@@ -20,7 +20,7 @@ from sample.models import (
     Room,
     Furniture,
     Cover,
-    BackCover, Tag,
+    BackCover, Tag, BookTag,
 )
 
 User = get_user_model()
@@ -222,7 +222,8 @@ class CloneMixinTestCase(TestCase):
         book_2 = Book.objects.create(
             name="New Book 2", created_by=self.user1, slug=slugify("New Book 2")
         )
-        book_2.tags.set([tag_1, tag_2])
+        BookTag.objects.create(book=book_2, tag=tag_1)
+        BookTag.objects.create(book=book_2, tag=tag_2)
 
         book_clone_2 = book_2.make_clone()
 
