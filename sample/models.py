@@ -51,7 +51,7 @@ class Book(CloneModel):
         on_delete=models.PROTECT,
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    tags = models.ManyToManyField(Tag, through='BookTag')
+    tags = models.ManyToManyField(Tag, through="BookTag")
 
     def __str__(self):
         return _(self.name)
@@ -63,7 +63,7 @@ class BookTag(models.Model):
 
     class Meta:
         unique_together = [
-            ('book', 'tag'),
+            ("book", "tag"),
         ]
 
 
