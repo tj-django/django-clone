@@ -20,7 +20,8 @@ from sample.models import (
     Room,
     Furniture,
     Cover,
-    BackCover, Tag,
+    BackCover,
+    Tag,
 )
 
 User = get_user_model()
@@ -214,8 +215,8 @@ class CloneMixinTestCase(TestCase):
             list(book_clone_1.authors.values_list("first_name", "last_name")),
         )
 
-        tag_1 = Tag.objects.create(name='test-tag-1')
-        tag_2 = Tag.objects.create(name='test-tag-2')
+        tag_1 = Tag.objects.create(name="test-tag-1")
+        tag_2 = Tag.objects.create(name="test-tag-2")
 
         _clone_m2m_fields_mock.return_value = ["tags"]
 
