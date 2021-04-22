@@ -71,6 +71,7 @@ release-to-pypi: increase-version  ## Release project to pypi
 	@git-changelog . > CHANGELOG.md
 	@git add .
 	@[ -z "`git status --porcelain`" ] && echo "No changes found." || git commit -am "Updated CHANGELOG.md."
+	@git pull
 	@git push
 	@git push --tags
 
