@@ -4,9 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v2.5.2](https://github.com/tj-django/django-clone/releases/tag/v2.5.2) - 2021-04-22
+## [v2.5.3](https://github.com/tj-django/django-clone/releases/tag/v2.5.3) - 2021-04-23
+
+<small>[Compare with v2.5.2](https://github.com/tj-django/django-clone/compare/v2.5.2...v2.5.3)</small>
+
+
+## [v2.5.2](https://github.com/tj-django/django-clone/releases/tag/v2.5.2) - 2021-04-23
 
 <small>[Compare with v2.5.1](https://github.com/tj-django/django-clone/compare/v2.5.1...v2.5.2)</small>
+
+### Added
+- Added pre-commit-config.yaml ([3f0d729](https://github.com/tj-django/django-clone/commit/3f0d72912377ad02afe851e2dfa362147e7d8e22) by Tonye Jack).
 
 
 ## [v2.5.1](https://github.com/tj-django/django-clone/releases/tag/v2.5.1) - 2021-04-22
@@ -14,7 +22,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <small>[Compare with v2.5.0](https://github.com/tj-django/django-clone/compare/v2.5.0...v2.5.1)</small>
 
 ### Added
+- Added .github/workflows/greetings.yml ([62a8973](https://github.com/tj-django/django-clone/commit/62a8973669916a56a5ee85934643a3a756adb730) by Tonye Jack).
 - Added .editorconfig ([e8dc042](https://github.com/tj-django/django-clone/commit/e8dc042718de23edcff9b04aaa7737c740a63db3) by Tonye Jack).
+
+### Fixed
+- Fixed regression calling instance.full_clean (#296) ([fa5b16b](https://github.com/tj-django/django-clone/commit/fa5b16bf7b414e9bb355c76e95b103956355e6f0) by Tonye Jack).
 
 
 ## [v2.5.0](https://github.com/tj-django/django-clone/releases/tag/v2.5.0) - 2021-04-21
@@ -460,3 +472,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 - Fixed typo. ([1cfe037](https://github.com/tj-django/django-clone/commit/1cfe037e50c8fca6c31a31ecf4b36b7c88c39fbe) by Tonye Jack).
+
+
