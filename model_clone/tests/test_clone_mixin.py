@@ -8,7 +8,7 @@ from django.test import TestCase, TransactionTestCase
 from django.utils.text import slugify
 from django.db.utils import IntegrityError
 from django.utils.timezone import make_naive
-from mock import patch, PropertyMock
+from unittest.mock import patch, PropertyMock
 
 from sample.models import (
     Edition,
@@ -22,7 +22,8 @@ from sample.models import (
     Cover,
     BackCover,
     BookTag,
-    Tag,
+    BookSaleTag,
+    Tag, SaleTag,
 )
 
 User = get_user_model()
@@ -232,6 +233,24 @@ class CloneMixinTestCase(TestCase):
         self.assertEqual(
             list(book_2.tags.values_list("name")),
             list(book_clone_2.tags.values_list("name")),
+        )
+
+        sale_tag_1 = SaleTag.objects.create(name="test-tag-3")
+        sale_tag_2 = SaleTag.objects.create(name="test-tag-4")
+
+        _clone_m2m_fields_mock.return_value = ["tags"]
+
+        book_3 = Book.objects.create(
+            name="New Book 3", created_by=self.user1, slug=slugify("New Book 3")
+        )
+        BookSaleTag.objects.create(book=book_3, sale_tag=sale_tag_1)
+        BookSaleTag.objects.create(book=book_3, sale_tag=sale_tag_2)
+
+        book_clone_3 = book_3.make_clone()
+
+        self.assertEqual(
+            list(book_3.tags.values_list("name")),
+            list(book_clone_3.tags.values_list("name")),
         )
 
     @patch("sample.models.Author._clone_excluded_fields", new_callable=PropertyMock)
