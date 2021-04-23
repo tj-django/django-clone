@@ -508,7 +508,10 @@ class CloneMixin(object):
                 objs = through.objects.filter(**{field_name: self.pk})
                 for item in objs:
                     if hasattr(through, "make_clone"):
-                        item.make_clone(attrs={field_name: duplicate}, sub_clone=True)
+                        try:
+                            item.make_clone(attrs={field_name: duplicate})
+                        except IntegrityError:
+                            item.make_clone(attrs={field_name: duplicate}, sub_clone=True)
                     else:
                         item.pk = None
                         setattr(item, field_name, duplicate)
