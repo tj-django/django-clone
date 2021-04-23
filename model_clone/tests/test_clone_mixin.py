@@ -8,7 +8,7 @@ from django.test import TestCase, TransactionTestCase
 from django.utils.text import slugify
 from django.db.utils import IntegrityError
 from django.utils.timezone import make_naive
-from unittest.mock import patch, PropertyMock
+from mock import patch, PropertyMock
 
 from sample.models import (
     Edition,
