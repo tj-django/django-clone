@@ -250,8 +250,8 @@ class CloneMixinTestCase(TestCase):
         book_clone_3 = book_3.make_clone()
 
         self.assertEqual(
-            list(book_3.tags.values_list("name")),
-            list(book_clone_3.tags.values_list("name")),
+            list(book_3.sale_tags.values_list("name")),
+            list(book_clone_3.sale_tags.values_list("name")),
         )
 
     @patch("sample.models.Author._clone_excluded_fields", new_callable=PropertyMock)
