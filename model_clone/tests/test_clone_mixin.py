@@ -239,7 +239,7 @@ class CloneMixinTestCase(TestCase):
         sale_tag_1 = SaleTag.objects.create(name="test-tag-3")
         sale_tag_2 = SaleTag.objects.create(name="test-tag-4")
 
-        _clone_m2m_fields_mock.return_value = ["tags"]
+        _clone_m2m_fields_mock.return_value = ["sale_tags"]
 
         book_3 = Book.objects.create(
             name="New Book 3", created_by=self.user1, slug=slugify("New Book 3")
