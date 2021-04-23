@@ -8,36 +8,64 @@ import model_clone.mixins.clone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sample', '0014_auto_20210422_1449'),
+        ("sample", "0014_auto_20210422_1449"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='SaleTag',
+            name="SaleTag",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
             bases=(model_clone.mixins.clone.CloneMixin, models.Model),
         ),
         migrations.CreateModel(
-            name='BookSaleTag',
+            name="BookSaleTag",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('book', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sample.book')),
-                ('sale_tag', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='sample.saletag')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "book",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="sample.book"
+                    ),
+                ),
+                (
+                    "sale_tag",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT, to="sample.saletag"
+                    ),
+                ),
             ],
             options={
-                'unique_together': {('book', 'sale_tag')},
+                "unique_together": {("book", "sale_tag")},
             },
             bases=(model_clone.mixins.clone.CloneMixin, models.Model),
         ),
         migrations.AddField(
-            model_name='book',
-            name='sale_tags',
-            field=models.ManyToManyField(through='sample.BookSaleTag', to='sample.SaleTag'),
+            model_name="book",
+            name="sale_tags",
+            field=models.ManyToManyField(
+                through="sample.BookSaleTag", to="sample.SaleTag"
+            ),
         ),
     ]

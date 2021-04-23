@@ -23,7 +23,8 @@ from sample.models import (
     BackCover,
     BookTag,
     BookSaleTag,
-    Tag, SaleTag,
+    Tag,
+    SaleTag,
 )
 
 User = get_user_model()

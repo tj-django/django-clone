@@ -48,6 +48,7 @@ class SaleTag(CloneModel):
     def __str__(self):
         return _(self.name)
 
+
 class Book(CloneModel):
     name = models.CharField(max_length=2000)
     slug = models.SlugField(unique=True)
