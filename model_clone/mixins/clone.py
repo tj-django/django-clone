@@ -207,16 +207,17 @@ class CloneMixin(object):
             duplicate.pk = None
         else:
             duplicate = self._create_copy_of_instance(self)
-            # Supports only updating the attributes of the base instance.
-            for name, value in attrs.items():
-                setattr(duplicate, name, value)
+
+        # Supports only updating the attributes of the base instance.
+        for name, value in attrs.items():
+            setattr(duplicate, name, value)
 
         duplicate.save()
 
         duplicate = self.__duplicate_o2o_fields(duplicate)
         duplicate = self.__duplicate_o2m_fields(duplicate)
         duplicate = self.__duplicate_m2o_fields(duplicate)
-        duplicate = self.__duplicate_m2m_fields(duplicate, sub_clone)
+        duplicate = self.__duplicate_m2m_fields(duplicate)
         return duplicate
 
     def bulk_clone(self, count, attrs=None, batch_size=None, auto_commit=False):
@@ -450,20 +451,14 @@ class CloneMixin(object):
 
         return duplicate
 
-    def __duplicate_m2m_fields(self, duplicate, sub_clone):
+    def __duplicate_m2m_fields(self, duplicate):
         """Duplicate many to many fields.
 
         :param duplicate: The transient instance that should be duplicated.
         :type duplicate: `django.db.models.Model`
-        :param sub_clone: Boolean indicating that the instance is a sub instance
-            i.e a related field of a top level instance.
         :return: The duplicate instance with all the many to many fields duplicated.
         """
         fields = set()
-
-        # Duplicating sub instance many to many fields not currently supported.
-        if sub_clone:
-            return duplicate
 
         for f in self._meta.many_to_many:
             if any(
