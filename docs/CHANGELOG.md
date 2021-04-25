@@ -4,9 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [v2.5.3](https://github.com/tj-django/django-clone/releases/tag/v2.5.3) - 2021-04-23
+## [v2.5.4](https://github.com/tj-django/django-clone/releases/tag/v2.5.4) - 2021-04-24
+
+<small>[Compare with v2.5.3](https://github.com/tj-django/django-clone/compare/v2.5.3...v2.5.4)</small>
+
+
+## [v2.5.3](https://github.com/tj-django/django-clone/releases/tag/v2.5.3) - 2021-04-25
 
 <small>[Compare with v2.5.2](https://github.com/tj-django/django-clone/compare/v2.5.2...v2.5.3)</small>
+
+### Fixed
+- Fixed bug using sub_clone=true (#302) ([570616c](https://github.com/tj-django/django-clone/commit/570616c8bc89169266d067f2b771196663c98e05) by Tonye Jack).
 
 
 ## [v2.5.2](https://github.com/tj-django/django-clone/releases/tag/v2.5.2) - 2021-04-23
