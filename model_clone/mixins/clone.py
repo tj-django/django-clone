@@ -355,8 +355,7 @@ class CloneMixin(object):
         return new_instance
 
     def __duplicate_o2o_fields(self, duplicate):
-        """
-        Duplicate the one to one fields.
+        """Duplicate one to one fields.
 
         :param duplicate: The transient instance that should be duplicated.
         :type duplicate: `django.db.models.Model`
