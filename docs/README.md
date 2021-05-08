@@ -17,9 +17,8 @@ Create copies of a model instance with explicit control on how the instance shou
 
 *   [Installation](#installation)
 *   [Usage](#usage)
-    *   [Inheriting from `CloneModel` or `CloneMixin`](#inheriting-from-clonemodel-or-clonemixin)
-        *   [Subclassing the `CloneModel`](#subclassing-the-clonemodel)
-        *   [Using the `CloneMixin`](#using-the-clonemixin)
+    *   [Subclassing the `CloneModel`](#subclassing-the-clonemodel)
+    *   [Using the `CloneMixin`](#using-the-clonemixin)
     *   [Duplicating a model instance](#duplicating-a-model-instance)
         *   [Bulk cloning a model](#bulk-cloning-a-model)
     *   [CloneMixin attributes](#clonemixin-attributes)
@@ -44,9 +43,27 @@ pip install django-clone
 
 ## Usage
 
-### Inheriting from `CloneModel` or `CloneMixin`
+**CHANGE**
 
-#### Subclassing the `CloneModel`
+```python
+from django.db import models
+
+class MyModel(models.Model):
+    title = models.CharField(max_length=200)
+```
+
+**TO**
+
+```python
+from django.db import models
+from model_clone import CloneModel
+
+class MyModel(CloneModel):
+    title = models.CharField(max_length=200)
+```
+
+
+### Subclassing the `CloneModel`
 
 ```python
 from django.db import models
@@ -67,7 +84,7 @@ class Tags(models.Model):  #  To enable cloning tags directly use `CloneModel` a
         return _(self.name)
 ```
 
-#### Using the `CloneMixin`
+### Using the `CloneMixin`
 
 ```python
 from django.db import models
