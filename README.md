@@ -17,9 +17,8 @@ Create copies of a model instance with explicit control on how the instance shou
 
 *   [Installation](#installation)
 *   [Usage](#usage)
-    *   [Inheriting from `CloneModel` or `CloneMixin`](#inheriting-from-clonemodel-or-clonemixin)
-        *   [Subclassing the `CloneModel`](#subclassing-the-clonemodel)
-        *   [Using the `CloneMixin`](#using-the-clonemixin)
+    *   [Subclassing the `CloneModel`](#subclassing-the-clonemodel)
+    *   [Using the `CloneMixin`](#using-the-clonemixin)
     *   [Duplicating a model instance](#duplicating-a-model-instance)
         *   [Bulk cloning a model](#bulk-cloning-a-model)
     *   [CloneMixin attributes](#clonemixin-attributes)
