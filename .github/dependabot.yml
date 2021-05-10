@@ -5,8 +5,16 @@ updates:
     schedule:
       interval: daily
     open-pull-requests-limit: 10
+    default_labels:
+      - "dependencies"
+      - "dependabot"
+      - "automerge"
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
       interval: daily
     open-pull-requests-limit: 10
+    default_labels:
+      - "dependencies"
+      - "dependabot"
+      - "automerge"
