@@ -1,0 +1,43 @@
+name: Run linters
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot'
+    strategy:
+      matrix:
+        python-version: [3.5, 3.6, 3.7, 3.8, 3.9]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - uses: actions/cache@v2
+        id: pip-cache
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.python-version }}-
+      - name: Install dependencies
+        run: |
+          pip install -U pip
+          pip install flake8==3.8.4
+      - name: Install black
+        if: ${{ matrix.python-version != '3.5' }}
+        run: |
+          pip install black
+      - name: Run Lint
+        uses: wearerequired/lint-action@v1.9.0
+        with:
+          github_token: ${{ secrets.github_token }}
+          black: ${{ matrix.python-version != '3.5' }}
+          flake8: true
+          git_email: "github-action[bot]@github.com"
+          auto_fix: ${{ matrix.python-version != '3.5' }}
