@@ -19,7 +19,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
           MERGE_METHOD: "rebase"
-          MERGE_REMOVE_LABELS: "automerge"
           UPDATE_METHOD: "rebase"
           MERGE_RETRIES: "6"
           MERGE_RETRY_SLEEP: "10000"
