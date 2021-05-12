@@ -26,7 +26,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v2.1.5
         id: pip-cache
         with:
           path: ~/.cache/pip
@@ -34,7 +34,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-${{ matrix.python-version }}-
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v2.1.5
         id: tox-cache
         with:
           path: |
