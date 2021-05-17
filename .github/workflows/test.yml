@@ -34,16 +34,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-${{ matrix.python-version }}-
 
-      - uses: actions/cache@v2.1.5
-        id: tox-cache
-        with:
-          path: |
-            .tox
-            .pytest_cache
-          key: ${{ runner.os }}-tox-${{ matrix.python-version }}-${{ hashFiles('requirements.txt') }}-{{ hashFiles('tox.ini') }}
-          restore-keys: |
-            ${{ runner.os }}-tox-${{ matrix.python-version }}-
-
       - name: Install dependencies
         run: |
           make install-test
