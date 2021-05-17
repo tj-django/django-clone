@@ -2,8 +2,6 @@
 
 Create copies of a model instance with explicit control on how the instance should be duplicated (limiting fields or related objects) copied and unique field detection.
 
-
-
 |    PyPI                        |  Python   | Django  |  Downloads  |
 |:------------------------------:|:---------:|:-------:|:-----------:|
 | [![PyPI version](https://badge.fury.io/py/django-clone.svg)](https://badge.fury.io/py/django-clone) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django_clone.svg)](https://pypi.org/project/django-clone) | [![PyPI - Django Version](https://img.shields.io/pypi/djversions/django_clone.svg)](https://docs.djangoproject.com/en/3.0/releases/) | [![Downloads](https://pepy.tech/badge/django-clone)](https://pepy.tech/project/django-clone) |
@@ -12,25 +10,38 @@ Create copies of a model instance with explicit control on how the instance shou
 |:----:|:---------------:|:--------:|:-------------:| :---------------:|:-------------:|:-----------:|
 | [![Test](https://github.com/tj-django/django-clone/workflows/Test/badge.svg)](https://github.com/tj-django/django-clone/actions?query=workflow%3ATest) | [![Known Vulnerabilities](https://snyk.io/test/github/tj-django/django-clone/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/tj-django/django-clone?targetFile=requirements.txt) | [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/b33dd02dbb034d7fa9886a99f5383ea6)](https://www.codacy.com/gh/tj-django/django-clone?utm_source=github.com\&utm_medium=referral\&utm_content=tj-django/django-clone\&utm_campaign=Badge_Coverage) <br/> [![codecov](https://codecov.io/gh/tj-django/django-clone/branch/main/graph/badge.svg?token=2NE21Oe50Q)](https://codecov.io/gh/tj-django/django-clone)| [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b33dd02dbb034d7fa9886a99f5383ea6)](https://www.codacy.com/gh/tj-django/django-clone?utm_source=github.com\&utm_medium=referral\&utm_content=tj-django/django-clone\&utm_campaign=Badge_Grade) | [![Updates](https://pyup.io/repos/github/tj-django/django-clone/shield.svg)](https://pyup.io/repos/github/tj-django/django-clone/) | [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) |  [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/tj-django/django-clone/main.svg)](https://results.pre-commit.ci/latest/github/tj-django/django-clone/main) |
 
-
 ## Table of contents
 
 *   [Installation](#installation)
+
 *   [Usage](#usage)
+
     *   [Subclassing the `CloneModel`](#subclassing-the-clonemodel)
+
     *   [Using the `CloneMixin`](#using-the-clonemixin)
+
     *   [Duplicating a model instance](#duplicating-a-model-instance)
+
         *   [Bulk cloning a model](#bulk-cloning-a-model)
+
     *   [CloneMixin attributes](#clonemixin-attributes)
+
         *   [Explicit](#explicit)
         *   [Implicit](#implicit)
+
     *   [Creating clones without subclassing `CloneMixin`.](#creating-clones-without-subclassing-clonemixin)
+
     *   [Django Admin](#django-admin)
+
         *   [Duplicating Models from the Django Admin view.](#duplicating-models-from-the-django-admin-view)
+
             *   [List View](#list-view)
             *   [Change View](#change-view)
+
         *   [CloneModelAdmin class attributes](#clonemodeladmin-class-attributes)
+
 *   [Found a Bug?](#found-a-bug)
+
 *   [Contributors ✨](#contributors-)
 
 ## Installation
@@ -61,7 +72,6 @@ from model_clone import CloneModel
 class MyModel(CloneModel):
     title = models.CharField(max_length=200)
 ```
-
 
 ### Subclassing the `CloneModel`
 
@@ -172,7 +182,6 @@ Out[11]: <QuerySet [<Tag: men>, <Tag: women>]>
 
 ### CloneMixin attributes
 
-
 #### Explicit
 
 |    Field Names        |  Description |
@@ -192,7 +201,8 @@ Out[11]: <QuerySet [<Tag: men>, <Tag: women>]>
 `_clone_excluded_o2o_fields` | Excluded one to one fields. |
 
 > **NOTE:** :warning:
-> - Ensure to either set `_clone_excluded_*` or `_clone_*`. Using both would raise errors.
+>
+> *   Ensure to either set `_clone_excluded_*` or `_clone_*`. Using both would raise errors.
 
 ### Creating clones without subclassing `CloneMixin`.
 
@@ -231,7 +241,6 @@ Out[11]: <QuerySet []>
 >
 > *   This method won't copy over related objects like Many to Many/One to Many relationships.
 > *   Ensure that required fields skipped from being cloned are passed in using the `attrs` dictionary.
-
 
 ### Django Admin
 
@@ -281,7 +290,8 @@ class TestModelAdmin(CloneModelAdmin):
 ```
 
 > **NOTE:** :warning:
-> - Ensure that `model_clone` is placed before `django.contrib.admin`
+>
+> *   Ensure that `model_clone` is placed before `django.contrib.admin`
 
 ```python
 INSTALLED_APPS = [
@@ -300,8 +310,11 @@ To file a bug or submit a patch, please head over to [django-clone on github](ht
 Thanks goes to these wonderful people:
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
 <!-- prettier-ignore-start -->
+
 <!-- markdownlint-disable -->
+
 <table>
   <tr>
     <td align="center"><a href="http://gerritneven.nl"><img src="https://avatars1.githubusercontent.com/u/2500973?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Gerben Neven</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/issues?q=author%3Agerbyzation" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=gerbyzation" title="Tests">⚠️</a> <a href="https://github.com/tj-django/django-clone/commits?author=gerbyzation" title="Code">💻</a></td>
@@ -314,6 +327,7 @@ Thanks goes to these wonderful people:
 </table>
 
 <!-- markdownlint-restore -->
+
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
