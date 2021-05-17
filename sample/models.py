@@ -239,4 +239,3 @@ class BackCover(models.Model):
 
 class Product(CloneMixin, models.Model):
     name = models.TextField(unique=True)
-

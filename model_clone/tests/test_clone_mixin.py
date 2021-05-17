@@ -652,6 +652,8 @@ class CloneMixinTransactionTestCase(TransactionTestCase):
             )
 
     def test_cloning_model_with_unique_text_field(self):
-        product = Product.objects.create(name='Test Product')
+        product = Product.objects.create(name="Test Product")
         clone = product.make_clone()
-        self.assertEqual(clone.name, f"{product.name} {Product.UNIQUE_DUPLICATE_SUFFIX} 1")
+        self.assertEqual(
+            clone.name, f"{product.name} {Product.UNIQUE_DUPLICATE_SUFFIX} 1"
+        )
