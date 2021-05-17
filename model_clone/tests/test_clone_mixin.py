@@ -655,5 +655,6 @@ class CloneMixinTransactionTestCase(TransactionTestCase):
         product = Product.objects.create(name="Test Product")
         clone = product.make_clone()
         self.assertEqual(
-            clone.name, "{0} {1} 1".format(product.name, Product.UNIQUE_DUPLICATE_SUFFIX)
+            clone.name,
+            "{0} {1} 1".format(product.name, Product.UNIQUE_DUPLICATE_SUFFIX),
         )
