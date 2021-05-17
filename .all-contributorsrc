@@ -55,6 +55,17 @@
         "bug",
         "test"
       ]
+    },
+    {
+      "login": "diesieben07",
+      "name": "Take Weiland",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1915984?v=4",
+      "profile": "https://github.com/diesieben07",
+      "contributions": [
+        "test",
+        "bug",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
