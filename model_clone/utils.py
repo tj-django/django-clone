@@ -162,7 +162,7 @@ def get_value(value, suffix, transform, max_length, index):
     duplicate_suffix = " {} {}".format(suffix, index)
     total_length = len(value + duplicate_suffix)
 
-    if total_length > max_length:
+    if max_length is not None and total_length > max_length:
         # Truncate the value to max_length - suffix length.
         value = value[: max_length - len(duplicate_suffix)]
 

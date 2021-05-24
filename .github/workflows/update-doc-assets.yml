@@ -13,6 +13,33 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Run test
+        uses: tj-actions/remark@v1.5
+
+      - name: Verify Changed files
+        uses: tj-actions/verify-changed-files@v6
+        id: verify_changed_files
+        with:
+          files: |
+            README.md
+
+      - name: README.md changed
+        if: steps.verify_changed_files.outputs.files_changed == 'true'
+        run: |
+          echo "README.md has uncommited changes"
+          exit 1
+
+      - name: Create Pull Request
+        if: failure()
+        uses: peter-evans/create-pull-request@v3
+        with:
+          base: "main"
+          title: "Updated README.md"
+          branch: "chore/update-readme"
+          commit-message: "Updated README.md"
+          body: "Updated README.md"
+          token: ${{ secrets.PAT_TOKEN }}
+
       - name: Copy doc assets
         run: |
           cp -f README.md docs/README.md
@@ -20,7 +47,7 @@ jobs:
           cp -f *.png docs
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3.9.2
+        uses: peter-evans/create-pull-request@v3.10.0
         with:
           commit-message: Synced README changes to docs
           committer: github-actions[bot] <github-actions[bot]@users.noreply@github.com>

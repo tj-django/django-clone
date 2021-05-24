@@ -25,6 +25,7 @@ from sample.models import (
     BookSaleTag,
     Tag,
     SaleTag,
+    Product,
 )
 
 User = get_user_model()
@@ -649,3 +650,11 @@ class CloneMixinTransactionTestCase(TransactionTestCase):
                 clone.first_name,
                 r"{}\s[\d]".format(Author.UNIQUE_DUPLICATE_SUFFIX),
             )
+
+    def test_cloning_model_with_unique_text_field(self):
+        product = Product.objects.create(name="Test Product")
+        clone = product.make_clone()
+        self.assertEqual(
+            clone.name,
+            "{0} {1} 1".format(product.name, Product.UNIQUE_DUPLICATE_SUFFIX),
+        )
