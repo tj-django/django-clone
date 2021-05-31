@@ -14,7 +14,7 @@ repos:
           exclude: ^docs/.*|.*.md
 
   -   repo: https://github.com/psf/black
-      rev: 21.5b1
+      rev: 21.5b2
       hooks:
         - id: black
           language_version: python3
