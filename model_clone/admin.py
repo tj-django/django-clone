@@ -34,7 +34,7 @@ class CloneModelAdminMixin(object):
                 clone.save()
                 self.message_user(
                     request,
-                    _("Duplication successful, redirected to cloned: {}".format(clone)),
+                    _("Duplication successful, redirected to cloned: {}").format(clone),
                 )
                 cloned_admin_url = reverse(
                     "admin:{0}_{1}_change".format(
