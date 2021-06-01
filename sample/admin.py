@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 from model_clone import CloneModelAdmin
-from sample.models import Book, Author, Page, Library
+from sample.models import Author, Book, Library, Page
 
 
 class PageInline(admin.StackedInline):

@@ -4,28 +4,28 @@ import time
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.db.transaction import TransactionManagementError
+from django.db.utils import IntegrityError
 from django.test import TestCase, TransactionTestCase
 from django.utils.text import slugify
-from django.db.utils import IntegrityError
 from django.utils.timezone import make_naive
-from mock import patch, PropertyMock
+from mock import PropertyMock, patch
 
 from sample.models import (
-    Edition,
-    Library,
-    Book,
     Author,
-    Page,
-    House,
-    Room,
-    Furniture,
-    Cover,
     BackCover,
-    BookTag,
+    Book,
     BookSaleTag,
-    Tag,
-    SaleTag,
+    BookTag,
+    Cover,
+    Edition,
+    Furniture,
+    House,
+    Library,
+    Page,
     Product,
+    Room,
+    SaleTag,
+    Tag,
 )
 
 User = get_user_model()

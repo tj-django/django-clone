@@ -1,20 +1,20 @@
 from itertools import repeat
-from typing import List, Optional, Dict
+from typing import Dict, List, Optional
 
 from conditional import conditional
 from django.core.checks import Error
 from django.core.exceptions import ValidationError
-from django.db import transaction, models, IntegrityError, connections
+from django.db import IntegrityError, connections, models, transaction
 from django.db.models import SlugField
 from django.utils.text import slugify
 
 from model_clone.apps import ModelCloneConfig
 from model_clone.utils import (
     clean_value,
-    transaction_autocommit,
-    get_unique_value,
     context_mutable_attribute,
     get_fields_and_unique_fields_from_cls,
+    get_unique_value,
+    transaction_autocommit,
 )
 
 
