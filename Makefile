@@ -22,33 +22,12 @@ guard-%: ## Checks that env var is set else exits with non 0 mainly used in CI;
 # --------------------------------------------------------
 # ------- Python package (pip) management commands -------
 # --------------------------------------------------------
-
 clean-build: ## Clean project build artifacts.
 	@echo "Removing build assets..."
 	@$(PYTHON) setup.py clean
 	@rm -rf build/
 	@rm -rf dist/
 	@rm -rf *.egg-info
-
-migrations:
-	@$(MANAGE_PY) makemigrations
-
-migrate:
-	@$(MANAGE_PY) migrate
-
-run: migrate
-	@echo "Starting server..."
-	@$(MANAGE_PY) runserver
-
-default-user: migrate
-	@echo "Creating a default user..."
-	@$(MANAGE_PY) create_default_user
-	@echo "Username: admin@admin.com"
-	@echo "Password: admin"
-
-test:
-	@echo "Running `$(PYTHON_VERSION)` test..."
-	@$(MANAGE_PY) test
 
 install: clean-build  ## Install project dependencies.
 	@echo "Installing project in dependencies..."
@@ -70,16 +49,35 @@ update-requirements:  ## Updates the requirement.txt adding missing package depe
 	@echo "Syncing the package requirements.txt..."
 	@$(PIP_COMPILE)
 
-release-to-pypi: increase-version  ## Release project to pypi
-	@$(PYTHON_PIP) install -U twine
-	@$(PYTHON) setup.py sdist bdist_wheel
-	@twine upload -r pypi dist/*
-	@git-changelog . > CHANGELOG.md
-	@git add .
-	@[ -z "`git status --porcelain`" ] && echo "No changes found." || git commit -am "Updated CHANGELOG.md."
-	@git pull
-	@git push
-	@git push --tags
+# --------------------------------------------------------
+# ------- Django management commands ---------------------
+# --------------------------------------------------------
+migrations:
+	@$(MANAGE_PY) makemigrations
+
+migrate:
+	@$(MANAGE_PY) migrate
+
+run: migrate
+	@echo "Starting server..."
+	@$(MANAGE_PY) runserver
+
+default-user: migrate
+	@echo "Creating a default user..."
+	@$(MANAGE_PY) create_default_user
+	@echo "Username: admin@admin.com"
+	@echo "Password: admin"
+
+makemessages:
+	@$(MANAGE_PY) makemessages --locale=en_US
+	@$(MANAGE_PY) makemessages --locale=fr
+
+compilemessages:
+	@$(MANAGE_PY) compilemessages --ignore=.tox
+
+test:
+	@echo "Running `$(PYTHON_VERSION)` test..."
+	@$(MANAGE_PY) test
 
 # ----------------------------------------------------------
 # ---------- Upgrade project version (bumpversion)  --------
@@ -92,6 +90,17 @@ increase-version: clean-build guard-PART  ## Bump the project version (using the
 	@git-changelog . > CHANGELOG.md
 	@git add .
 	@[ -z "`git status --porcelain`" ] && echo "No changes found." || git commit -am "Updated CHANGELOG.md."
+
+release-to-pypi: increase-version  ## Release project to pypi
+	@$(PYTHON_PIP) install -U twine
+	@$(PYTHON) setup.py sdist bdist_wheel
+	@twine upload -r pypi dist/*
+	@git-changelog . > CHANGELOG.md
+	@git add .
+	@[ -z "`git status --porcelain`" ] && echo "No changes found." || git commit -am "Updated CHANGELOG.md."
+	@git pull
+	@git push
+	@git push --tags
 
 # ----------------------------------------------------------
 # --------- Run project Test -------------------------------
