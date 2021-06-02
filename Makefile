@@ -113,4 +113,5 @@ lint-fix:  ## Run black with inplace for model_clone and sample/models.py.
 # --------- Docs ---------------------------------------
 # -----------------------------------------------------------
 serve-docs:
+	@npm i -g docsify-cli
 	@npx docsify serve ./docs

@@ -5,7 +5,7 @@ from django.test import TestCase
 from django.utils.text import slugify
 
 from model_clone import create_copy_of_instance
-from sample.models import Library, Book
+from sample.models import Book, Library
 
 User = get_user_model()
 

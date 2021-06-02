@@ -1,5 +1,5 @@
-import os
 import io
+import os
 
 from setuptools import find_packages, setup
 
