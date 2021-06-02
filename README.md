@@ -44,6 +44,8 @@ Create copies of a model instance with explicit control on how the instance shou
 
         *   [CloneModelAdmin class attributes](#clonemodeladmin-class-attributes)
 
+*   [Running locally](#running-locally)
+
 *   [Found a Bug?](#found-a-bug)
 
 *   [Contributors ✨](#contributors-)
