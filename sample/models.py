@@ -2,8 +2,8 @@ from uuid import uuid4
 
 from django.conf import settings
 from django.db import models
-from django.utils.translation import gettext as _
 from django.utils import timezone
+from django.utils.translation import gettext as _
 
 from model_clone import CloneMixin
 from model_clone.models import CloneModel

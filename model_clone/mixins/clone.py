@@ -1,20 +1,20 @@
 from itertools import repeat
-from typing import List, Optional, Dict
+from typing import Dict, List, Optional
 
 from conditional import conditional
 from django.core.checks import Error
 from django.core.exceptions import ValidationError
-from django.db import transaction, models, IntegrityError, connections
+from django.db import IntegrityError, connections, models, transaction
 from django.db.models import SlugField
 from django.utils.text import slugify
 
 from model_clone.apps import ModelCloneConfig
 from model_clone.utils import (
     clean_value,
-    transaction_autocommit,
-    get_unique_value,
     context_mutable_attribute,
     get_fields_and_unique_fields_from_cls,
+    get_unique_value,
+    transaction_autocommit,
 )
 
 
@@ -250,11 +250,11 @@ class CloneMixin(object):
 
     def parallel_clone(self, count, attrs=None, batch_size=None, auto_commit=False):
         # if this takes n time for t records
-        # t^n i.e 100 * 10ms = 1000ms to clone 100 objects.
+        # t^n i.e 100 ** 2ms = 10000ms (10s) to clone 100 objects.
         # I'll like to reduce this down to max time to clone count/batch_size i.e
-        # If it take 100ms to clone 100 objects with a db of batch_size 100
-        # If it takes 10ms to clone 10 objects i'll like to keep this down to 10ms for
-        # max_num_of_threads i.e 10 threads for 100 objects.
+        # If it take 10000ms to clone 100 objects with a db of batch_size 100
+        # If it takes 20ms to clone 10 objects I'll like to keep this down to 20ms
+        # i.e max_num_of_threads 10 for 100 objects.
         # This should run in parallel
         # Testing jit and cpython if they offer better API's.
         pass
