@@ -252,7 +252,7 @@ Out[11]: <QuerySet []>
 
 #### Duplicating Models from the Django Admin view.
 
-Change
+**Change**
 
 ```python
 from django.contrib import admin
@@ -263,7 +263,7 @@ class TestModelAdmin(ModelAdmin):
     pass
 ```
 
-to
+**to**
 
 ```python
 from model_clone import CloneModelAdmin
