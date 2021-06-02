@@ -305,6 +305,18 @@ INSTALLED_APPS = [
 ]
 ```
 
+## Running locally
+
+```shell
+$ git clone git@github.com:tj-django/django-clone.git
+$ make default-user
+$ make run
+```
+
+Spins up a django server running the demo app.
+
+Visit http://127.0.0.1:8000
+
 ## Found a Bug?
 
 To file a bug or submit a patch, please head over to [django-clone on github](https://github.com/tj-django/django-clone/issues).

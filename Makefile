@@ -40,6 +40,12 @@ run: migrate
 	@echo "Starting server..."
 	@$(MANAGE_PY) runserver
 
+default-user: migrate
+	@echo "Creating a default user..."
+	@$(MANAGE_PY) create_default_user
+	@echo "Username: admin@admin.com"
+	@echo "Password: admin"
+
 test:
 	@echo "Running `$(PYTHON_VERSION)` test..."
 	@$(MANAGE_PY) test

@@ -57,7 +57,7 @@ class CloneModelAdminMixin(object):
         if clone_obj_ids:
             self.message_user(
                 request,
-                _("Successfully created: {} new duplicates".format(len(clone_obj_ids))),
+                _("Successfully created: {} new duplicates").format(len(clone_obj_ids)),
             )
 
     make_clone.short_description = _("Duplicate selected %(verbose_name_plural)s")
