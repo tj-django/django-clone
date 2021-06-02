@@ -16,8 +16,14 @@ jobs:
       github.actor == 'pre-commit-ci' ||
       github.actor == 'pre-commit-ci[bot]' ||
       github.actor == 'renovate[bot]' ||
+      github.actor == 'pyup-bot' ||
+      github.actor == 'pyup-bot[bot]' ||
       github.actor == 'renovate'
     steps:
+      - name: Get user information
+        run: |
+          echo "Login: ${{ github.event.pull_request.user.login }}"
+          echo "Actor: ${{ github.actor }}"
       - name: automerge
         uses: pascalgn/automerge-action@v0.14.2
         env:
