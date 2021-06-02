@@ -44,6 +44,8 @@ Create copies of a model instance with explicit control on how the instance shou
 
         *   [CloneModelAdmin class attributes](#clonemodeladmin-class-attributes)
 
+*   [Running locally](#running-locally)
+
 *   [Found a Bug?](#found-a-bug)
 
 *   [Contributors ✨](#contributors-)
@@ -305,6 +307,18 @@ INSTALLED_APPS = [
 ]
 ```
 
+## Running locally
+
+```shell
+$ git clone git@github.com:tj-django/django-clone.git
+$ make default-user
+$ make run
+```
+
+Spins up a django server running the demo app.
+
+Visit http://127.0.0.1:8000
+
 ## Found a Bug?
 
 To file a bug or submit a patch, please head over to [django-clone on github](https://github.com/tj-django/django-clone/issues).
@@ -327,6 +341,7 @@ Thanks goes to these wonderful people:
     <td align="center"><a href="https://renovate.whitesourcesoftware.com"><img src="https://avatars0.githubusercontent.com/u/25180681?v=4?s=100" width="100px;" alt=""/><br /><sub><b>WhiteSource Renovate</b></sub></a><br /><a href="#maintenance-renovate-bot" title="Maintenance">🚧</a></td>
     <td align="center"><a href="https://github.com/yuekui"><img src="https://avatars2.githubusercontent.com/u/2561450?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Yuekui</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/commits?author=yuekui" title="Code">💻</a> <a href="https://github.com/tj-django/django-clone/issues?q=author%3Ayuekui" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=yuekui" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://github.com/diesieben07"><img src="https://avatars.githubusercontent.com/u/1915984?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Take Weiland</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/commits?author=diesieben07" title="Tests">⚠️</a> <a href="https://github.com/tj-django/django-clone/issues?q=author%3Adiesieben07" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=diesieben07" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/ptrck"><img src="https://avatars.githubusercontent.com/u/1259703?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Patrick</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/issues?q=author%3Aptrck" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
