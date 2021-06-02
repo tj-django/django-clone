@@ -7,6 +7,10 @@ jobs:
   auto-approve:
     runs-on: ubuntu-latest
     steps:
+      - name: Get user information
+        run: |
+          echo "Login: ${{ github.event.pull_request.user.login }}"
+          echo "Actor: ${{ github.actor }}"
       - uses: hmarr/auto-approve-action@v2
         if: |
           (
@@ -17,6 +21,7 @@ jobs:
             github.event.pull_request.user.login == 'renovate[bot]' ||
             github.event.pull_request.user.login == 'renovate' ||
             github.event.pull_request.user.login == 'pyup-bot' ||
+            github.event.pull_request.user.login == 'pyup-bot[bot]' ||
             github.event.pull_request.user.login == 'github-actions[bot]' ||
             github.event.pull_request.user.login == 'pre-commit-ci' ||
             github.event.pull_request.user.login == 'pre-commit-ci[bot]'
@@ -30,6 +35,7 @@ jobs:
             github.actor == 'renovate[bot]' ||
             github.actor == 'renovate' ||
             github.actor == 'pyup-bot' ||
+            github.actor == 'pyup-bot[bot]' ||
             github.actor == 'github-actions[bot]' ||
             github.actor == 'pre-commit-ci' ||
             github.actor == 'pre-commit-ci[bot]'
