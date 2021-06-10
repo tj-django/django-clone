@@ -22,8 +22,6 @@ jobs:
             github.event.pull_request.user.login == 'dependabot-preview' ||
             github.event.pull_request.user.login == 'renovate[bot]' ||
             github.event.pull_request.user.login == 'renovate' ||
-            github.event.pull_request.user.login == 'pyup-bot' ||
-            github.event.pull_request.user.login == 'pyup-bot[bot]' ||
             github.event.pull_request.user.login == 'github-actions[bot]' ||
             github.event.pull_request.user.login == 'pre-commit-ci' ||
             github.event.pull_request.user.login == 'pre-commit-ci[bot]'
@@ -36,8 +34,6 @@ jobs:
             github.actor == 'dependabot-preview' ||
             github.actor == 'renovate[bot]' ||
             github.actor == 'renovate' ||
-            github.actor == 'pyup-bot' ||
-            github.actor == 'pyup-bot[bot]' ||
             github.actor == 'github-actions[bot]' ||
             github.actor == 'pre-commit-ci' ||
             github.actor == 'pre-commit-ci[bot]'
