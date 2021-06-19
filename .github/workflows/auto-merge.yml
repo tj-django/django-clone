@@ -16,25 +16,28 @@ jobs:
       - name: automerge
         if: |
           (
-            github.event.pull_request.user.login == 'dependabot[bot]' ||
-            github.event.pull_request.user.login == 'dependabot' ||
-            github.event.pull_request.user.login == 'dependabot-preview[bot]' ||
-            github.event.pull_request.user.login == 'dependabot-preview' ||
-            github.event.pull_request.user.login == 'renovate[bot]' ||
-            github.event.pull_request.user.login == 'renovate' ||
-            github.event.pull_request.user.login == 'github-actions[bot]' ||
-            github.event.pull_request.user.login == 'pre-commit-ci' ||
-            github.event.pull_request.user.login == 'pre-commit-ci[bot]'
+            (
+              github.event.pull_request.user.login == 'dependabot[bot]' ||
+              github.event.pull_request.user.login == 'dependabot' ||
+              github.event.pull_request.user.login == 'dependabot-preview[bot]' ||
+              github.event.pull_request.user.login == 'dependabot-preview' ||
+              github.event.pull_request.user.login == 'renovate[bot]' ||
+              github.event.pull_request.user.login == 'renovate' ||
+              github.event.pull_request.user.login == 'github-actions[bot]'
+            )
+              &&
+            (
+              github.actor == 'dependabot[bot]' ||
+              github.actor == 'dependabot' ||
+              github.actor == 'dependabot-preview[bot]' ||
+              github.actor == 'dependabot-preview' ||
+              github.actor == 'renovate[bot]' ||
+              github.actor == 'renovate' ||
+              github.actor == 'github-actions[bot]'
+            )
           )
-            &&
+          ||
           (
-            github.actor == 'dependabot[bot]' ||
-            github.actor == 'dependabot' ||
-            github.actor == 'dependabot-preview[bot]' ||
-            github.actor == 'dependabot-preview' ||
-            github.actor == 'renovate[bot]' ||
-            github.actor == 'renovate' ||
-            github.actor == 'github-actions[bot]' ||
             github.actor == 'pre-commit-ci' ||
             github.actor == 'pre-commit-ci[bot]'
           )
