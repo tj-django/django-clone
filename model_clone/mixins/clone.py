@@ -219,10 +219,12 @@ class CloneMixin(object):
 
         duplicate, m2o_instances = self.__duplicate_m2o_fields(duplicate)
 
-        if any([
-            save_new,
-            m2o_instances,
-        ]):
+        if any(
+            [
+                save_new,
+                m2o_instances,
+            ]
+        ):
             for instance in m2o_instances:
                 instance.save(using=using)
 
