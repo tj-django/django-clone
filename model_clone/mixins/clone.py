@@ -217,17 +217,9 @@ class CloneMixin(object):
         for name, value in attrs.items():
             setattr(duplicate, name, value)
 
-        duplicate, m2o_instances = self.__duplicate_m2o_fields(duplicate)
+        duplicate.save(using=using)
 
-        if any([
-            save_new,
-            m2o_instances,
-        ]):
-            for instance in m2o_instances:
-                instance.save(using=using)
-
-            duplicate.save(using=using)
-
+        duplicate = self.__duplicate_m2o_fields(duplicate, using=using)
         duplicate = self.__duplicate_o2o_fields(duplicate, using=using)
         duplicate = self.__duplicate_o2m_fields(duplicate, using=using)
         duplicate = self.__duplicate_m2m_fields(duplicate, using=using)
@@ -457,18 +449,16 @@ class CloneMixin(object):
 
         return duplicate
 
-    def __duplicate_m2o_fields(self, duplicate):
+    def __duplicate_m2o_fields(self, duplicate, using=None):
         """Duplicate many to one fields.
 
         :param duplicate: The transient instance that should be duplicated.
         :type duplicate: `django.db.models.Model`
+        :param using: The database alias used to save the created instances.
+        :type using: str
         :return: The duplicate instance with all the many to one fields duplicated.
         """
-        m2o_instances = []
-
-        for f in itertools.chain(
-            self._meta.related_objects, self._meta.concrete_fields
-        ):
+        for f in self._meta.concrete_fields:
             if f.many_to_one:
                 if any(
                     [
@@ -480,18 +470,16 @@ class CloneMixin(object):
                     item = getattr(self, f.name)
                     if hasattr(item, "make_clone"):
                         try:
-                            item_clone = item.make_clone(save_new=False)
+                            item_clone = item.make_clone(using=using)
                         except IntegrityError:
-                            item_clone = item.make_clone(save_new=False, sub_clone=True)
+                            item_clone = item.make_clone(sub_clone=True)
                     else:
                         item.pk = None
-                        item_clone = item
+                        item_clone = item.save(using=using)
 
                     setattr(duplicate, f.name, item_clone)
 
-                    m2o_instances.append(item_clone)
-
-        return duplicate, m2o_instances
+        return duplicate
 
     def __duplicate_m2m_fields(self, duplicate, using=None):
         """Duplicate many to many fields.
