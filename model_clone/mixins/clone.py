@@ -197,7 +197,7 @@ class CloneMixin(object):
         :type using: str
         :return: The model instance that has been cloned.
         """
-        using = self.state.db or self.__class__._default_manager.db
+        using = self._state.db or self.__class__._default_manager.db
         attrs = attrs or {}
         if not self.pk:
             raise ValidationError(
@@ -224,11 +224,11 @@ class CloneMixin(object):
         return duplicate
 
     def bulk_clone(self, count, attrs=None, batch_size=None, auto_commit=False):
-        ops = connections[self.__class__._default_manager.db].ops
+        using = self._state.db or self.__class__._default_manager.db
+        ops = connections[using].ops
         objs = range(count)
         clones = []
         batch_size = batch_size or max(ops.bulk_batch_size([], list(objs)), 1)
-        using = self.state.db or self.__class__._default_manager.db
 
         with conditional(
             auto_commit,
