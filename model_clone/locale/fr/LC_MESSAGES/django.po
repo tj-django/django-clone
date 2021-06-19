@@ -1,0 +1,113 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-06-19 12:06+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Tonye Jack <jtonye@ymail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: django_clone/settings.py:139
+msgid "English"
+msgstr ""
+
+#: django_clone/settings.py:140
+msgid "French"
+msgstr ""
+
+#: model_clone/admin.py:37
+msgid "Duplication successful, redirected to cloned: {}"
+msgstr ""
+
+#: model_clone/admin.py:60
+msgid "Successfully created: {} new duplicates"
+msgstr ""
+
+#: model_clone/admin.py:63
+#, python-format
+msgid "Duplicate selected %(verbose_name_plural)s"
+msgstr ""
+
+#: model_clone/templates/admin/change_form_object_tools.html:5
+#: model_clone/templates/clone/change_form.html:7
+msgid "Duplicate"
+msgstr ""
+
+#: sample/models.py:28
+msgid "{} {}"
+msgstr ""
+
+#: sample/models.py:109
+msgid "libraries"
+msgstr ""
+
+#: sample/models.py:119
+msgid "Job title"
+msgstr ""
+
+#: sample/models.py:127
+msgid "Company"
+msgstr ""
+
+#: sample/models.py:132
+msgid "Driver applications"
+msgstr ""
+
+#: sample/models.py:138
+msgid "Chosen drivers"
+msgstr ""
+
+#: sample/models.py:146
+msgid "Choose contract"
+msgstr ""
+
+#: sample/models.py:159
+msgid "Assignment status"
+msgstr ""
+
+#: sample/models.py:162
+msgid "Location"
+msgstr ""
+
+#: sample/models.py:170
+msgid "Driver type"
+msgstr ""
+
+#: sample/models.py:177
+msgid "Car type"
+msgstr ""
+
+#: sample/models.py:180
+msgid "Compensation"
+msgstr ""
+
+#: sample/models.py:182
+msgid "Amount of hours"
+msgstr ""
+
+#: sample/models.py:183
+msgid "Spots available"
+msgstr ""
+
+#: sample/models.py:184
+msgid "Assignment description"
+msgstr ""
+
+#: sample/models.py:190
+msgid "Assigment"
+msgstr ""
+
+#: sample/models.py:191
+msgid "Assignments"
+msgstr ""

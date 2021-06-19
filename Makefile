@@ -50,7 +50,7 @@ update-requirements:  ## Updates the requirement.txt adding missing package depe
 	@$(PIP_COMPILE)
 
 # --------------------------------------------------------
-# ------- Django management commands ---------------------
+# ------- Django manage.py commands ---------------------
 # --------------------------------------------------------
 migrations:
 	@$(MANAGE_PY) makemigrations
@@ -68,11 +68,11 @@ default-user: migrate
 	@echo "Username: admin@admin.com"
 	@echo "Password: admin"
 
-makemessages:
+makemessages: clean-build  ## Runs over the entire source tree of the current directory and pulls out all strings marked for translation.
 	@$(MANAGE_PY) makemessages --locale=en_US
 	@$(MANAGE_PY) makemessages --locale=fr
 
-compilemessages:
+compilemessages: clean-build  ## Compiles .po files created by makemessages to .mo files for use with the built-in gettext support.
 	@$(MANAGE_PY) compilemessages --ignore=.tox
 
 test:
@@ -91,7 +91,7 @@ increase-version: clean-build guard-PART  ## Bump the project version (using the
 	@git add .
 	@[ -z "`git status --porcelain`" ] && echo "No changes found." || git commit -am "Updated CHANGELOG.md."
 
-release-to-pypi: increase-version  ## Release project to pypi
+release-to-pypi: makemessages compilemessages increase-version  ## Release project to pypi
 	@$(PYTHON_PIP) install -U twine
 	@$(PYTHON) setup.py sdist bdist_wheel
 	@twine upload -r pypi dist/*

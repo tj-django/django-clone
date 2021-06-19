@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+from django.utils.translation import gettext_lazy as _
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -132,3 +134,16 @@ else:
     TEST_OUTPUT_VERBOSE = 2
     TEST_OUTPUT_DESCRIPTIONS = True
     TEST_OUTPUT_DIR = "test-reports"
+
+LANGUAGES = (
+  ("en", _("English")),
+  ("fr", _("French")),
+)
+
+# Set the default language for your site.
+LANGUAGE_CODE = "en"
+
+# Tell Django where the project's translation files should be.
+LOCALE_PATHS=(
+    os.path.join(BASE_DIR, "model_clone", "locale"),
+)
