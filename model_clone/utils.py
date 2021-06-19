@@ -2,12 +2,13 @@ import contextlib
 import re
 
 import six
-from django.core.exceptions import ValidationError
 from django.db import models, transaction
 from django.db.transaction import TransactionManagementError
 
 
-def create_copy_of_instance(instance, attrs=None, exclude=(), save_new=True, using=None):
+def create_copy_of_instance(
+    instance, attrs=None, exclude=(), save_new=True, using=None
+):
     """
     Clone an instance of `django.db.models.Model`.
 
@@ -52,7 +53,9 @@ def create_copy_of_instance(instance, attrs=None, exclude=(), save_new=True, usi
         try:
             attrs = dict(attrs)
         except (TypeError, ValueError):
-            raise ValueError("Invalid: Expected attrs to be a dict or iterable of key and value tuples.")
+            raise ValueError(
+                "Invalid: Expected attrs to be a dict or iterable of key and value tuples."
+            )
 
     for f in fields:
         if all(

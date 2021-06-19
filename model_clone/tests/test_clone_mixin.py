@@ -4,7 +4,7 @@ import time
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.db.transaction import TransactionManagementError
-from django.db.utils import IntegrityError, DEFAULT_DB_ALIAS
+from django.db.utils import DEFAULT_DB_ALIAS, IntegrityError
 from django.test import TestCase, TransactionTestCase
 from django.utils.text import slugify
 from django.utils.timezone import make_naive
@@ -32,10 +32,10 @@ User = get_user_model()
 
 
 class CloneMixinTestCase(TestCase):
-    REPLICA_DB_ALIAS = 'replica'
+    REPLICA_DB_ALIAS = "replica"
     databases = {
-        'default',
-        'replica',
+        "default",
+        "replica",
     }
 
     @classmethod
