@@ -225,13 +225,10 @@ class CloneMixin(object):
             o2o_instances,
             m2o_instances,
         ]):
-            for instance in m2o_instances:
+            for instance in itertools.chain(m2o_instances, o2o_instances):
                 instance.save(using=using)
 
             duplicate.save(using=using)
-
-            for instance in o2o_instances:
-                instance.save(using=using)
 
         duplicate = self.__duplicate_o2m_fields(duplicate, using=using)
         duplicate = self.__duplicate_m2m_fields(duplicate, using=using)
