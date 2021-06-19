@@ -1,484 +1,601 @@
 # Changelog
-All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
-and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+## [v2.6.1](https://github.com/tj-django/django-clone/tree/v2.6.1) (2021-06-19)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.6.0...v2.6.1)
+
+**Merged pull requests:**
+
+- Upgraded v2.5.3 → v2.6.0 [\#374](https://github.com/tj-django/django-clone/pull/374) ([jackton1](https://github.com/jackton1))
+
+## [v2.6.0](https://github.com/tj-django/django-clone/tree/v2.6.0) (2021-06-19)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.5.3...v2.6.0)
+
+**Implemented enhancements:**
+
+- Drop python2.7 support. [\#204](https://github.com/tj-django/django-clone/issues/204)
+
+**Fixed bugs:**
+
+- \[BUG\] - Duplicated models are not always created in same database [\#366](https://github.com/tj-django/django-clone/issues/366)
+- \[BUG\] \(Admin view\) Cloning from "bulk" doees not work, while it works fine inside of instance editor [\#333](https://github.com/tj-django/django-clone/issues/333)
+- `TextField` is not supported with unique value generation [\#331](https://github.com/tj-django/django-clone/issues/331)
+
+**Closed issues:**
+
+- How to clone a question with its choices? [\#315](https://github.com/tj-django/django-clone/issues/315)
+- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
+- Cloning complex model relationships [\#175](https://github.com/tj-django/django-clone/issues/175)
+
+**Merged pull requests:**
+
+- Increase test coverage. [\#373](https://github.com/tj-django/django-clone/pull/373) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#372](https://github.com/tj-django/django-clone/pull/372) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated locales. [\#371](https://github.com/tj-django/django-clone/pull/371) ([jackton1](https://github.com/jackton1))
+- Updated README.md [\#370](https://github.com/tj-django/django-clone/pull/370) ([jackton1](https://github.com/jackton1))
+- Added translation support. [\#369](https://github.com/tj-django/django-clone/pull/369) ([jackton1](https://github.com/jackton1))
+- Add support for multiple databases [\#368](https://github.com/tj-django/django-clone/pull/368) ([jackton1](https://github.com/jackton1))
+- Update auto-merge.yml [\#367](https://github.com/tj-django/django-clone/pull/367) ([jackton1](https://github.com/jackton1))
+- \[pre-commit.ci\] pre-commit autoupdate [\#365](https://github.com/tj-django/django-clone/pull/365) ([pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci))
+- Update codecov/codecov-action action to v1.5.2 [\#364](https://github.com/tj-django/django-clone/pull/364) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#363](https://github.com/tj-django/django-clone/pull/363) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated README.md [\#362](https://github.com/tj-django/django-clone/pull/362) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#361](https://github.com/tj-django/django-clone/pull/361) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Update README.md [\#360](https://github.com/tj-django/django-clone/pull/360) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#359](https://github.com/tj-django/django-clone/pull/359) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated README.md [\#358](https://github.com/tj-django/django-clone/pull/358) ([jackton1](https://github.com/jackton1))
+- Updated README.md [\#357](https://github.com/tj-django/django-clone/pull/357) ([jackton1](https://github.com/jackton1))
+- docs: add ptrck as a contributor [\#356](https://github.com/tj-django/django-clone/pull/356) ([allcontributors[bot]](https://github.com/apps/allcontributors))
+- feature/update docs and usage of str format [\#355](https://github.com/tj-django/django-clone/pull/355) ([jackton1](https://github.com/jackton1))
+- Update dependency django to v3.2.4 [\#354](https://github.com/tj-django/django-clone/pull/354) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#353](https://github.com/tj-django/django-clone/pull/353) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated README.md [\#352](https://github.com/tj-django/django-clone/pull/352) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#350](https://github.com/tj-django/django-clone/pull/350) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated README.md [\#349](https://github.com/tj-django/django-clone/pull/349) ([jackton1](https://github.com/jackton1))
+- Update README.md [\#348](https://github.com/tj-django/django-clone/pull/348) ([jackton1](https://github.com/jackton1))
+- Make sure format string is properly translated [\#346](https://github.com/tj-django/django-clone/pull/346) ([ptrck](https://github.com/ptrck))
+- Update wearerequired/lint-action action to v1.10.0 [\#345](https://github.com/tj-django/django-clone/pull/345) ([renovate[bot]](https://github.com/apps/renovate))
+- Update actions/cache action to v2.1.6 [\#344](https://github.com/tj-django/django-clone/pull/344) ([renovate[bot]](https://github.com/apps/renovate))
+- Update pascalgn/automerge-action action to v0.14.2 [\#343](https://github.com/tj-django/django-clone/pull/343) ([renovate[bot]](https://github.com/apps/renovate))
+- Bump django from 3.2.2 to 3.2.3 [\#342](https://github.com/tj-django/django-clone/pull/342) ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): update peter-evans/create-pull-request action to v3.10.0 [\#340](https://github.com/tj-django/django-clone/pull/340) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#339](https://github.com/tj-django/django-clone/pull/339) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated README.md [\#338](https://github.com/tj-django/django-clone/pull/338) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#337](https://github.com/tj-django/django-clone/pull/337) ([github-actions[bot]](https://github.com/apps/github-actions))
+- docs: add diesieben07 as a contributor [\#336](https://github.com/tj-django/django-clone/pull/336) ([allcontributors[bot]](https://github.com/apps/allcontributors))
+- Skip lint actions on forks [\#335](https://github.com/tj-django/django-clone/pull/335) ([jackton1](https://github.com/jackton1))
+- Remove tox cache [\#334](https://github.com/tj-django/django-clone/pull/334) ([jackton1](https://github.com/jackton1))
+- Add support for unique TextFields [\#332](https://github.com/tj-django/django-clone/pull/332) ([diesieben07](https://github.com/diesieben07))
+- Update precommit hook pre-commit/pre-commit-hooks to v4.0.1 [\#329](https://github.com/tj-django/django-clone/pull/329) ([renovate[bot]](https://github.com/apps/renovate))
+- Drop python2.7 support [\#328](https://github.com/tj-django/django-clone/pull/328) ([jackton1](https://github.com/jackton1))
+- Update precommit hook pre-commit/pre-commit-hooks to v4 [\#327](https://github.com/tj-django/django-clone/pull/327) ([renovate[bot]](https://github.com/apps/renovate))
+- Bump peter-evans/create-pull-request from 3.9.1 to 3.9.2 [\#326](https://github.com/tj-django/django-clone/pull/326) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update dependency django to v3.2.3 [\#325](https://github.com/tj-django/django-clone/pull/325) ([renovate[bot]](https://github.com/apps/renovate))
+- Bump actions/first-interaction from 1 to 1.1.0 [\#324](https://github.com/tj-django/django-clone/pull/324) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/setup-python from 2 to 2.2.2 [\#323](https://github.com/tj-django/django-clone/pull/323) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/cache from 2 to 2.1.5 [\#322](https://github.com/tj-django/django-clone/pull/322) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump peaceiris/actions-gh-pages from 3 to 3.8.0 [\#321](https://github.com/tj-django/django-clone/pull/321) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/checkout from 2 to 2.3.4 [\#320](https://github.com/tj-django/django-clone/pull/320) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump peter-evans/create-pull-request from 3 to 3.9.1 [\#319](https://github.com/tj-django/django-clone/pull/319) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump codecov/codecov-action from 1 to 1.5.0 [\#318](https://github.com/tj-django/django-clone/pull/318) ([dependabot[bot]](https://github.com/apps/dependabot))
+- \[pre-commit.ci\] pre-commit autoupdate [\#317](https://github.com/tj-django/django-clone/pull/317) ([pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci))
+- Updated docs [\#316](https://github.com/tj-django/django-clone/pull/316) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Update dependency django to v3.2.2 [\#313](https://github.com/tj-django/django-clone/pull/313) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency six to v1.16.0 [\#312](https://github.com/tj-django/django-clone/pull/312) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency django to v3.2.1 [\#310](https://github.com/tj-django/django-clone/pull/310) ([renovate[bot]](https://github.com/apps/renovate))
+- \[pre-commit.ci\] pre-commit autoupdate [\#309](https://github.com/tj-django/django-clone/pull/309) ([pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci))
+- Update dependency typing-extensions to v3.10.0.0 [\#307](https://github.com/tj-django/django-clone/pull/307) ([renovate[bot]](https://github.com/apps/renovate))
+- Upgrade to GitHub-native Dependabot [\#306](https://github.com/tj-django/django-clone/pull/306) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- \[pre-commit.ci\] pre-commit autoupdate [\#305](https://github.com/tj-django/django-clone/pull/305) ([pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci))
+- Updated django master -\> main [\#304](https://github.com/tj-django/django-clone/pull/304) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#303](https://github.com/tj-django/django-clone/pull/303) ([github-actions[bot]](https://github.com/apps/github-actions))
 
-## [v2.5.4](https://github.com/tj-django/django-clone/releases/tag/v2.5.4) - 2021-04-24
+## [v2.5.3](https://github.com/tj-django/django-clone/tree/v2.5.3) (2021-04-25)
 
-<small>[Compare with v2.5.3](https://github.com/tj-django/django-clone/compare/v2.5.3...v2.5.4)</small>
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.5.2...v2.5.3)
 
+**Merged pull requests:**
 
-## [v2.5.3](https://github.com/tj-django/django-clone/releases/tag/v2.5.3) - 2021-04-25
+- Fixed bug using sub\_clone=True [\#302](https://github.com/tj-django/django-clone/pull/302) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#301](https://github.com/tj-django/django-clone/pull/301) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated docs [\#300](https://github.com/tj-django/django-clone/pull/300) ([github-actions[bot]](https://github.com/apps/github-actions))
 
-<small>[Compare with v2.5.2](https://github.com/tj-django/django-clone/compare/v2.5.2...v2.5.3)</small>
+## [v2.5.2](https://github.com/tj-django/django-clone/tree/v2.5.2) (2021-04-23)
 
-### Fixed
-- Fixed bug using sub_clone=true (#302) ([570616c](https://github.com/tj-django/django-clone/commit/570616c8bc89169266d067f2b771196663c98e05) by Tonye Jack).
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.5.1...v2.5.2)
 
+**Merged pull requests:**
 
-## [v2.5.2](https://github.com/tj-django/django-clone/releases/tag/v2.5.2) - 2021-04-23
+- Improve test coverage. [\#299](https://github.com/tj-django/django-clone/pull/299) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#298](https://github.com/tj-django/django-clone/pull/298) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated docs [\#297](https://github.com/tj-django/django-clone/pull/297) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Fixed regression calling instance.full\_clean [\#296](https://github.com/tj-django/django-clone/pull/296) ([jackton1](https://github.com/jackton1))
 
-<small>[Compare with v2.5.1](https://github.com/tj-django/django-clone/compare/v2.5.1...v2.5.2)</small>
+## [v2.5.1](https://github.com/tj-django/django-clone/tree/v2.5.1) (2021-04-22)
 
-### Added
-- Added pre-commit-config.yaml ([3f0d729](https://github.com/tj-django/django-clone/commit/3f0d72912377ad02afe851e2dfa362147e7d8e22) by Tonye Jack).
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.5.0...v2.5.1)
 
+**Fixed bugs:**
 
-## [v2.5.1](https://github.com/tj-django/django-clone/releases/tag/v2.5.1) - 2021-04-22
+- \[BUG\] Regression on full\_clean [\#295](https://github.com/tj-django/django-clone/issues/295)
 
-<small>[Compare with v2.5.0](https://github.com/tj-django/django-clone/compare/v2.5.0...v2.5.1)</small>
+**Merged pull requests:**
 
-### Added
-- Added .github/workflows/greetings.yml ([62a8973](https://github.com/tj-django/django-clone/commit/62a8973669916a56a5ee85934643a3a756adb730) by Tonye Jack).
-- Added .editorconfig ([e8dc042](https://github.com/tj-django/django-clone/commit/e8dc042718de23edcff9b04aaa7737c740a63db3) by Tonye Jack).
+- Updated docs [\#294](https://github.com/tj-django/django-clone/pull/294) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Update README.md [\#293](https://github.com/tj-django/django-clone/pull/293) ([jackton1](https://github.com/jackton1))
+- Revert "Update README.md" [\#291](https://github.com/tj-django/django-clone/pull/291) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#290](https://github.com/tj-django/django-clone/pull/290) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Update README.md [\#289](https://github.com/tj-django/django-clone/pull/289) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#288](https://github.com/tj-django/django-clone/pull/288) ([github-actions[bot]](https://github.com/apps/github-actions))
 
-### Fixed
-- Fixed regression calling instance.full_clean (#296) ([fa5b16b](https://github.com/tj-django/django-clone/commit/fa5b16bf7b414e9bb355c76e95b103956355e6f0) by Tonye Jack).
+## [v2.5.0](https://github.com/tj-django/django-clone/tree/v2.5.0) (2021-04-21)
 
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.4.0...v2.5.0)
 
-## [v2.5.0](https://github.com/tj-django/django-clone/releases/tag/v2.5.0) - 2021-04-21
+**Merged pull requests:**
 
-<small>[Compare with v2.4.0](https://github.com/tj-django/django-clone/compare/v2.4.0...v2.5.0)</small>
+- Updated docs [\#287](https://github.com/tj-django/django-clone/pull/287) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Update README.md [\#286](https://github.com/tj-django/django-clone/pull/286) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#285](https://github.com/tj-django/django-clone/pull/285) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Added black pre-commit hook [\#284](https://github.com/tj-django/django-clone/pull/284) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#283](https://github.com/tj-django/django-clone/pull/283) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Update README.md [\#282](https://github.com/tj-django/django-clone/pull/282) ([jackton1](https://github.com/jackton1))
+- Fix bugs for related\_name and m2o clone [\#281](https://github.com/tj-django/django-clone/pull/281) ([yuekui](https://github.com/yuekui))
+- Updated docs [\#280](https://github.com/tj-django/django-clone/pull/280) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Update classmethod order. [\#276](https://github.com/tj-django/django-clone/pull/276) ([jackton1](https://github.com/jackton1))
+- Update test coverage. [\#274](https://github.com/tj-django/django-clone/pull/274) ([jackton1](https://github.com/jackton1))
+- Update function order. [\#273](https://github.com/tj-django/django-clone/pull/273) ([jackton1](https://github.com/jackton1))
+- Updated tox to test django3.2. [\#272](https://github.com/tj-django/django-clone/pull/272) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#271](https://github.com/tj-django/django-clone/pull/271) ([github-actions[bot]](https://github.com/apps/github-actions))
 
-### Added
-- Added black pre-commit hook (#284) ([7d4a36b](https://github.com/tj-django/django-clone/commit/7d4a36be428b8431644b4f873ca51fe2011c5ddf) by Tonye Jack).
+## [v2.4.0](https://github.com/tj-django/django-clone/tree/v2.4.0) (2021-04-16)
 
-### Fixed
-- Fix bugs for related_name and m2o clone (#281) ([53eb444](https://github.com/tj-django/django-clone/commit/53eb444e7e939f6c123c2b00ff0761c740955116) by Yuekui).
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.3.3...v2.4.0)
 
+**Fixed bugs:**
 
-## [v2.4.0](https://github.com/tj-django/django-clone/releases/tag/v2.4.0) - 2021-04-16
+- \[BUG\] when cloning, images are not created but are linked to the source image [\#268](https://github.com/tj-django/django-clone/issues/268)
 
-<small>[Compare with v2.3.3](https://github.com/tj-django/django-clone/compare/v2.3.3...v2.4.0)</small>
+**Closed issues:**
 
-### Added
-- Add a delay to resolve inconsistency in windows (#266) ([59ab32d](https://github.com/tj-django/django-clone/commit/59ab32d318c1478da14965fe6dec8986dbe5ba55) by Tonye Jack).
+- Consolidate the sample apps [\#216](https://github.com/tj-django/django-clone/issues/216)
+- Add ROADMAP and outstanding features [\#55](https://github.com/tj-django/django-clone/issues/55)
+- Document the excluded fields. [\#25](https://github.com/tj-django/django-clone/issues/25)
 
+**Merged pull requests:**
 
-## [v2.3.3](https://github.com/tj-django/django-clone/releases/tag/v2.3.3) - 2021-04-09
+- Updated install\_requires and doc strings. [\#269](https://github.com/tj-django/django-clone/pull/269) ([jackton1](https://github.com/jackton1))
+- Clean up implementation. [\#267](https://github.com/tj-django/django-clone/pull/267) ([jackton1](https://github.com/jackton1))
+- Add a delay to resolve inconsistency in windows [\#266](https://github.com/tj-django/django-clone/pull/266) ([jackton1](https://github.com/jackton1))
+- Update test\_clone\_mixin.py [\#265](https://github.com/tj-django/django-clone/pull/265) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#263](https://github.com/tj-django/django-clone/pull/263) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated the default auto field [\#262](https://github.com/tj-django/django-clone/pull/262) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#260](https://github.com/tj-django/django-clone/pull/260) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated docs [\#259](https://github.com/tj-django/django-clone/pull/259) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated docs [\#258](https://github.com/tj-django/django-clone/pull/258) ([github-actions[bot]](https://github.com/apps/github-actions))
 
-<small>[Compare with v2.3.2](https://github.com/tj-django/django-clone/compare/v2.3.2...v2.3.3)</small>
+## [v2.3.3](https://github.com/tj-django/django-clone/tree/v2.3.3) (2021-04-09)
 
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.3.2...v2.3.3)
 
-## [v2.3.2](https://github.com/tj-django/django-clone/releases/tag/v2.3.2) - 2021-04-08
+## [v2.3.2](https://github.com/tj-django/django-clone/tree/v2.3.2) (2021-04-08)
 
-<small>[Compare with v2.3.1](https://github.com/tj-django/django-clone/compare/v2.3.1...v2.3.2)</small>
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.3.1...v2.3.2)
 
-### Fixed
-- Fixed test. ([0945265](https://github.com/tj-django/django-clone/commit/0945265bf3860dbb7c9a151066b3fe1a58f52d6d) by Tonye Jack).
-- Fixed formatting. ([9ae328b](https://github.com/tj-django/django-clone/commit/9ae328be5b7c3a6f6f2a5bf2827aab96aee6178d) by Tonye Jack).
+**Merged pull requests:**
 
+- Improve doc strings [\#257](https://github.com/tj-django/django-clone/pull/257) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#256](https://github.com/tj-django/django-clone/pull/256) ([github-actions[bot]](https://github.com/apps/github-actions))
 
-## [v2.3.1](https://github.com/tj-django/django-clone/releases/tag/v2.3.1) - 2021-04-08
+## [v2.3.1](https://github.com/tj-django/django-clone/tree/v2.3.1) (2021-04-08)
 
-<small>[Compare with v2.3.0](https://github.com/tj-django/django-clone/compare/v2.3.0...v2.3.1)</small>
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.3.0...v2.3.1)
 
-### Added
-- Added .github/workflows/release.yml ([d739de6](https://github.com/tj-django/django-clone/commit/d739de6ca214e95d1cf98e9ba89103a90501c49b) by Tonye Jack).
+## [v2.3.0](https://github.com/tj-django/django-clone/tree/v2.3.0) (2021-04-08)
 
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.2.1...v2.3.0)
 
-## [v2.3.0](https://github.com/tj-django/django-clone/releases/tag/v2.3.0) - 2021-04-08
+**Fixed bugs:**
 
-<small>[Compare with v2.2.1](https://github.com/tj-django/django-clone/compare/v2.2.1...v2.3.0)</small>
+- Error cloning models that have one to one fields [\#248](https://github.com/tj-django/django-clone/issues/248)
 
-### Fixed
-- Fix bug with o2o fields (#255) ([cdd3d0a](https://github.com/tj-django/django-clone/commit/cdd3d0a0ceee3a6ed098a8319f190eae02ea6633) by Tonye Jack).
-- Fixed bug with cloning o2o fields (#252) ([342eca8](https://github.com/tj-django/django-clone/commit/342eca8a2bfad5b90432c733c7ff777cef8f50bd) by Tonye Jack).
-- Fix code style issues with black ([197d0a4](https://github.com/tj-django/django-clone/commit/197d0a4b9ecd62c5032b8aad4a2990e8c6ff18a2) by Lint Action).
+**Merged pull requests:**
 
+- Fix bug cloning o2o fields [\#255](https://github.com/tj-django/django-clone/pull/255) ([jackton1](https://github.com/jackton1))
+- Revert "Fixed bug with cloning o2o fields" [\#254](https://github.com/tj-django/django-clone/pull/254) ([jackton1](https://github.com/jackton1))
+- Updated the library verbose name. [\#253](https://github.com/tj-django/django-clone/pull/253) ([jackton1](https://github.com/jackton1))
+- Fixed bug with cloning o2o fields [\#252](https://github.com/tj-django/django-clone/pull/252) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#251](https://github.com/tj-django/django-clone/pull/251) ([github-actions[bot]](https://github.com/apps/github-actions))
 
-## [v2.2.1](https://github.com/tj-django/django-clone/releases/tag/v2.2.1) - 2021-04-07
+## [v2.2.1](https://github.com/tj-django/django-clone/tree/v2.2.1) (2021-04-07)
 
-<small>[Compare with v2.2.0](https://github.com/tj-django/django-clone/compare/v2.2.0...v2.2.1)</small>
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.2.0...v2.2.1)
 
-### Fixed
-- Fixed typo with filename. ([30b9a92](https://github.com/tj-django/django-clone/commit/30b9a928206f918dfb2bea1c6cb7b102ac61fd86) by Tonye Jack).
+## [v2.2.0](https://github.com/tj-django/django-clone/tree/v2.2.0) (2021-04-07)
 
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.1.1...v2.2.0)
 
-## [v2.2.0](https://github.com/tj-django/django-clone/releases/tag/v2.2.0) - 2021-04-07
+**Merged pull requests:**
 
-<small>[Compare with v2.1.1](https://github.com/tj-django/django-clone/compare/v2.1.1...v2.2.0)</small>
+- Update test.yml [\#250](https://github.com/tj-django/django-clone/pull/250) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#247](https://github.com/tj-django/django-clone/pull/247) ([github-actions[bot]](https://github.com/apps/github-actions))
 
-### Added
-- Added migration. ([c938488](https://github.com/tj-django/django-clone/commit/c938488abc8e8a7476e0da86a3db1128b15255d9) by Tonye Jack).
-- Added .github/workflows/sync-release-version.yml ([6bdce7c](https://github.com/tj-django/django-clone/commit/6bdce7cc5a834040a84441880231c71a576f5e86) by Tonye Jack).
-- Added .github/auto-approve.yml ([47538b5](https://github.com/tj-django/django-clone/commit/47538b54bdd89b277539451c346a26ed57608323) by Tonye Jack).
-- Added .github/workflows/auto-approve.yml ([8f4bba0](https://github.com/tj-django/django-clone/commit/8f4bba0ee8b50008544baa204719b461ce2d823b) by Tonye Jack).
+## [v2.1.1](https://github.com/tj-django/django-clone/tree/v2.1.1) (2021-03-25)
 
-### Fixed
-- Fix code style issues with black ([b295af9](https://github.com/tj-django/django-clone/commit/b295af98c5208a45dba0680604d7ccf8b5e0649a) by Lint Action).
-- Fixed bug using pre_save. ([bc1ec5f](https://github.com/tj-django/django-clone/commit/bc1ec5f98b468cf8adac4956218f4d36ccde04e2) by Tonye Jack).
-- Fixed saving date/datetime fields. ([13b5959](https://github.com/tj-django/django-clone/commit/13b5959e4f89e6e0e46fe284f693ed1aff7022ca) by Tonye Jack).
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.1.3...v2.1.1)
 
-### Removed
-- Remove whitespace. ([e60b52a](https://github.com/tj-django/django-clone/commit/e60b52a5ebc4eb7e0040092e8f62b35989b1c6ca) by Tonye Jack).
+**Merged pull requests:**
 
+- Updated docs [\#245](https://github.com/tj-django/django-clone/pull/245) ([github-actions[bot]](https://github.com/apps/github-actions))
 
-## [v2.1.1](https://github.com/tj-django/django-clone/releases/tag/v2.1.1) - 2021-03-25
+## [v2.1.3](https://github.com/tj-django/django-clone/tree/v2.1.3) (2021-03-25)
 
-<small>[Compare with v2.1.0](https://github.com/tj-django/django-clone/compare/v2.1.0...v2.1.1)</small>
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.1.0...v2.1.3)
 
+## [v2.1.0](https://github.com/tj-django/django-clone/tree/v2.1.0) (2021-03-25)
 
-## [v2.1.0](https://github.com/tj-django/django-clone/releases/tag/v2.1.0) - 2021-03-25
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.0.2...v2.1.0)
 
-<small>[Compare with v2.0.2](https://github.com/tj-django/django-clone/compare/v2.0.2...v2.1.0)</small>
+**Merged pull requests:**
 
-### Fixed
-- Fix code style issues with black ([08f6a3c](https://github.com/tj-django/django-clone/commit/08f6a3c8e3e733392eabec6693ad6b3a6969394f) by Lint Action).
-- Fixed lint errors. ([8286951](https://github.com/tj-django/django-clone/commit/82869511299afbca5e44bd79bafb9b9b154d05f7) by Tonye Jack).
+- Increased test coverage. [\#244](https://github.com/tj-django/django-clone/pull/244) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#243](https://github.com/tj-django/django-clone/pull/243) ([github-actions[bot]](https://github.com/apps/github-actions))
 
+## [v2.0.2](https://github.com/tj-django/django-clone/tree/v2.0.2) (2021-03-24)
 
-## [v2.0.2](https://github.com/tj-django/django-clone/releases/tag/v2.0.2) - 2021-03-24
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.0.1...v2.0.2)
 
-<small>[Compare with v2.0.1](https://github.com/tj-django/django-clone/compare/v2.0.1...v2.0.2)</small>
+**Fixed bugs:**
 
-### Fixed
-- Fix code style issues with black ([1a450ef](https://github.com/tj-django/django-clone/commit/1a450ef545aa04d17de1db74720d4e110e476a98) by Lint Action).
-- Fixed test ([34a77e6](https://github.com/tj-django/django-clone/commit/34a77e68133c1f417947f408818decafd074ada6) by Tonye Jack).
-- Fixed lint errors. ([5f4b4ea](https://github.com/tj-django/django-clone/commit/5f4b4eae1c313565cad43efea6d38c2c41e8671b) by Tonye Jack).
-- Fixed bug with cloning slugs. ([bdb6029](https://github.com/tj-django/django-clone/commit/bdb60295f84359ed9f43fea31af2f0c076c5d623) by Tonye Jack).
-- Fixed short description. ([64ce104](https://github.com/tj-django/django-clone/commit/64ce104f03c5718a1e5b95e256b5d50700ff8803) by Tonye Jack).
-- Fixed migrations. ([4ede994](https://github.com/tj-django/django-clone/commit/4ede9947c2a6528598766a7b3cec04fb105d03b6) by Tonye Jack).
-- Fixed type hints. ([afae2d7](https://github.com/tj-django/django-clone/commit/afae2d7f9dd46f3394015a142f9a85d4d45e0ea8) by Tonye Jack).
-- Fixed clean. ([3ead462](https://github.com/tj-django/django-clone/commit/3ead462bc16c79594609539de73aa89a51019f5a) by Tonye Jack).
-- Fixed imports. ([5e04253](https://github.com/tj-django/django-clone/commit/5e042538055ed9860cd2bd9d78cd7683dc4cd376) by Tonye Jack).
+- Fixed bug cloning unique slug fields. [\#242](https://github.com/tj-django/django-clone/pull/242) ([jackton1](https://github.com/jackton1))
 
+**Merged pull requests:**
 
-## [v2.0.1](https://github.com/tj-django/django-clone/releases/tag/v2.0.1) - 2021-03-24
+- Increased test coverage. [\#241](https://github.com/tj-django/django-clone/pull/241) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#240](https://github.com/tj-django/django-clone/pull/240) ([github-actions[bot]](https://github.com/apps/github-actions))
 
-<small>[Compare with v2.0.0](https://github.com/tj-django/django-clone/compare/v2.0.0...v2.0.1)</small>
+## [v2.0.1](https://github.com/tj-django/django-clone/tree/v2.0.1) (2021-03-24)
 
-### Fixed
-- Fix code style issues with black ([408303a](https://github.com/tj-django/django-clone/commit/408303a2b2ce38d0cb8b76e5b5beac7030c90d30) by Lint Action).
-- Fixed typo. ([d20c3d5](https://github.com/tj-django/django-clone/commit/d20c3d51d8ac4d1830b0006108d8cd2e614b9e43) by Tonye Jack).
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.0.0...v2.0.1)
 
-### Removed
-- Remove old name ([f82dab7](https://github.com/tj-django/django-clone/commit/f82dab7b1585288c68e188b5c79bccf0551ae5fe) by Tonye Jack).
+**Merged pull requests:**
 
+- Fixed typo. [\#239](https://github.com/tj-django/django-clone/pull/239) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#238](https://github.com/tj-django/django-clone/pull/238) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated docs [\#237](https://github.com/tj-django/django-clone/pull/237) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Update and rename update-readme.yml to update-doc-assets.yml [\#236](https://github.com/tj-django/django-clone/pull/236) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#235](https://github.com/tj-django/django-clone/pull/235) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated docs [\#234](https://github.com/tj-django/django-clone/pull/234) ([github-actions[bot]](https://github.com/apps/github-actions))
 
-## [v2.0.0](https://github.com/tj-django/django-clone/releases/tag/v2.0.0) - 2021-03-20
+## [v2.0.0](https://github.com/tj-django/django-clone/tree/v2.0.0) (2021-03-20)
 
-<small>[Compare with v1.1.10](https://github.com/tj-django/django-clone/compare/v1.1.10...v2.0.0)</small>
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v1.1.10...v2.0.0)
 
-### Added
-- Added spacing. ([af86ae6](https://github.com/tj-django/django-clone/commit/af86ae6b570cb2c1101d59814e7dadb3b897eb9e) by Tonye Jack).
-- Added docs. ([a35d976](https://github.com/tj-django/django-clone/commit/a35d976f0fdeead88736bd9c2395434ed5aa2c3a) by Tonye Jack).
+**Implemented enhancements:**
 
-### Fixed
-- Fix code style issues with black ([fb1377f](https://github.com/tj-django/django-clone/commit/fb1377f704b1bce4f69286e484eac0b6515b6f63) by Lint Action).
-- Fixed lint errors. ([43f9887](https://github.com/tj-django/django-clone/commit/43f9887e61c13607bdd80212f0c37fd1919671f4) by Tonye Jack).
-- Fixed token. ([237b2f1](https://github.com/tj-django/django-clone/commit/237b2f173cc69a80125f1c67712d82d43b17ff19) by Tonye Jack).
+- Update the clone link to include the model verbose name. [\#51](https://github.com/tj-django/django-clone/issues/51)
 
-### Removed
-- Removed unused code ([18943b6](https://github.com/tj-django/django-clone/commit/18943b69227340e7dddc2e1416c058db48d5b34f) by Tonye Jack).
-- Remove parallel ([8929f85](https://github.com/tj-django/django-clone/commit/8929f855f7e77ae8ff7223ec5d4f0adf21db0b47) by Tonye Jack).
+**Closed issues:**
 
+- Action Required: Fix Renovate Configuration [\#214](https://github.com/tj-django/django-clone/issues/214)
+- Initial Update [\#210](https://github.com/tj-django/django-clone/issues/210)
+- Initial Update [\#208](https://github.com/tj-django/django-clone/issues/208)
 
-## [v1.1.10](https://github.com/tj-django/django-clone/releases/tag/v1.1.10) - 2020-12-05
+**Merged pull requests:**
 
-<small>[Compare with v1.1.9](https://github.com/tj-django/django-clone/compare/v1.1.9...v1.1.10)</small>
+- Updated coverage config. [\#233](https://github.com/tj-django/django-clone/pull/233) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#232](https://github.com/tj-django/django-clone/pull/232) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated docs [\#230](https://github.com/tj-django/django-clone/pull/230) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Update README.md [\#229](https://github.com/tj-django/django-clone/pull/229) ([jackton1](https://github.com/jackton1))
+- Update admin.py [\#228](https://github.com/tj-django/django-clone/pull/228) ([jackton1](https://github.com/jackton1))
+- Added succinct field names. [\#226](https://github.com/tj-django/django-clone/pull/226) ([jackton1](https://github.com/jackton1))
+- Update test.yml [\#225](https://github.com/tj-django/django-clone/pull/225) ([jackton1](https://github.com/jackton1))
+- Update wearerequired/lint-action action to v1.9.0 [\#224](https://github.com/tj-django/django-clone/pull/224) ([renovate[bot]](https://github.com/apps/renovate))
+- Bump rokroskar/workflow-run-cleanup-action from v0.3.0 to v0.3.2 [\#223](https://github.com/tj-django/django-clone/pull/223) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Update wearerequired/lint-action action to v1.8.0 [\#220](https://github.com/tj-django/django-clone/pull/220) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#219](https://github.com/tj-django/django-clone/pull/219) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated docs [\#218](https://github.com/tj-django/django-clone/pull/218) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated docs [\#217](https://github.com/tj-django/django-clone/pull/217) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Update test.yml [\#215](https://github.com/tj-django/django-clone/pull/215) ([jackton1](https://github.com/jackton1))
+- Bump rokroskar/workflow-run-cleanup-action from v0.2.2 to v0.3.0 [\#213](https://github.com/tj-django/django-clone/pull/213) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Update rokroskar/workflow-run-cleanup-action action to v0.3.0 [\#212](https://github.com/tj-django/django-clone/pull/212) ([renovate[bot]](https://github.com/apps/renovate))
+- Update README.md [\#211](https://github.com/tj-django/django-clone/pull/211) ([jackton1](https://github.com/jackton1))
+- Config file for pyup.io [\#209](https://github.com/tj-django/django-clone/pull/209) ([pyup-bot](https://github.com/pyup-bot))
 
-### Fixed
-- Fix code style issues with black ([49d8378](https://github.com/tj-django/django-clone/commit/49d837822689766f40c2ee0c0449f8a94907604b) by Lint Action).
+## [v1.1.10](https://github.com/tj-django/django-clone/tree/v1.1.10) (2020-12-05)
 
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v1.1.9...v1.1.10)
 
-## [v1.1.9](https://github.com/tj-django/django-clone/releases/tag/v1.1.9) - 2020-11-29
+**Closed issues:**
 
-<small>[Compare with v1.1.8](https://github.com/tj-django/django-clone/compare/v1.1.8...v1.1.9)</small>
+- Update create\_copy\_of\_instance imports [\#202](https://github.com/tj-django/django-clone/issues/202)
 
-### Fixed
-- Fixed lint errors. ([c93a953](https://github.com/tj-django/django-clone/commit/c93a953001137b73b555c6df9bc652f7ad2f2169) by Tonye Jack).
+**Merged pull requests:**
 
+- Include python3.9 in the test matrix. [\#207](https://github.com/tj-django/django-clone/pull/207) ([jackton1](https://github.com/jackton1))
+- Moved import of create\_copy\_of\_instance. [\#206](https://github.com/tj-django/django-clone/pull/206) ([jackton1](https://github.com/jackton1))
 
-## [v1.1.8](https://github.com/tj-django/django-clone/releases/tag/v1.1.8) - 2020-11-07
+## [v1.1.9](https://github.com/tj-django/django-clone/tree/v1.1.9) (2020-11-29)
 
-<small>[Compare with v1.1.6](https://github.com/tj-django/django-clone/compare/v1.1.6...v1.1.8)</small>
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v1.1.8...v1.1.9)
 
-### Added
-- Add support for running workflow on forks ([a40a22e](https://github.com/tj-django/django-clone/commit/a40a22e0966916537109bbd4262edffe64052c73) by Tonye Jack).
-- Add support for related manytomany fields ([0c88207](https://github.com/tj-django/django-clone/commit/0c88207cbb858c844bbee48f702cefa61e09403e) by Yuekui Li).
+**Implemented enhancements:**
 
-### Changed
-- Change lint action back to v1 ([c53774c](https://github.com/tj-django/django-clone/commit/c53774c73a55a795a2c73ef2e5844c003b087b08) by Yuekui).
+- Remove circle CI integration [\#196](https://github.com/tj-django/django-clone/issues/196)
 
-### Fixed
-- Fixed lint errors. ([b01bb07](https://github.com/tj-django/django-clone/commit/b01bb07aab96238330dd4b133991aa14b1b68d1b) by Tonye Jack).
-- Fix code style issues with black ([400e8f2](https://github.com/tj-django/django-clone/commit/400e8f213d87ad0a648a1412ad1b8d06d64944eb) by Lint Action).
-- Fix typo ([29757bc](https://github.com/tj-django/django-clone/commit/29757bc9de045b20dac2751260c9dd4b6e90d1c4) by Yuekui).
+**Merged pull requests:**
 
-### Removed
-- Removed unused code. ([1a2308f](https://github.com/tj-django/django-clone/commit/1a2308feb527478842d4439d8f42cd57ebf42771) by Tonye Jack).
+- Update tox.ini [\#203](https://github.com/tj-django/django-clone/pull/203) ([jackton1](https://github.com/jackton1))
+- Update README.md [\#201](https://github.com/tj-django/django-clone/pull/201) ([jackton1](https://github.com/jackton1))
+- Delete config.yml [\#200](https://github.com/tj-django/django-clone/pull/200) ([jackton1](https://github.com/jackton1))
+- Update README.md [\#199](https://github.com/tj-django/django-clone/pull/199) ([jackton1](https://github.com/jackton1))
 
+## [v1.1.8](https://github.com/tj-django/django-clone/tree/v1.1.8) (2020-11-07)
 
-## [v1.1.6](https://github.com/tj-django/django-clone/releases/tag/v1.1.6) - 2020-09-07
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v1.1.6...v1.1.8)
 
-<small>[Compare with v1.1.5](https://github.com/tj-django/django-clone/compare/v1.1.5...v1.1.6)</small>
+**Merged pull requests:**
 
+- Fixed lint errors. [\#197](https://github.com/tj-django/django-clone/pull/197) ([jackton1](https://github.com/jackton1))
+- Try to fix lint error for forks [\#195](https://github.com/tj-django/django-clone/pull/195) ([yuekui](https://github.com/yuekui))
+- Update setup.py [\#194](https://github.com/tj-django/django-clone/pull/194) ([jackton1](https://github.com/jackton1))
+- Update test.yml [\#192](https://github.com/tj-django/django-clone/pull/192) ([jackton1](https://github.com/jackton1))
+- Add support for running workflow on forks [\#191](https://github.com/tj-django/django-clone/pull/191) ([jackton1](https://github.com/jackton1))
+- Add support for related ManyToMany fields [\#190](https://github.com/tj-django/django-clone/pull/190) ([yuekui](https://github.com/yuekui))
+- Update README.md [\#188](https://github.com/tj-django/django-clone/pull/188) ([jackton1](https://github.com/jackton1))
+- Update clone.py [\#187](https://github.com/tj-django/django-clone/pull/187) ([jackton1](https://github.com/jackton1))
 
-## [v1.1.5](https://github.com/tj-django/django-clone/releases/tag/v1.1.5) - 2020-09-07
+## [v1.1.6](https://github.com/tj-django/django-clone/tree/v1.1.6) (2020-09-07)
 
-<small>[Compare with v1.1.4](https://github.com/tj-django/django-clone/compare/v1.1.4...v1.1.5)</small>
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v1.1.5...v1.1.6)
 
-### Fixed
-- Fixed issues with sdist. ([ca59c86](https://github.com/tj-django/django-clone/commit/ca59c866ce2fb09822c3a6aa723bf1bf2dc18d9a) by Tonye Jack).
+## [v1.1.5](https://github.com/tj-django/django-clone/tree/v1.1.5) (2020-09-07)
 
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v1.1.4...v1.1.5)
 
-## [v1.1.4](https://github.com/tj-django/django-clone/releases/tag/v1.1.4) - 2020-09-07
+## [v1.1.4](https://github.com/tj-django/django-clone/tree/v1.1.4) (2020-09-07)
 
-<small>[Compare with v1.1.3](https://github.com/tj-django/django-clone/compare/v1.1.3...v1.1.4)</small>
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v1.1.3...v1.1.4)
 
+## [v1.1.3](https://github.com/tj-django/django-clone/tree/v1.1.3) (2020-09-07)
 
-## [v1.1.3](https://github.com/tj-django/django-clone/releases/tag/v1.1.3) - 2020-09-07
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v1.1.2...v1.1.3)
 
-<small>[Compare with v1.1.2](https://github.com/tj-django/django-clone/compare/v1.1.2...v1.1.3)</small>
+## [v1.1.2](https://github.com/tj-django/django-clone/tree/v1.1.2) (2020-09-07)
 
-### Fixed
-- Fixed manifest.in ([df2e40b](https://github.com/tj-django/django-clone/commit/df2e40b137cab9c8968d738fa2428e06bc5dbf44) by Tonye Jack).
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v1.1.1...v1.1.2)
 
+## [v1.1.1](https://github.com/tj-django/django-clone/tree/v1.1.1) (2020-09-07)
 
-## [v1.1.2](https://github.com/tj-django/django-clone/releases/tag/v1.1.2) - 2020-09-07
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v1.1.0...v1.1.1)
 
-<small>[Compare with v1.1.1](https://github.com/tj-django/django-clone/compare/v1.1.1...v1.1.2)</small>
+## [v1.1.0](https://github.com/tj-django/django-clone/tree/v1.1.0) (2020-09-07)
 
-### Added
-- Added missing changes. ([37de0a6](https://github.com/tj-django/django-clone/commit/37de0a6824933d1891f4b97d563ba9e17064690f) by Tonye Jack).
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v1.0.0...v1.1.0)
 
+**Fixed bugs:**
 
-## [v1.1.1](https://github.com/tj-django/django-clone/releases/tag/v1.1.1) - 2020-09-07
+- Resolve bug with Clone Meta class [\#185](https://github.com/tj-django/django-clone/pull/185) ([jackton1](https://github.com/jackton1))
 
-<small>[Compare with v1.1.0](https://github.com/tj-django/django-clone/compare/v1.1.0...v1.1.1)</small>
+**Closed issues:**
 
-### Added
-- Added missing changes. ([64ec246](https://github.com/tj-django/django-clone/commit/64ec24661615d8d143081d2ad43ad4d9c97b1e1a) by Tonye Jack).
+- Implicit declaration of ManyToManyField, auto\_created is of type "CloneMetaClass" [\#184](https://github.com/tj-django/django-clone/issues/184)
+- Add the MANIFEST.in [\#62](https://github.com/tj-django/django-clone/issues/62)
 
-### Fixed
-- Fixed makefile. ([9815226](https://github.com/tj-django/django-clone/commit/9815226ab63c363dfc09e450b93b917ced9828ff) by Tonye Jack).
+**Merged pull requests:**
 
+- Update README.md [\#183](https://github.com/tj-django/django-clone/pull/183) ([jackton1](https://github.com/jackton1))
+- Update dependency six to v1.15.0 [\#81](https://github.com/tj-django/django-clone/pull/81) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency pip-tools to v5.3.1 [\#80](https://github.com/tj-django/django-clone/pull/80) ([renovate[bot]](https://github.com/apps/renovate))
 
-## [v1.1.0](https://github.com/tj-django/django-clone/releases/tag/v1.1.0) - 2020-09-07
+## [v1.0.0](https://github.com/tj-django/django-clone/tree/v1.0.0) (2020-09-05)
 
-<small>[Compare with v1.0.0](https://github.com/tj-django/django-clone/compare/v1.0.0...v1.1.0)</small>
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v0.2.0...v1.0.0)
 
+**Merged pull requests:**
 
-## [v1.0.0](https://github.com/tj-django/django-clone/releases/tag/v1.0.0) - 2020-09-05
+- Create test.yml [\#182](https://github.com/tj-django/django-clone/pull/182) ([jackton1](https://github.com/jackton1))
+- docs: add yuekui as a contributor [\#181](https://github.com/tj-django/django-clone/pull/181) ([allcontributors[bot]](https://github.com/apps/allcontributors))
+- Updated to test django3.1 [\#180](https://github.com/tj-django/django-clone/pull/180) ([jackton1](https://github.com/jackton1))
+- Update setup.py module [\#179](https://github.com/tj-django/django-clone/pull/179) ([jackton1](https://github.com/jackton1))
+- Fix invalid enum field value for unique\_together fields [\#178](https://github.com/tj-django/django-clone/pull/178) ([yuekui](https://github.com/yuekui))
+- docs: add renovate-bot as a contributor [\#177](https://github.com/tj-django/django-clone/pull/177) ([allcontributors[bot]](https://github.com/apps/allcontributors))
+- chore\(deps\): update dependency twine to v3 [\#173](https://github.com/tj-django/django-clone/pull/173) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated classifiers to Production/Stable [\#108](https://github.com/tj-django/django-clone/pull/108) ([jackton1](https://github.com/jackton1))
+- Update dependency git-changelog to v0.4.0 [\#78](https://github.com/tj-django/django-clone/pull/78) ([renovate[bot]](https://github.com/apps/renovate))
 
-<small>[Compare with v0.2.0](https://github.com/tj-django/django-clone/compare/v0.2.0...v1.0.0)</small>
+## [v0.2.0](https://github.com/tj-django/django-clone/tree/v0.2.0) (2020-06-04)
 
-### Added
-- Add migrations ([1d9c68e](https://github.com/tj-django/django-clone/commit/1d9c68e84793f02415139ae7bac1f0c18da82a71) by Yuekui Li).
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v0.1.6...v0.2.0)
 
-### Fixed
-- Fix code style issues with black ([6249abe](https://github.com/tj-django/django-clone/commit/6249abe494cec23448d6fff09b7aa0eb2cf7978a) by Lint Action).
-- Fixed test. ([240cc7c](https://github.com/tj-django/django-clone/commit/240cc7cb171d2d89c500e34c0511ab15a25d71f3) by Tonye Jack).
-- Fixed github action. ([80bdd3e](https://github.com/tj-django/django-clone/commit/80bdd3ec6221b683957f4abf321130e599be174e) by Tonye Jack).
-- Fixed flake8 error. ([7845ede](https://github.com/tj-django/django-clone/commit/7845ede0cbbf4a0d762f481dd184939096f8be17) by Tonye Jack).
-- Fix invalid enum field value for unique_together fields ([1f83bf8](https://github.com/tj-django/django-clone/commit/1f83bf8472b47739c3a879a9b40199630178336a) by Yuekui Li).
+## [v0.1.6](https://github.com/tj-django/django-clone/tree/v0.1.6) (2020-06-04)
 
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v0.1.5...v0.1.6)
 
-## [v0.2.0](https://github.com/tj-django/django-clone/releases/tag/v0.2.0) - 2020-06-04
+**Closed issues:**
 
-<small>[Compare with v0.1.6](https://github.com/tj-django/django-clone/compare/v0.1.6...v0.2.0)</small>
+- 'CloneMixin' has no attribute '\_meta' [\#58](https://github.com/tj-django/django-clone/issues/58)
 
-### Removed
-- Removed unused code. ([6f3f515](https://github.com/tj-django/django-clone/commit/6f3f5158d8b21ab24d8743cc4b33823aa347aa44) by Tonye Jack).
+**Merged pull requests:**
 
+- Update admin.py [\#90](https://github.com/tj-django/django-clone/pull/90) ([jackton1](https://github.com/jackton1))
+- Update README.md [\#89](https://github.com/tj-django/django-clone/pull/89) ([jackton1](https://github.com/jackton1))
+- Update dependency bump2version to v1 [\#85](https://github.com/tj-django/django-clone/pull/85) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency isort to v4.3.21 [\#79](https://github.com/tj-django/django-clone/pull/79) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency future to v0.18.2 [\#77](https://github.com/tj-django/django-clone/pull/77) ([renovate[bot]](https://github.com/apps/renovate))
+- Configure Renovate [\#73](https://github.com/tj-django/django-clone/pull/73) ([renovate[bot]](https://github.com/apps/renovate))
+- Update README.md [\#72](https://github.com/tj-django/django-clone/pull/72) ([jackton1](https://github.com/jackton1))
+- Replicate model errors [\#71](https://github.com/tj-django/django-clone/pull/71) ([jackton1](https://github.com/jackton1))
+- Remove the information for updating INSTALLED\_APPS [\#70](https://github.com/tj-django/django-clone/pull/70) ([jackton1](https://github.com/jackton1))
 
-## [v0.1.6](https://github.com/tj-django/django-clone/releases/tag/v0.1.6) - 2020-06-04
+## [v0.1.5](https://github.com/tj-django/django-clone/tree/v0.1.5) (2020-05-12)
 
-<small>[Compare with v0.1.5](https://github.com/tj-django/django-clone/compare/v0.1.5...v0.1.6)</small>
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v0.1.4...v0.1.5)
 
-### Added
-- Add renovate.json ([99d54b5](https://github.com/tj-django/django-clone/commit/99d54b5e5ff9eb3a759edf0d3610f1d587f69429) by Renovate Bot).
+## [v0.1.4](https://github.com/tj-django/django-clone/tree/v0.1.4) (2020-05-12)
 
-### Fixed
-- Fixed unused imports. ([14e40e2](https://github.com/tj-django/django-clone/commit/14e40e2d42a9f016a9520f88e52f03ac40cd8768) by Tonye Jack).
-- Fixed bug with index. ([dcd6256](https://github.com/tj-django/django-clone/commit/dcd625685b3b921d09526901a7458ac56389dda1) by Tonye Jack).
-- Fixed lint errors. ([888d88d](https://github.com/tj-django/django-clone/commit/888d88d5605fb8ba7ebf19fd91d4cd1eca318e13) by Tonye Jack).
-- Fixed test. ([ac7af5f](https://github.com/tj-django/django-clone/commit/ac7af5f973a54f2f4c59df403edf26dc38d51bd5) by Tonye Jack).
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v0.1.3...v0.1.4)
 
-### Removed
-- Remove the information for updating installed_apps ([4a4aa8c](https://github.com/tj-django/django-clone/commit/4a4aa8c0ef3a6943b8cfe43fae96c522d6126111) by Tonye Jack).
+**Closed issues:**
 
+- Document support for Django3+ [\#64](https://github.com/tj-django/django-clone/issues/64)
+- Improve README.md [\#63](https://github.com/tj-django/django-clone/issues/63)
 
-## [v0.1.5](https://github.com/tj-django/django-clone/releases/tag/v0.1.5) - 2020-05-12
+**Merged pull requests:**
 
-<small>[Compare with v0.1.4](https://github.com/tj-django/django-clone/compare/v0.1.4...v0.1.5)</small>
+- Updated to include python3.8 test. [\#69](https://github.com/tj-django/django-clone/pull/69) ([jackton1](https://github.com/jackton1))
+- Merge pull request \#67 from jackton1/master [\#68](https://github.com/tj-django/django-clone/pull/68) ([jackton1](https://github.com/jackton1))
+- Master to develop [\#67](https://github.com/tj-django/django-clone/pull/67) ([jackton1](https://github.com/jackton1))
+- Develop [\#66](https://github.com/tj-django/django-clone/pull/66) ([jackton1](https://github.com/jackton1))
 
+## [v0.1.3](https://github.com/tj-django/django-clone/tree/v0.1.3) (2020-04-16)
 
-## [v0.1.4](https://github.com/tj-django/django-clone/releases/tag/v0.1.4) - 2020-05-12
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v0.1.2...v0.1.3)
 
-<small>[Compare with v0.1.3](https://github.com/tj-django/django-clone/compare/v0.1.3...v0.1.4)</small>
+**Closed issues:**
 
-### Fixed
-- Fixed typo. ([1613037](https://github.com/tj-django/django-clone/commit/16130379a65be64a5cc87ba716d300a3ac34a196) by Tonye Jack).
-- Fixed formatting ([db2bfb2](https://github.com/tj-django/django-clone/commit/db2bfb27196b6187f2e07e3db85ac3129c70615f) by Tonye Jack).
-- Fixed test errors ([f773001](https://github.com/tj-django/django-clone/commit/f773001fc8dc0f3811f74bd630b8c8e54e622992) by Tonye Jack).
-- Fixed lint errors ([1a0900a](https://github.com/tj-django/django-clone/commit/1a0900ada94751908d671405c1c89e9c316926c8) by Tonye Jack).
-- Fixed version. ([969b562](https://github.com/tj-django/django-clone/commit/969b562276ec908961c84296043ec9ba65a7f86e) by Tonye Jack).
-- Fixed test. ([f66e745](https://github.com/tj-django/django-clone/commit/f66e74556c8924189f417a6195272b7267d92afb) by Tonye Jack).
-- Fixed ordering. ([07d5f64](https://github.com/tj-django/django-clone/commit/07d5f64eb65fcf6962c238ebb26a2580770f4aa0) by Tonye Jack).
+- Create a new git repo [\#56](https://github.com/tj-django/django-clone/issues/56)
 
-### Removed
-- Remove unused line. ([7d6339a](https://github.com/tj-django/django-clone/commit/7d6339a8eba8e8d661b3004274a9fdfccf7afd55) by Tonye Jack).
+**Merged pull requests:**
 
+- Update test and documentation to include Django3.0 support. [\#65](https://github.com/tj-django/django-clone/pull/65) ([jackton1](https://github.com/jackton1))
+- Updated the example to use the clonable model above. [\#61](https://github.com/tj-django/django-clone/pull/61) ([jackton1](https://github.com/jackton1))
+- Update README.md [\#59](https://github.com/tj-django/django-clone/pull/59) ([jackton1](https://github.com/jackton1))
+- Fixed typo [\#54](https://github.com/tj-django/django-clone/pull/54) ([jackton1](https://github.com/jackton1))
+- Fixed example documentation. [\#53](https://github.com/tj-django/django-clone/pull/53) ([jackton1](https://github.com/jackton1))
+- Update README.md [\#50](https://github.com/tj-django/django-clone/pull/50) ([jackton1](https://github.com/jackton1))
+- Update README.md [\#49](https://github.com/tj-django/django-clone/pull/49) ([jackton1](https://github.com/jackton1))
+- Update README.md [\#48](https://github.com/tj-django/django-clone/pull/48) ([jackton1](https://github.com/jackton1))
+- Updated .set passing the instance instead of pk. [\#47](https://github.com/tj-django/django-clone/pull/47) ([jackton1](https://github.com/jackton1))
+- docs: add SebastianKapunkt as a contributor [\#46](https://github.com/tj-django/django-clone/pull/46) ([allcontributors[bot]](https://github.com/apps/allcontributors))
+- Removed unused line [\#45](https://github.com/tj-django/django-clone/pull/45) ([jackton1](https://github.com/jackton1))
+- Reordered badges [\#44](https://github.com/tj-django/django-clone/pull/44) ([jackton1](https://github.com/jackton1))
+- Updated the .circle config. [\#43](https://github.com/tj-django/django-clone/pull/43) ([jackton1](https://github.com/jackton1))
+- Actually clone clone\_many\_to\_one fields not only transfer them [\#42](https://github.com/tj-django/django-clone/pull/42) ([SebastianKapunkt](https://github.com/SebastianKapunkt))
+- Feature/add spec for cloning in parallel. [\#37](https://github.com/tj-django/django-clone/pull/37) ([jackton1](https://github.com/jackton1))
 
-## [v0.1.3](https://github.com/tj-django/django-clone/releases/tag/v0.1.3) - 2020-04-16
+## [v0.1.2](https://github.com/tj-django/django-clone/tree/v0.1.2) (2019-12-03)
 
-<small>[Compare with v0.1.2](https://github.com/tj-django/django-clone/compare/v0.1.2...v0.1.3)</small>
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v0.1.1...v0.1.2)
 
-### Fixed
-- Fixed typo ([e2f9643](https://github.com/tj-django/django-clone/commit/e2f9643ffd165adbe98c343293936b879061056d) by Tonye Jack).
-- Fixed example documentation. ([b6ceae9](https://github.com/tj-django/django-clone/commit/b6ceae92bae52e7efa49789ffcd1cb7b749a8546) by Tonye Jack).
-- Fixed lint errors. ([a72040d](https://github.com/tj-django/django-clone/commit/a72040d601a19e341d39381510c949d2f2316251) by Tonye Jack).
-- Fix lint errors ([9dab0f7](https://github.com/tj-django/django-clone/commit/9dab0f7c5d7c6105d1552d3130050aa0889f94df) by Tonye Jack).
-- Fixed invalid config. ([d33354b](https://github.com/tj-django/django-clone/commit/d33354ba8f83c5c694f52512db0575ce12d6fa19) by Tonye Jack).
+**Closed issues:**
 
-### Removed
-- Removed trailing whitespace. ([6933020](https://github.com/tj-django/django-clone/commit/6933020271094b054a9753e64a75d1064bb2fdb7) by Tonye Jack).
-- Removed unused line ([0307889](https://github.com/tj-django/django-clone/commit/0307889c5550b098fa8cf553c91d0a5b3756b1ff) by Tonye Jack).
+- :bug: wheel does not include templates [\#38](https://github.com/tj-django/django-clone/issues/38)
 
+**Merged pull requests:**
 
-## [v0.1.2](https://github.com/tj-django/django-clone/releases/tag/v0.1.2) - 2019-12-03
+- Fixed indentation. [\#40](https://github.com/tj-django/django-clone/pull/40) ([jackton1](https://github.com/jackton1))
+- Added PyPi badge. [\#39](https://github.com/tj-django/django-clone/pull/39) ([jackton1](https://github.com/jackton1))
 
-<small>[Compare with v0.1.1](https://github.com/tj-django/django-clone/compare/v0.1.1...v0.1.2)</small>
+## [v0.1.1](https://github.com/tj-django/django-clone/tree/v0.1.1) (2019-12-02)
 
-### Fixed
-- Fixed test. ([5b65a84](https://github.com/tj-django/django-clone/commit/5b65a842380d30ec84e4e6d3db882702385bfec8) by Tonye Jack).
-- Fixed flake8 errors. ([ac0c27b](https://github.com/tj-django/django-clone/commit/ac0c27b2a93c10c29b3a32990752d3c544bf9619) by Tonye Jack).
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v0.1.0...v0.1.1)
 
-### Removed
-- Removed unused line. ([4e1d5d1](https://github.com/tj-django/django-clone/commit/4e1d5d144acccfb8a15a8551ce3902338387467b) by Tonye Jack).
-- Remove tabs. ([f8c1a46](https://github.com/tj-django/django-clone/commit/f8c1a46e77c5c1ec42f4fc84af6872d2861a8a69) by Tonye Jack).
-- Remove unused code. ([ecfa4b6](https://github.com/tj-django/django-clone/commit/ecfa4b623ed4456cff431095f4b62ec41badb829) by Tonye Jack).
+**Implemented enhancements:**
 
+- Fix bug with cloning unique fields and added support for bulk\_clone. [\#33](https://github.com/tj-django/django-clone/pull/33) ([jackton1](https://github.com/jackton1))
 
-## [v0.1.1](https://github.com/tj-django/django-clone/releases/tag/v0.1.1) - 2019-12-02
+**Merged pull requests:**
 
-<small>[Compare with v0.1.0](https://github.com/tj-django/django-clone/compare/v0.1.0...v0.1.1)</small>
+- Updated MANIFEST.in to include model\_clone templates. [\#41](https://github.com/tj-django/django-clone/pull/41) ([jackton1](https://github.com/jackton1))
+- Cleaned up the sample app. [\#36](https://github.com/tj-django/django-clone/pull/36) ([jackton1](https://github.com/jackton1))
+- Update README.md [\#35](https://github.com/tj-django/django-clone/pull/35) ([jackton1](https://github.com/jackton1))
+- Update README.md [\#34](https://github.com/tj-django/django-clone/pull/34) ([jackton1](https://github.com/jackton1))
+- Fix typo cloneModelAdmin -\> CloneModelAdmin [\#32](https://github.com/tj-django/django-clone/pull/32) ([SebastianKapunkt](https://github.com/SebastianKapunkt))
+- Handle case when value in unquie field has fields max\_length [\#31](https://github.com/tj-django/django-clone/pull/31) ([SebastianKapunkt](https://github.com/SebastianKapunkt))
+- Update README.md [\#30](https://github.com/tj-django/django-clone/pull/30) ([jackton1](https://github.com/jackton1))
+- Feature/update test and rename clonable to clone [\#29](https://github.com/tj-django/django-clone/pull/29) ([jackton1](https://github.com/jackton1))
+- Update README.md [\#28](https://github.com/tj-django/django-clone/pull/28) ([jackton1](https://github.com/jackton1))
+- Increased test coverage and renamed clonable -\> clone. [\#19](https://github.com/tj-django/django-clone/pull/19) ([jackton1](https://github.com/jackton1))
 
-### Added
-- Added pypi badge. ([e0a09e4](https://github.com/tj-django/django-clone/commit/e0a09e4dd084fd7ffe2c95a66aaa1a5b09762d78) by Tonye Jack).
-- Added spec for cloning in parallel. ([bede5de](https://github.com/tj-django/django-clone/commit/bede5de00cd40a610c65d9d8ae19fa270cf8fc41) by Tonye Jack).
+## [v0.1.0](https://github.com/tj-django/django-clone/tree/v0.1.0) (2019-11-23)
 
-### Fixed
-- Fixed indentation. ([75214a5](https://github.com/tj-django/django-clone/commit/75214a5b786a5322b8aa2af59fc95f6d0d10a78c) by Tonye Jack).
-- Fixed flake8 error. ([b28fb8c](https://github.com/tj-django/django-clone/commit/b28fb8c5f67f1ef9b790fa7f0ac3e9b106544d6f) by Tonye Jack).
-- Fixed example. ([1ad41d3](https://github.com/tj-django/django-clone/commit/1ad41d3f2866136a53d4fc0f91ded97ffe5f7f89) by Tonye Jack).
-- Fixed test. ([ec39547](https://github.com/tj-django/django-clone/commit/ec395478f1ecfce4a1d1a0afbc8f0299d5f4c6dc) by Tonye Jack).
-- Fixed lint errors and added support for running autopep8. ([4537a46](https://github.com/tj-django/django-clone/commit/4537a460de92d0ef34c875d37439f79c26a69d36) by Tonye Jack).
-- Fix bug with cloning unique fields and added support for bulk_clone. ([70e76a8](https://github.com/tj-django/django-clone/commit/70e76a81e6497ef52a2d525bc4a5e6a27d5b0e75) by Tonye Jack).
-- Fix typo clonemodeladmin -> clonemodeladmin ([b8a29c2](https://github.com/tj-django/django-clone/commit/b8a29c240aba7f7736ef297a69f54eb0a399d1ad) by SebastianKapunkt).
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v0.0.11...v0.1.0)
 
-### Removed
-- Remove .extend. ([3e31e86](https://github.com/tj-django/django-clone/commit/3e31e86ab49d834cc2aad89760fa2a25eff687df) by Tonye Jack).
+## [v0.0.11](https://github.com/tj-django/django-clone/tree/v0.0.11) (2019-11-23)
 
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v0.0.10...v0.0.11)
 
-## [v0.1.0](https://github.com/tj-django/django-clone/releases/tag/v0.1.0) - 2019-11-23
+**Implemented enhancements:**
 
-<small>[Compare with v0.0.11](https://github.com/tj-django/django-clone/compare/v0.0.11...v0.1.0)</small>
+- Increase test coverage.  [\#2](https://github.com/tj-django/django-clone/issues/2)
 
+**Fixed bugs:**
 
-## [v0.0.11](https://github.com/tj-django/django-clone/releases/tag/v0.0.11) - 2019-11-23
+- Fix python2.7 test using circle CI's docker image. [\#1](https://github.com/tj-django/django-clone/issues/1)
 
-<small>[Compare with v0.0.10](https://github.com/tj-django/django-clone/compare/v0.0.10...v0.0.11)</small>
+**Closed issues:**
 
-### Fixed
-- Fixed lint errors. ([5b9ceae](https://github.com/tj-django/django-clone/commit/5b9ceae369da2322ee6cdbed785b0fab74275aad) by Tonye Jack).
-- Fixed indentation. ([18e382d](https://github.com/tj-django/django-clone/commit/18e382d9b23872a725c97ab44333e4a354d2c123) by Tonye Jack).
-- Fixed duplicate context ([be24df3](https://github.com/tj-django/django-clone/commit/be24df310abd82f4c7d716b18da82c376246578f) by Tonye Jack).
-- Fixed yaml lint errors. ([ec949cb](https://github.com/tj-django/django-clone/commit/ec949cb75bcab1783e417e19ea3c04efa86b9658) by Tonye Jack).
-- Fixed flake8 errors. ([133d404](https://github.com/tj-django/django-clone/commit/133d404acf49bf134f382bd98e06395fde7abe1f) by Tonye Jack).
+- Bug when installing version above 0.0.3 [\#18](https://github.com/tj-django/django-clone/issues/18)
 
-### Removed
-- Removed unused file. ([bc869a7](https://github.com/tj-django/django-clone/commit/bc869a78428ef27f8af0f2abdb11e56331faa4c3) by Tonye Jack).
-- Removed node_modules. ([ae75573](https://github.com/tj-django/django-clone/commit/ae75573519bc6223ccdbe905ed49f4c3f050da18) by Tonye Jack).
-- Removed empty config ([b779051](https://github.com/tj-django/django-clone/commit/b77905110a26ba96d22967cdb761e552dd0d8c6a) by Tonye Jack).
+**Merged pull requests:**
 
+- Update README.md inlcuded snyk tag. [\#27](https://github.com/tj-django/django-clone/pull/27) ([jackton1](https://github.com/jackton1))
+- Updated to use excluded fields. [\#23](https://github.com/tj-django/django-clone/pull/23) ([jackton1](https://github.com/jackton1))
+- Updated the .gitignore. [\#22](https://github.com/tj-django/django-clone/pull/22) ([jackton1](https://github.com/jackton1))
+- Updated CI and fix tox test. [\#21](https://github.com/tj-django/django-clone/pull/21) ([jackton1](https://github.com/jackton1))
+- Update README.md [\#20](https://github.com/tj-django/django-clone/pull/20) ([jackton1](https://github.com/jackton1))
 
-## [v0.0.10](https://github.com/tj-django/django-clone/releases/tag/v0.0.10) - 2019-11-12
+## [v0.0.10](https://github.com/tj-django/django-clone/tree/v0.0.10) (2019-11-12)
 
-<small>[Compare with v0.0.9](https://github.com/tj-django/django-clone/compare/v0.0.9...v0.0.10)</small>
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v0.0.9...v0.0.10)
 
-### Fixed
-- Fixed manage.py. ([eaa73f6](https://github.com/tj-django/django-clone/commit/eaa73f6687b4bf586cd4c6468819a615aea76d37) by Tonye Jack).
-- Fixed pyenv. ([66aabd5](https://github.com/tj-django/django-clone/commit/66aabd5536d6b924d56b4a04180c460fdc399449) by Tonye Jack).
-- Fixed tox. ([82afdde](https://github.com/tj-django/django-clone/commit/82afdde7929d85b55bec6e4ad8784e268564bbee) by Tonye Jack).
-- Fixed python27. ([20b3c55](https://github.com/tj-django/django-clone/commit/20b3c55ecaa376d8069134427b39ce857c218931) by Tonye Jack).
+**Merged pull requests:**
 
-### Removed
-- Removed bumpversion==0.5.3. ([60a18e5](https://github.com/tj-django/django-clone/commit/60a18e57e7e4b98335cc7c612c25e77f8a5b4564) by Tonye Jack).
+- Updated .circleci config. [\#17](https://github.com/tj-django/django-clone/pull/17) ([jackton1](https://github.com/jackton1))
 
+## [v0.0.9](https://github.com/tj-django/django-clone/tree/v0.0.9) (2019-11-10)
 
-## [v0.0.9](https://github.com/tj-django/django-clone/releases/tag/v0.0.9) - 2019-11-10
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v0.0.8...v0.0.9)
 
-<small>[Compare with v0.0.8](https://github.com/tj-django/django-clone/compare/v0.0.8...v0.0.9)</small>
+## [v0.0.8](https://github.com/tj-django/django-clone/tree/v0.0.8) (2019-11-10)
 
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v0.0.7...v0.0.8)
 
-## [v0.0.8](https://github.com/tj-django/django-clone/releases/tag/v0.0.8) - 2019-11-10
+## [v0.0.7](https://github.com/tj-django/django-clone/tree/v0.0.7) (2019-11-10)
 
-<small>[Compare with v0.0.7](https://github.com/tj-django/django-clone/compare/v0.0.7...v0.0.8)</small>
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v0.0.6...v0.0.7)
 
+## [v0.0.6](https://github.com/tj-django/django-clone/tree/v0.0.6) (2019-11-10)
 
-## [v0.0.7](https://github.com/tj-django/django-clone/releases/tag/v0.0.7) - 2019-11-10
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v0.0.5...v0.0.6)
 
-<small>[Compare with v0.0.6](https://github.com/tj-django/django-clone/compare/v0.0.6...v0.0.7)</small>
+## [v0.0.5](https://github.com/tj-django/django-clone/tree/v0.0.5) (2019-11-10)
 
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v0.0.3...v0.0.5)
 
-## [v0.0.6](https://github.com/tj-django/django-clone/releases/tag/v0.0.6) - 2019-11-10
+## [v0.0.3](https://github.com/tj-django/django-clone/tree/v0.0.3) (2019-11-10)
 
-<small>[Compare with v0.0.5](https://github.com/tj-django/django-clone/compare/v0.0.5...v0.0.6)</small>
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v0.0.2...v0.0.3)
 
-### Added
-- Added twine to deploy requirements ([59eba81](https://github.com/tj-django/django-clone/commit/59eba81e23cfb07687ae2c1b01ce82573597f61a) by Tonye Jack).
+**Closed issues:**
 
+- @all-contributors please add @jakebolam for infrastructure, tests and code [\#11](https://github.com/tj-django/django-clone/issues/11)
+- Doesn't duplicate with custom `id` [\#9](https://github.com/tj-django/django-clone/issues/9)
 
-## [v0.0.5](https://github.com/tj-django/django-clone/releases/tag/v0.0.5) - 2019-11-10
+**Merged pull requests:**
 
-<small>[Compare with v0.0.3](https://github.com/tj-django/django-clone/compare/v0.0.3...v0.0.5)</small>
+- Update issue templates [\#16](https://github.com/tj-django/django-clone/pull/16) ([jackton1](https://github.com/jackton1))
+- docs: add andresp99999 as a contributor [\#15](https://github.com/tj-django/django-clone/pull/15) ([allcontributors[bot]](https://github.com/apps/allcontributors))
+- Add class variable USE\_UNIQUE\_DUPLICATE\_SUFFIX [\#14](https://github.com/tj-django/django-clone/pull/14) ([andresp99999](https://github.com/andresp99999))
+- docs: add SebastianKapunkt as a contributor [\#13](https://github.com/tj-django/django-clone/pull/13) ([allcontributors[bot]](https://github.com/apps/allcontributors))
+- docs: add gerbyzation as a contributor [\#12](https://github.com/tj-django/django-clone/pull/12) ([allcontributors[bot]](https://github.com/apps/allcontributors))
+- filter pk field from concrete\_fields [\#10](https://github.com/tj-django/django-clone/pull/10) ([gerbyzation](https://github.com/gerbyzation))
+- Added create\_copy\_of\_instance utility. [\#8](https://github.com/tj-django/django-clone/pull/8) ([jackton1](https://github.com/jackton1))
+- Feature/move to including the duplicate action and duplicate object tools [\#7](https://github.com/tj-django/django-clone/pull/7) ([jackton1](https://github.com/jackton1))
+- Admin button [\#6](https://github.com/tj-django/django-clone/pull/6) ([SebastianKapunkt](https://github.com/SebastianKapunkt))
+- Fix clone of one to many and many to one [\#5](https://github.com/tj-django/django-clone/pull/5) ([SebastianKapunkt](https://github.com/SebastianKapunkt))
+- Updated example [\#3](https://github.com/tj-django/django-clone/pull/3) ([jackton1](https://github.com/jackton1))
 
-### Added
-- Added the changelog.md ([3e6aeb2](https://github.com/tj-django/django-clone/commit/3e6aeb2307fe5a29b9e68fd1acac1ae5e3cfe974) by Tonye Jack).
+## [v0.0.2](https://github.com/tj-django/django-clone/tree/v0.0.2) (2019-04-07)
 
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v0.0.1...v0.0.2)
 
-## [v0.0.3](https://github.com/tj-django/django-clone/releases/tag/v0.0.3) - 2019-11-10
+## [v0.0.1](https://github.com/tj-django/django-clone/tree/v0.0.1) (2019-04-06)
 
-<small>[Compare with v0.0.1](https://github.com/tj-django/django-clone/compare/v0.0.1...v0.0.3)</small>
+[Full Changelog](https://github.com/tj-django/django-clone/compare/7b01ca1df72d4ac2a691257807cf9eab426332ae...v0.0.1)
 
-### Added
-- Add class variable use_unique_duplicate_suffix ([fd207c4](https://github.com/tj-django/django-clone/commit/fd207c41398a469ebca01bbe7ad7c0284a54d218) by Andres Portillo).
-- Added new line at the end of the file. ([b5b68fc](https://github.com/tj-django/django-clone/commit/b5b68fc139e5c708c5f370fc4b3256d31d1daefc) by Tonye Jack).
-- Added new line. ([4327dab](https://github.com/tj-django/django-clone/commit/4327dab28b06a0efec071eb4822bc916945399dc) by Tonye Jack).
-- Added create_copy_of_instance utility. ([ab41b02](https://github.com/tj-django/django-clone/commit/ab41b02f1b52cf8f4ca6b7452085f66e69f25bb7) by Tonye Jack).
-- Add django-admin clonablemodeladmin ([147c56f](https://github.com/tj-django/django-clone/commit/147c56fa59f770278050eeecf0868a611a15e060) by Sebastian Kindt).
 
-### Changed
-- Change comparison to check for any truthy value ([6d11bd1](https://github.com/tj-django/django-clone/commit/6d11bd1ae43d395ec08e6764cdf7cff597b79f54) by Andres Portillo).
-- Changed docker image. ([9644e73](https://github.com/tj-django/django-clone/commit/9644e73e4682904df818e678484971edb5118990) by Tonye Jack).
 
-### Fixed
-- Fix admin url regex ([e806e97](https://github.com/tj-django/django-clone/commit/e806e97bcbaec9f3030db97f6afce4ff9700619e) by Tonye Jack).
-- Fixed test. ([d7cc014](https://github.com/tj-django/django-clone/commit/d7cc014c7b7547863865bdb98b1e8c7d2b32d75d) by Tonye Jack).
-- Fix clone of one to many and many to one ([78a506b](https://github.com/tj-django/django-clone/commit/78a506b6caff3a7715f35a617f96c56bf2087028) by Sebastian Kindt).
-- Fixed install command. ([1ea325c](https://github.com/tj-django/django-clone/commit/1ea325c2981a22f62b2c52011a3c77d82c2c77c5) by Tonye Jack).
-- Fixed virtualenv. ([eab8da9](https://github.com/tj-django/django-clone/commit/eab8da905bd110e7d8bffe4b1bb680c45caa8d75) by Tonye Jack).
-
-### Removed
-- Removed extra spaces. ([28f327f](https://github.com/tj-django/django-clone/commit/28f327fbdf129e5477dc200f8af822a10a4867a0) by Tonye Jack).
-- Remove redundant one to one clone. ([d1a56bd](https://github.com/tj-django/django-clone/commit/d1a56bdc1c7f000b5729b7c13324077e1b2a7267) by Tonye Jack).
-- Removed unused code. ([6216032](https://github.com/tj-django/django-clone/commit/6216032d67534f0ab35da8efb574a6c1aebcf838) by Tonye Jack).
-
-
-## [v0.0.1](https://github.com/tj-django/django-clone/releases/tag/v0.0.1) - 2019-04-06
-
-<small>[Compare with first commit](https://github.com/tj-django/django-clone/compare/7b01ca1df72d4ac2a691257807cf9eab426332ae...v0.0.1)</small>
-
-### Added
-- Added pypi deployment setup. ([96816e6](https://github.com/tj-django/django-clone/commit/96816e66ca00d6146860cb96e64047d8f5add6d8) by Tonye Jack).
-- Added circleci config. ([af22fc8](https://github.com/tj-django/django-clone/commit/af22fc8c00fdb17f12d83140c35a50cd8c678ba9) by Tonye Jack).
-- Added base class setup. ([7b01ca1](https://github.com/tj-django/django-clone/commit/7b01ca1df72d4ac2a691257807cf9eab426332ae) by Tonye Jack).
-
-### Fixed
-- Fixed typo. ([1cfe037](https://github.com/tj-django/django-clone/commit/1cfe037e50c8fca6c31a31ecf4b36b7c88c39fbe) by Tonye Jack).
-
-
+\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*
