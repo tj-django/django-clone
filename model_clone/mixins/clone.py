@@ -217,19 +217,18 @@ class CloneMixin(object):
         for name, value in attrs.items():
             setattr(duplicate, name, value)
 
-        duplicate, o2o_instances = self.__duplicate_o2o_fields(duplicate)
         duplicate, m2o_instances = self.__duplicate_m2o_fields(duplicate)
 
         if any([
             save_new,
-            o2o_instances,
             m2o_instances,
         ]):
-            for instance in itertools.chain(m2o_instances, o2o_instances):
+            for instance in m2o_instances:
                 instance.save(using=using)
 
             duplicate.save(using=using)
 
+        duplicate = self.__duplicate_o2o_fields(duplicate, using=using)
         duplicate = self.__duplicate_o2m_fields(duplicate, using=using)
         duplicate = self.__duplicate_m2m_fields(duplicate, using=using)
 
@@ -378,16 +377,15 @@ class CloneMixin(object):
 
         return new_instance
 
-    def __duplicate_o2o_fields(self, duplicate):
+    def __duplicate_o2o_fields(self, duplicate, using=None):
         """Duplicate one to one fields.
-
         :param duplicate: The transient instance that should be duplicated.
         :type duplicate: `django.db.models.Model`
+        :param using: The database alias used to save the created instances.
+        :type using: str
         :return: The duplicate instance with all the one to one fields duplicated.
         """
-        o2o_instances = []
-
-        for f in itertools.chain(self._meta.related_objects, self._meta.concrete_fields):
+        for f in self._meta.related_objects:
             if f.one_to_one:
                 if any(
                     [
@@ -406,10 +404,9 @@ class CloneMixin(object):
                             sub_clone=True,
                         )
                         setattr(new_rel_object, f.remote_field.name, duplicate)
+                        new_rel_object.save(using=using)
 
-                        o2o_instances.append(new_rel_object)
-
-        return duplicate, o2o_instances
+        return duplicate
 
     def __duplicate_o2m_fields(self, duplicate, using=None):
         """Duplicate one to many fields.
@@ -421,7 +418,9 @@ class CloneMixin(object):
         :return: The duplicate instance with all the transcient one to many duplicated instances.
         """
 
-        for f in itertools.chain(self._meta.related_objects, self._meta.concrete_fields):
+        for f in itertools.chain(
+            self._meta.related_objects, self._meta.concrete_fields
+        ):
             if f.one_to_many:
                 if any(
                     [
@@ -467,7 +466,9 @@ class CloneMixin(object):
         """
         m2o_instances = []
 
-        for f in itertools.chain(self._meta.related_objects, self._meta.concrete_fields):
+        for f in itertools.chain(
+            self._meta.related_objects, self._meta.concrete_fields
+        ):
             if f.many_to_one:
                 if any(
                     [
@@ -556,7 +557,7 @@ class CloneMixin(object):
                             item.make_clone(
                                 attrs={field_name: duplicate},
                                 sub_clone=True,
-                                using=using
+                                using=using,
                             )
                     else:
                         item.pk = None
