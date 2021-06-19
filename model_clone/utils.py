@@ -155,7 +155,7 @@ def context_mutable_attribute(obj, key, value):
         if attribute_exists:
             setattr(obj, key, default)
         else:
-            delattr(obj, key)
+            delattr(obj, key)  # pragma: no cover
 
 
 def get_value(value, suffix, transform, max_length, index):
@@ -239,7 +239,7 @@ def get_fields_and_unique_fields_from_cls(
                 and not force
                 and getattr(f, "one_to_one", False)
             ):
-                valid = f.name not in clone_excluded_o2o_fields
+                valid = f.name not in clone_excluded_o2o_fields  # pragma: no cover
             else:
                 valid = True
 
