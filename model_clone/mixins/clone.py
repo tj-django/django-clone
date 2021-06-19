@@ -185,7 +185,7 @@ class CloneMixin(object):
         pass
 
     @transaction.atomic
-    def make_clone(self, attrs=None, sub_clone=False):
+    def make_clone(self, attrs=None, sub_clone=False, using=None):
         """Creates a clone of the django model instance.
 
         :param attrs: Dictionary of attributes to be replaced on the cloned object.
@@ -193,8 +193,11 @@ class CloneMixin(object):
         :param sub_clone: Internal boolean used to detect cloning sub objects.
         :type sub_clone: bool
         :rtype: :obj:`django.db.models.Model`
+        :param using: The database alias used to save the created instances.
+        :type using: str
         :return: The model instance that has been cloned.
         """
+        using = self.state.db or self.__class__._default_manager.db
         attrs = attrs or {}
         if not self.pk:
             raise ValidationError(
@@ -206,17 +209,18 @@ class CloneMixin(object):
             duplicate = self
             duplicate.pk = None
         else:
-            duplicate = self._create_copy_of_instance(self)
+            duplicate = self._create_copy_of_instance(self, using=using)
 
         for name, value in attrs.items():
             setattr(duplicate, name, value)
 
-        duplicate.save()
+        duplicate.save(using=using)
 
-        duplicate = self.__duplicate_o2o_fields(duplicate)
+        duplicate = self.__duplicate_o2o_fields(duplicate, using=using)
         duplicate = self.__duplicate_o2m_fields(duplicate)
-        duplicate = self.__duplicate_m2o_fields(duplicate)
-        duplicate = self.__duplicate_m2m_fields(duplicate)
+        duplicate = self.__duplicate_m2o_fields(duplicate, using=using)
+        duplicate = self.__duplicate_m2m_fields(duplicate, using=using)
+
         return duplicate
 
     def bulk_clone(self, count, attrs=None, batch_size=None, auto_commit=False):
@@ -224,10 +228,11 @@ class CloneMixin(object):
         objs = range(count)
         clones = []
         batch_size = batch_size or max(ops.bulk_batch_size([], list(objs)), 1)
+        using = self.state.db or self.__class__._default_manager.db
 
         with conditional(
             auto_commit,
-            transaction_autocommit(using=self.__class__._default_manager.db),
+            transaction_autocommit(using=using),
         ):
             # If count exceeds the MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS
             with conditional(
@@ -260,11 +265,13 @@ class CloneMixin(object):
         pass
 
     @staticmethod
-    def _create_copy_of_instance(instance, force=False, sub_clone=False):
+    def _create_copy_of_instance(instance, using=None, force=False, sub_clone=False):
         """Create a copy of an instance
 
         :param instance: The instance to be duplicated.
         :type instance: `django.db.models.Model`
+        :param using: The database alias used to save the created instances.
+        :type using: str
         :param force: Flag to skip using the current model clone declared attributes.
         :type force: bool
         :param sub_clone: Flag to skip cloning one to one fields for sub clones.
@@ -350,18 +357,20 @@ class CloneMixin(object):
                             force=True,
                             sub_clone=True,
                         )
-                        sub_instance.save()
+                        sub_instance.save(using=using)
                         value = sub_instance.pk
 
             setattr(new_instance, f.attname, value)
 
         return new_instance
 
-    def __duplicate_o2o_fields(self, duplicate):
+    def __duplicate_o2o_fields(self, duplicate, using=None):
         """Duplicate one to one fields.
 
         :param duplicate: The transient instance that should be duplicated.
         :type duplicate: `django.db.models.Model`
+        :param using: The database alias used to save the created instances.
+        :type using: str
         :return: The duplicate instance with all the one to one fields duplicated.
         """
         for f in self._meta.related_objects:
@@ -383,7 +392,7 @@ class CloneMixin(object):
                             sub_clone=True,
                         )
                         setattr(new_rel_object, f.remote_field.name, duplicate)
-                        new_rel_object.save()
+                        new_rel_object.save(using=using)
 
         return duplicate
 
@@ -420,11 +429,13 @@ class CloneMixin(object):
 
         return duplicate
 
-    def __duplicate_m2o_fields(self, duplicate):
+    def __duplicate_m2o_fields(self, duplicate, using=None):
         """Duplicate many to one fields.
 
         :param duplicate: The transient instance that should be duplicated.
         :type duplicate: `django.db.models.Model`
+        :param using: The database alias used to save the created instances.
+        :type using: str
         :return: The duplicate instance with all the many to one fields duplicated.
         """
         fields = set()
@@ -443,20 +454,26 @@ class CloneMixin(object):
         # Clone many to one fields
         for field in fields:
             item = getattr(self, field.name)
-            try:
-                item_clone = item.make_clone()
-            except IntegrityError:
-                item_clone = item.make_clone(sub_clone=True)
+            if hasattr(item, "make_clone"):
+                try:
+                    item_clone = item.make_clone()
+                except IntegrityError:
+                    item_clone = item.make_clone(sub_clone=True)
+            else:
+                item.pk = None
+                item_clone = item.save(using=using)
 
             setattr(duplicate, field.name, item_clone)
 
         return duplicate
 
-    def __duplicate_m2m_fields(self, duplicate):
+    def __duplicate_m2m_fields(self, duplicate, using=None):
         """Duplicate many to many fields.
 
         :param duplicate: The transient instance that should be duplicated.
         :type duplicate: `django.db.models.Model`
+        :param using: The database alias used to save the created instances.
+        :type using: str
         :return: The duplicate instance with all the many to many fields duplicated.
         """
         fields = set()
@@ -470,6 +487,7 @@ class CloneMixin(object):
                 ]
             ):
                 fields.add(f)
+
         for f in self._meta.related_objects:
             if f.many_to_many:
                 if any(
@@ -513,7 +531,7 @@ class CloneMixin(object):
                     else:
                         item.pk = None
                         setattr(item, field_name, duplicate)
-                        item.save()
+                        item.save(using=using)
             else:
                 destination.set(source.all())
 
