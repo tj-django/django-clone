@@ -552,34 +552,6 @@ class CloneMixinTestCase(TestCase):
                 r"{}\s[\d]".format(Author.UNIQUE_DUPLICATE_SUFFIX),
             )
 
-    def test_cloning_instances_in_an_atomic_transaction_with_auto_commit_off_is_valid(
-        self,
-    ):
-        first_name = (
-            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, "
-            "sed diam nonumy eirmod tempor invidunt ut labore et dolore "
-            "magna aliquyam erat, sed diam voluptua. At vero eos et accusam "
-            "et justo duo dolores "
-        )
-        author = Author.objects.create(
-            first_name=first_name,
-            last_name="Jack",
-            age=26,
-            sex="F",
-            created_by=self.user1,
-        )
-
-        clones = author.bulk_clone(1000)
-
-        self.assertEqual(len(clones), 1000)
-
-        for clone in clones:
-            self.assertNotEqual(author.pk, clone.pk)
-            self.assertRegexpMatches(
-                clone.first_name,
-                r"{}\s[\d]".format(Author.UNIQUE_DUPLICATE_SUFFIX),
-            )
-
     @patch(
         "sample.models.Book._clone_m2o_or_o2m_fields",
         new_callable=PropertyMock,
