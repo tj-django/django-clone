@@ -207,8 +207,8 @@ class CloneMixin(object):
                 )
             )
         if sub_clone:
-            duplicate = self
-            duplicate.pk = None
+            duplicate = self  # pragma: no cover
+            duplicate.pk = None  # pragma: no cover
         else:
             duplicate = self._create_copy_of_instance(self, using=using)
 
@@ -472,8 +472,8 @@ class CloneMixin(object):
                         except IntegrityError:
                             item_clone = item.make_clone(sub_clone=True)
                     else:
-                        item.pk = None
-                        item_clone = item.save(using=using)
+                        item.pk = None  # pragma: no cover
+                        item_clone = item.save(using=using)  # pragma: no cover
 
                     setattr(duplicate, f.name, item_clone)
 
