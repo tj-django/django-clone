@@ -39,6 +39,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
           MERGE_METHOD: "rebase"
           UPDATE_METHOD: "rebase"
-          MERGE_RETRIES: "6"
+          MERGE_RETRIES: "10"
           MERGE_RETRY_SLEEP: "100000"
           MERGE_LABELS: ""
