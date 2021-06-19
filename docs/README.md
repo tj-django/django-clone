@@ -14,6 +14,12 @@
 
 Create copies of a model instance with explicit control on how the instance should be duplicated (limiting fields or related objects) copied and unique field detection.
 
+## Features
+
+*   Multiple Database support i.e Create a duplicate on one or more databases.
+*   Restrict fields used for creating a duplicate instance.
+*   Detect unique fields and naively add a suffix (`copy {count}`) to each new instance.
+
 ## Table of contents
 
 *   [Installation](#installation)
@@ -246,7 +252,7 @@ Out[11]: <QuerySet []>
 > **NOTE:** :warning:
 >
 > *   This method won't copy over related objects like Many to Many/One to Many relationships.
-> *   Ensure that required fields skipped from being cloned are passed in using the `attrs` dictionary.
+> *   Ensure that required fields skipped from being cloned are passed in using the `attrs` kwargs.
 
 ### Django Admin
 
