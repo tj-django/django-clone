@@ -635,9 +635,11 @@ class CloneMixinTestCase(TestCase):
         "sample.models.Edition.UNIQUE_DUPLICATE_SUFFIX",
         new_callable=PropertyMock,
     )
-    def test_unique_duplicate_suffix_check(self, unique_duplicate_suffix_mock, use_unique_duplicate_suffix_mock):
+    def test_unique_duplicate_suffix_check(
+        self, unique_duplicate_suffix_mock, use_unique_duplicate_suffix_mock
+    ):
         use_unique_duplicate_suffix_mock.return_value = True
-        unique_duplicate_suffix_mock.return_value = ''
+        unique_duplicate_suffix_mock.return_value = ""
 
         errors = Edition.check()
         expected_errors = [
@@ -664,8 +666,8 @@ class CloneMixinTestCase(TestCase):
         new_callable=PropertyMock,
     )
     def test_clone_fields_check(self, _clone_excluded_fields_mock, _clone_fields_mock):
-        _clone_excluded_fields_mock.return_value = ['test']
-        _clone_fields_mock.return_value = ['test']
+        _clone_excluded_fields_mock.return_value = ["test"]
+        _clone_fields_mock.return_value = ["test"]
 
         errors = Edition.check()
         expected_errors = [
@@ -674,8 +676,8 @@ class CloneMixinTestCase(TestCase):
                 hint=(
                     'Please provide either "_clone_fields"'
                     + ' or "_clone_excluded_fields" for model {}'.format(
-                    Edition.__name__,
-                )
+                        Edition.__name__,
+                    )
                 ),
                 obj=Edition,
                 id="{}.E002".format(ModelCloneConfig.name),
@@ -691,9 +693,11 @@ class CloneMixinTestCase(TestCase):
         "sample.models.Edition._clone_excluded_m2m_fields",
         new_callable=PropertyMock,
     )
-    def test_clone_m2m_fields_check(self, _clone_m2m_fields_mock, _clone_excluded_m2m_fields_mock):
-        _clone_m2m_fields_mock.return_value = ['test']
-        _clone_excluded_m2m_fields_mock.return_value = ['test']
+    def test_clone_m2m_fields_check(
+        self, _clone_m2m_fields_mock, _clone_excluded_m2m_fields_mock
+    ):
+        _clone_m2m_fields_mock.return_value = ["test"]
+        _clone_excluded_m2m_fields_mock.return_value = ["test"]
 
         errors = Edition.check()
         expected_errors = [
@@ -702,8 +706,8 @@ class CloneMixinTestCase(TestCase):
                 hint=(
                     'Please provide either "_clone_m2m_fields"'
                     + ' or "_clone_excluded_m2m_fields" for model {}'.format(
-                    Edition.__name__,
-                )
+                        Edition.__name__,
+                    )
                 ),
                 obj=Edition,
                 id="{}.E002".format(ModelCloneConfig.name),
@@ -719,9 +723,11 @@ class CloneMixinTestCase(TestCase):
         "sample.models.Edition._clone_excluded_m2o_or_o2m_fields",
         new_callable=PropertyMock,
     )
-    def test_clone_m2o_or_o2m_fields_check(self, _clone_m2o_or_o2m_fields_mock, _clone_excluded_m2o_or_o2m_fields_mock):
-        _clone_m2o_or_o2m_fields_mock.return_value = ['test']
-        _clone_excluded_m2o_or_o2m_fields_mock.return_value = ['test']
+    def test_clone_m2o_or_o2m_fields_check(
+        self, _clone_m2o_or_o2m_fields_mock, _clone_excluded_m2o_or_o2m_fields_mock
+    ):
+        _clone_m2o_or_o2m_fields_mock.return_value = ["test"]
+        _clone_excluded_m2o_or_o2m_fields_mock.return_value = ["test"]
 
         errors = Edition.check()
         expected_errors = [
@@ -730,8 +736,8 @@ class CloneMixinTestCase(TestCase):
                 hint=(
                     'Please provide either "_clone_m2o_or_o2m_fields"'
                     + ' or "_clone_excluded_m2o_or_o2m_fields" for model {}'.format(
-                    Edition.__name__,
-                )
+                        Edition.__name__,
+                    )
                 ),
                 obj=Edition,
                 id="{}.E002".format(ModelCloneConfig.name),
@@ -747,9 +753,11 @@ class CloneMixinTestCase(TestCase):
         "sample.models.Edition._clone_excluded_o2o_fields",
         new_callable=PropertyMock,
     )
-    def test_clone_o2o_fields_check(self, _clone_o2o_fields_mock, _clone_excluded_o2o_fields_mock):
-        _clone_o2o_fields_mock.return_value = ['test']
-        _clone_excluded_o2o_fields_mock.return_value = ['test']
+    def test_clone_o2o_fields_check(
+        self, _clone_o2o_fields_mock, _clone_excluded_o2o_fields_mock
+    ):
+        _clone_o2o_fields_mock.return_value = ["test"]
+        _clone_excluded_o2o_fields_mock.return_value = ["test"]
 
         errors = Edition.check()
         expected_errors = [
@@ -758,8 +766,8 @@ class CloneMixinTestCase(TestCase):
                 hint=(
                     'Please provide either "_clone_o2o_fields"'
                     + ' or "_clone_excluded_o2o_fields" for model {}'.format(
-                    Edition.__name__,
-                )
+                        Edition.__name__,
+                    )
                 ),
                 obj=Edition,
                 id="{}.E002".format(ModelCloneConfig.name),

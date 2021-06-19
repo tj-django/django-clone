@@ -170,7 +170,9 @@ class CloneMixin(object):
                     "Conflicting configuration.",
                     hint=(
                         'Please provide either "_clone_o2o_fields"'
-                        + ' or "_clone_excluded_o2o_fields" for model {}'.format(cls.__name__)
+                        + ' or "_clone_excluded_o2o_fields" for model {}'.format(
+                            cls.__name__
+                        )
                     ),
                     obj=cls,
                     id="{}.E002".format(ModelCloneConfig.name),
