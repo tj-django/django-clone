@@ -2,14 +2,16 @@ import datetime
 import time
 
 from django.contrib.auth import get_user_model
+from django.core.checks import Error
 from django.core.exceptions import ValidationError
 from django.db.transaction import TransactionManagementError
-from django.db.utils import IntegrityError
+from django.db.utils import DEFAULT_DB_ALIAS, IntegrityError
 from django.test import TestCase, TransactionTestCase
 from django.utils.text import slugify
 from django.utils.timezone import make_naive
 from mock import PropertyMock, patch
 
+from model_clone.apps import ModelCloneConfig
 from sample.models import (
     Author,
     BackCover,
@@ -32,6 +34,12 @@ User = get_user_model()
 
 
 class CloneMixinTestCase(TestCase):
+    REPLICA_DB_ALIAS = "replica"
+    databases = {
+        "default",
+        "replica",
+    }
+
     @classmethod
     def setUpTestData(cls):
         cls.user1 = User.objects.create(username="user 1")
@@ -121,8 +129,24 @@ class CloneMixinTestCase(TestCase):
             clone = book.make_clone()
 
             self.assertNotEqual(book.pk, clone.pk)
+            self.assertIsNotNone(clone.backcover.pk)
             self.assertNotEqual(backcover.pk, clone.backcover.pk)
             self.assertEqual(backcover.content, clone.backcover.content)
+
+    def test_cloning_model_with_a_different_db_alias_is_valid(self):
+        name = "New Library"
+        instance = Library(name=name, user=self.user1)
+        instance.save(using=DEFAULT_DB_ALIAS)
+        new_user = User(username="new user 2")
+        new_user.save(using=self.REPLICA_DB_ALIAS)
+        clone = instance.make_clone(
+            attrs={"user": new_user, "name": "New name"},
+            using=self.REPLICA_DB_ALIAS,
+        )
+
+        self.assertEqual(instance.name, name)
+        self.assertNotEqual(instance.pk, clone.pk)
+        self.assertNotEqual(instance.name, clone.name)
 
     def test_cloning_with_field_overridden(self):
         name = "New Library"
@@ -602,6 +626,154 @@ class CloneMixinTestCase(TestCase):
 
         self.assertEqual(house.name, clone_house.name)
         self.assertEqual(house.rooms.count(), clone_house.rooms.count())
+
+    @patch(
+        "sample.models.Edition.USE_UNIQUE_DUPLICATE_SUFFIX",
+        new_callable=PropertyMock,
+    )
+    @patch(
+        "sample.models.Edition.UNIQUE_DUPLICATE_SUFFIX",
+        new_callable=PropertyMock,
+    )
+    def test_unique_duplicate_suffix_check(
+        self, unique_duplicate_suffix_mock, use_unique_duplicate_suffix_mock
+    ):
+        use_unique_duplicate_suffix_mock.return_value = True
+        unique_duplicate_suffix_mock.return_value = ""
+
+        errors = Edition.check()
+        expected_errors = [
+            Error(
+                "UNIQUE_DUPLICATE_SUFFIX is required.",
+                hint=(
+                    "Please provide UNIQUE_DUPLICATE_SUFFIX"
+                    + " for {} or set USE_UNIQUE_DUPLICATE_SUFFIX=False".format(
+                        Edition.__name__,
+                    )
+                ),
+                obj=Edition,
+                id="{}.E001".format(ModelCloneConfig.name),
+            )
+        ]
+        self.assertEqual(errors, expected_errors)
+
+    @patch(
+        "sample.models.Edition._clone_fields",
+        new_callable=PropertyMock,
+    )
+    @patch(
+        "sample.models.Edition._clone_excluded_fields",
+        new_callable=PropertyMock,
+    )
+    def test_clone_fields_check(self, _clone_excluded_fields_mock, _clone_fields_mock):
+        _clone_excluded_fields_mock.return_value = ["test"]
+        _clone_fields_mock.return_value = ["test"]
+
+        errors = Edition.check()
+        expected_errors = [
+            Error(
+                "Conflicting configuration.",
+                hint=(
+                    'Please provide either "_clone_fields"'
+                    + ' or "_clone_excluded_fields" for model {}'.format(
+                        Edition.__name__,
+                    )
+                ),
+                obj=Edition,
+                id="{}.E002".format(ModelCloneConfig.name),
+            )
+        ]
+        self.assertEqual(errors, expected_errors)
+
+    @patch(
+        "sample.models.Edition._clone_m2m_fields",
+        new_callable=PropertyMock,
+    )
+    @patch(
+        "sample.models.Edition._clone_excluded_m2m_fields",
+        new_callable=PropertyMock,
+    )
+    def test_clone_m2m_fields_check(
+        self, _clone_m2m_fields_mock, _clone_excluded_m2m_fields_mock
+    ):
+        _clone_m2m_fields_mock.return_value = ["test"]
+        _clone_excluded_m2m_fields_mock.return_value = ["test"]
+
+        errors = Edition.check()
+        expected_errors = [
+            Error(
+                "Conflicting configuration.",
+                hint=(
+                    'Please provide either "_clone_m2m_fields"'
+                    + ' or "_clone_excluded_m2m_fields" for model {}'.format(
+                        Edition.__name__,
+                    )
+                ),
+                obj=Edition,
+                id="{}.E002".format(ModelCloneConfig.name),
+            )
+        ]
+        self.assertEqual(errors, expected_errors)
+
+    @patch(
+        "sample.models.Edition._clone_m2o_or_o2m_fields",
+        new_callable=PropertyMock,
+    )
+    @patch(
+        "sample.models.Edition._clone_excluded_m2o_or_o2m_fields",
+        new_callable=PropertyMock,
+    )
+    def test_clone_m2o_or_o2m_fields_check(
+        self, _clone_m2o_or_o2m_fields_mock, _clone_excluded_m2o_or_o2m_fields_mock
+    ):
+        _clone_m2o_or_o2m_fields_mock.return_value = ["test"]
+        _clone_excluded_m2o_or_o2m_fields_mock.return_value = ["test"]
+
+        errors = Edition.check()
+        expected_errors = [
+            Error(
+                "Conflicting configuration.",
+                hint=(
+                    'Please provide either "_clone_m2o_or_o2m_fields"'
+                    + ' or "_clone_excluded_m2o_or_o2m_fields" for model {}'.format(
+                        Edition.__name__,
+                    )
+                ),
+                obj=Edition,
+                id="{}.E002".format(ModelCloneConfig.name),
+            )
+        ]
+        self.assertEqual(errors, expected_errors)
+
+    @patch(
+        "sample.models.Edition._clone_o2o_fields",
+        new_callable=PropertyMock,
+    )
+    @patch(
+        "sample.models.Edition._clone_excluded_o2o_fields",
+        new_callable=PropertyMock,
+    )
+    def test_clone_o2o_fields_check(
+        self, _clone_o2o_fields_mock, _clone_excluded_o2o_fields_mock
+    ):
+        _clone_o2o_fields_mock.return_value = ["test"]
+        _clone_excluded_o2o_fields_mock.return_value = ["test"]
+
+        errors = Edition.check()
+        expected_errors = [
+            Error(
+                "Conflicting configuration.",
+                hint=(
+                    'Please provide either "_clone_o2o_fields"'
+                    + ' or "_clone_excluded_o2o_fields" for model {}'.format(
+                        Edition.__name__,
+                    )
+                ),
+                obj=Edition,
+                id="{}.E002".format(ModelCloneConfig.name),
+            )
+        ]
+        self.assertEqual(errors, expected_errors)
 
 
 class CloneMixinTransactionTestCase(TransactionTestCase):

@@ -1,3 +1,4 @@
+import itertools
 from itertools import repeat
 from typing import Dict, List, Optional
 
@@ -154,7 +155,7 @@ class CloneMixin(object):
                         "Please provide either "
                         + '"_clone_m2o_or_o2m_fields"'
                         + " or "
-                        + '"_clone_excluded_m2o_or_o2m_fields" for {}'.format(
+                        + '"_clone_excluded_m2o_or_o2m_fields" for model {}'.format(
                             cls.__name__
                         )
                     ),
@@ -169,7 +170,9 @@ class CloneMixin(object):
                     "Conflicting configuration.",
                     hint=(
                         'Please provide either "_clone_o2o_fields"'
-                        + ' or "_clone_excluded_o2o_fields" for {}'.format(cls.__name__)
+                        + ' or "_clone_excluded_o2o_fields" for model {}'.format(
+                            cls.__name__
+                        )
                     ),
                     obj=cls,
                     id="{}.E002".format(ModelCloneConfig.name),
@@ -197,7 +200,7 @@ class CloneMixin(object):
         :type using: str
         :return: The model instance that has been cloned.
         """
-        using = self._state.db or self.__class__._default_manager.db
+        using = using or self._state.db or self.__class__._default_manager.db
         attrs = attrs or {}
         if not self.pk:
             raise ValidationError(
@@ -206,8 +209,8 @@ class CloneMixin(object):
                 )
             )
         if sub_clone:
-            duplicate = self
-            duplicate.pk = None
+            duplicate = self  # pragma: no cover
+            duplicate.pk = None  # pragma: no cover
         else:
             duplicate = self._create_copy_of_instance(self, using=using)
 
@@ -216,15 +219,17 @@ class CloneMixin(object):
 
         duplicate.save(using=using)
 
-        duplicate = self.__duplicate_o2o_fields(duplicate, using=using)
-        duplicate = self.__duplicate_o2m_fields(duplicate)
         duplicate = self.__duplicate_m2o_fields(duplicate, using=using)
+        duplicate = self.__duplicate_o2o_fields(duplicate, using=using)
+        duplicate = self.__duplicate_o2m_fields(duplicate, using=using)
         duplicate = self.__duplicate_m2m_fields(duplicate, using=using)
 
         return duplicate
 
-    def bulk_clone(self, count, attrs=None, batch_size=None, auto_commit=False):
-        using = self._state.db or self.__class__._default_manager.db
+    def bulk_clone(
+        self, count, attrs=None, batch_size=None, using=None, auto_commit=False
+    ):
+        using = using or self._state.db or self.__class__._default_manager.db
         ops = connections[using].ops
         objs = range(count)
         clones = []
@@ -366,7 +371,6 @@ class CloneMixin(object):
 
     def __duplicate_o2o_fields(self, duplicate, using=None):
         """Duplicate one to one fields.
-
         :param duplicate: The transient instance that should be duplicated.
         :type duplicate: `django.db.models.Model`
         :param using: The database alias used to save the created instances.
@@ -396,16 +400,19 @@ class CloneMixin(object):
 
         return duplicate
 
-    def __duplicate_o2m_fields(self, duplicate):
+    def __duplicate_o2m_fields(self, duplicate, using=None):
         """Duplicate one to many fields.
 
         :param duplicate: The transient instance that should be duplicated.
         :type duplicate: `django.db.models.Model`
-        :return: The duplicate instance with all the one to many fields duplicated.
+        :param using: The database alias used to save the created instances.
+        :type using: str
+        :return: The duplicate instance with all the transcient one to many duplicated instances.
         """
-        fields = set()
 
-        for f in self._meta.related_objects:
+        for f in itertools.chain(
+            self._meta.related_objects, self._meta.concrete_fields
+        ):
             if f.one_to_many:
                 if any(
                     [
@@ -415,17 +422,30 @@ class CloneMixin(object):
                         not in self._clone_excluded_m2o_or_o2m_fields,
                     ]
                 ):
-                    fields.add(f)
+                    for item in getattr(self, f.get_accessor_name()).all():
+                        if hasattr(item, "make_clone"):
+                            try:
+                                item.make_clone(
+                                    attrs={f.remote_field.name: duplicate},
+                                    using=using,
+                                )
+                            except IntegrityError:
+                                item.make_clone(
+                                    attrs={f.remote_field.name: duplicate},
+                                    save_new=False,
+                                    sub_clone=True,
+                                    using=using,
+                                )
+                        else:
+                            new_item = CloneMixin._create_copy_of_instance(
+                                item,
+                                force=True,
+                                sub_clone=True,
+                                using=using,
+                            )
+                            setattr(new_item, f.remote_field.name, duplicate)
 
-        # Clone one to many fields
-        for field in fields:
-            for item in getattr(self, field.get_accessor_name()).all():
-                try:
-                    item.make_clone(attrs={field.remote_field.name: duplicate})
-                except IntegrityError:
-                    item.make_clone(
-                        attrs={field.remote_field.name: duplicate}, sub_clone=True
-                    )
+                            new_item.save(using=using)
 
         return duplicate
 
@@ -438,8 +458,6 @@ class CloneMixin(object):
         :type using: str
         :return: The duplicate instance with all the many to one fields duplicated.
         """
-        fields = set()
-
         for f in self._meta.concrete_fields:
             if f.many_to_one:
                 if any(
@@ -449,21 +467,17 @@ class CloneMixin(object):
                         and f.name not in self._clone_excluded_m2o_or_o2m_fields,
                     ]
                 ):
-                    fields.add(f)
+                    item = getattr(self, f.name)
+                    if hasattr(item, "make_clone"):
+                        try:
+                            item_clone = item.make_clone(using=using)
+                        except IntegrityError:
+                            item_clone = item.make_clone(sub_clone=True)
+                    else:
+                        item.pk = None  # pragma: no cover
+                        item_clone = item.save(using=using)  # pragma: no cover
 
-        # Clone many to one fields
-        for field in fields:
-            item = getattr(self, field.name)
-            if hasattr(item, "make_clone"):
-                try:
-                    item_clone = item.make_clone()
-                except IntegrityError:
-                    item_clone = item.make_clone(sub_clone=True)
-            else:
-                item.pk = None
-                item_clone = item.save(using=using)
-
-            setattr(duplicate, field.name, item_clone)
+                    setattr(duplicate, f.name, item_clone)
 
         return duplicate
 
@@ -523,10 +537,15 @@ class CloneMixin(object):
                 for item in objs:
                     if hasattr(through, "make_clone"):
                         try:
-                            item.make_clone(attrs={field_name: duplicate})
+                            item.make_clone(
+                                attrs={field_name: duplicate},
+                                using=using,
+                            )
                         except IntegrityError:
                             item.make_clone(
-                                attrs={field_name: duplicate}, sub_clone=True
+                                attrs={field_name: duplicate},
+                                sub_clone=True,
+                                using=using,
                             )
                     else:
                         item.pk = None
