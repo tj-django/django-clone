@@ -144,9 +144,7 @@ LANGUAGES = (
 LANGUAGE_CODE = "en"
 
 # Tell Django where the project's translation files should be.
-LOCALE_PATHS = (
-    os.path.join(BASE_DIR, "model_clone", "locale"),
-)
+LOCALE_PATHS = (os.path.join(BASE_DIR, "model_clone", "locale"),)
 
 
 SECURE_HSTS_SECONDS = 3600
