@@ -145,3 +145,18 @@ LANGUAGE_CODE = "en"
 
 # Tell Django where the project's translation files should be.
 LOCALE_PATHS = (os.path.join(BASE_DIR, "model_clone", "locale"),)
+
+
+SECURE_HSTS_SECONDS = 3600
+
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+SECURE_SSL_REDIRECT = os.getenv("SECURE_SSL_REDIRECT_ENABLED") != "False"
+
+SESSION_COOKIE_SECURE = os.getenv("SESSION_COOKIE_SECURE_ENABLED") != "False"
+
+CSRF_COOKIE_SECURE = os.getenv("CSRF_COOKIE_SECURE_ENABLED") != "False"
+
+SECURE_HSTS_PRELOAD = True
