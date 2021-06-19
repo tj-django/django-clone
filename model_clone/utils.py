@@ -146,17 +146,14 @@ def context_mutable_attribute(obj, key, value):
     """
     Context manager that modifies an obj temporarily.
     """
-    default = None
-    is_set = hasattr(obj, key)
-    if is_set:
-        default = getattr(obj, key)
+    attribute_exists = hasattr(obj, key)
+    default = getattr(obj, key, None)
     try:
         setattr(obj, key, value)
         yield
     finally:
-        if not is_set and hasattr(obj, key):
-            del obj[key]
-        else:
+        del obj[key]
+        if attribute_exists:
             setattr(obj, key, default)
 
 

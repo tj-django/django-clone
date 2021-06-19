@@ -14,6 +14,7 @@ exclude_lines =
     if settings.DEBUG
     # Don't complain if tests don't hit defensive assertion code:
     raise AssertionError
+    raise StopIteration
     raise NotImplementedError
     except ImportError
     except IntegrityError
