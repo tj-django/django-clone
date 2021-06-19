@@ -223,7 +223,9 @@ class CloneMixin(object):
 
         return duplicate
 
-    def bulk_clone(self, count, attrs=None, batch_size=None, using=None, auto_commit=False):
+    def bulk_clone(
+        self, count, attrs=None, batch_size=None, using=None, auto_commit=False
+    ):
         using = using or self._state.db or self.__class__._default_manager.db
         ops = connections[using].ops
         objs = range(count)
