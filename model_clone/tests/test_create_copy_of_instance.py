@@ -30,7 +30,7 @@ class CreateCopyOfInstanceTestCase(TestCase):
         self.assertEqual(clone.user, self.user2)
 
     def test_cloning_model_with_a_different_db_alias_is_valid(self):
-        new_user = User(username="new user")
+        new_user = User(username="new user 1")
         new_user.save(using=self.REPLICA_DB_ALIAS)
         instance = Library(name="First library", user=self.user1)
         instance.save(using=DEFAULT_DB_ALIAS)

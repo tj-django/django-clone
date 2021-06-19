@@ -134,7 +134,7 @@ class CloneMixinTestCase(TestCase):
         name = "New Library"
         instance = Library(name=name, user=self.user1)
         instance.save(using=DEFAULT_DB_ALIAS)
-        new_user = User(username="new user")
+        new_user = User(username="new user 2")
         new_user.save(using=self.REPLICA_DB_ALIAS)
         clone = instance.make_clone(
             attrs={"user": new_user, "name": "New name"},
