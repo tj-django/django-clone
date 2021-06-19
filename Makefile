@@ -22,26 +22,48 @@ guard-%: ## Checks that env var is set else exits with non 0 mainly used in CI;
 # --------------------------------------------------------
 # ------- Python package (pip) management commands -------
 # --------------------------------------------------------
-clean-build: ## Clean project build artifacts.
-	@echo "Removing build assets..."
-	@$(PYTHON) setup.py clean
-	@rm -rf build/
-	@rm -rf dist/
-	@rm -rf *.egg-info
+clean: clean-build clean-pyc clean-test  ## remove all build, test, coverage and Python artifacts
 
-install: clean-build  ## Install project dependencies.
+clean-build:  ## remove build artifacts
+	@rm -fr build/
+	@rm -fr dist/
+	@rm -fr .eggs/
+	@find . -name '*.egg-info' -exec rm -fr {} +
+	@find . -name '*.egg' -exec rm -f {} +
+
+clean-pyc:  ## remove Python file artifacts
+	@find . -name '*.pyc' -exec rm -f {} +
+	@find . -name '*.pyo' -exec rm -f {} +
+	@find . -name '*~' -exec rm -f {} +
+	@find . -name '__pycache__' -exec rm -fr {} +
+
+clean-test:  ## remove test and coverage artifacts
+	@rm -fr .tox/
+	@rm -f .coverage
+	@rm -fr htmlcov/
+	@rm -fr .pytest_cache
+
+install-wheel:  ## Install wheel
+	@echo "Installing wheel..."
+	@pip install wheel
+
+install: clean requirements.txt install-wheel  ## Install project dependencies.
 	@echo "Installing project in dependencies..."
 	@$(PYTHON_PIP) install -r requirements.txt
 
-install-lint: clean-build  ## Install lint extra dependencies.
+install-lint: clean setup.py install-wheel  ## Install lint extra dependencies.
 	@echo "Installing lint extra requirements..."
 	@$(PYTHON_PIP) install -e .'[lint]'
 
-install-test: clean-build clean-test-all ## Install test extra dependencies.
+install-test: clean setup.py install-wheel ## Install test extra dependencies.
 	@echo "Installing test extra requirements..."
 	@$(PYTHON_PIP) install -e .'[test]'
 
-install-dev: clean-build  ## Install development extra dependencies.
+install-deploy: clean setup.py install-wheel ## Install deploy extra dependencies.
+	@echo "Installing deploy extra requirements..."
+	@$(PYTHON_PIP) install -e .'[deploy]'
+
+install-dev: clean setup.py install-wheel  ## Install development extra dependencies.
 	@echo "Installing development requirements..."
 	@$(PYTHON_PIP) install -e .'[development]' -r requirements.txt
 
@@ -80,27 +102,18 @@ test:
 	@$(MANAGE_PY) test
 
 # ----------------------------------------------------------
-# ---------- Upgrade project version (bumpversion)  --------
+# ---------- Release the project to PyPI -------------------
 # ----------------------------------------------------------
-increase-version: clean-build makemessages compilemessages guard-PART  ## Bump the project version (using the $PART env: defaults to 'patch').
-	@git checkout main
-	@echo "Increasing project '$(PART)' version..."
-	@$(PYTHON_PIP) install -q -e .'[deploy]'
-	@bumpversion --verbose $(PART)
-	@git-changelog . > CHANGELOG.md
-	@git add .
-	@[ -z "`git status --porcelain`" ] && echo "No changes found." || git commit -am "Updated CHANGELOG.md."
+increase-version: guard-PART  ## Increase project version
+	@bump2version $(PART)
+	@git switch -c main
 
-release:  increase-version  ## Release project to pypi
-	@$(PYTHON_PIP) install -U twine
-	@$(PYTHON) setup.py sdist bdist_wheel
-	@twine upload -r pypi dist/*
-	@git-changelog . > CHANGELOG.md
-	@git add .
-	@[ -z "`git status --porcelain`" ] && echo "No changes found." || git commit -am "Updated CHANGELOG.md."
-	@git pull
-	@git push
-	@git push --tags
+dist: clean install-deploy  ## builds source and wheel package
+	@pip install twine==3.4.1
+	@python setup.py sdist bdist_wheel
+
+release: dist  ## package and upload a release
+	@twine upload dist/*
 
 # ----------------------------------------------------------
 # --------- Run project Test -------------------------------
