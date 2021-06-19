@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-from django.db import IntegrityError, DEFAULT_DB_ALIAS
+from django.db import DEFAULT_DB_ALIAS, IntegrityError
 from django.test import TestCase
 from django.utils.text import slugify
 
@@ -11,10 +11,10 @@ User = get_user_model()
 
 
 class CreateCopyOfInstanceTestCase(TestCase):
-    REPLICA_DB_ALIAS = 'replica'
+    REPLICA_DB_ALIAS = "replica"
     databases = {
-        'default',
-        'replica',
+        "default",
+        "replica",
     }
 
     @classmethod
@@ -34,7 +34,9 @@ class CreateCopyOfInstanceTestCase(TestCase):
         new_user.save(using=self.REPLICA_DB_ALIAS)
         instance = Library(name="First library", user=self.user1)
         instance.save(using=DEFAULT_DB_ALIAS)
-        clone = create_copy_of_instance(instance, attrs={"user": new_user}, using=self.REPLICA_DB_ALIAS)
+        clone = create_copy_of_instance(
+            instance, attrs={"user": new_user}, using=self.REPLICA_DB_ALIAS
+        )
 
         self.assertNotEqual(instance.pk, clone.pk)
         self.assertEqual(clone.user, new_user)
