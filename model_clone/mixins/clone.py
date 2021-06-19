@@ -186,14 +186,12 @@ class CloneMixin(object):
         pass
 
     @transaction.atomic
-    def make_clone(self, attrs=None, sub_clone=False, using=None, save_new=True):
+    def make_clone(self, attrs=None, sub_clone=False, using=None):
         """Creates a clone of the django model instance.
 
         :param attrs: Dictionary of attributes to be replaced on the cloned object.
         :type attrs: dict
         :param sub_clone: Internal boolean used to detect cloning sub objects.
-        :type sub_clone: bool
-        :param save_new: Boolean used to determine if the new instance should be saved.
         :type sub_clone: bool
         :rtype: :obj:`django.db.models.Model`
         :param using: The database alias used to save the created instances.
