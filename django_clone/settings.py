@@ -136,14 +136,12 @@ else:
     TEST_OUTPUT_DIR = "test-reports"
 
 LANGUAGES = (
-  ("en", _("English")),
-  ("fr", _("French")),
+    ("en", _("English")),
+    ("fr", _("French")),
 )
 
 # Set the default language for your site.
 LANGUAGE_CODE = "en"
 
 # Tell Django where the project's translation files should be.
-LOCALE_PATHS=(
-    os.path.join(BASE_DIR, "model_clone", "locale"),
-)
+LOCALE_PATHS = (os.path.join(BASE_DIR, "model_clone", "locale"),)
