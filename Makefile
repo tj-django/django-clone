@@ -82,7 +82,7 @@ test:
 # ----------------------------------------------------------
 # ---------- Upgrade project version (bumpversion)  --------
 # ----------------------------------------------------------
-increase-version: clean-build guard-PART  ## Bump the project version (using the $PART env: defaults to 'patch').
+increase-version: clean-build makemessages compilemessages guard-PART  ## Bump the project version (using the $PART env: defaults to 'patch').
 	@git checkout main
 	@echo "Increasing project '$(PART)' version..."
 	@$(PYTHON_PIP) install -q -e .'[deploy]'
@@ -91,7 +91,7 @@ increase-version: clean-build guard-PART  ## Bump the project version (using the
 	@git add .
 	@[ -z "`git status --porcelain`" ] && echo "No changes found." || git commit -am "Updated CHANGELOG.md."
 
-release-to-pypi: makemessages compilemessages increase-version  ## Release project to pypi
+release:  increase-version  ## Release project to pypi
 	@$(PYTHON_PIP) install -U twine
 	@$(PYTHON) setup.py sdist bdist_wheel
 	@twine upload -r pypi dist/*

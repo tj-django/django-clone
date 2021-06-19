@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-from django.db import IntegrityError
+from django.db import IntegrityError, DEFAULT_DB_ALIAS
 from django.test import TestCase
 from django.utils.text import slugify
 
@@ -11,6 +11,12 @@ User = get_user_model()
 
 
 class CreateCopyOfInstanceTestCase(TestCase):
+    REPLICA_DB_ALIAS = 'replica'
+    databases = {
+        'default',
+        'replica',
+    }
+
     @classmethod
     def setUpTestData(cls):
         cls.user1 = User.objects.create(username="user 1")
@@ -22,6 +28,17 @@ class CreateCopyOfInstanceTestCase(TestCase):
 
         self.assertNotEqual(instance.pk, clone.pk)
         self.assertEqual(clone.user, self.user2)
+
+    def test_cloning_model_with_a_different_db_alias_is_valid(self):
+        new_user = User(username="new user")
+        new_user.save(using=self.REPLICA_DB_ALIAS)
+        instance = Library(name="First library", user=self.user1)
+        instance.save(using=DEFAULT_DB_ALIAS)
+        clone = create_copy_of_instance(instance, attrs={"user": new_user}, using=self.REPLICA_DB_ALIAS)
+
+        self.assertNotEqual(instance.pk, clone.pk)
+        self.assertEqual(clone.user, new_user)
+        self.assertNotEqual(instance._state.db, clone._state.db)
 
     def test_cloning_unique_fk_field_without_a_fallback_value_is_invalid(self):
         name = "New Library"

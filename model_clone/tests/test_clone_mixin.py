@@ -4,7 +4,7 @@ import time
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.db.transaction import TransactionManagementError
-from django.db.utils import IntegrityError
+from django.db.utils import IntegrityError, DEFAULT_DB_ALIAS
 from django.test import TestCase, TransactionTestCase
 from django.utils.text import slugify
 from django.utils.timezone import make_naive
@@ -32,6 +32,12 @@ User = get_user_model()
 
 
 class CloneMixinTestCase(TestCase):
+    REPLICA_DB_ALIAS = 'replica'
+    databases = {
+        'default',
+        'replica',
+    }
+
     @classmethod
     def setUpTestData(cls):
         cls.user1 = User.objects.create(username="user 1")
@@ -123,6 +129,21 @@ class CloneMixinTestCase(TestCase):
             self.assertNotEqual(book.pk, clone.pk)
             self.assertNotEqual(backcover.pk, clone.backcover.pk)
             self.assertEqual(backcover.content, clone.backcover.content)
+
+    def test_cloning_model_with_a_different_db_alias_is_valid(self):
+        name = "New Library"
+        instance = Library(name=name, user=self.user1)
+        instance.save(using=DEFAULT_DB_ALIAS)
+        new_user = User(username="new user")
+        new_user.save(using=self.REPLICA_DB_ALIAS)
+        clone = instance.make_clone(
+            attrs={"user": new_user, "name": "New name"},
+            using=self.REPLICA_DB_ALIAS,
+        )
+
+        self.assertEqual(instance.name, name)
+        self.assertNotEqual(instance.pk, clone.pk)
+        self.assertNotEqual(instance.name, clone.name)
 
     def test_cloning_with_field_overridden(self):
         name = "New Library"

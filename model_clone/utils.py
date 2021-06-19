@@ -7,7 +7,7 @@ from django.db import models, transaction
 from django.db.transaction import TransactionManagementError
 
 
-def create_copy_of_instance(instance, exclude=(), save_new=True, attrs=None):
+def create_copy_of_instance(instance, attrs=None, exclude=(), save_new=True, using=None):
     """
     Clone an instance of `django.db.models.Model`.
 
@@ -17,6 +17,8 @@ def create_copy_of_instance(instance, exclude=(), save_new=True, attrs=None):
     :type exclude: list|set
     :param save_new: Save the model instance after duplication calling .save().
     :type save_new: bool
+    :param using: The database alias used to save the created instances.
+    :type using: str
     :param attrs: Kwargs of field and value to set on the duplicated instance.
     :type attrs: dict
     :return: The new duplicated instance.
@@ -42,13 +44,15 @@ def create_copy_of_instance(instance, exclude=(), save_new=True, attrs=None):
 
     defaults = {}
     attrs = attrs or {}
+    default_db_alias = instance._state.db or instance.__class__._default_manager.db
+    using = using or default_db_alias
     fields = instance.__class__._meta.concrete_fields
 
     if not isinstance(attrs, dict):
         try:
             attrs = dict(attrs)
         except (TypeError, ValueError):
-            raise ValueError("Invalid: Expected attrs to be a dict or iterable.")
+            raise ValueError("Invalid: Expected attrs to be a dict or iterable of key and value tuples.")
 
     for f in fields:
         if all(
@@ -81,14 +85,13 @@ def create_copy_of_instance(instance, exclude=(), save_new=True, attrs=None):
         )
     ]
 
-    try:
-        # Run the unique validation before creating the instance.
+    # Bug with django using full_clean on a different db
+    if using == default_db_alias:
+        # Validate the new instance on the same database
         new_obj.full_clean(exclude=exclude)
-    except ValidationError as e:
-        raise ValidationError(", ".join(e.messages))
 
     if save_new:
-        new_obj.save()
+        new_obj.save(using=using)
 
     return new_obj
 
