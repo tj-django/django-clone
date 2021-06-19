@@ -69,11 +69,11 @@ default-user: migrate
 	@echo "Password: admin"
 
 makemessages: clean-build  ## Runs over the entire source tree of the current directory and pulls out all strings marked for translation.
-	@$(MANAGE_PY) makemessages --locale=en_US
-	@$(MANAGE_PY) makemessages --locale=fr
+	@$(MANAGE_PY) makemessages --locale=en_US  --ignore=sample
+	@$(MANAGE_PY) makemessages --locale=fr  --ignore=sample
 
 compilemessages: clean-build  ## Compiles .po files created by makemessages to .mo files for use with the built-in gettext support.
-	@$(MANAGE_PY) compilemessages --ignore=.tox
+	@$(MANAGE_PY) compilemessages --ignore=.tox,sample
 
 test:
 	@echo "Running `$(PYTHON_VERSION)` test..."
