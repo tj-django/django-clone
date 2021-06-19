@@ -152,9 +152,10 @@ def context_mutable_attribute(obj, key, value):
         setattr(obj, key, value)
         yield
     finally:
-        del obj[key]
         if attribute_exists:
             setattr(obj, key, default)
+        else:
+            delattr(obj, key)
 
 
 def get_value(value, suffix, transform, max_length, index):

@@ -127,6 +127,7 @@ class CloneMixinTestCase(TestCase):
             clone = book.make_clone()
 
             self.assertNotEqual(book.pk, clone.pk)
+            self.assertIsNotNone(clone.backcover.pk)
             self.assertNotEqual(backcover.pk, clone.backcover.pk)
             self.assertEqual(backcover.content, clone.backcover.content)
 
