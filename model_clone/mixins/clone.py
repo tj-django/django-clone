@@ -220,11 +220,13 @@ class CloneMixin(object):
         duplicate, o2o_instances = self.__duplicate_o2o_fields(duplicate)
         duplicate, m2o_instances = self.__duplicate_m2o_fields(duplicate)
 
-        if any([
-            save_new,
-            o2o_instances,
-            m2o_instances,
-        ]):
+        if any(
+            [
+                save_new,
+                o2o_instances,
+                m2o_instances,
+            ]
+        ):
             for instance in m2o_instances:
                 instance.save(using=using)
 
@@ -390,7 +392,9 @@ class CloneMixin(object):
         """
         o2o_instances = []
 
-        for f in itertools.chain(self._meta.related_objects, self._meta.concrete_fields):
+        for f in itertools.chain(
+            self._meta.related_objects, self._meta.concrete_fields
+        ):
             if f.one_to_one:
                 if any(
                     [
@@ -424,7 +428,9 @@ class CloneMixin(object):
         :return: The duplicate instance with all the transcient one to many duplicated instances.
         """
 
-        for f in itertools.chain(self._meta.related_objects, self._meta.concrete_fields):
+        for f in itertools.chain(
+            self._meta.related_objects, self._meta.concrete_fields
+        ):
             if f.one_to_many:
                 if any(
                     [
@@ -470,7 +476,9 @@ class CloneMixin(object):
         """
         m2o_instances = []
 
-        for f in itertools.chain(self._meta.related_objects, self._meta.concrete_fields):
+        for f in itertools.chain(
+            self._meta.related_objects, self._meta.concrete_fields
+        ):
             if f.many_to_one:
                 if any(
                     [
@@ -559,7 +567,7 @@ class CloneMixin(object):
                             item.make_clone(
                                 attrs={field_name: duplicate},
                                 sub_clone=True,
-                                using=using
+                                using=using,
                             )
                     else:
                         item.pk = None
