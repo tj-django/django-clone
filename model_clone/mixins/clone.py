@@ -407,7 +407,7 @@ class CloneMixin(object):
         :type duplicate: `django.db.models.Model`
         :param using: The database alias used to save the created instances.
         :type using: str
-        :return: The duplicate instance with all the transcient one to many duplicated instances.
+        :return: The duplicate instance with all the transient one to many duplicated instances.
         """
 
         for f in itertools.chain(
