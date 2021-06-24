@@ -354,7 +354,7 @@ class CloneMixin(object):
                         )
 
                 elif isinstance(f, models.OneToOneField) and not sub_clone:
-                    sub_instance = getattr(instance, f.name, f.get_default())
+                    sub_instance = getattr(instance, f.name, None) or f.get_default()
 
                     if sub_instance is not None:
                         sub_instance = CloneMixin._create_copy_of_instance(
