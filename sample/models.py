@@ -14,6 +14,8 @@ class Author(CloneModel):
     last_name = models.CharField(max_length=200, blank=True)
     age = models.PositiveIntegerField()
 
+    uuid = models.UUIDField(default=uuid4, unique=True, editable=False)
+
     SEX_CHOICES = [
         ("F", "Female"),
         ("M", "Male"),
@@ -101,6 +103,8 @@ class Library(CloneModel):
     id = models.UUIDField(primary_key=True, default=uuid4)
     name = models.CharField(max_length=100)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+
+    uuid = models.UUIDField(default=uuid4, unique=True, editable=False)
 
     _clone_fields = ["name"]
     _clone_o2o_fields = ["user"]
