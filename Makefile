@@ -91,11 +91,11 @@ default-user: migrate
 	@echo "Password: admin"
 
 makemessages: clean-build  ## Runs over the entire source tree of the current directory and pulls out all strings marked for translation.
-	@$(MANAGE_PY) makemessages --locale=en_US  --ignore=sample
-	@$(MANAGE_PY) makemessages --locale=fr  --ignore=sample
+	@$(MANAGE_PY) makemessages --locale=en_US  --ignore=sample,django_clone
+	@$(MANAGE_PY) makemessages --locale=fr  --ignore=sample,django_clone
 
-compilemessages: clean-build  ## Compiles .po files created by makemessages to .mo files for use with the built-in gettext support.
-	@$(MANAGE_PY) compilemessages --ignore=.tox,sample
+compilemessages: makemessages ## Compiles .po files created by makemessages to .mo files for use with the built-in gettext support.
+	@$(MANAGE_PY) compilemessages --ignore=.tox,sample,django_clone
 
 test:
 	@echo "Running `$(PYTHON_VERSION)` test..."
@@ -108,7 +108,7 @@ increase-version: guard-PART  ## Increase project version
 	@bump2version $(PART)
 	@git switch -c main
 
-dist: clean install-deploy  ## builds source and wheel package
+dist: clean install-deploy compilemessages  ## builds source and wheel package
 	@pip install twine==3.4.1
 	@python setup.py sdist bdist_wheel
 
