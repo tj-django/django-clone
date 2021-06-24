@@ -1,5 +1,37 @@
 # Changelog
 
+## [Unreleased](https://github.com/tj-django/django-clone/tree/HEAD)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.7.0...HEAD)
+
+**Closed issues:**
+
+- Add release automation which would be triggered by a new release. [\#231](https://github.com/tj-django/django-clone/issues/231)
+
+## [v2.7.0](https://github.com/tj-django/django-clone/tree/v2.7.0) (2021-06-24)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.6.1...v2.7.0)
+
+**Fixed bugs:**
+
+- UUIDField with unique re-uses previous value and raises an IntegrityError [\#381](https://github.com/tj-django/django-clone/issues/381)
+
+**Closed issues:**
+
+- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
+
+**Merged pull requests:**
+
+- Updated translation to exclude sample apps [\#384](https://github.com/tj-django/django-clone/pull/384) ([jackton1](https://github.com/jackton1))
+- Resolve bug re-using the source instance value. [\#383](https://github.com/tj-django/django-clone/pull/383) ([jackton1](https://github.com/jackton1))
+- Updated translation. [\#382](https://github.com/tj-django/django-clone/pull/382) ([jackton1](https://github.com/jackton1))
+- Update tj-actions/verify-changed-files action to v7 [\#380](https://github.com/tj-django/django-clone/pull/380) ([renovate[bot]](https://github.com/apps/renovate))
+- Fix typo in doc strings. [\#379](https://github.com/tj-django/django-clone/pull/379) ([jackton1](https://github.com/jackton1))
+- Update precommit hook pycqa/isort to v5.9.1 [\#378](https://github.com/tj-django/django-clone/pull/378) ([renovate[bot]](https://github.com/apps/renovate))
+- Update precommit hook pycqa/isort to v5.9.0 [\#377](https://github.com/tj-django/django-clone/pull/377) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#376](https://github.com/tj-django/django-clone/pull/376) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Upgraded v2.6.0 → v2.6.1 [\#375](https://github.com/tj-django/django-clone/pull/375) ([jackton1](https://github.com/jackton1))
+
 ## [v2.6.1](https://github.com/tj-django/django-clone/tree/v2.6.1) (2021-06-19)
 
 [Full Changelog](https://github.com/tj-django/django-clone/compare/v2.6.0...v2.6.1)
@@ -25,7 +57,6 @@
 **Closed issues:**
 
 - How to clone a question with its choices? [\#315](https://github.com/tj-django/django-clone/issues/315)
-- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
 - Cloning complex model relationships [\#175](https://github.com/tj-django/django-clone/issues/175)
 
 **Merged pull requests:**
