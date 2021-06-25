@@ -33,6 +33,7 @@ Create copies of a model instance with explicit control on how the instance shou
     *   [Duplicating a model instance](#duplicating-a-model-instance)
 
         *   [Bulk cloning a model](#bulk-cloning-a-model)
+        *   [Multi database support](#multi-database-support)
 
     *   [CloneMixin attributes](#clonemixin-attributes)
 
