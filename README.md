@@ -192,6 +192,25 @@ In [11]: test_obj_clone.tags.all()
 Out[11]: <QuerySet [<Tag: men>, <Tag: women>]>
 ```
 
+#### Multi database support
+
+```python
+
+In [6]: test_obj_clone = test_obj.make_clone(using='replica')  # Replicate test object to a different database.
+
+In [7]: test_obj_clone.pk
+Out[7]: 1
+
+In [8]: test_obj_clone.title
+Out[8]: 'New'
+
+In [9]: test_obj_clone.tags.all()
+Out[9]: <QuerySet [<Tag: men>, <Tag: women>]>
+
+In [10]: test_obj_clone._state.db
+Out[10]: 'replica'
+```
+
 ### CloneMixin attributes
 
 #### Explicit
