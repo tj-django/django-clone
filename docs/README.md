@@ -16,7 +16,7 @@ Create copies of a model instance with explicit control on how the instance shou
 
 ## Features
 
-*   Multiple Database support i.e Create a duplicate on one or more databases.
+*   Multi Database support i.e Create a duplicate on one or more databases.
 *   Restrict fields used for creating a duplicate instance.
 *   Detect unique fields and naively add a suffix (`copy {count}`) to each new instance.
 
