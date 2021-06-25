@@ -1,12 +1,21 @@
 # Changelog
 
-## [Unreleased](https://github.com/tj-django/django-clone/tree/HEAD)
+## [v2.7.1](https://github.com/tj-django/django-clone/tree/v2.7.1) (2021-06-25)
 
-[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.7.0...HEAD)
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.7.0...v2.7.1)
 
 **Closed issues:**
 
 - Add release automation which would be triggered by a new release. [\#231](https://github.com/tj-django/django-clone/issues/231)
+
+**Merged pull requests:**
+
+- Updated docs [\#391](https://github.com/tj-django/django-clone/pull/391) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated docs [\#389](https://github.com/tj-django/django-clone/pull/389) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated README.md [\#388](https://github.com/tj-django/django-clone/pull/388) ([jackton1](https://github.com/jackton1))
+- docs: add ptrck as a contributor for code [\#387](https://github.com/tj-django/django-clone/pull/387) ([allcontributors[bot]](https://github.com/apps/allcontributors))
+- Updated docs [\#386](https://github.com/tj-django/django-clone/pull/386) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Upgraded v2.6.1 → v2.7.0 [\#385](https://github.com/tj-django/django-clone/pull/385) ([jackton1](https://github.com/jackton1))
 
 ## [v2.7.0](https://github.com/tj-django/django-clone/tree/v2.7.0) (2021-06-24)
 
@@ -61,7 +70,7 @@
 
 **Merged pull requests:**
 
-- Increase test coverage. [\#373](https://github.com/tj-django/django-clone/pull/373) ([jackton1](https://github.com/jackton1))
+- Increase test coverage and add release automation [\#373](https://github.com/tj-django/django-clone/pull/373) ([jackton1](https://github.com/jackton1))
 - Updated docs [\#372](https://github.com/tj-django/django-clone/pull/372) ([github-actions[bot]](https://github.com/apps/github-actions))
 - Updated locales. [\#371](https://github.com/tj-django/django-clone/pull/371) ([jackton1](https://github.com/jackton1))
 - Updated README.md [\#370](https://github.com/tj-django/django-clone/pull/370) ([jackton1](https://github.com/jackton1))

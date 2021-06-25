@@ -16,7 +16,7 @@ Create copies of a model instance with explicit control on how the instance shou
 
 ## Features
 
-*   Multiple Database support i.e Create a duplicate on one or more databases.
+*   Multi Database support i.e Create a duplicate on one or more databases.
 *   Restrict fields used for creating a duplicate instance.
 *   Detect unique fields and naively add a suffix (`copy {count}`) to each new instance.
 
@@ -33,6 +33,7 @@ Create copies of a model instance with explicit control on how the instance shou
     *   [Duplicating a model instance](#duplicating-a-model-instance)
 
         *   [Bulk cloning a model](#bulk-cloning-a-model)
+        *   [Multi database support](#multi-database-support)
 
     *   [CloneMixin attributes](#clonemixin-attributes)
 
@@ -190,6 +191,25 @@ Out[10]: 'New copy 1'
 
 In [11]: test_obj_clone.tags.all()
 Out[11]: <QuerySet [<Tag: men>, <Tag: women>]>
+```
+
+#### Multi database support
+
+```python
+
+In [6]: test_obj_clone = test_obj.make_clone(using='replica')  # Replicate test object to a different database.
+
+In [7]: test_obj_clone.pk
+Out[7]: 1
+
+In [8]: test_obj_clone.title
+Out[8]: 'New'
+
+In [9]: test_obj_clone.tags.all()
+Out[9]: <QuerySet [<Tag: men>, <Tag: women>]>
+
+In [10]: test_obj_clone._state.db
+Out[10]: 'replica'
 ```
 
 ### CloneMixin attributes
