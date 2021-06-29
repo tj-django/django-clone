@@ -1,5 +1,24 @@
 # Changelog
 
+## [v2.7.2](https://github.com/tj-django/django-clone/tree/v2.7.2) (2021-06-29)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.7.1...v2.7.2)
+
+**Closed issues:**
+
+- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
+
+**Merged pull requests:**
+
+- Use default value only for special fields like timestamp, uuid [\#399](https://github.com/tj-django/django-clone/pull/399) ([yuekui](https://github.com/yuekui))
+- Update dependency asgiref to v3.4.0 [\#398](https://github.com/tj-django/django-clone/pull/398) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#397](https://github.com/tj-django/django-clone/pull/397) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated docs [\#396](https://github.com/tj-django/django-clone/pull/396) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated README.md [\#395](https://github.com/tj-django/django-clone/pull/395) ([jackton1](https://github.com/jackton1))
+- Updated README.md [\#394](https://github.com/tj-django/django-clone/pull/394) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#393](https://github.com/tj-django/django-clone/pull/393) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Upgraded v2.7.0 → v2.7.1 [\#392](https://github.com/tj-django/django-clone/pull/392) ([jackton1](https://github.com/jackton1))
+
 ## [v2.7.1](https://github.com/tj-django/django-clone/tree/v2.7.1) (2021-06-25)
 
 [Full Changelog](https://github.com/tj-django/django-clone/compare/v2.7.0...v2.7.1)
@@ -24,10 +43,6 @@
 **Fixed bugs:**
 
 - UUIDField with unique re-uses previous value and raises an IntegrityError [\#381](https://github.com/tj-django/django-clone/issues/381)
-
-**Closed issues:**
-
-- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
 
 **Merged pull requests:**
 
