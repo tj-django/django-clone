@@ -325,7 +325,7 @@ class CloneMixin(object):
                 f.pre_save(new_instance, add=True)
                 continue
 
-            value = getattr(instance, f.attname, f.get_default())
+            value = getattr(instance, f.attname)
 
             if all(
                 [

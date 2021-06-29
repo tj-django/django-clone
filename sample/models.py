@@ -63,6 +63,7 @@ class Book(CloneModel):
     created_at = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag, through="BookTag")
     sale_tags = models.ManyToManyField(SaleTag, through="BookSaleTag")
+    published_at = models.DateTimeField(null=True, blank=True, default=timezone.now)
 
     def __str__(self):
         return _(self.name)
