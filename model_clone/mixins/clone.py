@@ -321,12 +321,11 @@ class CloneMixin(object):
         new_instance = cls()
 
         for f in fields:
-            value = f.get_default() or getattr(instance, f.attname, None)
+            if not f.editable:
+                f.pre_save(new_instance, add=True)
+                continue
 
-            if isinstance(f, (models.DateTimeField, models.DateField)):
-                if f.auto_now or f.auto_now_add:
-                    f.pre_save(new_instance, add=True)
-                    continue
+            value = getattr(instance, f.attname)
 
             if all(
                 [

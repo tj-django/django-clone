@@ -11,16 +11,17 @@ from model_clone.models import CloneModel
 
 class Author(CloneModel):
     first_name = models.CharField(max_length=200, blank=True, unique=True)
-    last_name = models.CharField(max_length=200, blank=True)
+    last_name = models.CharField(default="Unknown", max_length=200, blank=True)
     age = models.PositiveIntegerField()
 
     uuid = models.UUIDField(default=uuid4, unique=True, editable=False)
 
     SEX_CHOICES = [
+        ("U", "Unknown"),
         ("F", "Female"),
         ("M", "Male"),
     ]
-    sex = models.CharField(choices=SEX_CHOICES, max_length=1)
+    sex = models.CharField(choices=SEX_CHOICES, max_length=1, default="U")
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.PROTECT,
@@ -62,6 +63,7 @@ class Book(CloneModel):
     created_at = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag, through="BookTag")
     sale_tags = models.ManyToManyField(SaleTag, through="BookSaleTag")
+    published_at = models.DateTimeField(null=True, blank=True, default=timezone.now)
 
     def __str__(self):
         return _(self.name)

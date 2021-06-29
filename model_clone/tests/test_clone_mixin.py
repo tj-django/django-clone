@@ -62,12 +62,13 @@ class CloneMixinTestCase(TestCase):
         clone = instance.make_clone({"user": self.user2})
         self.assertNotEqual(instance.pk, clone.pk)
 
-    @patch("sample.models.Book._clone_excluded_fields", new_callable=PropertyMock)
+    @patch("sample.models.Library._clone_excluded_fields", new_callable=PropertyMock)
     def test_cloning_model_with_excluded_fields(self, _clone_excluded_fields_mock):
         _clone_excluded_fields_mock.return_value = ["name"]
         instance = Library.objects.create(name="First library", user=self.user1)
         clone = instance.make_clone({"name": "New Library"})
         self.assertNotEqual(instance.pk, clone.pk)
+        self.assertNotEqual(instance.name, clone.name)
 
     def test_cloning_explict_fields(self):
         name = "New Library"
@@ -77,6 +78,25 @@ class CloneMixinTestCase(TestCase):
         self.assertEqual(instance.name, name)
         self.assertNotEqual(instance.pk, clone.pk)
         self.assertNotEqual(instance.name, clone.name)
+
+    @patch("sample.models.Book._clone_fields", new_callable=PropertyMock)
+    def test_cloning_with_default_value(self, _clone_fields_mock):
+        instance = Book.objects.create(
+            name="Not Published Book", created_by=self.user1, published_at=None
+        )
+        _clone_fields_mock.return_value = ["name", "created_by", "slug", "published_at"]
+        clone = instance.make_clone()
+        self.assertNotEqual(instance.pk, clone.pk)
+        self.assertEqual(instance.name, clone.name)
+        self.assertNotEqual(instance.slug, clone.slug)
+        self.assertIsNone(clone.published_at)
+
+        _clone_fields_mock.return_value.remove("published_at")
+        clone = instance.make_clone()
+        self.assertNotEqual(instance.pk, clone.pk)
+        self.assertEqual(instance.name, clone.name)
+        self.assertNotEqual(instance.slug, clone.slug)
+        self.assertIsNotNone(clone.published_at)
 
     def test_cloning_unique_fk_field(self):
         name = "New Library"
