@@ -4,5 +4,5 @@ from model_clone import CloneMixin
 
 
 class Driver(CloneMixin, models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=200)
     age = models.SmallIntegerField()
