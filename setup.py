@@ -17,7 +17,6 @@ test_requires = [
     "mock",
     "unittest-xml-reporting",
     "codacy-coverage",
-    "django-migration-fixer",
 ]
 
 deploy_requires = [
@@ -49,8 +48,9 @@ extras_require = {
     ],
     'development:python_version >= "3.6"': ["black"],
     "test": test_requires,
+    "test:python_version >= '3.6'": ["black"],
     "lint": lint_requires,
-    'lint:python_version >= "3.6"': ["black"],
+    'lint:python_version >= "3.6"': ["django-migration-fixer"],
     "deploy": deploy_requires,
 }
 
