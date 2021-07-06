@@ -17,6 +17,7 @@ test_requires = [
     "mock",
     "unittest-xml-reporting",
     "codacy-coverage",
+    "django-migration-fixer",
 ]
 
 deploy_requires = [

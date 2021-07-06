@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "sample_assignment",
     "sample_company",
     "sample_driver",
+    "migration_fixer",
 ]
 
 
