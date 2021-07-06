@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import sys
 
 from django.utils.translation import gettext_lazy as _
 
@@ -45,6 +46,9 @@ INSTALLED_APPS = [
     "sample_company",
     "sample_driver",
 ]
+
+if sys.version_info >= (3, 6):
+    INSTALLED_APPS += ["migration_fixer"]
 
 
 TEMPLATES = [
