@@ -48,9 +48,9 @@ extras_require = {
     ],
     'development:python_version >= "3.6"': ["black"],
     "test": test_requires,
-    "test:python_version >= '3.6'": ["black"],
+    "test:python_version >= '3.6'": ["django-migration-fixer"],
     "lint": lint_requires,
-    'lint:python_version >= "3.6"': ["django-migration-fixer"],
+    'lint:python_version >= "3.6"': ["black"],
     "deploy": deploy_requires,
 }
 
