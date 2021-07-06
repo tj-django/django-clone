@@ -42,7 +42,7 @@ jobs:
              sample_assignment/migrations
              sample_driver/migrations
              sample_company/migrations
-          
+
       - name: Commit migration changes
         if: steps.verify-changed-files.outputs.files_changed == 'true'
         run: |
