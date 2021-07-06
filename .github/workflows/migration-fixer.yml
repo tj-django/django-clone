@@ -1,0 +1,59 @@
+name: Fix django migrations
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  fix-migrations:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.6.x'
+
+      - uses: actions/cache@v2.1.6
+        id: pip-cache
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.python-version }}-
+
+      - name: Install dependencies
+        run: |
+          make install-test
+
+      - name: Run django-migration-fixer
+        uses: tj-django/django-migration-fixer@v1.0.1
+
+      - name: Verify Changed files
+        uses: tj-actions/verify-changed-files@v7.1
+        id: verify-changed-files
+        with:
+          files: |
+             sample/migrations
+             sample_assignment/migrations
+             sample_driver/migrations
+             sample_company/migrations
+          
+      - name: Commit migration changes
+        if: steps.verify-changed-files.outputs.files_changed == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add sample/migrations/* sample_assignment/migrations/* sample_driver/migrations/* sample_company/migrations/*
+          git commit -m "Update migrations"
+
+      - name: Push migration changes
+        if: steps.verify-changed-files.outputs.files_changed == 'true'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
