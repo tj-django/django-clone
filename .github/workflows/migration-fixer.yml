@@ -48,7 +48,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add sample/migrations/* sample_assignment/migrations/* sample_driver/migrations/* sample_company/migrations/*
+          git add sample/migrations sample_assignment/migrations sample_driver/migrations sample_company/migrations
           git commit -m "Update migrations"
 
       - name: Push migration changes
