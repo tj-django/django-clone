@@ -35,6 +35,7 @@ lint_requires = [
 
 local_dev_requires = [
     "Django>=1.11.18",
+    "django-migration-fixer",
     "pip-tools",
     "check-manifest",
 ]
