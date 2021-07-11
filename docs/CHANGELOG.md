@@ -1,12 +1,33 @@
 # Changelog
 
-## [v2.7.2](https://github.com/tj-django/django-clone/tree/v2.7.2) (2021-06-29)
+## [v2.8.0](https://github.com/tj-django/django-clone/tree/v2.8.0) (2021-07-11)
 
-[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.7.1...v2.7.2)
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.7.2...v2.8.0)
 
 **Closed issues:**
 
+- Drop Django 1.11 support [\#390](https://github.com/tj-django/django-clone/issues/390)
 - Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
+
+**Merged pull requests:**
+
+- Updated docs [\#417](https://github.com/tj-django/django-clone/pull/417) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated README.md [\#416](https://github.com/tj-django/django-clone/pull/416) ([jackton1](https://github.com/jackton1))
+- Dropped django 1.11 support. [\#415](https://github.com/tj-django/django-clone/pull/415) ([jackton1](https://github.com/jackton1))
+- Update tj-django/django-migration-fixer action to v1.1.0 [\#414](https://github.com/tj-django/django-clone/pull/414) ([renovate[bot]](https://github.com/apps/renovate))
+- Update precommit hook pycqa/isort to v5.9.2 [\#413](https://github.com/tj-django/django-clone/pull/413) ([renovate[bot]](https://github.com/apps/renovate))
+- Update tj-django/django-migration-fixer action to v1.0.7 [\#411](https://github.com/tj-django/django-clone/pull/411) ([renovate[bot]](https://github.com/apps/renovate))
+- Update tj-django/django-migration-fixer action to v1.0.6 [\#409](https://github.com/tj-django/django-clone/pull/409) ([renovate[bot]](https://github.com/apps/renovate))
+- Installed django-migration-fixer [\#406](https://github.com/tj-django/django-clone/pull/406) ([jackton1](https://github.com/jackton1))
+- Create CODE\_OF\_CONDUCT.md [\#405](https://github.com/tj-django/django-clone/pull/405) ([jackton1](https://github.com/jackton1))
+- Update dependency asgiref to v3.4.1 [\#403](https://github.com/tj-django/django-clone/pull/403) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency django to v3.2.5 [\#402](https://github.com/tj-django/django-clone/pull/402) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#401](https://github.com/tj-django/django-clone/pull/401) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Upgraded v2.7.1 → v2.7.2 [\#400](https://github.com/tj-django/django-clone/pull/400) ([jackton1](https://github.com/jackton1))
+
+## [v2.7.2](https://github.com/tj-django/django-clone/tree/v2.7.2) (2021-06-29)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.7.1...v2.7.2)
 
 **Merged pull requests:**
 
