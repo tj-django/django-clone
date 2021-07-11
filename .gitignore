@@ -18,6 +18,8 @@ coverage.*
 htmlcov/
 test-reports/
 
+.venv/
+
 .mypy_cache
 
 *.mo

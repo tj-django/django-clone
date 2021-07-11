@@ -34,7 +34,6 @@ lint_requires = [
 ]
 
 local_dev_requires = [
-    "Django>=1.11.18",
     "pip-tools",
     "check-manifest",
 ]
@@ -104,7 +103,6 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
-        "Framework :: Django :: 1.11",
         "Framework :: Django :: 2.0",
         "Framework :: Django :: 2.1",
         "Framework :: Django :: 2.2",
