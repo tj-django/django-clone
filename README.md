@@ -51,6 +51,8 @@ Create copies of a model instance with explicit control on how the instance shou
 
         *   [CloneModelAdmin class attributes](#clonemodeladmin-class-attributes)
 
+*   [Compatibility](#compatibility)
+
 *   [Running locally](#running-locally)
 
 *   [Found a Bug?](#found-a-bug)
@@ -333,7 +335,6 @@ INSTALLED_APPS = [
 ]
 ```
 
-
 ## Compatibility
 
 |  Python      |  Supported version |
@@ -341,13 +342,11 @@ INSTALLED_APPS = [
 |  Python2.6   |    `=<2.5.3`       |
 |  Python3.5+  |    All versions    |
 
-
 |  Django      |   Supported version |
 |--------------|---------------------|
 |  1.11        |    `=<2.7.2`        |
 |  2.x         |    All versions     |
 |  3.x         |    All versions     |
-
 
 ## Running locally
 
