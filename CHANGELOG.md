@@ -1,5 +1,15 @@
 # Changelog
 
+## [v2.8.1](https://github.com/tj-django/django-clone/tree/v2.8.1) (2021-07-13)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.8.0...v2.8.1)
+
+**Merged pull requests:**
+
+- Update test to include python3.10 and pypy. [\#420](https://github.com/tj-django/django-clone/pull/420) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#419](https://github.com/tj-django/django-clone/pull/419) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Upgraded v2.7.2 → v2.8.0 [\#418](https://github.com/tj-django/django-clone/pull/418) ([jackton1](https://github.com/jackton1))
+
 ## [v2.8.0](https://github.com/tj-django/django-clone/tree/v2.8.0) (2021-07-11)
 
 [Full Changelog](https://github.com/tj-django/django-clone/compare/v2.7.2...v2.8.0)
