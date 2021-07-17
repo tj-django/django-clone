@@ -22,8 +22,8 @@ class Migration(migrations.Migration):
         if django.VERSION >= (2, 2)
         else [
             migrations.AlterField(
-                model_name='saletag',
-                name='name',
+                model_name="saletag",
+                name="name",
                 field=models.CharField(max_length=255, unique=True),
             ),
         ]
