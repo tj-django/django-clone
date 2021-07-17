@@ -1,4 +1,5 @@
 import itertools
+import warnings
 from itertools import repeat
 from typing import Dict, List, Optional
 
@@ -15,7 +16,7 @@ from model_clone.utils import (
     context_mutable_attribute,
     get_fields_and_unique_fields_from_cls,
     get_unique_value,
-    transaction_autocommit,
+    transaction_autocommit, get_unique_default,
 )
 
 
@@ -341,12 +342,31 @@ class CloneMixin(object):
                     and not f.choices
                 ):
                     value = clean_value(value, unique_duplicate_suffix)
-                    if use_unique_duplicate_suffix:
+
+                    if f.has_default():
+                        value = f.get_default()
+
+                        if not callable(f.default):
+                            value = get_unique_default(
+                                model=cls,
+                                fname=f.attname,
+                                value=value,
+                                transform=(
+                                    slugify if isinstance(f, SlugField) else str
+                                ),
+                                suffix=unique_duplicate_suffix,
+                                max_length=f.max_length,
+                                max_attempts=max_unique_duplicate_query_attempts,
+                            )
+
+                    elif use_unique_duplicate_suffix:
                         value = get_unique_value(
-                            obj=instance,
+                            model=cls,
                             fname=f.attname,
                             value=value,
-                            transform=(slugify if isinstance(f, SlugField) else str),
+                            transform=(
+                                slugify if isinstance(f, SlugField) else str
+                            ),
                             suffix=unique_duplicate_suffix,
                             max_length=f.max_length,
                             max_attempts=max_unique_duplicate_query_attempts,

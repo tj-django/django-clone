@@ -1,9 +1,16 @@
+from itertools import count
 from uuid import uuid4
 
+import django
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext as _
+
+from model_clone.utils import get_unique_default
+
+if django.VERSION >= (2, 2):
+    from django.db.models import UniqueConstraint
 
 from model_clone import CloneMixin
 from model_clone.models import CloneModel
@@ -38,8 +45,21 @@ class Author(CloneModel):
         unique_together = (("first_name", "last_name", "sex"),)
 
 
+def get_unique_tag_name():
+    return get_unique_default(
+        model=Tag,
+        fname='name',
+        value='test-tag',
+    )
+
+
 class Tag(CloneModel):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, default=get_unique_tag_name)
+
+    class Meta:
+        constraints = [
+            UniqueConstraint(fields=['name'], name='tag_unique_name'),
+        ] if django.VERSION >= (2, 2) else []
 
     def __str__(self):
         return _(self.name)
@@ -47,6 +67,11 @@ class Tag(CloneModel):
 
 class SaleTag(CloneModel):
     name = models.CharField(max_length=255)
+
+    class Meta:
+        constraints = [
+            UniqueConstraint(fields=['name'], name='sale_tag_unique_name'),
+        ] if django.VERSION >= (2, 2) else []
 
     def __str__(self):
         return _(self.name)
