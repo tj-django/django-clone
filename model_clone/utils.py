@@ -111,9 +111,7 @@ def unpack_unique_constraints(opts, only_fields=()):
     """
     fields = []
     constraints = getattr(
-        opts,
-        "total_unique_constraints",
-        getattr(opts, "constraints", [])
+        opts, "total_unique_constraints", getattr(opts, "constraints", [])
     )
     for constraint in constraints:
         fields.extend([f for f in constraint.fields if f in only_fields])
