@@ -20,4 +20,11 @@ class Migration(migrations.Migration):
             model_name='tag',
             constraint=models.UniqueConstraint(fields=('name',), name='tag_unique_name'),
         ),
-    ]  if django.VERSION >= (2, 2) else []
+    ]  if django.VERSION >= (2, 2) else [
+        migrations.AlterField(
+            model_name='tag',
+            name='name',
+            field=models.CharField(default=sample.models.get_unique_tag_name,
+                                   max_length=255),
+        ),
+    ]

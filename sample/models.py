@@ -56,10 +56,11 @@ def get_unique_tag_name():
 class Tag(CloneModel):
     name = models.CharField(max_length=255, default=get_unique_tag_name)
 
-    class Meta:
-        constraints = [
-            UniqueConstraint(fields=['name'], name='tag_unique_name'),
-        ] if django.VERSION >= (2, 2) else []
+    if django.VERSION >= (2, 2):
+        class Meta:
+            constraints = [
+                UniqueConstraint(fields=['name'], name='tag_unique_name'),
+            ]
 
     def __str__(self):
         return _(self.name)
@@ -68,10 +69,11 @@ class Tag(CloneModel):
 class SaleTag(CloneModel):
     name = models.CharField(max_length=255)
 
-    class Meta:
-        constraints = [
-            UniqueConstraint(fields=['name'], name='sale_tag_unique_name'),
-        ] if django.VERSION >= (2, 2) else []
+    if django.VERSION >= (2, 2):
+        class Meta:
+            constraints = [
+                UniqueConstraint(fields=['name'], name='sale_tag_unique_name'),
+            ]
 
     def __str__(self):
         return _(self.name)
