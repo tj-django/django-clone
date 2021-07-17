@@ -235,11 +235,19 @@ class CloneMixinTestCase(TestCase):
 
     def test_cloning_with_unique_constraint_is_valid(self):
         sale_tag = SaleTag.objects.create(name="test-sale-tag")
-        clone_sale_tag = sale_tag.make_clone()
+        clone_sale_tag_1 = sale_tag.make_clone()
 
-        self.assertNotEqual(sale_tag.pk, clone_sale_tag.pk)
+        self.assertNotEqual(sale_tag.pk, clone_sale_tag_1.pk)
         self.assertRegexpMatches(
-            clone_sale_tag.name,
+            clone_sale_tag_1.name,
+            r"{}\s[\d]".format(SaleTag.UNIQUE_DUPLICATE_SUFFIX),
+        )
+
+        clone_sale_tag_2 = sale_tag.make_clone()
+
+        self.assertNotEqual(clone_sale_tag_1.pk, clone_sale_tag_2.pk)
+        self.assertRegexpMatches(
+            clone_sale_tag_2.name,
             r"{}\s[\d]".format(SaleTag.UNIQUE_DUPLICATE_SUFFIX),
         )
 
