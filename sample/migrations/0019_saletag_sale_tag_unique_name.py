@@ -7,12 +7,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sample', '0018_auto_20210628_2301'),
+        ("sample", "0018_auto_20210628_2301"),
     ]
 
-    operations = [
-        migrations.AddConstraint(
-            model_name='saletag',
-            constraint=models.UniqueConstraint(fields=('name',), name='sale_tag_unique_name'),
-        ),
-    ] if django.VERSION >= (2, 2) else []
+    operations = (
+        [
+            migrations.AddConstraint(
+                model_name="saletag",
+                constraint=models.UniqueConstraint(
+                    fields=("name",), name="sale_tag_unique_name"
+                ),
+            ),
+        ]
+        if django.VERSION >= (2, 2)
+        else []
+    )

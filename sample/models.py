@@ -1,4 +1,3 @@
-from itertools import count
 from uuid import uuid4
 
 import django
@@ -48,8 +47,8 @@ class Author(CloneModel):
 def get_unique_tag_name():
     return get_unique_default(
         model=Tag,
-        fname='name',
-        value='test-tag',
+        fname="name",
+        value="test-tag",
     )
 
 
@@ -57,9 +56,13 @@ class Tag(CloneModel):
     name = models.CharField(max_length=255, default=get_unique_tag_name)
 
     class Meta:
-        constraints = [
-            UniqueConstraint(fields=['name'], name='tag_unique_name'),
-        ] if django.VERSION >= (2, 2) else []
+        constraints = (
+            [
+                UniqueConstraint(fields=["name"], name="tag_unique_name"),
+            ]
+            if django.VERSION >= (2, 2)
+            else []
+        )
 
     def __str__(self):
         return _(self.name)
@@ -69,9 +72,13 @@ class SaleTag(CloneModel):
     name = models.CharField(max_length=255)
 
     class Meta:
-        constraints = [
-            UniqueConstraint(fields=['name'], name='sale_tag_unique_name'),
-        ] if django.VERSION >= (2, 2) else []
+        constraints = (
+            [
+                UniqueConstraint(fields=["name"], name="sale_tag_unique_name"),
+            ]
+            if django.VERSION >= (2, 2)
+            else []
+        )
 
     def __str__(self):
         return _(self.name)

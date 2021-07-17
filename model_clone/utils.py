@@ -208,9 +208,9 @@ def generate_value(value, suffix, transform, max_length, max_attempts):
 def get_unique_value(
     model,
     fname,
-    value='',
+    value="",
     transform=lambda v: v,
-    suffix='',
+    suffix="",
     max_length=None,
     max_attempts=100,
 ):
@@ -283,8 +283,12 @@ def get_fields_and_unique_fields_from_cls(
     unique_fields = [
         f.name
         for f in fields
-        if not f.auto_created and (f.unique or f.name in unique_field_names
-                                   or f.name in unique_constraint_field_names)
+        if not f.auto_created
+        and (
+            f.unique
+            or f.name in unique_field_names
+            or f.name in unique_constraint_field_names
+        )
     ]
 
     return fields, unique_fields
@@ -295,7 +299,7 @@ def get_unique_default(
     fname,
     value,
     transform=lambda v: v,
-    suffix='',
+    suffix="",
     max_length=None,
     max_attempts=100,
 ):

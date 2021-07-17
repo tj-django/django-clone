@@ -446,7 +446,7 @@ class CloneMixinTestCase(TestCase):
         )
         self.assertEqual(
             author_clone_1.last_name,
-            Author._meta.get_field('last_name').get_default(),
+            Author._meta.get_field("last_name").get_default(),
         )
 
         author_clone_2 = author.make_clone()
@@ -460,9 +460,9 @@ class CloneMixinTestCase(TestCase):
         self.assertEqual(
             author_clone_2.last_name,
             "{} {} {}".format(
-                Author._meta.get_field('last_name').get_default(),
+                Author._meta.get_field("last_name").get_default(),
                 Author.UNIQUE_DUPLICATE_SUFFIX,
-                1
+                1,
             ),
         )
 
