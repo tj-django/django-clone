@@ -53,7 +53,8 @@ def get_unique_tag_name():
 
 
 class Tag(CloneModel):
-    name = models.CharField(max_length=255, default=get_unique_tag_name)
+    name = models.CharField(max_length=255, default=get_unique_tag_name,
+                            unique=django.VERSION < (2, 2))
 
     if django.VERSION >= (2, 2):
         class Meta:
@@ -66,7 +67,7 @@ class Tag(CloneModel):
 
 
 class SaleTag(CloneModel):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=django.VERSION < (2, 2))
 
     if django.VERSION >= (2, 2):
         class Meta:
