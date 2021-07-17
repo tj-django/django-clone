@@ -30,12 +30,13 @@ class Migration(migrations.Migration):
         if django.VERSION >= (2, 2)
         else [
             migrations.AlterField(
-                model_name='tag',
-                name='name',
+                model_name="tag",
+                name="name",
                 field=models.CharField(
                     default=sample.models.get_unique_tag_name,
                     max_length=255,
-                    unique=True),
+                    unique=True,
+                ),
             ),
         ]
     )

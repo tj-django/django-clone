@@ -58,6 +58,7 @@ class Tag(CloneModel):
     )
 
     if django.VERSION >= (2, 2):
+
         class Meta:
             constraints = [
                 UniqueConstraint(fields=["name"], name="tag_unique_name"),
