@@ -53,8 +53,9 @@ def get_unique_tag_name():
 
 
 class Tag(CloneModel):
-    name = models.CharField(max_length=255, default=get_unique_tag_name,
-                            unique=django.VERSION < (2, 2))
+    name = models.CharField(
+        max_length=255, default=get_unique_tag_name, unique=django.VERSION < (2, 2)
+    )
 
     if django.VERSION >= (2, 2):
 
