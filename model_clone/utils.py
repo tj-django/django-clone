@@ -110,7 +110,7 @@ def unpack_unique_constraints(opts, only_fields=()):
     :return: Flat list of fields.
     """
     fields = []
-    if hasattr(opts, 'total_unique_constraints'):
+    if hasattr(opts, "total_unique_constraints"):
         for constraint in opts.total_unique_constraints:
             fields.extend([f for f in constraint.fields if f in only_fields])
     return fields
