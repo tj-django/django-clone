@@ -1,5 +1,4 @@
 import itertools
-import warnings
 from itertools import repeat
 from typing import Dict, List, Optional
 
@@ -15,8 +14,9 @@ from model_clone.utils import (
     clean_value,
     context_mutable_attribute,
     get_fields_and_unique_fields_from_cls,
+    get_unique_default,
     get_unique_value,
-    transaction_autocommit, get_unique_default,
+    transaction_autocommit,
 )
 
 
@@ -364,9 +364,7 @@ class CloneMixin(object):
                             model=cls,
                             fname=f.attname,
                             value=value,
-                            transform=(
-                                slugify if isinstance(f, SlugField) else str
-                            ),
+                            transform=(slugify if isinstance(f, SlugField) else str),
                             suffix=unique_duplicate_suffix,
                             max_length=f.max_length,
                             max_attempts=max_unique_duplicate_query_attempts,

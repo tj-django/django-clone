@@ -1,4 +1,3 @@
-from itertools import count
 from uuid import uuid4
 
 import django
@@ -48,8 +47,8 @@ class Author(CloneModel):
 def get_unique_tag_name():
     return get_unique_default(
         model=Tag,
-        fname='name',
-        value='test-tag',
+        fname="name",
+        value="test-tag",
     )
 
 
