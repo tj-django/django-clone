@@ -227,7 +227,7 @@ def get_unique_value(
     new = six.next(it)
     kwargs = {fname: new}
 
-    while qs.filter(**kwargs).exists():
+    while qs.filter(**kwargs).exists():  # pragma: no cover
         new = six.next(it)
         kwargs[fname] = new
 
