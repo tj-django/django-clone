@@ -243,7 +243,7 @@ class CloneMixinTestCase(TestCase):
             r"{}\s[\d]".format(SaleTag.UNIQUE_DUPLICATE_SUFFIX),
         )
 
-        clone_sale_tag_2 = sale_tag.make_clone()
+        clone_sale_tag_2 = clone_sale_tag_1.make_clone()
 
         self.assertNotEqual(clone_sale_tag_1.pk, clone_sale_tag_2.pk)
         self.assertRegexpMatches(
