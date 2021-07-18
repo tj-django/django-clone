@@ -1,5 +1,23 @@
 # Changelog
 
+## [Unreleased](https://github.com/tj-django/django-clone/tree/HEAD)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.9.0...HEAD)
+
+**Fixed bugs:**
+
+- `UniqueConstraint` in Model Meta is not considered [\#330](https://github.com/tj-django/django-clone/issues/330)
+
+## [v2.9.0](https://github.com/tj-django/django-clone/tree/v2.9.0) (2021-07-18)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.8.1...v2.9.0)
+
+**Merged pull requests:**
+
+- Resolved bug cloning models with UniqueConstraint. [\#423](https://github.com/tj-django/django-clone/pull/423) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#422](https://github.com/tj-django/django-clone/pull/422) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Upgraded v2.8.0 → v2.8.1 [\#421](https://github.com/tj-django/django-clone/pull/421) ([jackton1](https://github.com/jackton1))
+
 ## [v2.8.1](https://github.com/tj-django/django-clone/tree/v2.8.1) (2021-07-13)
 
 [Full Changelog](https://github.com/tj-django/django-clone/compare/v2.8.0...v2.8.1)
