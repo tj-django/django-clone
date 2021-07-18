@@ -339,12 +339,12 @@ INSTALLED_APPS = [
 
 |  Python      |  Supported version |
 |--------------|--------------------|
-|  Python2.6   |    `=<2.5.3`       |
+|  Python2.6   |    `<=2.5.3`       |
 |  Python3.5+  |    All versions    |
 
 |  Django      |   Supported version |
 |--------------|---------------------|
-|  1.11        |    `=<2.7.2`        |
+|  1.11        |    `<=2.7.2`        |
 |  2.x         |    All versions     |
 |  3.x         |    All versions     |
 
