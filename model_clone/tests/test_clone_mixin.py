@@ -233,6 +233,34 @@ class CloneMixinTestCase(TestCase):
             list(book_clone.authors.values_list("first_name", "last_name")),
         )
 
+    def test_cloning_with_unique_constraint_is_valid(self):
+        sale_tag = SaleTag.objects.create(name="test-sale-tag")
+        clone_sale_tag_1 = sale_tag.make_clone()
+
+        self.assertNotEqual(sale_tag.pk, clone_sale_tag_1.pk)
+        self.assertRegexpMatches(
+            clone_sale_tag_1.name,
+            r"{}\s[\d]".format(SaleTag.UNIQUE_DUPLICATE_SUFFIX),
+        )
+
+        clone_sale_tag_2 = clone_sale_tag_1.make_clone()
+
+        self.assertNotEqual(clone_sale_tag_1.pk, clone_sale_tag_2.pk)
+        self.assertRegexpMatches(
+            clone_sale_tag_2.name,
+            r"{}\s[\d]".format(SaleTag.UNIQUE_DUPLICATE_SUFFIX),
+        )
+
+    def test_cloning_with_unique_constraint_uses_field_default(self):
+        tag = Tag.objects.create(name="test-tag")
+        clone_tag = tag.make_clone()
+
+        self.assertNotEqual(tag.pk, clone_tag.pk)
+        self.assertRegexpMatches(
+            clone_tag.name,
+            r"\s[\d]",
+        )
+
     @patch("sample.models.Book._clone_m2m_fields", new_callable=PropertyMock)
     def test_cloning_with_explicit_clone_m2m_fields(
         self,
@@ -416,17 +444,51 @@ class CloneMixinTestCase(TestCase):
             created_by=self.user1,
         )
 
-        author_clone = author.make_clone()
+        author_clone_1 = author.make_clone()
 
-        self.assertNotEqual(author.pk, author_clone.pk)
-        self.assertEqual(author.sex, author_clone.sex)
+        self.assertNotEqual(author.pk, author_clone_1.pk)
+        self.assertEqual(author.sex, author_clone_1.sex)
         self.assertEqual(
-            author_clone.first_name,
+            author_clone_1.first_name,
             "{} {} {}".format(first_name, Author.UNIQUE_DUPLICATE_SUFFIX, 1),
         )
         self.assertEqual(
-            author_clone.last_name,
-            "{} {} {}".format(last_name, Author.UNIQUE_DUPLICATE_SUFFIX, 1),
+            author_clone_1.last_name,
+            Author._meta.get_field("last_name").get_default(),
+        )
+
+        author_clone_2 = author.make_clone()
+
+        self.assertNotEqual(author.pk, author_clone_2.pk)
+        self.assertEqual(author.sex, author_clone_2.sex)
+        self.assertEqual(
+            author_clone_2.first_name,
+            "{} {} {}".format(first_name, Author.UNIQUE_DUPLICATE_SUFFIX, 2),
+        )
+        self.assertEqual(
+            author_clone_2.last_name,
+            "{} {} {}".format(
+                Author._meta.get_field("last_name").get_default(),
+                Author.UNIQUE_DUPLICATE_SUFFIX,
+                1,
+            ),
+        )
+
+        author_clone_3 = author.make_clone()
+
+        self.assertNotEqual(author.pk, author_clone_3.pk)
+        self.assertEqual(author.sex, author_clone_3.sex)
+        self.assertEqual(
+            author_clone_3.first_name,
+            "{} {} {}".format(first_name, Author.UNIQUE_DUPLICATE_SUFFIX, 3),
+        )
+        self.assertEqual(
+            author_clone_3.last_name,
+            "{} {} {}".format(
+                Author._meta.get_field("last_name").get_default(),
+                Author.UNIQUE_DUPLICATE_SUFFIX,
+                2,
+            ),
         )
 
     def test_cloning_unique_slug_field(self):

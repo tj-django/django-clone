@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     "sample_driver",
 ]
 
-if sys.version_info >= (3, 6):
+if sys.version_info >= (3, 6) and "--fix" in sys.argv:
     INSTALLED_APPS += ["migration_fixer"]
 
 

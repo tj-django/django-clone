@@ -99,6 +99,25 @@ def create_copy_of_instance(
     return new_obj
 
 
+def unpack_unique_constraints(opts, only_fields=()):
+    """
+    Unpack unique constraint fields.
+
+    :param opts: Model options
+    :type opts: `django.db.models.options.Options`
+    :param only_fields: Fields that should be considered.
+    :type only_fields: `collections.Iterable`
+    :return: Flat list of fields.
+    """
+    fields = []
+    constraints = getattr(
+        opts, "total_unique_constraints", getattr(opts, "constraints", [])
+    )
+    for constraint in constraints:
+        fields.extend([f for f in constraint.fields if f in only_fields])
+    return fields
+
+
 def unpack_unique_together(opts, only_fields=()):
     """
     Unpack unique together fields.
@@ -163,7 +182,7 @@ def get_value(value, suffix, transform, max_length, index):
     Append a suffix to a string value and apply a pass directly to a
     transformation function.
     """
-    duplicate_suffix = " {} {}".format(suffix, index)
+    duplicate_suffix = " " + "{} {}".format(suffix, index).strip()
     total_length = len(value + duplicate_suffix)
 
     if max_length is not None and total_length > max_length:
@@ -189,12 +208,20 @@ def generate_value(value, suffix, transform, max_length, max_attempts):
     )
 
 
-def get_unique_value(obj, fname, value, transform, suffix, max_length, max_attempts):
+def get_unique_value(
+    model,
+    fname,
+    value="",
+    transform=lambda v: v,
+    suffix="",
+    max_length=None,
+    max_attempts=100,
+):
     """
     Generate a unique value using current value and query the model
     for existing objects with the new value.
     """
-    qs = obj.__class__._default_manager.all()
+    qs = model._default_manager.all()
     it = generate_value(value, suffix, transform, max_length, max_attempts)
 
     new = six.next(it)
@@ -251,10 +278,54 @@ def get_fields_and_unique_fields_from_cls(
         only_fields=[f.attname for f in fields],
     )
 
+    unique_constraint_field_names = unpack_unique_constraints(
+        opts=cls._meta,
+        only_fields=[f.attname for f in fields],
+    )
+
     unique_fields = [
         f.name
         for f in fields
-        if not f.auto_created and (f.unique or f.name in unique_field_names)
+        if not f.auto_created
+        and (
+            f.unique
+            or f.name in unique_field_names
+            or f.name in unique_constraint_field_names
+        )
     ]
 
     return fields, unique_fields
+
+
+def get_unique_default(
+    model,
+    fname,
+    value,
+    transform=lambda v: v,
+    suffix="",
+    max_length=None,
+    max_attempts=100,
+):
+    """Get a unique value using the value and adding a suffix if needed."""
+
+    qs = model._default_manager.all()
+
+    if not qs.filter(**{fname: value}).exists():
+        return value
+
+    it = generate_value(
+        value,
+        suffix,
+        transform,
+        max_length,
+        max_attempts,
+    )
+
+    new = six.next(it)
+    kwargs = {fname: new}
+
+    while qs.filter(**kwargs).exists():
+        new = six.next(it)
+        kwargs[fname] = new
+
+    return new
