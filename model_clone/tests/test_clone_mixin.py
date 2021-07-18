@@ -463,14 +463,14 @@ class CloneMixinTestCase(TestCase):
         self.assertEqual(author.sex, author_clone_2.sex)
         self.assertEqual(
             author_clone_2.first_name,
-            "{} {} {}".format(first_name, Author.UNIQUE_DUPLICATE_SUFFIX, 3),
+            "{} {} {}".format(first_name, Author.UNIQUE_DUPLICATE_SUFFIX, 2),
         )
         self.assertEqual(
             author_clone_2.last_name,
             "{} {} {}".format(
                 Author._meta.get_field("last_name").get_default(),
                 Author.UNIQUE_DUPLICATE_SUFFIX,
-                3,
+                2,
             ),
         )
 
@@ -480,14 +480,14 @@ class CloneMixinTestCase(TestCase):
         self.assertEqual(author.sex, author_clone_3.sex)
         self.assertEqual(
             author_clone_3.first_name,
-            "{} {} {}".format(first_name, Author.UNIQUE_DUPLICATE_SUFFIX, 2),
+            "{} {} {}".format(first_name, Author.UNIQUE_DUPLICATE_SUFFIX, 3),
         )
         self.assertEqual(
             author_clone_3.last_name,
             "{} {} {}".format(
                 Author._meta.get_field("last_name").get_default(),
                 Author.UNIQUE_DUPLICATE_SUFFIX,
-                2,
+                3,
             ),
         )
 
