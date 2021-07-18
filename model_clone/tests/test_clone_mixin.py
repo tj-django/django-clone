@@ -470,7 +470,7 @@ class CloneMixinTestCase(TestCase):
             "{} {} {}".format(
                 Author._meta.get_field("last_name").get_default(),
                 Author.UNIQUE_DUPLICATE_SUFFIX,
-                2,
+                1,
             ),
         )
 
@@ -487,7 +487,7 @@ class CloneMixinTestCase(TestCase):
             "{} {} {}".format(
                 Author._meta.get_field("last_name").get_default(),
                 Author.UNIQUE_DUPLICATE_SUFFIX,
-                3,
+                2,
             ),
         )
 
