@@ -474,6 +474,23 @@ class CloneMixinTestCase(TestCase):
             ),
         )
 
+        author_clone_3 = author.make_clone()
+
+        self.assertNotEqual(author.pk, author_clone_3.pk)
+        self.assertEqual(author.sex, author_clone_3.sex)
+        self.assertEqual(
+            author_clone_3.first_name,
+            "{} {} {}".format(first_name, Author.UNIQUE_DUPLICATE_SUFFIX, 2),
+        )
+        self.assertEqual(
+            author_clone_3.last_name,
+            "{} {} {}".format(
+                Author._meta.get_field("last_name").get_default(),
+                Author.UNIQUE_DUPLICATE_SUFFIX,
+                1,
+            ),
+        )
+
     def test_cloning_unique_slug_field(self):
         name = "New Book"
         book = Book.objects.create(name=name, created_by=self.user1, slug=slugify(name))
