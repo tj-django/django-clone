@@ -345,8 +345,8 @@ class CloneMixin(object):
 
                     if f.has_default():
                         value = f.get_default()
-
-                        if not callable(f.default):
+                        
+                        if not callable(f.default) and isinstance(value, str):
                             value = get_unique_default(
                                 model=cls,
                                 fname=f.attname,
@@ -359,7 +359,7 @@ class CloneMixin(object):
                                 max_attempts=max_unique_duplicate_query_attempts,
                             )
 
-                    elif use_unique_duplicate_suffix:
+                    elif use_unique_duplicate_suffix and isinstance(value, str):
                         value = get_unique_value(
                             model=cls,
                             fname=f.attname,
