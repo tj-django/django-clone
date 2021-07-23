@@ -345,7 +345,7 @@ class CloneMixin(object):
 
                     if f.has_default():
                         value = f.get_default()
-                        
+
                         if not callable(f.default) and isinstance(value, str):
                             value = get_unique_default(
                                 model=cls,
