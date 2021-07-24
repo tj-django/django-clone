@@ -2,11 +2,35 @@
 
 ## [Unreleased](https://github.com/tj-django/django-clone/tree/HEAD)
 
-[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.9.0...HEAD)
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.9.1...HEAD)
+
+**Closed issues:**
+
+- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
+
+## [v2.9.1](https://github.com/tj-django/django-clone/tree/v2.9.1) (2021-07-23)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.9.0...v2.9.1)
 
 **Fixed bugs:**
 
+- \[BUG\] unsupported operand type\(s\) for +: 'NoneType' and 'str' [\#433](https://github.com/tj-django/django-clone/issues/433)
 - `UniqueConstraint` in Model Meta is not considered [\#330](https://github.com/tj-django/django-clone/issues/330)
+
+**Merged pull requests:**
+
+- Resolve bug duplicating non str values [\#436](https://github.com/tj-django/django-clone/pull/436) ([jackton1](https://github.com/jackton1))
+- Update codecov/codecov-action action to v2.0.2 [\#435](https://github.com/tj-django/django-clone/pull/435) ([renovate[bot]](https://github.com/apps/renovate))
+- Update codacy/codacy-analysis-cli-action action to v4 [\#434](https://github.com/tj-django/django-clone/pull/434) ([renovate[bot]](https://github.com/apps/renovate))
+- \[pre-commit.ci\] pre-commit autoupdate [\#432](https://github.com/tj-django/django-clone/pull/432) ([pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci))
+- Update codacy/codacy-analysis-cli-action action to v3 [\#431](https://github.com/tj-django/django-clone/pull/431) ([renovate[bot]](https://github.com/apps/renovate))
+- Update tj-django/django-migration-fixer action to v1.1.2 [\#430](https://github.com/tj-django/django-clone/pull/430) ([renovate[bot]](https://github.com/apps/renovate))
+- Update codecov/codecov-action action to v2 [\#429](https://github.com/tj-django/django-clone/pull/429) ([renovate[bot]](https://github.com/apps/renovate))
+- Update tj-django/django-migration-fixer action to v1.1.1 [\#428](https://github.com/tj-django/django-clone/pull/428) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#427](https://github.com/tj-django/django-clone/pull/427) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated docs [\#426](https://github.com/tj-django/django-clone/pull/426) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated docs [\#425](https://github.com/tj-django/django-clone/pull/425) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Upgraded v2.8.1 → v2.9.0 [\#424](https://github.com/tj-django/django-clone/pull/424) ([jackton1](https://github.com/jackton1))
 
 ## [v2.9.0](https://github.com/tj-django/django-clone/tree/v2.9.0) (2021-07-18)
 
@@ -35,7 +59,6 @@
 **Closed issues:**
 
 - Drop Django 1.11 support [\#390](https://github.com/tj-django/django-clone/issues/390)
-- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
 
 **Merged pull requests:**
 
