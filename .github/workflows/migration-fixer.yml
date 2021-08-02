@@ -23,7 +23,7 @@ jobs:
           make install-test
 
       - name: Run django-migration-fixer
-        uses: tj-django/django-migration-fixer@v1.1.2
+        uses: tj-django/django-migration-fixer@v1.1.3
 
       - name: Verify Changed files
         uses: tj-actions/verify-changed-files@v7.1
