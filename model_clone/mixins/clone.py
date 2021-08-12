@@ -98,7 +98,7 @@ class CloneMixin(object):
     MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS = 100  # type: int
 
     @classmethod
-    def check(cls, **kwargs):
+    def check(cls, **kwargs):  # pragma: no cover
         errors = super(CloneMixin, cls).check(**kwargs)
 
         if cls.USE_UNIQUE_DUPLICATE_SUFFIX and not cls.UNIQUE_DUPLICATE_SUFFIX:
