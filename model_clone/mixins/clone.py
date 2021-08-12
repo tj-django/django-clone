@@ -16,7 +16,8 @@ from model_clone.utils import (
     get_fields_and_unique_fields_from_cls,
     get_unique_default,
     get_unique_value,
-    transaction_autocommit, get_value,
+    get_value,
+    transaction_autocommit,
 )
 
 
@@ -316,7 +317,7 @@ class CloneMixin(object):
             "DUPLICATE_SUFFIX",
             CloneMixin.DUPLICATE_SUFFIX,
         )
-        append_duplicate_suffix_to_non_unique_fields =  getattr(
+        append_duplicate_suffix_to_non_unique_fields = getattr(
             cls,
             "APPEND_DUPLICATE_SUFFIX_TO_NON_UNIQUE_FIELDS",
             CloneMixin.APPEND_DUPLICATE_SUFFIX_TO_NON_UNIQUE_FIELDS,
@@ -401,7 +402,10 @@ class CloneMixin(object):
                     f.name not in unique_fields,
                 ]
             ):
-                if isinstance(f, (models.CharField, models.TextField)) and not f.choices:
+                if (
+                    isinstance(f, (models.CharField, models.TextField))
+                    and not f.choices
+                ):
                     value = get_value(
                         value=value,
                         transform=(slugify if isinstance(f, SlugField) else str),
