@@ -219,7 +219,7 @@ Out[10]: 'replica'
 
 |    Attribute        |  Description |
 |:------------------------------:|:------------:|
-| `DUPLICATE_SUFFIX` | Suffix to append to duplicates (NOTE: This requires `USE_DUPLICATE_SUFFIX_FOR_NON_UNIQUE_FIELDS` to be enabled and supports string fields). |
+| `DUPLICATE_SUFFIX` | Suffix to append to duplicates <br> (NOTE: This requires `USE_DUPLICATE_SUFFIX_FOR_NON_UNIQUE_FIELDS` <br> to be enabled and supports string fields). |
 `USE_DUPLICATE_SUFFIX_FOR_NON_UNIQUE_FIELDS` | Enable appending the `DUPLICATE_SUFFIX` to new cloned instances. |
 `UNIQUE_DUPLICATE_SUFFIX` | Suffix to append to unique fields |
 `USE_UNIQUE_DUPLICATE_SUFFIX` | Enable appending the `UNIQUE_DUPLICATE_SUFFIX` to new cloned instances. |
