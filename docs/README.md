@@ -1,14 +1,10 @@
-|  Python   | Django  |  Downloads  |
-|:---------:|:-------:|:-----------:|
-| [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django_clone.svg)](https://pypi.org/project/django-clone) | [![PyPI - Django Version](https://img.shields.io/pypi/djversions/django_clone.svg)](https://docs.djangoproject.com/en/3.0/releases/) | [![Downloads](https://pepy.tech/badge/django-clone)](https://pepy.tech/project/django-clone) |
+|  Python   | Django  |  Downloads  |   Code Style   |
+|:---------:|:-------:|:-----------:|:--------------:|
+| [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django_clone.svg)](https://pypi.org/project/django-clone) | [![PyPI - Django Version](https://img.shields.io/pypi/djversions/django_clone.svg)](https://docs.djangoproject.com/en/3.0/releases/) | [![Downloads](https://pepy.tech/badge/django-clone)](https://pepy.tech/project/django-clone) | [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) |
 
-|    PyPI         | Test | Vulnerabilities | Coverage | Code Quality  |
-|:---------------:|:----:|:---------------:|:--------:|:-------------:|
-| [![PyPI version](https://badge.fury.io/py/django-clone.svg)](https://badge.fury.io/py/django-clone) | [![Test](https://github.com/tj-django/django-clone/workflows/Test/badge.svg)](https://github.com/tj-django/django-clone/actions?query=workflow%3ATest) | [![Known Vulnerabilities](https://snyk.io/test/github/tj-django/django-clone/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/tj-django/django-clone?targetFile=requirements.txt) | [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/b33dd02dbb034d7fa9886a99f5383ea6)](https://www.codacy.com/gh/tj-django/django-clone?utm_source=github.com\&utm_medium=referral\&utm_content=tj-django/django-clone\&utm_campaign=Badge_Coverage) <br/> [![codecov](https://codecov.io/gh/tj-django/django-clone/branch/main/graph/badge.svg?token=2NE21Oe50Q)](https://codecov.io/gh/tj-django/django-clone)| [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b33dd02dbb034d7fa9886a99f5383ea6)](https://www.codacy.com/gh/tj-django/django-clone?utm_source=github.com\&utm_medium=referral\&utm_content=tj-django/django-clone\&utm_campaign=Badge_Grade)
-
-| Dependencies   |  Code Style   |  Pre-Commit |
-|:--------------:|:-------------:|:-----------:|
-| [![Updates](https://pyup.io/repos/github/tj-django/django-clone/shield.svg)](https://pyup.io/repos/github/tj-django/django-clone/) | [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) |  [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/tj-django/django-clone/main.svg)](https://results.pre-commit.ci/latest/github/tj-django/django-clone/main) |
+|    PyPI         | Test | Vulnerabilities | Coverage | Code Quality  | Dependencies   |  Pre-Commit   |
+|:---------------:|:----:|:---------------:|:--------:|:-------------:|:--------------:|:-------------:|
+| [![PyPI version](https://badge.fury.io/py/django-clone.svg)](https://badge.fury.io/py/django-clone) | [![Test](https://github.com/tj-django/django-clone/workflows/Test/badge.svg)](https://github.com/tj-django/django-clone/actions?query=workflow%3ATest) | [![Known Vulnerabilities](https://snyk.io/test/github/tj-django/django-clone/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/tj-django/django-clone?targetFile=requirements.txt) | [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/b33dd02dbb034d7fa9886a99f5383ea6)](https://www.codacy.com/gh/tj-django/django-clone?utm_source=github.com\&utm_medium=referral\&utm_content=tj-django/django-clone\&utm_campaign=Badge_Coverage) <br/> [![codecov](https://codecov.io/gh/tj-django/django-clone/branch/main/graph/badge.svg?token=2NE21Oe50Q)](https://codecov.io/gh/tj-django/django-clone)| [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b33dd02dbb034d7fa9886a99f5383ea6)](https://www.codacy.com/gh/tj-django/django-clone?utm_source=github.com\&utm_medium=referral\&utm_content=tj-django/django-clone\&utm_campaign=Badge_Grade) | [![Updates](https://pyup.io/repos/github/tj-django/django-clone/shield.svg)](https://pyup.io/repos/github/tj-django/django-clone/) |  [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/tj-django/django-clone/main.svg)](https://results.pre-commit.ci/latest/github/tj-django/django-clone/main) |
 
 ## django-clone
 
@@ -38,8 +34,8 @@ Create copies of a model instance with explicit control on how the instance shou
 
     *   [CloneMixin attributes](#clonemixin-attributes)
 
-        *   [Explicit](#explicit)
-        *   [Implicit](#implicit)
+        *   [Explicit (include only these fields)](#explicit-include-only-these-fields)
+        *   [Implicit (include all except these fields)](#implicit-include-all-except-these-fields)
 
     *   [Creating clones without subclassing `CloneMixin`.](#creating-clones-without-subclassing-clonemixin)
 
@@ -217,18 +213,26 @@ Out[10]: 'replica'
 
 ### CloneMixin attributes
 
-#### Explicit
+|    Attribute        |  Description |
+|:------------------------------:|:------------:|
+| `DUPLICATE_SUFFIX` | Suffix to append to duplicates <br> (NOTE: This requires `USE_DUPLICATE_SUFFIX_FOR_NON_UNIQUE_FIELDS` <br> to be enabled and supports string fields). |
+`USE_DUPLICATE_SUFFIX_FOR_NON_UNIQUE_FIELDS` | Enable appending the `DUPLICATE_SUFFIX` to new cloned instances. |
+`UNIQUE_DUPLICATE_SUFFIX` | Suffix to append to unique fields |
+`USE_UNIQUE_DUPLICATE_SUFFIX` | Enable appending the `UNIQUE_DUPLICATE_SUFFIX` to new cloned instances. |
+`MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS` | The max query attempt while generating unique values for a case of unique conflicts. |
 
-|    Field Names        |  Description |
+#### Explicit (include only these fields)
+
+|    Attribute        |  Description |
 |:------------------------------:|:------------:|
 | `_clone_fields` | Restrict the list of fields to copy from the instance (By default: Copies all fields excluding auto-created/non editable model fields) |
 `_clone_m2m_fields` | Restricted Many to many fields (i.e Test.tags) |
 `_clone_m2o_or_o2m_fields` | Restricted Many to One/One to Many fields |
 `_clone_o2o_fields` | Restricted One to One fields |
 
-#### Implicit
+#### Implicit (include all except these fields)
 
-|  Field Names (include all except these fields.) | Description |
+|  Attribute  | Description |
 |:--------------------:|:-----------:|
 | `_clone_excluded_fields` | Excluded model fields. |
 `_clone_excluded_m2m_fields` | Excluded many to many fields. |
