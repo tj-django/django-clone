@@ -116,6 +116,21 @@ class CloneMixin(object):
                 )
             )
 
+        if cls.USE_DUPLICATE_SUFFIX_FOR_NON_UNIQUE_FIELDS and not cls.DUPLICATE_SUFFIX:
+            errors.append(
+                Error(
+                    "UNIQUE_DUPLICATE_SUFFIX is required.",
+                    hint=(
+                            "Please provide DUPLICATE_SUFFIX"
+                            + " for {} or set USE_DUPLICATE_SUFFIX_FOR_NON_UNIQUE_FIELDS=False".format(
+                        cls.__name__
+                    )
+                    ),
+                    obj=cls,
+                    id="{}.E001".format(ModelCloneConfig.name),
+                )
+            )
+
         if all([cls._clone_fields, cls._clone_excluded_fields]):
             errors.append(
                 Error(
