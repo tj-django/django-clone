@@ -121,10 +121,10 @@ class CloneMixin(object):
                 Error(
                     "UNIQUE_DUPLICATE_SUFFIX is required.",
                     hint=(
-                            "Please provide DUPLICATE_SUFFIX"
-                            + " for {} or set USE_DUPLICATE_SUFFIX_FOR_NON_UNIQUE_FIELDS=False".format(
-                        cls.__name__
-                    )
+                        "Please provide DUPLICATE_SUFFIX"
+                        + " for {} or set USE_DUPLICATE_SUFFIX_FOR_NON_UNIQUE_FIELDS=False".format(
+                            cls.__name__
+                        )
                     ),
                     obj=cls,
                     id="{}.E001".format(ModelCloneConfig.name),
