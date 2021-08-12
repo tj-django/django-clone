@@ -226,7 +226,7 @@ Out[10]: 'replica'
 `MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS` | The max query attempt while generating unique values for a case of unique conflicts. |
 
 
-#### Explicit (Cloneable fields)
+#### Explicit (include only these fields)
 
 |    Attribute        |  Description |
 |:------------------------------:|:------------:|
@@ -235,9 +235,9 @@ Out[10]: 'replica'
 `_clone_m2o_or_o2m_fields` | Restricted Many to One/One to Many fields |
 `_clone_o2o_fields` | Restricted One to One fields |
 
-#### Implicit (Cloneable fields)
+#### Implicit (include all except these fields)
 
-|  Attribute (include all except these fields.) | Description |
+|  Attribute  | Description |
 |:--------------------:|:-----------:|
 | `_clone_excluded_fields` | Excluded model fields. |
 `_clone_excluded_m2m_fields` | Excluded many to many fields. |
