@@ -38,8 +38,8 @@ Create copies of a model instance with explicit control on how the instance shou
 
     *   [CloneMixin attributes](#clonemixin-attributes)
 
-        *   [Explicit](#explicit)
-        *   [Implicit](#implicit)
+        *   [Explicit (include only these fields)](#explicit-include-only-these-fields)
+        *   [Implicit (include all except these fields)](#implicit-include-all-except-these-fields)
 
     *   [Creating clones without subclassing `CloneMixin`.](#creating-clones-without-subclassing-clonemixin)
 
@@ -225,7 +225,6 @@ Out[10]: 'replica'
 `USE_UNIQUE_DUPLICATE_SUFFIX` | Enable appending the `UNIQUE_DUPLICATE_SUFFIX` to new cloned instances. |
 `MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS` | The max query attempt while generating unique values for a case of unique conflicts. |
 
-
 #### Explicit (include only these fields)
 
 |    Attribute        |  Description |
@@ -243,7 +242,6 @@ Out[10]: 'replica'
 `_clone_excluded_m2m_fields` | Excluded many to many fields. |
 `_clone_excluded_m2o_or_o2m_fields` |  Excluded Many to One/One to Many fields. |
 `_clone_excluded_o2o_fields` | Excluded one to one fields. |
-
 
 > **NOTE:** :warning:
 >
