@@ -16,7 +16,7 @@ from model_clone.utils import (
     get_fields_and_unique_fields_from_cls,
     get_unique_default,
     get_unique_value,
-    transaction_autocommit,
+    transaction_autocommit, get_value,
 )
 
 
@@ -90,9 +90,11 @@ class CloneMixin(object):
     _clone_excluded_m2o_or_o2m_fields = []  # type: List[str]
     _clone_excluded_o2o_fields = []  # type: List[str]
 
+    DUPLICATE_SUFFIX = "copy"  # type: str
     UNIQUE_DUPLICATE_SUFFIX = "copy"  # type: str
     USE_UNIQUE_DUPLICATE_SUFFIX = True  # type: bool
     MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS = 100  # type: int
+    APPEND_DUPLICATE_SUFFIX_TO_NON_UNIQUE_FIELDS = False  # type: bool
 
     @classmethod
     def check(cls, **kwargs):
@@ -309,9 +311,19 @@ class CloneMixin(object):
             "MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS",
             CloneMixin.MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS,
         )
+        duplicate_suffix = getattr(
+            cls,
+            "DUPLICATE_SUFFIX",
+            CloneMixin.DUPLICATE_SUFFIX,
+        )
+        append_duplicate_suffix_to_non_unique_fields =  getattr(
+            cls,
+            "APPEND_DUPLICATE_SUFFIX_TO_NON_UNIQUE_FIELDS",
+            CloneMixin.APPEND_DUPLICATE_SUFFIX_TO_NON_UNIQUE_FIELDS,
+        )
 
         fields, unique_fields = get_fields_and_unique_fields_from_cls(
-            cls=cls,
+            model=cls,
             force=force,
             clone_fields=clone_fields,
             clone_excluded_fields=clone_excluded_fields,
@@ -381,6 +393,21 @@ class CloneMixin(object):
                         )
                         sub_instance.save(using=using)
                         value = sub_instance.pk
+            elif all(
+                [
+                    append_duplicate_suffix_to_non_unique_fields,
+                    f.concrete,
+                    f.editable,
+                    f.name not in unique_fields,
+                ]
+            ):
+                if isinstance(f, (models.CharField, models.TextField)) and not f.choices:
+                    value = get_value(
+                        value=value,
+                        transform=(slugify if isinstance(f, SlugField) else str),
+                        suffix=duplicate_suffix,
+                        max_length=f.max_length,
+                    )
 
             setattr(new_instance, f.attname, value)
 

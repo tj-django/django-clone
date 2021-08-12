@@ -177,12 +177,16 @@ def context_mutable_attribute(obj, key, value):
             delattr(obj, key)  # pragma: no cover
 
 
-def get_value(value, suffix, transform, max_length, index):
+def get_value(value, suffix, transform, max_length, index=None):
     """
     Append a suffix to a string value and apply a pass directly to a
     transformation function.
     """
-    duplicate_suffix = " " + "{} {}".format(suffix, index).strip()
+    if index is None:
+        duplicate_suffix = " {}".format(suffix.strip())
+    else:
+        duplicate_suffix = " {} {}".format(suffix.strip(), index)
+
     total_length = len(value + duplicate_suffix)
 
     if max_length is not None and total_length > max_length:
@@ -235,7 +239,7 @@ def get_unique_value(
 
 
 def get_fields_and_unique_fields_from_cls(
-    cls,
+    model,
     force,
     clone_fields,
     clone_excluded_fields,
@@ -248,7 +252,7 @@ def get_fields_and_unique_fields_from_cls(
     """
     fields = []
 
-    for f in cls._meta.concrete_fields:
+    for f in model._meta.concrete_fields:
         valid = False
         if not getattr(f, "primary_key", False):
             if clone_fields and not force and not getattr(f, "one_to_one", False):
@@ -274,12 +278,12 @@ def get_fields_and_unique_fields_from_cls(
             fields.append(f)
 
     unique_field_names = unpack_unique_together(
-        opts=cls._meta,
+        opts=model._meta,
         only_fields=[f.attname for f in fields],
     )
 
     unique_constraint_field_names = unpack_unique_constraints(
-        opts=cls._meta,
+        opts=model._meta,
         only_fields=[f.attname for f in fields],
     )
 
