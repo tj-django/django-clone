@@ -92,10 +92,10 @@ class CloneMixin(object):
     _clone_excluded_o2o_fields = []  # type: List[str]
 
     DUPLICATE_SUFFIX = "copy"  # type: str
+    USE_DUPLICATE_SUFFIX_FOR_NON_UNIQUE_FIELDS = False  # type: bool
     UNIQUE_DUPLICATE_SUFFIX = "copy"  # type: str
     USE_UNIQUE_DUPLICATE_SUFFIX = True  # type: bool
     MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS = 100  # type: int
-    APPEND_DUPLICATE_SUFFIX_TO_NON_UNIQUE_FIELDS = False  # type: bool
 
     @classmethod
     def check(cls, **kwargs):
@@ -317,10 +317,10 @@ class CloneMixin(object):
             "DUPLICATE_SUFFIX",
             CloneMixin.DUPLICATE_SUFFIX,
         )
-        append_duplicate_suffix_to_non_unique_fields = getattr(
+        use_duplicate_suffix_for_non_unique_fields = getattr(
             cls,
-            "APPEND_DUPLICATE_SUFFIX_TO_NON_UNIQUE_FIELDS",
-            CloneMixin.APPEND_DUPLICATE_SUFFIX_TO_NON_UNIQUE_FIELDS,
+            "USE_DUPLICATE_SUFFIX_FOR_NON_UNIQUE_FIELDS",
+            CloneMixin.USE_DUPLICATE_SUFFIX_FOR_NON_UNIQUE_FIELDS,
         )
 
         fields, unique_fields = get_fields_and_unique_fields_from_cls(
@@ -396,7 +396,7 @@ class CloneMixin(object):
                         value = sub_instance.pk
             elif all(
                 [
-                    append_duplicate_suffix_to_non_unique_fields,
+                    use_duplicate_suffix_for_non_unique_fields,
                     f.concrete,
                     f.editable,
                     f.name not in unique_fields,
