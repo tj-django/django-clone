@@ -217,23 +217,33 @@ Out[10]: 'replica'
 
 ### CloneMixin attributes
 
-#### Explicit
+|    Attribute        |  Description |
+|:------------------------------:|:------------:|
+| `DUPLICATE_SUFFIX` | Suffix to append to duplicates (NOTE: This requires `USE_DUPLICATE_SUFFIX_FOR_NON_UNIQUE_FIELDS` to be enabled and supports string fields). |
+`USE_DUPLICATE_SUFFIX_FOR_NON_UNIQUE_FIELDS` | Enable appending the `DUPLICATE_SUFFIX` to new cloned instances. |
+`UNIQUE_DUPLICATE_SUFFIX` | Suffix to append to unique fields |
+`USE_UNIQUE_DUPLICATE_SUFFIX` | Enable appending the `UNIQUE_DUPLICATE_SUFFIX` to new cloned instances. |
+`MAX_UNIQUE_DUPLICATE_QUERY_ATTEMPTS` | The max query attempt while generating unique values for a case of unique conflicts. |
 
-|    Field Names        |  Description |
+
+#### Explicit (Cloneable fields)
+
+|    Attribute        |  Description |
 |:------------------------------:|:------------:|
 | `_clone_fields` | Restrict the list of fields to copy from the instance (By default: Copies all fields excluding auto-created/non editable model fields) |
 `_clone_m2m_fields` | Restricted Many to many fields (i.e Test.tags) |
 `_clone_m2o_or_o2m_fields` | Restricted Many to One/One to Many fields |
 `_clone_o2o_fields` | Restricted One to One fields |
 
-#### Implicit
+#### Implicit (Cloneable fields)
 
-|  Field Names (include all except these fields.) | Description |
+|  Attribute (include all except these fields.) | Description |
 |:--------------------:|:-----------:|
 | `_clone_excluded_fields` | Excluded model fields. |
 `_clone_excluded_m2m_fields` | Excluded many to many fields. |
 `_clone_excluded_m2o_or_o2m_fields` |  Excluded Many to One/One to Many fields. |
 `_clone_excluded_o2o_fields` | Excluded one to one fields. |
+
 
 > **NOTE:** :warning:
 >
