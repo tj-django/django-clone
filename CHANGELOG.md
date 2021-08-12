@@ -2,11 +2,38 @@
 
 ## [Unreleased](https://github.com/tj-django/django-clone/tree/HEAD)
 
-[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.9.1...HEAD)
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.9.2...HEAD)
+
+**Merged pull requests:**
+
+- Updated docs [\#450](https://github.com/tj-django/django-clone/pull/450) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated README.md [\#449](https://github.com/tj-django/django-clone/pull/449) ([jackton1](https://github.com/jackton1))
+
+## [v2.9.2](https://github.com/tj-django/django-clone/tree/v2.9.2) (2021-08-12)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.9.1...v2.9.2)
+
+**Implemented enhancements:**
+
+- Add setting to enable/disable appending copy \(x\) to string fields. [\#308](https://github.com/tj-django/django-clone/issues/308)
 
 **Closed issues:**
 
 - Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
+
+**Merged pull requests:**
+
+- Updated checks. [\#447](https://github.com/tj-django/django-clone/pull/447) ([jackton1](https://github.com/jackton1))
+- Updated README.md [\#446](https://github.com/tj-django/django-clone/pull/446) ([jackton1](https://github.com/jackton1))
+- Added support for adding duplicate suffix 'copy' to non unique fields. [\#445](https://github.com/tj-django/django-clone/pull/445) ([jackton1](https://github.com/jackton1))
+- Updated admin to check querystring parameters and use the obj instance instead of the object\_id. [\#444](https://github.com/tj-django/django-clone/pull/444) ([jackton1](https://github.com/jackton1))
+- Update tj-django/django-migration-fixer action to v1.2.0 [\#443](https://github.com/tj-django/django-clone/pull/443) ([renovate[bot]](https://github.com/apps/renovate))
+- Update tj-django/django-migration-fixer action to v1.1.4 [\#442](https://github.com/tj-django/django-clone/pull/442) ([renovate[bot]](https://github.com/apps/renovate))
+- Update tj-django/django-migration-fixer action to v1.1.3 [\#441](https://github.com/tj-django/django-clone/pull/441) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency django to v3.2.6 [\#440](https://github.com/tj-django/django-clone/pull/440) ([renovate[bot]](https://github.com/apps/renovate))
+- Update precommit hook pycqa/isort to v5.9.3 [\#439](https://github.com/tj-django/django-clone/pull/439) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#438](https://github.com/tj-django/django-clone/pull/438) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Upgraded v2.9.0 → v2.9.1 [\#437](https://github.com/tj-django/django-clone/pull/437) ([jackton1](https://github.com/jackton1))
 
 ## [v2.9.1](https://github.com/tj-django/django-clone/tree/v2.9.1) (2021-07-23)
 
