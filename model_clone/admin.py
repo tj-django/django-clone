@@ -29,7 +29,7 @@ class CloneModelAdminMixin(object):
 
             obj = self.get_object(request, unquote(object_id), to_field)
 
-            if object_id is not None and request.GET.get("duplicate"):
+            if obj is not None and request.GET.get("duplicate") == "true":
                 clone = obj.make_clone()
                 clone.save()
                 self.message_user(
