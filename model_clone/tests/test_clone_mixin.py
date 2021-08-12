@@ -521,6 +521,23 @@ class CloneMixinTestCase(TestCase):
                 slugify("{} {} {}".format(book.slug, Book.UNIQUE_DUPLICATE_SUFFIX, i)),
             )
 
+    @patch("sample.models.Book.USE_DUPLICATE_SUFFIX_FOR_NON_UNIQUE_FIELDS", new_callable=PropertyMock)
+    def test_making_sub_clones_of_a_non_unique_slug_field_appends_copy(
+        self,
+        use_duplicate_suffix_for_non_unique_fields_mock,
+    ):
+        name = "New Book"
+        book = Book.objects.create(name=name, created_by=self.user1, slug=slugify(name), custom_slug=slugify(name))
+
+        use_duplicate_suffix_for_non_unique_fields_mock.return_value = True
+
+        book_clone = book.make_clone()
+
+        self.assertEqual(
+            book_clone.custom_slug,
+            slugify("{} {}".format(book.custom_slug, Book.DUPLICATE_SUFFIX)),
+        )
+
     def test_cloning_unique_fields_max_length(self):
         """
         Max unique field length handling.

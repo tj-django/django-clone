@@ -76,7 +76,7 @@ def create_copy_of_instance(
 
     new_obj = instance.__class__(**defaults)
 
-    exclude = exclude or [
+    exclude = set([
         f.name
         for f in instance._meta.fields
         if any(
@@ -86,7 +86,7 @@ def create_copy_of_instance(
                 f.null,
             ]
         )
-    ]
+    ] + list(exclude))
 
     # Bug with django using full_clean on a different db
     if using == default_db_alias:
