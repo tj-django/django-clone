@@ -76,17 +76,20 @@ def create_copy_of_instance(
 
     new_obj = instance.__class__(**defaults)
 
-    exclude = set([
-        f.name
-        for f in instance._meta.fields
-        if any(
-            [
-                all([f.name not in defaults, f.attname not in defaults]),
-                f.has_default(),
-                f.null,
-            ]
-        )
-    ] + list(exclude))
+    exclude = set(
+        [
+            f.name
+            for f in instance._meta.fields
+            if any(
+                [
+                    all([f.name not in defaults, f.attname not in defaults]),
+                    f.has_default(),
+                    f.null,
+                ]
+            )
+        ]
+        + list(exclude)
+    )
 
     # Bug with django using full_clean on a different db
     if using == default_db_alias:
