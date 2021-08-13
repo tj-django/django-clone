@@ -365,11 +365,13 @@ class CloneMixin(object):
                 ]
             ):
                 # Do not try to get unique value for enum type field
-                if all([
-                    isinstance(f, (models.CharField, models.TextField)),
-                    not f.choices,
-                    isinstance(value, str),
-                ]):
+                if all(
+                    [
+                        isinstance(f, (models.CharField, models.TextField)),
+                        not f.choices,
+                        isinstance(value, str),
+                    ]
+                ):
                     value = clean_value(value, unique_duplicate_suffix)
 
                     if f.has_default():
