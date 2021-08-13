@@ -8,11 +8,12 @@
 
 ## django-clone
 
-Create copies of a model instance with explicit control on how the instance should be duplicated (limiting fields or related objects copied) with unique field detection.
+Create copies of a model instance with explicit control on how the instance should be duplicated (limiting fields or related objects copied) with unique field detection. This solves the problem introduced by using `instance.pk = None` and `instance.save()` which results in copying more object state than required.
 
 ## Features
 
 *   100% test coverage.
+*   More control over how a model instance should be duplicated
 *   Multi Database support i.e Create a duplicate on one or more databases.
 *   Restrict fields used for creating a duplicate instance.
 *   Detect unique fields and naively add a suffix (`copy {count}`) to each new instance.
