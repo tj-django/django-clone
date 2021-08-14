@@ -1,11 +1,20 @@
 # Changelog
 
-## [Unreleased](https://github.com/tj-django/django-clone/tree/HEAD)
+## [v2.9.3](https://github.com/tj-django/django-clone/tree/v2.9.3) (2021-08-13)
 
-[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.9.2...HEAD)
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.9.2...v2.9.3)
+
+**Fixed bugs:**
+
+- \[BUG\] Cloning fails with nullable strings on regex [\#453](https://github.com/tj-django/django-clone/issues/453)
 
 **Merged pull requests:**
 
+- Fixed bug with calling clean on None values [\#456](https://github.com/tj-django/django-clone/pull/456) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#455](https://github.com/tj-django/django-clone/pull/455) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated README.md [\#454](https://github.com/tj-django/django-clone/pull/454) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#452](https://github.com/tj-django/django-clone/pull/452) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Upgraded v2.9.1 → v2.9.2 [\#451](https://github.com/tj-django/django-clone/pull/451) ([jackton1](https://github.com/jackton1))
 - Updated docs [\#450](https://github.com/tj-django/django-clone/pull/450) ([github-actions[bot]](https://github.com/apps/github-actions))
 - Updated README.md [\#449](https://github.com/tj-django/django-clone/pull/449) ([jackton1](https://github.com/jackton1))
 
