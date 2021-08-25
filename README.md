@@ -67,6 +67,8 @@ pip install django-clone
 
 ## Usage
 
+### Subclassing the `CloneModel`
+
 **CHANGE**
 
 ```python
@@ -86,7 +88,7 @@ class MyModel(CloneModel):
     title = models.CharField(max_length=200)
 ```
 
-### Subclassing the `CloneModel`
+#### Example
 
 ```python
 from django.db import models
