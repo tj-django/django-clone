@@ -26,6 +26,8 @@ Create copies of a model instance with explicit control on how the instance shou
 
     *   [Subclassing the `CloneModel`](#subclassing-the-clonemodel)
 
+        *   [Example](#example)
+
     *   [Using the `CloneMixin`](#using-the-clonemixin)
 
     *   [Duplicating a model instance](#duplicating-a-model-instance)
