@@ -90,7 +90,7 @@ class MyModel(CloneModel):
     title = models.CharField(max_length=200)
 ```
 
-#### Example
+**Example**
 
 ```python
 from django.db import models
