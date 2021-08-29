@@ -18,5 +18,5 @@ six==1.16.0
     # via django-clone (setup.py)
 sqlparse==0.4.1
     # via django
-typing-extensions==3.10.0.0
+typing-extensions==3.10.0.1
     # via asgiref
