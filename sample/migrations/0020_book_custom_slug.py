@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("sample", "0020_auto_20210717_2230"),
+        ("sample", "0019_saletag_sale_tag_unique_name"),
     ]
 
     operations = [
