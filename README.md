@@ -160,6 +160,17 @@ Out[8]: 'New copy 1'
 
 In [9]: test_obj_clone.tags.all()
 Out[9]: <QuerySet [<Tag: men>, <Tag: women>]>
+
+In [6]: test_obj_clone = test_obj.make_clone(attrs={'title': 'Updated title'})
+
+In [7]: test_obj_clone.pk
+Out[7]: 3
+
+In [8]: test_obj_clone.title
+Out[8]: 'Updated title'
+
+In [9]: test_obj_clone.tags.all()
+Out[9]: <QuerySet [<Tag: men>, <Tag: women>]>
 ```
 
 #### Bulk cloning a model
