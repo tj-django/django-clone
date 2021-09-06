@@ -1,5 +1,44 @@
 # Changelog
 
+## [v2.9.4](https://github.com/tj-django/django-clone/tree/v2.9.4) (2021-09-06)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.9.3...v2.9.4)
+
+**Implemented enhancements:**
+
+- \[Feature\] Option to modify cloned object before saving [\#469](https://github.com/tj-django/django-clone/issues/469)
+
+**Closed issues:**
+
+- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
+
+**Merged pull requests:**
+
+- Updated docs [\#482](https://github.com/tj-django/django-clone/pull/482) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Added support for modifying the duplicate instance before it's saved [\#481](https://github.com/tj-django/django-clone/pull/481) ([jackton1](https://github.com/jackton1))
+- Update tj-actions/verify-changed-files action to v7.2 [\#480](https://github.com/tj-django/django-clone/pull/480) ([renovate[bot]](https://github.com/apps/renovate))
+- Update tj-django/django-migration-fixer action to v1.3.2 [\#479](https://github.com/tj-django/django-clone/pull/479) ([renovate[bot]](https://github.com/apps/renovate))
+- Update pascalgn/automerge-action action to v0.14.3 [\#478](https://github.com/tj-django/django-clone/pull/478) ([renovate[bot]](https://github.com/apps/renovate))
+- Update tj-django/django-migration-fixer action to v1.3.1 [\#477](https://github.com/tj-django/django-clone/pull/477) ([renovate[bot]](https://github.com/apps/renovate))
+- Upgraded django-migration-fixer to v1.3.4 [\#476](https://github.com/tj-django/django-clone/pull/476) ([jackton1](https://github.com/jackton1))
+- Update dependency django to v3.2.7 [\#475](https://github.com/tj-django/django-clone/pull/475) ([renovate[bot]](https://github.com/apps/renovate))
+- \[pre-commit.ci\] pre-commit autoupdate [\#474](https://github.com/tj-django/django-clone/pull/474) ([pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci))
+- Update dependency typing-extensions to v3.10.0.2 [\#473](https://github.com/tj-django/django-clone/pull/473) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency typing-extensions to v3.10.0.1 [\#472](https://github.com/tj-django/django-clone/pull/472) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#471](https://github.com/tj-django/django-clone/pull/471) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated docs [\#470](https://github.com/tj-django/django-clone/pull/470) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated docs [\#468](https://github.com/tj-django/django-clone/pull/468) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Update tj-django/django-migration-fixer action to v1.3.0 [\#467](https://github.com/tj-django/django-clone/pull/467) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated README.md [\#465](https://github.com/tj-django/django-clone/pull/465) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#464](https://github.com/tj-django/django-clone/pull/464) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated README.md [\#463](https://github.com/tj-django/django-clone/pull/463) ([jackton1](https://github.com/jackton1))
+- Update codecov/codecov-action action to v2.0.3 [\#462](https://github.com/tj-django/django-clone/pull/462) ([renovate[bot]](https://github.com/apps/renovate))
+- Update tj-django/django-migration-fixer action to v1.2.2 [\#461](https://github.com/tj-django/django-clone/pull/461) ([renovate[bot]](https://github.com/apps/renovate))
+- Update peter-evans/create-pull-request action to v3.10.1 [\#460](https://github.com/tj-django/django-clone/pull/460) ([renovate[bot]](https://github.com/apps/renovate))
+- Update tj-django/django-migration-fixer action to v1.2.1 [\#459](https://github.com/tj-django/django-clone/pull/459) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#458](https://github.com/tj-django/django-clone/pull/458) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Upgraded v2.9.2 → v2.9.3 [\#457](https://github.com/tj-django/django-clone/pull/457) ([jackton1](https://github.com/jackton1))
+
 ## [v2.9.3](https://github.com/tj-django/django-clone/tree/v2.9.3) (2021-08-13)
 
 [Full Changelog](https://github.com/tj-django/django-clone/compare/v2.9.2...v2.9.3)
@@ -25,10 +64,6 @@
 **Implemented enhancements:**
 
 - Add setting to enable/disable appending copy \(x\) to string fields. [\#308](https://github.com/tj-django/django-clone/issues/308)
-
-**Closed issues:**
-
-- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
 
 **Merged pull requests:**
 
