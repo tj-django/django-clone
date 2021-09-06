@@ -206,6 +206,10 @@ class CloneMixin(object):
         # TODO: Support bulk clones split by the batch_szie
         pass
 
+    def pre_save_duplicate(self, instance):
+        """Override this method to modify the duplicate instance before it's saved."""
+        return instance
+
     @transaction.atomic
     def make_clone(self, attrs=None, sub_clone=False, using=None):
         """Creates a clone of the django model instance.
@@ -236,6 +240,7 @@ class CloneMixin(object):
         for name, value in attrs.items():
             setattr(duplicate, name, value)
 
+        duplicate = self.pre_save_duplicate(duplicate)
         duplicate.save(using=using)
 
         duplicate = self.__duplicate_m2o_fields(duplicate, using=using)
