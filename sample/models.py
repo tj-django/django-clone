@@ -100,7 +100,7 @@ class Book(CloneModel):
         return _(self.name)
 
     def pre_save_duplicate(self, instance):
-        instance.name = "{name} (Cloned)".format(name=instance.name)
+        instance.name = self.name
 
         return instance
 
