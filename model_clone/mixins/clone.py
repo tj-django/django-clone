@@ -206,7 +206,7 @@ class CloneMixin(object):
         # TODO: Support bulk clones split by the batch_szie
         pass
 
-    def pre_save_duplicate(self, instance):
+    def pre_save_duplicate(self, instance):  # pylint: disable=R0201
         """Override this method to modify the duplicate instance before it's saved."""
         return instance
 
