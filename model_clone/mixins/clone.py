@@ -45,9 +45,12 @@ class CloneMixin(object):
     :type _clone_excluded_o2o_fields: collections.Iterable
 
     :Example:
+    >>> from django.conf import settings
+    >>> from django.db import models
+    >>>
     >>> # Using explicit fields
     >>>
-    >>> class TestModel(CloneMixin, models.Model):
+    >>> class TestModel1(CloneMixin, models.Model):
     >>>     field_1 = models.CharField(max_length=200)
     >>>     tags =  models.ManyToManyField(Tags)
     >>>     audiences = models.ManyToManyField(Audience)
@@ -55,14 +58,14 @@ class CloneMixin(object):
     >>>         settings.AUTH_USER_MODEL,
     >>>         on_delete=models.CASCADE,
     >>>     )
-
+    >>>
     >>>     _clone_m2m_fields = ['tags', 'audiences']
     >>>     _clone_m2o_or_o2m_fields = ['user']
     >>>     ...
-
+    >>>
     >>> # Using implicit all except fields.
-
-    >>> class TestModel(CloneMixin, models.Model):
+    >>>
+    >>> class TestModel2(CloneMixin, models.Model):
     >>>     field_1 = models.CharField(max_length=200)
     >>>     tags =  models.ManyToManyField(Tags)
     >>>     audiences = models.ManyToManyField(Audience)
@@ -203,7 +206,7 @@ class CloneMixin(object):
     @classmethod
     def bulk_clone_multi(cls, objs, attrs=None, batch_size=None):
         # type: (List[models.Model], Optional[List[Dict]], Optional[int]) -> List[models.Model]
-        # TODO: Support bulk clones split by the batch_szie
+        # TODO: Support bulk clones split by the batch_size
         pass
 
     def pre_save_duplicate(self, instance):  # pylint: disable=R0201
