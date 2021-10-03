@@ -298,7 +298,7 @@ class CloneMixin(object):
 
     @staticmethod
     def _create_copy_of_instance(instance, using=None, force=False, sub_clone=False):
-        """Create a copy of an instance
+        """Create a copy of a model instance.
 
         :param instance: The instance to be duplicated.
         :type instance: `django.db.models.Model`
