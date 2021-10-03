@@ -464,13 +464,29 @@ class CloneMixin(object):
                 ):
                     rel_object = getattr(self, f.name, None)
                     if rel_object:
-                        new_rel_object = CloneMixin._create_copy_of_instance(
-                            rel_object,
-                            force=True,
-                            sub_clone=True,
-                        )
-                        setattr(new_rel_object, f.remote_field.name, duplicate)
-                        new_rel_object.save(using=using)
+                        if hasattr(rel_object, "make_clone"):
+                            try:
+                                rel_object.make_clone(
+                                    attrs={f.remote_field.name: duplicate},
+                                    using=using,
+                                )
+                            except IntegrityError:
+                                rel_object.make_clone(
+                                    attrs={f.remote_field.name: duplicate},
+                                    save_new=False,
+                                    sub_clone=True,
+                                    using=using,
+                                )
+                        else:
+                            new_rel_object = CloneMixin._create_copy_of_instance(
+                                rel_object,
+                                force=True,
+                                sub_clone=True,
+                                using=using,
+                            )
+                            setattr(new_rel_object, f.remote_field.name, duplicate)
+
+                            new_rel_object.save(using=using)
 
         return duplicate
 
