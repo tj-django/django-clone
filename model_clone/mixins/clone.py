@@ -23,7 +23,7 @@ from model_clone.utils import (
 
 class CloneMixin(object):
 
-    """CloneMixin mixin to duplicate an object using the model cls.
+    """CloneMixin mixin to duplicate an object using the model's class.
 
     :param _clone_fields: Restricted List of fields to copy from the instance.
     :type _clone_fields: collections.Iterable
