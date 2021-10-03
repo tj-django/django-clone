@@ -1,5 +1,46 @@
 # Changelog
 
+## [Unreleased](https://github.com/tj-django/django-clone/tree/HEAD)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.9.5...HEAD)
+
+**Closed issues:**
+
+- Document model checks. [\#24](https://github.com/tj-django/django-clone/issues/24)
+
+## [v2.9.5](https://github.com/tj-django/django-clone/tree/v2.9.5) (2021-10-03)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.9.4...v2.9.5)
+
+**Implemented enhancements:**
+
+- Improve field name validation [\#261](https://github.com/tj-django/django-clone/issues/261)
+- Add integration with DRF [\#57](https://github.com/tj-django/django-clone/issues/57)
+
+**Fixed bugs:**
+
+- \[BUG\] Nested and Reverse relationship don't cloned [\#488](https://github.com/tj-django/django-clone/issues/488)
+
+**Closed issues:**
+
+- Add check to validate all fields declared using clone\_\* and clone\_exclude\_\* [\#270](https://github.com/tj-django/django-clone/issues/270)
+- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
+- Testing django 3.0 async.io  event loop clone support. [\#52](https://github.com/tj-django/django-clone/issues/52)
+- Update documentation to use mkdocs [\#26](https://github.com/tj-django/django-clone/issues/26)
+
+**Merged pull requests:**
+
+- Resolve bug cloning OneToOne fields [\#493](https://github.com/tj-django/django-clone/pull/493) ([jackton1](https://github.com/jackton1))
+- Update dependency pytz to v2021.3 [\#492](https://github.com/tj-django/django-clone/pull/492) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#491](https://github.com/tj-django/django-clone/pull/491) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated README.md [\#490](https://github.com/tj-django/django-clone/pull/490) ([jackton1](https://github.com/jackton1))
+- \[pre-commit.ci\] pre-commit autoupdate [\#489](https://github.com/tj-django/django-clone/pull/489) ([pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci))
+- Updated docs [\#487](https://github.com/tj-django/django-clone/pull/487) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Update codecov/codecov-action action to v2.1.0 [\#486](https://github.com/tj-django/django-clone/pull/486) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency sqlparse to v0.4.2 [\#485](https://github.com/tj-django/django-clone/pull/485) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#484](https://github.com/tj-django/django-clone/pull/484) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Upgraded v2.9.3 → v2.9.4 [\#483](https://github.com/tj-django/django-clone/pull/483) ([jackton1](https://github.com/jackton1))
+
 ## [v2.9.4](https://github.com/tj-django/django-clone/tree/v2.9.4) (2021-09-06)
 
 [Full Changelog](https://github.com/tj-django/django-clone/compare/v2.9.3...v2.9.4)
@@ -7,10 +48,6 @@
 **Implemented enhancements:**
 
 - \[Feature\] Option to modify cloned object before saving [\#469](https://github.com/tj-django/django-clone/issues/469)
-
-**Closed issues:**
-
-- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
 
 **Merged pull requests:**
 
