@@ -15,6 +15,13 @@ body:
       options:
         - label: I have searched the existing issues
           required: true
+  - type: checkboxes
+    attributes:
+      label: Does this issue exist in the latest version?
+      description: Please view all releases to confirm that this issue hasn't already been fixed.
+      options:
+        - label: I'm using the latest release
+          required: true
   - type: textarea
     id: what-happened
     attributes:
@@ -29,10 +36,10 @@ body:
       label: To Reproduce
       description: Steps to reproduce the behavior?
       placeholder: |
-        1. Go to '...'
-        2. Click on '....'
-        3. Scroll down to '....'
-        4. See error
+        1. In this environment...
+        2. With this config...
+        3. Run '...'
+        4. See error...
     validations:
       required: true
   - type: dropdown
@@ -41,9 +48,13 @@ body:
       label: What OS are you seeing the problem on?
       multiple: true
       options:
-        - linux
-        - macos
-        - windows
+        - all
+        - ubuntu-latest or ubuntu-20.04
+        - ubuntu-18.04
+        - macos-latest or macos-10.15
+        - macos-11
+        - windows-latest or windows-2019
+        - windows-2016
     validations:
       required: true
   - type: textarea
