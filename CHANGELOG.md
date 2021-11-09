@@ -1,12 +1,35 @@
 # Changelog
 
-## [Unreleased](https://github.com/tj-django/django-clone/tree/HEAD)
+## [v2.9.6](https://github.com/tj-django/django-clone/tree/v2.9.6) (2021-11-09)
 
-[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.9.5...HEAD)
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.9.5...v2.9.6)
+
+**Fixed bugs:**
+
+- \[BUG\] 2.9.5 now clones the o2o which clones the original again, so too many clones [\#505](https://github.com/tj-django/django-clone/issues/505)
 
 **Closed issues:**
 
+- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
 - Document model checks. [\#24](https://github.com/tj-django/django-clone/issues/24)
+
+**Merged pull requests:**
+
+- \[pre-commit.ci\] pre-commit autoupdate [\#509](https://github.com/tj-django/django-clone/pull/509) ([pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci))
+- Revert "Resolve bug cloning OneToOne fields" [\#508](https://github.com/tj-django/django-clone/pull/508) ([jackton1](https://github.com/jackton1))
+- Update peter-evans/create-pull-request action to v3.11.0 [\#507](https://github.com/tj-django/django-clone/pull/507) ([renovate[bot]](https://github.com/apps/renovate))
+- Update actions/checkout action to v2.4.0 [\#506](https://github.com/tj-django/django-clone/pull/506) ([renovate[bot]](https://github.com/apps/renovate))
+- \[pre-commit.ci\] pre-commit autoupdate [\#504](https://github.com/tj-django/django-clone/pull/504) ([pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci))
+- Updated docs [\#503](https://github.com/tj-django/django-clone/pull/503) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated README.md [\#502](https://github.com/tj-django/django-clone/pull/502) ([jackton1](https://github.com/jackton1))
+- Update dependency django to v3.2.9 [\#501](https://github.com/tj-django/django-clone/pull/501) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#500](https://github.com/tj-django/django-clone/pull/500) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Update actions/checkout action to v2.3.5 [\#499](https://github.com/tj-django/django-clone/pull/499) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency django to v3.2.8 [\#498](https://github.com/tj-django/django-clone/pull/498) ([renovate[bot]](https://github.com/apps/renovate))
+- Bump tj-actions/verify-changed-files from 7.2 to 8 [\#497](https://github.com/tj-django/django-clone/pull/497) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update tj-actions/verify-changed-files action to v8 [\#496](https://github.com/tj-django/django-clone/pull/496) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#495](https://github.com/tj-django/django-clone/pull/495) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Upgraded v2.9.4 → v2.9.5 [\#494](https://github.com/tj-django/django-clone/pull/494) ([jackton1](https://github.com/jackton1))
 
 ## [v2.9.5](https://github.com/tj-django/django-clone/tree/v2.9.5) (2021-10-03)
 
@@ -24,7 +47,6 @@
 **Closed issues:**
 
 - Add check to validate all fields declared using clone\_\* and clone\_exclude\_\* [\#270](https://github.com/tj-django/django-clone/issues/270)
-- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
 - Testing django 3.0 async.io  event loop clone support. [\#52](https://github.com/tj-django/django-clone/issues/52)
 - Update documentation to use mkdocs [\#26](https://github.com/tj-django/django-clone/issues/26)
 
