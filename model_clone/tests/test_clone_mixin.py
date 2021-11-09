@@ -894,9 +894,7 @@ class CloneMixinTestCase(TestCase):
         clones = [sentence.make_clone() for _ in range(2)]
 
         self.assertEqual(2, len(clones))
-        self.assertEqual(
-            3, Sentence.objects.count()
-        )  # breaks with AssertionError: 3 != 5
+        self.assertEqual(3, Sentence.objects.count())
 
 
 class CloneMixinTransactionTestCase(TransactionTestCase):
