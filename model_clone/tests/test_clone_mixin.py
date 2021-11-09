@@ -20,6 +20,7 @@ from sample.models import (
     BookTag,
     Cover,
     Edition,
+    Ending,
     Furniture,
     House,
     Library,
@@ -27,7 +28,8 @@ from sample.models import (
     Product,
     Room,
     SaleTag,
-    Tag, Sentence, Ending,
+    Sentence,
+    Tag,
 )
 
 User = get_user_model()
@@ -892,7 +894,9 @@ class CloneMixinTestCase(TestCase):
         clones = [sentence.make_clone() for _ in range(2)]
 
         self.assertEqual(2, len(clones))
-        self.assertEqual(3, Sentence.objects.count())  # breaks with AssertionError: 3 != 5
+        self.assertEqual(
+            3, Sentence.objects.count()
+        )  # breaks with AssertionError: 3 != 5
 
 
 class CloneMixinTransactionTestCase(TransactionTestCase):
