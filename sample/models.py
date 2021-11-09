@@ -281,3 +281,13 @@ class BackCover(models.Model):
 
 class Product(CloneMixin, models.Model):
     name = models.TextField(unique=True)
+
+
+class Sentence(CloneMixin, models.Model):
+    value = models.TextField()
+
+    _clone_o2o_fields = {'ending'}
+
+
+class Ending(CloneMixin, models.Model):
+    sentence = models.OneToOneField(Sentence, on_delete=models.CASCADE, related_name='ending')

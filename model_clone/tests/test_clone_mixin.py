@@ -27,7 +27,7 @@ from sample.models import (
     Product,
     Room,
     SaleTag,
-    Tag,
+    Tag, Sentence, Ending,
 )
 
 User = get_user_model()
@@ -881,6 +881,18 @@ class CloneMixinTestCase(TestCase):
             )
         ]
         self.assertEqual(errors, expected_errors)
+
+    def test_cloning_o2o_fields(self):
+        sentence = Sentence.objects.create(value="A really long sentence")
+        Ending.objects.create(sentence=sentence)
+
+        self.assertEqual(1, Sentence.objects.count())
+        self.assertEqual(1, Ending.objects.count())
+
+        clones = [sentence.make_clone() for _ in range(2)]
+
+        self.assertEqual(2, len(clones))
+        self.assertEqual(3, Sentence.objects.count())  # breaks with AssertionError: 3 != 5
 
 
 class CloneMixinTransactionTestCase(TransactionTestCase):
