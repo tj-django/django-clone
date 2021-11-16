@@ -2,36 +2,18 @@ name: automerge
 on:
   check_suite:
     types:
-      - rerequested
       - completed
 
 jobs:
   automerge:
     runs-on: ubuntu-latest
     if: |
-      (
-        github.event.pull_request.user.login == 'dependabot[bot]' ||
-        github.event.pull_request.user.login == 'dependabot' ||
-        github.event.pull_request.user.login == 'dependabot-preview[bot]' ||
-        github.event.pull_request.user.login == 'dependabot-preview' ||
-        github.event.pull_request.user.login == 'renovate[bot]' ||
-        github.event.pull_request.user.login == 'renovate' ||
-        github.event.pull_request.user.login == 'github-actions[bot]' ||
-        github.event.pull_request.user.login == 'pre-commit-ci' ||
-        github.event.pull_request.user.login == 'pre-commit-ci[bot]'
-      )
-        &&
-      (
-        github.actor == 'dependabot[bot]' ||
-        github.actor == 'dependabot' ||
-        github.actor == 'dependabot-preview[bot]' ||
-        github.actor == 'dependabot-preview' ||
-        github.actor == 'renovate[bot]' ||
-        github.actor == 'renovate' ||
-        github.actor == 'github-actions[bot]'  ||
-        github.actor == 'pre-commit-ci' ||
-        github.actor == 'pre-commit-ci[bot]'
-      )
+      github.actor == 'dependabot[bot]' ||
+      github.actor == 'dependabot' ||
+      github.actor == 'dependabot-preview[bot]' ||
+      github.actor == 'dependabot-preview' ||
+      github.actor == 'renovate[bot]' ||
+      github.actor == 'renovate'
     steps:
       - name: automerge
         uses: pascalgn/automerge-action@v0.14.3
@@ -39,6 +21,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
           MERGE_METHOD: "rebase"
           UPDATE_METHOD: "rebase"
-          MERGE_RETRIES: "10"
+          MERGE_RETRIES: "6"
           MERGE_RETRY_SLEEP: "100000"
           MERGE_LABELS: ""
