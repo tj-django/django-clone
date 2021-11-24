@@ -20,6 +20,9 @@ This solves the problem introduced by using `instance.pk = None` and `instance.s
 *   Restrict fields used for creating a duplicate instance.
 *   Detect unique fields and naively add a suffix (`copy {count}`) to each new instance.
 
+
+## Table of Contents
+
 ## Installation
 
 Run
