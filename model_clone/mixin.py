@@ -135,8 +135,8 @@ class CloneMixin(object):
                 Error(
                     "Conflicting configuration.",
                     hint=(
-                        "Please provide either \"_clone_fields\""
-                        f" or \"_clone_excluded_fields\" for model {cls.__name__}"
+                        'Please provide either "_clone_fields"'
+                        f' or "_clone_excluded_fields" for model {cls.__name__}'
                     ),
                     obj=cls,
                     id=f"{ModelCloneConfig.name}.E002",
@@ -148,8 +148,8 @@ class CloneMixin(object):
                 Error(
                     "Conflicting configuration.",
                     hint=(
-                        "Please provide either \"_clone_m2m_fields\""
-                        f" or \"_clone_excluded_m2m_fields\" for model {cls.__name__}"
+                        'Please provide either "_clone_m2m_fields"'
+                        f' or "_clone_excluded_m2m_fields" for model {cls.__name__}'
                     ),
                     obj=cls,
                     id=f"{ModelCloneConfig.name}.E002",
@@ -166,8 +166,8 @@ class CloneMixin(object):
                 Error(
                     "Conflicting configuration.",
                     hint=(
-                        "Please provide either \"_clone_m2o_or_o2m_fields\" or "
-                        f"\"_clone_excluded_m2o_or_o2m_fields\" for model {cls.__name__}"
+                        'Please provide either "_clone_m2o_or_o2m_fields" or '
+                        f'"_clone_excluded_m2o_or_o2m_fields" for model {cls.__name__}'
                     ),
                     obj=cls,
                     id=f"{ModelCloneConfig.name}.E002",
@@ -179,8 +179,8 @@ class CloneMixin(object):
                 Error(
                     "Conflicting configuration.",
                     hint=(
-                        "Please provide either \"_clone_o2o_fields\" or "
-                        f"\"_clone_excluded_o2o_fields\" for model {cls.__name__}"
+                        'Please provide either "_clone_o2o_fields" or '
+                        f'"_clone_excluded_o2o_fields" for model {cls.__name__}'
                     ),
                     obj=cls,
                     id=f"{ModelCloneConfig.name}.E002",
