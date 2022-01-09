@@ -5,7 +5,7 @@ __email__ = "jtonye@ymail.com"
 __version__ = "2.9.6"
 
 from model_clone.admin import CloneModelAdmin, CloneModelAdminMixin
-from model_clone.mixins import CloneMixin
+from model_clone.mixin import CloneMixin
 from model_clone.utils import create_copy_of_instance
 
 __all__ = [
