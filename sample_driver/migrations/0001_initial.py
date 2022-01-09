@@ -2,7 +2,7 @@
 
 from django.db import migrations, models
 
-import model_clone.mixins.clone
+import model_clone.mixin
 
 
 class Migration(migrations.Migration):
@@ -27,6 +27,6 @@ class Migration(migrations.Migration):
                 ("name", models.CharField(max_length=255)),
                 ("age", models.SmallIntegerField()),
             ],
-            bases=(model_clone.mixins.clone.CloneMixin, models.Model),
+            bases=(model_clone.mixin.CloneMixin, models.Model),
         ),
     ]

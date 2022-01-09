@@ -3,7 +3,7 @@
 import django.db.models.deletion
 from django.db import migrations, models
 
-import model_clone.mixins.clone
+import model_clone.mixin
 
 
 class Migration(migrations.Migration):
@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
                 ),
                 ("name", models.CharField(max_length=255)),
             ],
-            bases=(model_clone.mixins.clone.CloneMixin, models.Model),
+            bases=(model_clone.mixin.CloneMixin, models.Model),
         ),
         migrations.CreateModel(
             name="Room",
@@ -51,7 +51,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            bases=(model_clone.mixins.clone.CloneMixin, models.Model),
+            bases=(model_clone.mixin.CloneMixin, models.Model),
         ),
         migrations.CreateModel(
             name="Furniture",
@@ -75,6 +75,6 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            bases=(model_clone.mixins.clone.CloneMixin, models.Model),
+            bases=(model_clone.mixin.CloneMixin, models.Model),
         ),
     ]
