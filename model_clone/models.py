@@ -1,6 +1,6 @@
 from django.db import models
 
-from model_clone.mixins.clone import CloneMixin
+from model_clone.mixin import CloneMixin
 
 
 class CloneModel(CloneMixin, models.Model):
