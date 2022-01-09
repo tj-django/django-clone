@@ -17,6 +17,7 @@ test_requires = [
     "mock",
     "unittest-xml-reporting",
     "codacy-coverage",
+    "django-migration-fixer",
 ]
 
 deploy_requires = [
@@ -31,6 +32,7 @@ lint_requires = [
     "flake8",
     "yamllint",
     "isort",
+    "black",
 ]
 
 local_dev_requires = [
@@ -45,11 +47,8 @@ extras_require = {
         test_requires,
         lint_requires,
     ],
-    'development:python_version >= "3.6"': ["black"],
     "test": test_requires,
-    "test:python_version >= '3.6'": ["django-migration-fixer"],
     "lint": lint_requires,
-    'lint:python_version >= "3.6"': ["black"],
     "deploy": deploy_requires,
 }
 
