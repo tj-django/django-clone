@@ -52,8 +52,9 @@ jobs:
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
           PLATFORM: ${{ matrix.platform }}
 
-#       - name: "Upload coverage to Codecov"
-#         uses: codecov/codecov-action@v2.1.0
-#         with:
-#           token: ${{ secrets.CODECOV_TOKEN }}
-#           fail_ci_if_error: true
+      - name: "Upload coverage to Codecov"
+        if: ${{ runner.os }} == "Linux"
+        uses: codecov/codecov-action@v2.1.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
