@@ -1,5 +1,41 @@
 # Changelog
 
+## [v3.0.0](https://github.com/tj-django/django-clone/tree/v3.0.0) (2022-01-09)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.9.6...v3.0.0)
+
+**Closed issues:**
+
+- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
+
+**Merged pull requests:**
+
+- chore: Move mixin to a module and dropped support for python3.5 [\#534](https://github.com/tj-django/django-clone/pull/534) ([jackton1](https://github.com/jackton1))
+- Update dependency django to v4.0.1 [\#533](https://github.com/tj-django/django-clone/pull/533) ([renovate[bot]](https://github.com/apps/renovate))
+- Update tj-actions/remark action to v2.3 [\#532](https://github.com/tj-django/django-clone/pull/532) ([renovate[bot]](https://github.com/apps/renovate))
+- Update tj-actions/remark action to v2 [\#531](https://github.com/tj-django/django-clone/pull/531) ([renovate[bot]](https://github.com/apps/renovate))
+- Update tj-actions/github-changelog-generator action to v1.11 [\#530](https://github.com/tj-django/django-clone/pull/530) ([renovate[bot]](https://github.com/apps/renovate))
+- Update tj-actions/github-changelog-generator action to v1.10 [\#529](https://github.com/tj-django/django-clone/pull/529) ([renovate[bot]](https://github.com/apps/renovate))
+- \[pre-commit.ci\] pre-commit autoupdate [\#528](https://github.com/tj-django/django-clone/pull/528) ([pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci))
+- Update peter-evans/create-pull-request action to v3.12.0 [\#527](https://github.com/tj-django/django-clone/pull/527) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency django to v4 [\#526](https://github.com/tj-django/django-clone/pull/526) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency django to v3.2.10 [\#525](https://github.com/tj-django/django-clone/pull/525) ([renovate[bot]](https://github.com/apps/renovate))
+- \[pre-commit.ci\] pre-commit autoupdate [\#524](https://github.com/tj-django/django-clone/pull/524) ([pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci))
+- Update dependency typing-extensions to v4.0.1 [\#523](https://github.com/tj-django/django-clone/pull/523) ([renovate[bot]](https://github.com/apps/renovate))
+- Update actions/setup-python action to v2.3.1 [\#522](https://github.com/tj-django/django-clone/pull/522) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#521](https://github.com/tj-django/django-clone/pull/521) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated README.md [\#520](https://github.com/tj-django/django-clone/pull/520) ([jackton1](https://github.com/jackton1))
+- Update README.md [\#519](https://github.com/tj-django/django-clone/pull/519) ([jackton1](https://github.com/jackton1))
+- Update actions/cache action to v2.1.7 [\#518](https://github.com/tj-django/django-clone/pull/518) ([renovate[bot]](https://github.com/apps/renovate))
+- \[pre-commit.ci\] pre-commit autoupdate [\#517](https://github.com/tj-django/django-clone/pull/517) ([pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci))
+- Update actions/setup-python action to v2.3.0 [\#516](https://github.com/tj-django/django-clone/pull/516) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated README.md [\#515](https://github.com/tj-django/django-clone/pull/515) ([jackton1](https://github.com/jackton1))
+- Update README.md [\#514](https://github.com/tj-django/django-clone/pull/514) ([jackton1](https://github.com/jackton1))
+- \[pre-commit.ci\] pre-commit autoupdate [\#513](https://github.com/tj-django/django-clone/pull/513) ([pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci))
+- Update dependency typing-extensions to v4 [\#512](https://github.com/tj-django/django-clone/pull/512) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#511](https://github.com/tj-django/django-clone/pull/511) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Upgraded v2.9.5 → v2.9.6 [\#510](https://github.com/tj-django/django-clone/pull/510) ([jackton1](https://github.com/jackton1))
+
 ## [v2.9.6](https://github.com/tj-django/django-clone/tree/v2.9.6) (2021-11-09)
 
 [Full Changelog](https://github.com/tj-django/django-clone/compare/v2.9.5...v2.9.6)
@@ -10,7 +46,6 @@
 
 **Closed issues:**
 
-- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
 - Document model checks. [\#24](https://github.com/tj-django/django-clone/issues/24)
 
 **Merged pull requests:**
