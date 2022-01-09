@@ -17,6 +17,7 @@ test_requires = [
     "mock",
     "unittest-xml-reporting",
     "codacy-coverage",
+    "django-migration-fixer",
 ]
 
 deploy_requires = [
@@ -31,6 +32,7 @@ lint_requires = [
     "flake8",
     "yamllint",
     "isort",
+    "black",
 ]
 
 local_dev_requires = [
@@ -45,11 +47,8 @@ extras_require = {
         test_requires,
         lint_requires,
     ],
-    'development:python_version >= "3.6"': ["black"],
     "test": test_requires,
-    "test:python_version >= '3.6'": ["django-migration-fixer"],
     "lint": lint_requires,
-    'lint:python_version >= "3.6"': ["black"],
     "deploy": deploy_requires,
 }
 
@@ -67,7 +66,7 @@ setup(
     name="django-clone",
     version="2.9.6",
     description="Create a clone of a django model instance.",
-    python_requires=">=3.5",
+    python_requires=">=3.6",
     long_description=LONG_DESCRIPTION,
     long_description_content_type=LONG_DESCRIPTION_TYPE,
     author="Tonye Jack",
@@ -96,7 +95,6 @@ setup(
         "Natural Language :: English",
         "Topic :: Internet :: WWW/HTTP",
         "Operating System :: OS Independent",
-        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",

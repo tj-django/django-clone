@@ -110,12 +110,10 @@ class CloneMixin(object):
                     "UNIQUE_DUPLICATE_SUFFIX is required.",
                     hint=(
                         "Please provide UNIQUE_DUPLICATE_SUFFIX"
-                        + " for {} or set USE_UNIQUE_DUPLICATE_SUFFIX=False".format(
-                            cls.__name__
-                        )
+                        f" for {cls.__name__} or set USE_UNIQUE_DUPLICATE_SUFFIX=False"
                     ),
                     obj=cls,
-                    id="{}.E001".format(ModelCloneConfig.name),
+                    id=f"{ModelCloneConfig.name}.E001",
                 )
             )
 
@@ -124,13 +122,11 @@ class CloneMixin(object):
                 Error(
                     "UNIQUE_DUPLICATE_SUFFIX is required.",
                     hint=(
-                        "Please provide DUPLICATE_SUFFIX"
-                        + " for {} or set USE_DUPLICATE_SUFFIX_FOR_NON_UNIQUE_FIELDS=False".format(
-                            cls.__name__
-                        )
+                        f"Please provide DUPLICATE_SUFFIX for {cls.__name__} "
+                        "or set USE_DUPLICATE_SUFFIX_FOR_NON_UNIQUE_FIELDS=False"
                     ),
                     obj=cls,
-                    id="{}.E001".format(ModelCloneConfig.name),
+                    id=f"{ModelCloneConfig.name}.E001",
                 )
             )
 
@@ -140,12 +136,10 @@ class CloneMixin(object):
                     "Conflicting configuration.",
                     hint=(
                         'Please provide either "_clone_fields"'
-                        + ' or "_clone_excluded_fields" for model {}'.format(
-                            cls.__name__
-                        )
+                        f' or "_clone_excluded_fields" for model {cls.__name__}'
                     ),
                     obj=cls,
-                    id="{}.E002".format(ModelCloneConfig.name),
+                    id=f"{ModelCloneConfig.name}.E002",
                 )
             )
 
@@ -155,12 +149,10 @@ class CloneMixin(object):
                     "Conflicting configuration.",
                     hint=(
                         'Please provide either "_clone_m2m_fields"'
-                        + ' or "_clone_excluded_m2m_fields" for model {}'.format(
-                            cls.__name__
-                        )
+                        f' or "_clone_excluded_m2m_fields" for model {cls.__name__}'
                     ),
                     obj=cls,
-                    id="{}.E002".format(ModelCloneConfig.name),
+                    id=f"{ModelCloneConfig.name}.E002",
                 )
             )
 
@@ -174,15 +166,11 @@ class CloneMixin(object):
                 Error(
                     "Conflicting configuration.",
                     hint=(
-                        "Please provide either "
-                        + '"_clone_m2o_or_o2m_fields"'
-                        + " or "
-                        + '"_clone_excluded_m2o_or_o2m_fields" for model {}'.format(
-                            cls.__name__
-                        )
+                        'Please provide either "_clone_m2o_or_o2m_fields" or '
+                        f'"_clone_excluded_m2o_or_o2m_fields" for model {cls.__name__}'
                     ),
                     obj=cls,
-                    id="{}.E002".format(ModelCloneConfig.name),
+                    id=f"{ModelCloneConfig.name}.E002",
                 )
             )
 
@@ -191,13 +179,11 @@ class CloneMixin(object):
                 Error(
                     "Conflicting configuration.",
                     hint=(
-                        'Please provide either "_clone_o2o_fields"'
-                        + ' or "_clone_excluded_o2o_fields" for model {}'.format(
-                            cls.__name__
-                        )
+                        'Please provide either "_clone_o2o_fields" or '
+                        f'"_clone_excluded_o2o_fields" for model {cls.__name__}'
                     ),
                     obj=cls,
-                    id="{}.E002".format(ModelCloneConfig.name),
+                    id=f"{ModelCloneConfig.name}.E002",
                 )
             )
 

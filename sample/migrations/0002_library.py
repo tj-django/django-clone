@@ -5,7 +5,7 @@ import django.db.models.deletion
 from django.conf import settings
 from django.db import migrations, models
 
-import model_clone.mixins.clone
+import model_clone.mixin
 
 
 class Migration(migrations.Migration):
@@ -34,6 +34,6 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            bases=(model_clone.mixins.clone.CloneMixin, models.Model),
+            bases=(model_clone.mixin.CloneMixin, models.Model),
         ),
     ]
