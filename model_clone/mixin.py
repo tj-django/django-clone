@@ -110,12 +110,10 @@ class CloneMixin(object):
                     "UNIQUE_DUPLICATE_SUFFIX is required.",
                     hint=(
                         "Please provide UNIQUE_DUPLICATE_SUFFIX"
-                        + " for {} or set USE_UNIQUE_DUPLICATE_SUFFIX=False".format(
-                            cls.__name__
-                        )
+                        f" for {cls.__name__} or set USE_UNIQUE_DUPLICATE_SUFFIX=False"
                     ),
                     obj=cls,
-                    id="{}.E001".format(ModelCloneConfig.name),
+                    id=f"{ModelCloneConfig.name}.E001",
                 )
             )
 
