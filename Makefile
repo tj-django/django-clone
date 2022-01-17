@@ -108,8 +108,7 @@ increase-version: guard-PART  ## Increase project version
 	@bump2version $(PART)
 	@git switch -c main
 
-dist: clean install-deploy  ## builds source and wheel package
-	@pip install twine==3.4.1
+dist: clean  ## builds source and wheel package
 	@python setup.py sdist bdist_wheel
 
 release: dist  ## package and upload a release
