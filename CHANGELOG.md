@@ -1,12 +1,24 @@
 # Changelog
 
-## [v3.0.0](https://github.com/tj-django/django-clone/tree/v3.0.0) (2022-01-09)
+## [v3.0.1](https://github.com/tj-django/django-clone/tree/v3.0.1) (2022-01-17)
 
-[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.9.6...v3.0.0)
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v3.0.0...v3.0.1)
 
 **Closed issues:**
 
 - Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
+
+**Merged pull requests:**
+
+- Added support for django4.0 [\#539](https://github.com/tj-django/django-clone/pull/539) ([jackton1](https://github.com/jackton1))
+- Update wearerequired/lint-action action to v1.11.1 [\#538](https://github.com/tj-django/django-clone/pull/538) ([renovate[bot]](https://github.com/apps/renovate))
+- Update wearerequired/lint-action action to v1.11.0 [\#537](https://github.com/tj-django/django-clone/pull/537) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#536](https://github.com/tj-django/django-clone/pull/536) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Upgraded v2.9.6 → v3.0.0 [\#535](https://github.com/tj-django/django-clone/pull/535) ([jackton1](https://github.com/jackton1))
+
+## [v3.0.0](https://github.com/tj-django/django-clone/tree/v3.0.0) (2022-01-09)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v2.9.6...v3.0.0)
 
 **Merged pull requests:**
 
