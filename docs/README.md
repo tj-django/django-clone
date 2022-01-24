@@ -361,7 +361,8 @@ INSTALLED_APPS = [
 |  Python      |  Supported version |
 |--------------|--------------------|
 |  Python2.x  |    `<=2.5.3`       |
-|  Python3.x  |    All versions    |
+|  Python3.5  |    `<=2.9.6`       |
+|  Python3.6+  |    All versions    |
 
 |  Django      |   Supported version |
 |--------------|---------------------|
