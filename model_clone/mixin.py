@@ -492,7 +492,6 @@ class CloneMixin(object):
                             except IntegrityError:
                                 item.make_clone(
                                     attrs={f.remote_field.name: duplicate},
-                                    save_new=False,
                                     sub_clone=True,
                                     using=using,
                                 )
