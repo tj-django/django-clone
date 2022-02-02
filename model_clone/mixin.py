@@ -89,10 +89,10 @@ class CloneMixin(object):
     _clone_o2o_fields = []  # type: List[str]
 
     # Excluded fields
-    _clone_excluded_fields = []  # type: List[str]
-    _clone_excluded_m2m_fields = []  # type: List[str]
-    _clone_excluded_m2o_or_o2m_fields = []  # type: List[str]
-    _clone_excluded_o2o_fields = []  # type: List[str]
+    _clone_excluded_fields = None  # type: Optional[List[str]]
+    _clone_excluded_m2m_fields = None  # type: Optional[List[str]]
+    _clone_excluded_m2o_or_o2m_fields = None  # Optional[type: List[str]]
+    _clone_excluded_o2o_fields = None  # type: Optional[List[str]]
 
     DUPLICATE_SUFFIX = "copy"  # type: str
     USE_DUPLICATE_SUFFIX_FOR_NON_UNIQUE_FIELDS = False  # type: bool
@@ -443,7 +443,7 @@ class CloneMixin(object):
                     [
                         f.name in self._clone_o2o_fields
                         and f not in self._meta.concrete_fields,
-                        self._clone_excluded_o2o_fields
+                        self._clone_excluded_o2o_fields is not None
                         and f.name not in self._clone_excluded_o2o_fields
                         and f not in self._meta.concrete_fields,
                     ]
@@ -477,7 +477,7 @@ class CloneMixin(object):
                 if any(
                     [
                         f.get_accessor_name() in self._clone_m2o_or_o2m_fields,
-                        self._clone_excluded_m2o_or_o2m_fields
+                        self._clone_excluded_m2o_or_o2m_fields is not None
                         and f.get_accessor_name()
                         not in self._clone_excluded_m2o_or_o2m_fields,
                     ]
@@ -522,7 +522,7 @@ class CloneMixin(object):
                 if any(
                     [
                         f.name in self._clone_m2o_or_o2m_fields,
-                        self._clone_excluded_m2o_or_o2m_fields
+                        self._clone_excluded_m2o_or_o2m_fields is not None
                         and f.name not in self._clone_excluded_m2o_or_o2m_fields,
                     ]
                 ):
@@ -555,7 +555,7 @@ class CloneMixin(object):
             if any(
                 [
                     f.name in self._clone_m2m_fields,
-                    self._clone_excluded_m2m_fields
+                    self._clone_excluded_m2m_fields is not None
                     and f.name not in self._clone_excluded_m2m_fields,
                 ]
             ):
@@ -566,7 +566,7 @@ class CloneMixin(object):
                 if any(
                     [
                         f.get_accessor_name() in self._clone_m2m_fields,
-                        self._clone_excluded_m2m_fields
+                        self._clone_excluded_m2m_fields is not None
                         and f.get_accessor_name()
                         not in self._clone_excluded_m2m_fields,
                     ]
