@@ -212,7 +212,7 @@ class CloneMixin(object):
         :type using: str
         :return: The model instance that has been cloned.
         """
-        cloned_references = cloned_references or {} 
+        cloned_references = cloned_references or {}
         using = using or self._state.db or self.__class__._default_manager.db
         attrs = attrs or {}
         if not self.pk:
@@ -235,10 +235,14 @@ class CloneMixin(object):
 
         cloned_references[self] = duplicate
 
-        duplicate = self.__duplicate_m2o_fields(duplicate, using=using, cloned_references=cloned_references)
-        duplicate = self.__duplicate_o2o_fields(duplicate, using=using, cloned_references=cloned_references)
-        duplicate = self.__duplicate_o2m_fields(duplicate, using=using, cloned_references=cloned_references)
-        duplicate = self.__duplicate_m2m_fields(duplicate, using=using, cloned_references=cloned_references)
+        duplicate = self.__duplicate_m2o_fields(
+            duplicate, using=using, cloned_references=cloned_references)
+        duplicate = self.__duplicate_o2o_fields(
+            duplicate, using=using, cloned_references=cloned_references)
+        duplicate = self.__duplicate_o2m_fields(
+            duplicate, using=using, cloned_references=cloned_references)
+        duplicate = self.__duplicate_m2m_fields(
+            duplicate, using=using, cloned_references=cloned_references)
 
         return duplicate
 
@@ -440,7 +444,7 @@ class CloneMixin(object):
         :type using: str
         :return: The duplicate instance with all the one to one fields duplicated.
         """
-        cloned_references=cloned_references or {}
+        cloned_references = cloned_references or {}
         for f in self._meta.related_objects:
             if f.one_to_one and any(
                 [
@@ -463,8 +467,8 @@ class CloneMixin(object):
 
         return duplicate
 
-    def __duplicate_o2m_fields(self, duplicate, using=None,cloned_references=None):
-        cloned_references=cloned_references or {}
+    def __duplicate_o2m_fields(self, duplicate, using=None, cloned_references=None):
+        cloned_references = cloned_references or {}
         """Duplicate one to many fields.
 
         :param duplicate: The transient instance that should be duplicated.
@@ -486,19 +490,21 @@ class CloneMixin(object):
                 ]
             ):
                 for item in getattr(self, f.get_accessor_name()).all():
-                    if cloned_reference:=cloned_references.get(item):
+                    if cloned_reference := cloned_references.get(item):
                         setattr(cloned_reference, f.remote_field.name, duplicate)
                     elif hasattr(item, "make_clone"):
                         try:
                             item.make_clone(
                                 attrs={f.remote_field.name: duplicate},
                                 using=using,
+                                cloned_references=cloned_references
                             )
                         except IntegrityError:
                             item.make_clone(
                                 attrs={f.remote_field.name: duplicate},
                                 sub_clone=True,
                                 using=using,
+                                cloned_references=cloned_references
                             )
                     else:
                         new_item = CloneMixin._create_copy_of_instance(
@@ -513,7 +519,7 @@ class CloneMixin(object):
 
         return duplicate
 
-    def __duplicate_m2o_fields(self, duplicate, using=None, cloned_references =None):
+    def __duplicate_m2o_fields(self, duplicate, using=None, cloned_references=None):
         """Duplicate many to one fields.
 
         :param duplicate: The transient instance that should be duplicated.
@@ -522,7 +528,8 @@ class CloneMixin(object):
         :type using: str
         :return: The duplicate instance with all the many to one fields duplicated.
         """
-        cloned_references=cloned_references or {}
+        cloned_references = cloned_references or {}
+
         for f in self._meta.concrete_fields:
             if f.many_to_one and any(
                 [
@@ -533,12 +540,14 @@ class CloneMixin(object):
             ):
                 item = getattr(self, f.name)
                 if cloned_references.get(item):
-                    item_clone=cloned_references.get(item)
+                    item_clone = cloned_references.get(item)
                 if hasattr(item, "make_clone"):
                     try:
-                        item_clone = item.make_clone(using=using)
+                        item_clone = item.make_clone(
+                            using=using, cloned_references=cloned_references)
                     except IntegrityError:
-                        item_clone = item.make_clone(sub_clone=True)
+                        item_clone = item.make_clone(
+                            sub_clone=True, cloned_references=cloned_references)
                 else:
                     item.pk = None  # pragma: no cover
                     item_clone = item.save(using=using)  # pragma: no cover
@@ -556,14 +565,14 @@ class CloneMixin(object):
         :type using: str
         :return: The duplicate instance with all the many to many fields duplicated.
         """
-        cloned_references=cloned_references or {}
+        cloned_references = cloned_references or {}
         fields = {f for f in self._meta.many_to_many if any(
-                [
-                    f.name in self._clone_m2m_fields,
-                    self._clone_excluded_m2m_fields
-                    and f.name not in self._clone_excluded_m2m_fields,
-                ]
-            )}
+            [
+                f.name in self._clone_m2m_fields,
+                self._clone_excluded_m2m_fields
+                and f.name not in self._clone_excluded_m2m_fields,
+            ]
+        )}
 
         for f in self._meta.related_objects:
             if f.many_to_many and any(
@@ -589,6 +598,7 @@ class CloneMixin(object):
                 field_name = field.m2m_field_name()
                 source = getattr(self, field.attname)
                 destination = getattr(duplicate, field.attname)
+
             if all(
                 [
                     through,
@@ -597,25 +607,27 @@ class CloneMixin(object):
             ):
                 objs = through.objects.filter(**{field_name: self.pk})
                 for item in objs:
-                    if cloned_item:=cloned_references.get(item):
+                    if cloned_item := cloned_references.get(item):
                         setattr(cloned_item, field_name, duplicate)
                     if hasattr(through, "make_clone"):
                         try:
                             item.make_clone(
                                 attrs={field_name: duplicate},
                                 using=using,
+                                cloned_references=cloned_references
                             )
                         except IntegrityError:
                             item.make_clone(
                                 attrs={field_name: duplicate},
                                 sub_clone=True,
                                 using=using,
+                                cloned_references=cloned_references
                             )
                     else:
                         item.pk = None
                         setattr(item, field_name, duplicate)
                         item.save(using=using)
             else:
-                destination.set(source.all())
+                destination.set([cloned_references.get(s) or s for s in source.all()])
 
         return duplicate

@@ -908,10 +908,15 @@ class CloneMixinTestCase(TestCase):
         "sample.models.Furniture._clone_m2o_or_o2m_fields",
         new_callable=PropertyMock,
     )
-    def test_cloning_cross_reference(self, author_clone_m2o_or_o2m_fields_mock,author_clone_m2m_fields, furniture_clone_m2o_or_o2m_fields_mock):
+    @patch(
+        "sample.models.Book._clone_m2m_fields",
+        new_callable=PropertyMock,
+    )
+    def test_cloning_cross_reference(self,book_clone_m2m_fields,furniture_clone_m2o_or_o2m_fields_mock ,author_clone_m2m_fields,author_clone_m2o_or_o2m_fields_mock):
         author_clone_m2o_or_o2m_fields_mock.return_value = ['lives_in']
         author_clone_m2m_fields.return_value = ['books']
         furniture_clone_m2o_or_o2m_fields_mock.return_value = ['books']
+        book_clone_m2m_fields.return_value = ['authors']
 
         house = House.objects.create(name='White House')
         author = Author.objects.create(first_name='Edgar Allen',
@@ -923,11 +928,11 @@ class CloneMixinTestCase(TestCase):
         book = Book.objects.create(name='The Raven',
                                    created_by=self.user1, found_in=furniture)
         book.authors.add(author)
+        author.refresh_from_db()
 
         duplicate = author.make_clone()
 
         assert duplicate.lives_in.rooms.first().furniture.first().books.first() == duplicate.books.first()
-
 
 class CloneMixinTransactionTestCase(TransactionTestCase):
     def test_cloning_multiple_instances_doesnt_exceed_the_max_length(self):
