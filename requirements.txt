@@ -12,7 +12,7 @@ django==4.0.3
     # via django-clone (setup.py)
 future==0.18.2
     # via django-clone (setup.py)
-pytz==2021.3
+pytz==2022.1
     # via django
 six==1.16.0
     # via django-clone (setup.py)
