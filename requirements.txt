@@ -6,17 +6,17 @@
 #
 asgiref==3.5.0
     # via django
-conditional==1.3
+conditional==1.4
     # via django-clone (setup.py)
-django==4.0.2
+django==4.0.3
     # via django-clone (setup.py)
 future==0.18.2
     # via django-clone (setup.py)
-pytz==2021.3
+pytz==2022.1
     # via django
 six==1.16.0
     # via django-clone (setup.py)
 sqlparse==0.4.2
     # via django
-typing-extensions==4.0.1
+typing-extensions==4.1.1
     # via asgiref

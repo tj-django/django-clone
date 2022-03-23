@@ -9,15 +9,15 @@ jobs:
   sync-doc-assets:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3.0.0
         with:
           fetch-depth: 0
 
       - name: Run test
-        uses: tj-actions/remark@v2.3
+        uses: tj-actions/remark@v3
 
       - name: Verify Changed files
-        uses: tj-actions/verify-changed-files@v8
+        uses: tj-actions/verify-changed-files@v9
         id: verify_changed_files
         with:
           files: |
@@ -31,7 +31,7 @@ jobs:
 
       - name: Create Pull Request
         if: failure()
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v4
         with:
           base: "main"
           title: "Updated README.md"
@@ -47,7 +47,7 @@ jobs:
           cp -f *.png docs
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3.12.1
+        uses: peter-evans/create-pull-request@v4.0.0
         with:
           commit-message: Synced README changes to docs
           committer: github-actions[bot] <github-actions[bot]@users.noreply@github.com>

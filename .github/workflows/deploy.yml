@@ -8,16 +8,16 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: Run semver-diff
         id: semver-diff
-        uses: tj-actions/semver-diff@v1.2.0
+        uses: tj-actions/semver-diff@v1.2.1
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: '3.6.x'
 
@@ -44,10 +44,10 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
 
       - name: Generate CHANGELOG
-        uses: tj-actions/github-changelog-generator@v1.11
+        uses: tj-actions/github-changelog-generator@v1.13
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v4
         with:
           base: "main"
           title: "Upgraded ${{ steps.semver-diff.outputs.old_version }} → ${{ steps.semver-diff.outputs.new_version }}"

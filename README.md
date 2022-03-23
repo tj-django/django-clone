@@ -18,45 +18,29 @@ This solves the problem introduced by using `instance.pk = None` and `instance.s
 *   More control over how a model instance should be duplicated
 *   Multi Database support i.e Create a duplicate on one or more databases.
 *   Restrict fields used for creating a duplicate instance.
-*   Detect unique fields and naively add a suffix (`copy {count}`) to each new instance.
+*   Detect unique fields and naively adds a suffix (`copy {count}`) to each new instance.
 
 ## Table of Contents
 
 *   [Installation](#installation)
-
 *   [Usage](#usage)
-
     *   [Subclassing the `CloneModel`](#subclassing-the-clonemodel)
-
     *   [Using the `CloneMixin`](#using-the-clonemixin)
-
     *   [Duplicating a model instance](#duplicating-a-model-instance)
-
         *   [Bulk cloning a model](#bulk-cloning-a-model)
         *   [Multi database support](#multi-database-support)
-
     *   [CloneMixin attributes](#clonemixin-attributes)
-
         *   [Explicit (include only these fields)](#explicit-include-only-these-fields)
         *   [Implicit (include all except these fields)](#implicit-include-all-except-these-fields)
-
     *   [Creating clones without subclassing `CloneMixin`.](#creating-clones-without-subclassing-clonemixin)
-
     *   [Django Admin](#django-admin)
-
         *   [Duplicating Models from the Django Admin view.](#duplicating-models-from-the-django-admin-view)
-
             *   [List View](#list-view)
             *   [Change View](#change-view)
-
         *   [CloneModelAdmin class attributes](#clonemodeladmin-class-attributes)
-
 *   [Compatibility](#compatibility)
-
 *   [Running locally](#running-locally)
-
 *   [Found a Bug?](#found-a-bug)
-
 *   [Contributors ✨](#contributors-)
 
 ## Installation

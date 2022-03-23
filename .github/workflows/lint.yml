@@ -13,12 +13,12 @@ jobs:
         python-version: [3.6, 3.7, 3.8, 3.9]
 
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3.0.0
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2.3.1
+        uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: actions/cache@v2.1.7
+      - uses: actions/cache@v3.0.0
         id: pip-cache
         with:
           path: ~/.cache/pip
@@ -32,7 +32,7 @@ jobs:
       - name: Install black
         run: pip install black
       - name: Run Lint
-        uses: wearerequired/lint-action@v1.11.1
+        uses: wearerequired/lint-action@v1.12.0
         with:
           github_token: ${{ secrets.github_token }}
           black: true

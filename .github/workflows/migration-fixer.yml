@@ -9,13 +9,13 @@ jobs:
   fix-migrations:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: '3.8.x'
 
@@ -24,10 +24,10 @@ jobs:
           make install-test
 
       - name: Run django-migration-fixer
-        uses: tj-django/django-migration-fixer@v1.3.4
+        uses: tj-django/django-migration-fixer@v1.3.5
 
       - name: Verify Changed files
-        uses: tj-actions/verify-changed-files@v8
+        uses: tj-actions/verify-changed-files@v9
         id: verify-changed-files
         with:
           files: |
