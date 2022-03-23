@@ -950,8 +950,6 @@ class CloneMixinTestCase(TestCase):
         )
         # Test correct referencing of o2m
         assert duplicate.lives_in == duplicate.books.first().found_in.room.house
-        
-
 
 
 class CloneMixinTransactionTestCase(TransactionTestCase):
