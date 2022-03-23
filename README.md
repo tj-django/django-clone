@@ -18,7 +18,7 @@ This solves the problem introduced by using `instance.pk = None` and `instance.s
 *   More control over how a model instance should be duplicated
 *   Multi Database support i.e Create a duplicate on one or more databases.
 *   Restrict fields used for creating a duplicate instance.
-*   Detect unique fields and naively add a suffix (`copy {count}`) to each new instance.
+*   Detect unique fields and naively adds a suffix (`copy {count}`) to each new instance.
 
 ## Table of Contents
 
