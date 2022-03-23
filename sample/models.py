@@ -33,6 +33,8 @@ class Author(CloneModel):
         on_delete=models.PROTECT,
     )
 
+    lives_in = models.ForeignKey("House", on_delete=models.SET_NULL, null=True)
+
     def __str__(self):
         return _("{} {}".format(self.first_name, self.last_name))
 
@@ -95,6 +97,10 @@ class Book(CloneModel):
     tags = models.ManyToManyField(Tag, through="BookTag")
     sale_tags = models.ManyToManyField(SaleTag, through="BookSaleTag")
     published_at = models.DateTimeField(null=True, blank=True, default=timezone.now)
+
+    found_in = models.ForeignKey(
+        "Furniture", on_delete=models.SET_NULL, null=True, related_name="books"
+    )
 
     def __str__(self):
         return _(self.name)

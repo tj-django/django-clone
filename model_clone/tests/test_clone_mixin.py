@@ -896,6 +896,61 @@ class CloneMixinTestCase(TestCase):
         self.assertEqual(2, len(clones))
         self.assertEqual(3, Sentence.objects.count())
 
+    @patch(
+        "sample.models.Author._clone_m2o_or_o2m_fields",
+        new_callable=PropertyMock,
+    )
+    @patch(
+        "sample.models.Author._clone_m2m_fields",
+        new_callable=PropertyMock,
+    )
+    @patch(
+        "sample.models.Furniture._clone_m2o_or_o2m_fields",
+        new_callable=PropertyMock,
+    )
+    @patch(
+        "sample.models.Book._clone_m2m_fields",
+        new_callable=PropertyMock,
+    )
+    def test_cloning_cross_reference(
+        self,
+        book_clone_m2m_fields,
+        furniture_clone_m2o_or_o2m_fields_mock,
+        author_clone_m2m_fields,
+        author_clone_m2o_or_o2m_fields_mock,
+    ):
+        author_clone_m2o_or_o2m_fields_mock.return_value = ["lives_in"]
+        author_clone_m2m_fields.return_value = ["books"]
+        furniture_clone_m2o_or_o2m_fields_mock.return_value = ["books"]
+        book_clone_m2m_fields.return_value = ["authors"]
+
+        house = House.objects.create(name="White House")
+        author = Author.objects.create(
+            first_name="Edgar Allen",
+            last_name="Poe",
+            age=27,
+            sex="M",
+            created_by=self.user1,
+            lives_in=house,
+        )
+        room = Room.objects.create(name="Oval office", house=house)
+        furniture = Furniture.objects.create(name="bookshelf", room=room)
+        book = Book.objects.create(
+            name="The Raven", created_by=self.user1, found_in=furniture
+        )
+        book.authors.add(author)
+        author.refresh_from_db()
+
+        duplicate = author.make_clone()
+
+        # Test correct referencing of many2many
+        assert (
+            duplicate.lives_in.rooms.first().furniture.first().books.first()
+            == duplicate.books.first()
+        )
+        # Test correct referencing of o2m
+        assert duplicate.lives_in == duplicate.books.first().found_in.room.house
+
 
 class CloneMixinTransactionTestCase(TransactionTestCase):
     def test_cloning_multiple_instances_doesnt_exceed_the_max_length(self):
