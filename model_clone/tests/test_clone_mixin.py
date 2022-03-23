@@ -943,10 +943,15 @@ class CloneMixinTestCase(TestCase):
 
         duplicate = author.make_clone()
 
+        # Test correct referencing of many2many
         assert (
             duplicate.lives_in.rooms.first().furniture.first().books.first()
             == duplicate.books.first()
         )
+        # Test correct referencing of o2m
+        assert duplicate.lives_in == duplicate.books.first().found_in.room.house
+        
+
 
 
 class CloneMixinTransactionTestCase(TransactionTestCase):
