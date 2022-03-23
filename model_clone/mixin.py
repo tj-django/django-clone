@@ -498,7 +498,8 @@ class CloneMixin(object):
                 ]
             ):
                 for item in getattr(self, f.get_accessor_name()).all():
-                    if cloned_reference := cloned_references.get(item):
+                    cloned_reference = cloned_references.get(item)
+                    if cloned_reference:
                         setattr(cloned_reference, f.remote_field.name, duplicate)
                     elif hasattr(item, "make_clone"):
                         try:
@@ -620,7 +621,8 @@ class CloneMixin(object):
             ):
                 objs = through.objects.filter(**{field_name: self.pk})
                 for item in objs:
-                    if cloned_item := cloned_references.get(item):
+                    cloned_item = cloned_references.get(item)
+                    if cloned_item:
                         setattr(cloned_item, field_name, duplicate)
                     if hasattr(through, "make_clone"):
                         try:
