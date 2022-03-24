@@ -884,12 +884,12 @@ class CloneMixinTestCase(TestCase):
         ]
         self.assertEqual(errors, expected_errors)
 
-    @patch( 
+    @patch(
         "sample.models.Ending._clone_o2o_fields",
         new_callable=PropertyMock,
     )
     def test_cloning_o2o_fields(self, ending_clone_o2o_fields_mock):
-        ending_clone_o2o_fields_mock.return_value = ['sentence']
+        ending_clone_o2o_fields_mock.return_value = ["sentence"]
         sentence = Sentence.objects.create(value="A really long sentence")
         Ending.objects.create(sentence=sentence)
 
@@ -956,6 +956,7 @@ class CloneMixinTestCase(TestCase):
         )
         # Test correct referencing of o2m
         assert duplicate.lives_in == duplicate.books.first().found_in.room.house
+
 
 class CloneMixinTransactionTestCase(TransactionTestCase):
     def test_cloning_multiple_instances_doesnt_exceed_the_max_length(self):
