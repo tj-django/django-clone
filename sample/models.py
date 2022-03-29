@@ -131,7 +131,7 @@ class BookSaleTag(CloneModel):
         ]
 
 
-class Page(models.Model):
+class Page(CloneModel):
     content = models.CharField(max_length=20000)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)

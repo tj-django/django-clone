@@ -502,7 +502,6 @@ class CloneMixin(object):
         :type using: str
         :return: The duplicate instance with all the transient one to many duplicated instances.
         """
-
         for f in itertools.chain(
             self._meta.related_objects, self._meta.concrete_fields
         ):
@@ -516,15 +515,17 @@ class CloneMixin(object):
             ):
                 for item in getattr(self, f.get_accessor_name()).all():
                     cloned_reference = cloned_references.get(item)
+                    
                     if cloned_reference:
                         setattr(cloned_reference, f.remote_field.name, duplicate)
                     elif hasattr(item, "make_clone"):
                         try:
-                            item.make_clone(
+                            c = item.make_clone(
                                 attrs={f.remote_field.name: duplicate},
                                 using=using,
                                 cloned_references=cloned_references,
                             )
+
                         except IntegrityError:
                             item.make_clone(
                                 attrs={f.remote_field.name: duplicate},
@@ -556,7 +557,6 @@ class CloneMixin(object):
         :return: The duplicate instance with all the many to one fields duplicated.
         """
         cloned_references = cloned_references or {}
-
         for f in self._meta.concrete_fields:
             if f.many_to_one and any(
                 [
@@ -568,7 +568,7 @@ class CloneMixin(object):
                 item = getattr(self, f.name)
                 if cloned_references.get(item):
                     item_clone = cloned_references.get(item)
-                if hasattr(item, "make_clone"):
+                elif hasattr(item, "make_clone"):
                     try:
                         item_clone = item.make_clone(
                             using=using, cloned_references=cloned_references

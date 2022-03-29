@@ -668,12 +668,18 @@ class CloneMixinTestCase(TestCase):
         "sample.models.Book._clone_m2o_or_o2m_fields",
         new_callable=PropertyMock,
     )
+    @patch(
+        "sample.models.Page._clone_m2o_or_o2m_fields",
+        new_callable=PropertyMock,
+    )
     def test_cloning_one_to_many(
         self,
-        _clone_m2o_or_o2m_fields_mock,
+        page_clone_m2o_or_o2m_fields_mock,
+        book_clone_m2o_or_o2m_fields_mock
     ):
-        _clone_m2o_or_o2m_fields_mock.return_value = ["page_set"]
-
+        book_clone_m2o_or_o2m_fields_mock.return_value = ["page_set"]
+        page_clone_m2o_or_o2m_fields_mock.return_value = ['book']
+        
         name = "New Book"
         book = Book.objects.create(name=name, created_by=self.user1, slug=slugify(name))
 
@@ -698,7 +704,7 @@ class CloneMixinTestCase(TestCase):
         )
         self.assertNotEqual(book.editions.count(), book_clone.editions.count())
         self.assertEqual(self.user1.book_set.count(), 2)
-        _clone_m2o_or_o2m_fields_mock.assert_called()
+        book_clone_m2o_or_o2m_fields_mock.assert_called()
 
     @patch(
         "sample.models.Edition._clone_m2o_or_o2m_fields",
@@ -888,8 +894,13 @@ class CloneMixinTestCase(TestCase):
         "sample.models.Ending._clone_o2o_fields",
         new_callable=PropertyMock,
     )
-    def test_cloning_o2o_fields(self, ending_clone_o2o_fields_mock):
+    @patch(
+        "sample.models.Book._clone_o2o_fields",
+        new_callable=PropertyMock,
+    )
+    def test_cloning_o2o_fields(self, ending_clone_o2o_fields_mock, book_clone_o2o_fields_mock):
         ending_clone_o2o_fields_mock.return_value = ["sentence"]
+        book_clone_o2o_fields_mock.return_value = ["ending"]
         sentence = Sentence.objects.create(value="A really long sentence")
         Ending.objects.create(sentence=sentence)
 
@@ -918,8 +929,18 @@ class CloneMixinTestCase(TestCase):
         "sample.models.Book._clone_m2m_fields",
         new_callable=PropertyMock,
     )
+    @patch(
+        "sample.models.Book._clone_m2o_or_o2m_fields",
+        new_callable=PropertyMock,
+    )
+    @patch(
+        "sample.models.Page._clone_m2o_or_o2m_fields",
+        new_callable=PropertyMock,
+    )
     def test_cloning_cross_reference(
         self,
+        page_clone_m2o_or_o2m_fields_mock,
+        book_clone_m2o_or_o2m_fields_mock,
         book_clone_m2m_fields,
         furniture_clone_m2o_or_o2m_fields_mock,
         author_clone_m2m_fields,
@@ -929,6 +950,8 @@ class CloneMixinTestCase(TestCase):
         author_clone_m2m_fields.return_value = ["books"]
         furniture_clone_m2o_or_o2m_fields_mock.return_value = ["books"]
         book_clone_m2m_fields.return_value = ["authors"]
+        page_clone_m2o_or_o2m_fields_mock.return_value = ['book']
+        book_clone_m2o_or_o2m_fields_mock.return_value = ['page_set']
 
         house = House.objects.create(name="White House")
         author = Author.objects.create(
@@ -945,6 +968,8 @@ class CloneMixinTestCase(TestCase):
             name="The Raven", created_by=self.user1, found_in=furniture
         )
         book.authors.add(author)
+
+
         author.refresh_from_db()
 
         duplicate = author.make_clone()
