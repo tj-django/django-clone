@@ -515,12 +515,12 @@ class CloneMixin(object):
             ):
                 for item in getattr(self, f.get_accessor_name()).all():
                     cloned_reference = cloned_references.get(item)
-                    
+
                     if cloned_reference:
                         setattr(cloned_reference, f.remote_field.name, duplicate)
                     elif hasattr(item, "make_clone"):
                         try:
-                            c = item.make_clone(
+                            item.make_clone(
                                 attrs={f.remote_field.name: duplicate},
                                 using=using,
                                 cloned_references=cloned_references,
