@@ -477,7 +477,6 @@ class CloneMixin(object):
                             rel_object,
                             force=True,
                             sub_clone=True,
-                            cloned_references=cloned_references,
                         )
                     setattr(new_rel_object, f.remote_field.name, duplicate)
                     new_rel_object.save(using=using)
