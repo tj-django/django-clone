@@ -142,7 +142,8 @@ class Edition(CloneModel):
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="editions")
     created_at = models.DateTimeField(default=timezone.now)
 
-    _clone_o2o_fields = ['cover']
+    _clone_o2o_fields = ["cover"]
+
 
 class Library(CloneModel):
     id = models.UUIDField(primary_key=True, default=uuid4)
@@ -247,7 +248,7 @@ class House(CloneMixin, models.Model):
     name = models.CharField(max_length=255)
     owned_by = models.ForeignKey(Author, on_delete=models.CASCADE, null=True)
     _clone_fields = ["name"]
-    _clone_m2o_or_o2m_fields = ["rooms", 'owned_by']
+    _clone_m2o_or_o2m_fields = ["rooms", "owned_by"]
 
     def __str__(self):
         return self.name
@@ -281,12 +282,13 @@ class Cover(CloneModel):
     book = models.OneToOneField(Book, on_delete=models.CASCADE)
     edition = models.OneToOneField(Edition, on_delete=models.CASCADE, null=True)
 
-    _clone_o2o_fields =['book', 'edition']
+    _clone_o2o_fields = ["book", "edition"]
+
 
 class BackCover(models.Model):
     content = models.CharField(max_length=200)
     book = models.OneToOneField(Book, on_delete=models.CASCADE)
-        
+
 
 class Product(CloneMixin, models.Model):
     name = models.TextField(unique=True)
@@ -295,7 +297,7 @@ class Product(CloneMixin, models.Model):
 class Sentence(CloneMixin, models.Model):
     value = models.TextField()
 
-    _clone_o2o_fields = { "ending" }
+    _clone_o2o_fields = {"ending"}
 
 
 class Ending(CloneMixin, models.Model):

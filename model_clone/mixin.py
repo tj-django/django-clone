@@ -228,7 +228,9 @@ class CloneMixin(object):
             duplicate = self  # pragma: no cover
             duplicate.pk = None  # pragma: no cover
         else:
-            duplicate = self._create_copy_of_instance(self, using=using, cloned_references=cloned_references)
+            duplicate = self._create_copy_of_instance(
+                self, using=using, cloned_references=cloned_references
+            )
 
         for name, value in attrs.items():
             setattr(duplicate, name, value)
@@ -297,7 +299,9 @@ class CloneMixin(object):
         pass
 
     @staticmethod
-    def _create_copy_of_instance(instance, using=None, force=False, sub_clone=False, cloned_references=None):
+    def _create_copy_of_instance(
+        instance, using=None, force=False, sub_clone=False, cloned_references=None
+    ):
         """Create a copy of a model instance.
 
         :param instance: The instance to be duplicated.
@@ -421,16 +425,13 @@ class CloneMixin(object):
                             sub_instance,
                             force=True,
                             sub_clone=True,
-                            cloned_references=cloned_references
+                            cloned_references=cloned_references,
                         )
                         sub_instance.save(using=using)
                         value = sub_instance.pk
-                    elif cloned_references.get(
-                        sub_instance
-                    ):
-                        value =cloned_references.get(
-                        sub_instance)
-                    
+                    elif cloned_references.get(sub_instance):
+                        value = cloned_references.get(sub_instance)
+
             elif all(
                 [
                     use_duplicate_suffix_for_non_unique_fields,
@@ -488,7 +489,7 @@ class CloneMixin(object):
                             rel_object,
                             force=True,
                             sub_clone=True,
-                            cloned_references=cloned_references
+                            cloned_references=cloned_references,
                         )
                     setattr(new_rel_object, f.remote_field.name, duplicate)
                     new_rel_object.save(using=using)
@@ -516,7 +517,7 @@ class CloneMixin(object):
                     and f.get_accessor_name()
                     not in self._clone_excluded_m2o_or_o2m_fields,
                 ]
-            ):  
+            ):
 
                 for item in getattr(self, f.get_accessor_name()).all():
                     cloned_reference = cloned_references.get(item)
@@ -564,13 +565,17 @@ class CloneMixin(object):
         """
         cloned_references = cloned_references or {}
         for f in self._meta.concrete_fields:
-            if f.many_to_one and any(
-                [
-                    f.name in self._clone_m2o_or_o2m_fields,
-                    self._clone_excluded_m2o_or_o2m_fields
-                    and f.name not in self._clone_excluded_m2o_or_o2m_fields,
-                ]
-            ) and getattr(self, f.name):
+            if (
+                f.many_to_one
+                and any(
+                    [
+                        f.name in self._clone_m2o_or_o2m_fields,
+                        self._clone_excluded_m2o_or_o2m_fields
+                        and f.name not in self._clone_excluded_m2o_or_o2m_fields,
+                    ]
+                )
+                and getattr(self, f.name)
+            ):
                 item = getattr(self, f.name)
                 if cloned_references.get(item):
                     item_clone = cloned_references.get(item)

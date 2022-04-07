@@ -7,13 +7,17 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sample', '0023_author_lives_in_book_found_in'),
+        ("sample", "0023_author_lives_in_book_found_in"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='cover',
-            name='edition',
-            field=models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, to='sample.edition'),
+            model_name="cover",
+            name="edition",
+            field=models.OneToOneField(
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="sample.edition",
+            ),
         ),
     ]
