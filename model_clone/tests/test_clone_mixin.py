@@ -888,19 +888,7 @@ class CloneMixinTestCase(TestCase):
         ]
         self.assertEqual(errors, expected_errors)
 
-    @patch(
-        "sample.models.Ending._clone_o2o_fields",
-        new_callable=PropertyMock,
-    )
-    @patch(
-        "sample.models.Book._clone_o2o_fields",
-        new_callable=PropertyMock,
-    )
-    def test_cloning_o2o_fields(
-        self, ending_clone_o2o_fields_mock, book_clone_o2o_fields_mock
-    ):
-        ending_clone_o2o_fields_mock.return_value = ["sentence"]
-        book_clone_o2o_fields_mock.return_value = ["ending"]
+    def test_cloning_o2o_fields(self):
         sentence = Sentence.objects.create(value="A really long sentence")
         Ending.objects.create(sentence=sentence)
 

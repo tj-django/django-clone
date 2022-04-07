@@ -227,9 +227,7 @@ class CloneMixin(object):
             duplicate = self  # pragma: no cover
             duplicate.pk = None  # pragma: no cover
         else:
-            duplicate = self._create_copy_of_instance(
-                self, using=using, cloned_references=cloned_references
-            )
+            duplicate = self._create_copy_of_instance(self, using=using)
 
         for name, value in attrs.items():
             setattr(duplicate, name, value)
@@ -298,9 +296,7 @@ class CloneMixin(object):
         pass
 
     @staticmethod
-    def _create_copy_of_instance(
-        instance, using=None, force=False, sub_clone=False, cloned_references=None
-    ):
+    def _create_copy_of_instance(instance, using=None, force=False, sub_clone=False):
         """Create a copy of a model instance.
 
         :param instance: The instance to be duplicated.
@@ -315,7 +311,6 @@ class CloneMixin(object):
         :rtype: `django.db.models.Model`
         """
         cls = instance.__class__
-        cloned_references = cloned_references or {}
 
         clone_fields = getattr(cls, "_clone_fields", CloneMixin._clone_fields)
         clone_excluded_fields = getattr(
@@ -417,14 +412,11 @@ class CloneMixin(object):
                 elif isinstance(f, models.OneToOneField) and not sub_clone:
                     sub_instance = getattr(instance, f.name, None) or f.get_default()
 
-                    if sub_instance is not None and not cloned_references.get(
-                        sub_instance
-                    ):
+                    if sub_instance is not None:
                         sub_instance = CloneMixin._create_copy_of_instance(
                             sub_instance,
                             force=True,
                             sub_clone=True,
-                            cloned_references=cloned_references,
                         )
                         sub_instance.save(using=using)
                         value = sub_instance.pk
