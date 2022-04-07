@@ -922,12 +922,17 @@ class CloneMixinTestCase(TestCase):
         new_callable=PropertyMock,
     )
     @patch(
+        "sample.models.Book._clone_o2o_fields",
+        new_callable=PropertyMock,
+    )
+    @patch(
         "sample.models.Page._clone_m2o_or_o2m_fields",
         new_callable=PropertyMock,
     )
     def test_cloning_cross_reference(
         self,
         page_clone_m2o_or_o2m_fields_mock,
+        book_clone_o2o_fields_mock,
         book_clone_m2o_or_o2m_fields_mock,
         book_clone_m2m_fields,
         furniture_clone_m2o_or_o2m_fields_mock,
@@ -939,8 +944,8 @@ class CloneMixinTestCase(TestCase):
         furniture_clone_m2o_or_o2m_fields_mock.return_value = ["books"]
         book_clone_m2m_fields.return_value = ["authors"]
         page_clone_m2o_or_o2m_fields_mock.return_value = ["book"]
-        book_clone_m2o_or_o2m_fields_mock.return_value = ["page_set"]
-
+        book_clone_m2o_or_o2m_fields_mock.return_value = ["page_set", 'editions']
+        book_clone_o2o_fields_mock.return_value = ['cover', 'backcover']
         house = House.objects.create(name="White House")
         author = Author.objects.create(
             first_name="Edgar Allen",
@@ -956,18 +961,27 @@ class CloneMixinTestCase(TestCase):
             name="The Raven", created_by=self.user1, found_in=furniture
         )
         book.authors.add(author)
+        edition = book.editions.create(seq=1)
+        cover = Cover(book=book, edition=edition)
+        cover.save()
+
 
         author.refresh_from_db()
 
-        duplicate = author.make_clone()
+        duplicate_author = author.make_clone()
+
+        duplicate_book = duplicate_author.books.first()
 
         # Test correct referencing of many2many
         assert (
-            duplicate.lives_in.rooms.first().furniture.first().books.first()
-            == duplicate.books.first()
+            duplicate_author.lives_in.rooms.first().furniture.first().books.first()
+            == duplicate_book
         )
         # Test correct referencing of o2m
-        assert duplicate.lives_in == duplicate.books.first().found_in.room.house
+        assert duplicate_author.lives_in == duplicate_book.found_in.room.house
+
+        # Test correct referencing of o2o
+        assert duplicate_book.cover == duplicate_book.editions.first().cover
 
 
 class CloneMixinTransactionTestCase(TransactionTestCase):

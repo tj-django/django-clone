@@ -142,6 +142,7 @@ class Edition(CloneModel):
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="editions")
     created_at = models.DateTimeField(default=timezone.now)
 
+    _clone_o2o_fields = ['cover']
 
 class Library(CloneModel):
     id = models.UUIDField(primary_key=True, default=uuid4)
@@ -278,12 +279,14 @@ class Furniture(CloneMixin, models.Model):
 class Cover(CloneModel):
     content = models.CharField(max_length=200)
     book = models.OneToOneField(Book, on_delete=models.CASCADE)
+    edition = models.OneToOneField(Edition, on_delete=models.CASCADE, null=True)
 
+    _clone_o2o_fields =['book', 'edition']
 
 class BackCover(models.Model):
     content = models.CharField(max_length=200)
     book = models.OneToOneField(Book, on_delete=models.CASCADE)
-
+        
 
 class Product(CloneMixin, models.Model):
     name = models.TextField(unique=True)
@@ -292,9 +295,7 @@ class Product(CloneMixin, models.Model):
 class Sentence(CloneMixin, models.Model):
     value = models.TextField()
 
-    _clone_o2o_fields = {
-        "ending",
-    }
+    _clone_o2o_fields = { "ending" }
 
 
 class Ending(CloneMixin, models.Model):

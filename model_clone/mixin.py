@@ -215,6 +215,7 @@ class CloneMixin(object):
         :return: The model instance that has been cloned.
         """
         cloned_references = cloned_references or {}
+
         using = using or self._state.db or self.__class__._default_manager.db
         attrs = attrs or {}
         if not self.pk:
@@ -227,7 +228,7 @@ class CloneMixin(object):
             duplicate = self  # pragma: no cover
             duplicate.pk = None  # pragma: no cover
         else:
-            duplicate = self._create_copy_of_instance(self, using=using)
+            duplicate = self._create_copy_of_instance(self, using=using, cloned_references=cloned_references)
 
         for name, value in attrs.items():
             setattr(duplicate, name, value)
@@ -296,7 +297,7 @@ class CloneMixin(object):
         pass
 
     @staticmethod
-    def _create_copy_of_instance(instance, using=None, force=False, sub_clone=False):
+    def _create_copy_of_instance(instance, using=None, force=False, sub_clone=False, cloned_references=None):
         """Create a copy of a model instance.
 
         :param instance: The instance to be duplicated.
@@ -311,6 +312,7 @@ class CloneMixin(object):
         :rtype: `django.db.models.Model`
         """
         cls = instance.__class__
+        cloned_references = cloned_references or {}
 
         clone_fields = getattr(cls, "_clone_fields", CloneMixin._clone_fields)
         clone_excluded_fields = getattr(
@@ -412,14 +414,23 @@ class CloneMixin(object):
                 elif isinstance(f, models.OneToOneField) and not sub_clone:
                     sub_instance = getattr(instance, f.name, None) or f.get_default()
 
-                    if sub_instance is not None:
+                    if sub_instance is not None and not cloned_references.get(
+                        sub_instance
+                    ):
                         sub_instance = CloneMixin._create_copy_of_instance(
                             sub_instance,
                             force=True,
                             sub_clone=True,
+                            cloned_references=cloned_references
                         )
                         sub_instance.save(using=using)
                         value = sub_instance.pk
+                    elif cloned_references.get(
+                        sub_instance
+                    ):
+                        value =cloned_references.get(
+                        sub_instance)
+                    
             elif all(
                 [
                     use_duplicate_suffix_for_non_unique_fields,
@@ -477,6 +488,7 @@ class CloneMixin(object):
                             rel_object,
                             force=True,
                             sub_clone=True,
+                            cloned_references=cloned_references
                         )
                     setattr(new_rel_object, f.remote_field.name, duplicate)
                     new_rel_object.save(using=using)
@@ -484,7 +496,6 @@ class CloneMixin(object):
         return duplicate
 
     def __duplicate_o2m_fields(self, duplicate, using=None, cloned_references=None):
-        cloned_references = cloned_references or {}
         """Duplicate one to many fields.
 
         :param duplicate: The transient instance that should be duplicated.
@@ -493,6 +504,8 @@ class CloneMixin(object):
         :type using: str
         :return: The duplicate instance with all the transient one to many duplicated instances.
         """
+        cloned_references = cloned_references or {}
+
         for f in itertools.chain(
             self._meta.related_objects, self._meta.concrete_fields
         ):
