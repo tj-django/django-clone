@@ -516,12 +516,14 @@ class CloneMixin(object):
                     and f.get_accessor_name()
                     not in self._clone_excluded_m2o_or_o2m_fields,
                 ]
-            ):
+            ):  
+
                 for item in getattr(self, f.get_accessor_name()).all():
                     cloned_reference = cloned_references.get(item)
 
                     if cloned_reference:
                         setattr(cloned_reference, f.remote_field.name, duplicate)
+                        cloned_reference.save()
                     elif hasattr(item, "make_clone"):
                         try:
                             item.make_clone(
@@ -568,7 +570,7 @@ class CloneMixin(object):
                     self._clone_excluded_m2o_or_o2m_fields
                     and f.name not in self._clone_excluded_m2o_or_o2m_fields,
                 ]
-            ):
+            ) and getattr(self, f.name):
                 item = getattr(self, f.name)
                 if cloned_references.get(item):
                     item_clone = cloned_references.get(item)
@@ -643,10 +645,8 @@ class CloneMixin(object):
             ):
                 objs = through.objects.filter(**{field_name: self.pk})
                 for item in objs:
-                    cloned_item = cloned_references.get(item)
-                    if cloned_item:
-                        setattr(cloned_item, field_name, duplicate)
-                    if hasattr(through, "make_clone"):
+                    # TODO: add logic for cross references
+                    if hasattr(item, "make_clone"):
                         try:
                             item.make_clone(
                                 attrs={field_name: duplicate},

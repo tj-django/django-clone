@@ -131,7 +131,7 @@ class BookSaleTag(CloneModel):
         ]
 
 
-class Page(CloneModel):
+class Page(models.Model):
     content = models.CharField(max_length=20000)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
@@ -245,9 +245,9 @@ class Assignment(CloneMixin, models.Model):
 
 class House(CloneMixin, models.Model):
     name = models.CharField(max_length=255)
-
+    owned_by = models.ForeignKey(Author, on_delete=models.CASCADE, null=True)
     _clone_fields = ["name"]
-    _clone_m2o_or_o2m_fields = ["rooms"]
+    _clone_m2o_or_o2m_fields = ["rooms", 'owned_by']
 
     def __str__(self):
         return self.name

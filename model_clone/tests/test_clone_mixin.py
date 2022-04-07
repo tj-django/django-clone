@@ -668,15 +668,11 @@ class CloneMixinTestCase(TestCase):
         "sample.models.Book._clone_m2o_or_o2m_fields",
         new_callable=PropertyMock,
     )
-    @patch(
-        "sample.models.Page._clone_m2o_or_o2m_fields",
-        new_callable=PropertyMock,
-    )
+
     def test_cloning_one_to_many(
-        self, page_clone_m2o_or_o2m_fields_mock, book_clone_m2o_or_o2m_fields_mock
+        self, book_clone_m2o_or_o2m_fields_mock
     ):
         book_clone_m2o_or_o2m_fields_mock.return_value = ["page_set"]
-        page_clone_m2o_or_o2m_fields_mock.return_value = ["book"]
 
         name = "New Book"
         book = Book.objects.create(name=name, created_by=self.user1, slug=slugify(name))
@@ -925,13 +921,8 @@ class CloneMixinTestCase(TestCase):
         "sample.models.Book._clone_o2o_fields",
         new_callable=PropertyMock,
     )
-    @patch(
-        "sample.models.Page._clone_m2o_or_o2m_fields",
-        new_callable=PropertyMock,
-    )
     def test_cloning_cross_reference(
         self,
-        page_clone_m2o_or_o2m_fields_mock,
         book_clone_o2o_fields_mock,
         book_clone_m2o_or_o2m_fields_mock,
         book_clone_m2m_fields,
@@ -939,13 +930,13 @@ class CloneMixinTestCase(TestCase):
         author_clone_m2m_fields,
         author_clone_m2o_or_o2m_fields_mock,
     ):
-        author_clone_m2o_or_o2m_fields_mock.return_value = ["lives_in"]
+        author_clone_m2o_or_o2m_fields_mock.return_value = ["lives_in", 'house_set']
         author_clone_m2m_fields.return_value = ["books"]
         furniture_clone_m2o_or_o2m_fields_mock.return_value = ["books"]
-        book_clone_m2m_fields.return_value = ["authors"]
-        page_clone_m2o_or_o2m_fields_mock.return_value = ["book"]
+        book_clone_m2m_fields.return_value = ["authors", "sale_tags"]
         book_clone_m2o_or_o2m_fields_mock.return_value = ["page_set", 'editions']
         book_clone_o2o_fields_mock.return_value = ['cover', 'backcover']
+
         house = House.objects.create(name="White House")
         author = Author.objects.create(
             first_name="Edgar Allen",
@@ -955,12 +946,18 @@ class CloneMixinTestCase(TestCase):
             created_by=self.user1,
             lives_in=house,
         )
+        house.owned_by = author
+        house.save()
+
         room = Room.objects.create(name="Oval office", house=house)
         furniture = Furniture.objects.create(name="bookshelf", room=room)
+
+
         book = Book.objects.create(
             name="The Raven", created_by=self.user1, found_in=furniture
         )
         book.authors.add(author)
+        
         edition = book.editions.create(seq=1)
         cover = Cover(book=book, edition=edition)
         cover.save()
@@ -972,13 +969,28 @@ class CloneMixinTestCase(TestCase):
 
         duplicate_book = duplicate_author.books.first()
 
+
+        assert Author.objects.count() == 2
+        assert Book.objects.count() == 2
+        assert Furniture.objects.count() == 2
+        assert House.objects.count() == 2
+        assert Room.objects.count() == 2
+        # TODO: figure out whats wrong with o2o 
+        # probably related to the create_instance_copy logic
+        # assert Edition.objects.count() == 2
+        assert Cover.objects.count() == 2
+
+
         # Test correct referencing of many2many
         assert (
             duplicate_author.lives_in.rooms.first().furniture.first().books.first()
             == duplicate_book
         )
+        # TODO: add assert for through m2m relation cross reference
+
         # Test correct referencing of o2m
         assert duplicate_author.lives_in == duplicate_book.found_in.room.house
+        assert duplicate_author == duplicate_book.found_in.room.house.owned_by
 
         # Test correct referencing of o2o
         assert duplicate_book.cover == duplicate_book.editions.first().cover
