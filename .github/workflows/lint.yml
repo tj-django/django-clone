@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: actions/cache@v3.0.3
+      - uses: actions/cache@v3.0.4
         id: pip-cache
         with:
           path: ~/.cache/pip
