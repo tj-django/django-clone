@@ -532,6 +532,8 @@ class CloneMixin(object):
                             item_clone = item.make_clone(using=using)
                         except IntegrityError:
                             item_clone = item.make_clone(sub_clone=True)
+                    elif item is None:
+                        item_clone = None
                     else:
                         item.pk = None  # pragma: no cover
                         item_clone = item.save(using=using)  # pragma: no cover
