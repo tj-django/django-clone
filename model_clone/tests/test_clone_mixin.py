@@ -721,6 +721,13 @@ class CloneMixinTestCase(TestCase):
         self.assertNotEqual(edition.book.id, edition_clone.book.id)
         self.assertEqual(edition.book.name, edition_clone.book.name)
         _clone_m2o_or_o2m_fields_mock.assert_called()
+    
+    @patch(
+        "sample.models.Edition._clone_m2o_or_o2m_fields",
+        new_callable=PropertyMock,
+    )
+    def test_cloning_nullable_many_to_one(self, _clone_m2o_or_o2m_fields_mock):
+        pass
 
     def test_cloning_complex_model_relationships(self):
         house = House.objects.create(name="My House")
