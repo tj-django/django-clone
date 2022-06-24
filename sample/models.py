@@ -133,7 +133,9 @@ class Page(models.Model):
 
 class Edition(CloneModel):
     seq = models.PositiveIntegerField()
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="editions")
+    book = models.ForeignKey(
+        Book, on_delete=models.CASCADE, null=True, related_name="editions", blank=True
+    )
     created_at = models.DateTimeField(default=timezone.now)
 
 
