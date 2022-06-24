@@ -727,7 +727,7 @@ class CloneMixinTestCase(TestCase):
         new_callable=PropertyMock,
     )
     def test_cloning_nullable_many_to_one(self, _clone_m2o_or_o2m_fields_mock):
-        clone_m2o_or_o2m_fields_mock.return_value = ["book"]
+        _clone_m2o_or_o2m_fields_mock.return_value = ["book"]
 
         edition = Edition.objects.create(seq=1, book=None)
         edition.make_clone()
