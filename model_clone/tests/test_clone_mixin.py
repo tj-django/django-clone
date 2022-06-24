@@ -730,11 +730,10 @@ class CloneMixinTestCase(TestCase):
         clone_m2o_or_o2m_fields_mock.return_value = ["book"]
 
         edition = Edition.objects.create(seq=1, book=None)
-        edition_clone = edition.make_clone()
+        edition.make_clone()
 
         self.assertIsNone(edition.book)
         _clone_m2o_or_o2m_fields_mock.assert_called()
-
 
     def test_cloning_complex_model_relationships(self):
         house = House.objects.create(name="My House")
