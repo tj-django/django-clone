@@ -25,7 +25,7 @@ deploy_requires = [
     "readme_renderer[md]",
     "changes",
     "git-changelog",
-    "twine",
+    "twine==3.7.1",
 ]
 
 lint_requires = [
