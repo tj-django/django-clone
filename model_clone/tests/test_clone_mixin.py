@@ -717,6 +717,7 @@ class CloneMixinTestCase(TestCase):
 
         book.page_set.set([page])
         edition_clone = edition.make_clone()
+        edition_clone.refresh_from_db()
 
         self.assertNotEqual(edition.book.id, edition_clone.book.id)
         self.assertEqual(edition.book.name, edition_clone.book.name)

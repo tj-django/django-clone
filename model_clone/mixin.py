@@ -237,6 +237,8 @@ class CloneMixin(object):
         duplicate = self.__duplicate_o2m_fields(duplicate, using=using)
         duplicate = self.__duplicate_m2m_fields(duplicate, using=using)
 
+        duplicate.save(using=using)
+
         return duplicate
 
     def bulk_clone(
