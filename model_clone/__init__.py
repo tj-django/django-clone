@@ -2,7 +2,7 @@
 
 __author__ = """Tonye Jack"""
 __email__ = "jtonye@ymail.com"
-__version__ = "3.0.4"
+__version__ = "3.0.5"
 
 from model_clone.admin import CloneModelAdmin, CloneModelAdminMixin
 from model_clone.mixin import CloneMixin
