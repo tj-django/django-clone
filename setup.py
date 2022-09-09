@@ -46,6 +46,7 @@ extras_require = {
         install_requires,
         test_requires,
         lint_requires,
+        deploy_requires,
     ],
     "test": test_requires,
     "lint": lint_requires,
