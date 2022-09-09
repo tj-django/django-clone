@@ -1,5 +1,50 @@
 # Changelog
 
+## [v3.0.6](https://github.com/tj-django/django-clone/tree/v3.0.6) (2022-09-09)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v3.0.5...v3.0.6)
+
+## [v3.0.5](https://github.com/tj-django/django-clone/tree/v3.0.5) (2022-09-09)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v3.0.4...v3.0.5)
+
+**Closed issues:**
+
+- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
+
+**Merged pull requests:**
+
+- docs: add Akollek as a contributor for code, bug, test [\#634](https://github.com/tj-django/django-clone/pull/634) ([allcontributors[bot]](https://github.com/apps/allcontributors))
+- Fix: Save duplicated objects after foreign keys updated [\#633](https://github.com/tj-django/django-clone/pull/633) ([Akollek](https://github.com/Akollek))
+- Update dependency django to v4.1.1 [\#632](https://github.com/tj-django/django-clone/pull/632) ([renovate[bot]](https://github.com/apps/renovate))
+- Update wearerequired/lint-action action to v2.1.0 [\#631](https://github.com/tj-django/django-clone/pull/631) ([renovate[bot]](https://github.com/apps/renovate))
+- \[pre-commit.ci\] pre-commit autoupdate [\#630](https://github.com/tj-django/django-clone/pull/630) ([pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci))
+- Update tj-actions/verify-changed-files action to v11 [\#629](https://github.com/tj-django/django-clone/pull/629) ([renovate[bot]](https://github.com/apps/renovate))
+- Update actions/cache action to v3.0.8 [\#628](https://github.com/tj-django/django-clone/pull/628) ([renovate[bot]](https://github.com/apps/renovate))
+- Update peter-evans/create-pull-request action to v4.1.1 [\#627](https://github.com/tj-django/django-clone/pull/627) ([renovate[bot]](https://github.com/apps/renovate))
+- Update peter-evans/create-pull-request action to v4.1.0 [\#626](https://github.com/tj-django/django-clone/pull/626) ([renovate[bot]](https://github.com/apps/renovate))
+
+## [v3.0.4](https://github.com/tj-django/django-clone/tree/v3.0.4) (2022-08-13)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v3.0.3...v3.0.4)
+
+**Merged pull requests:**
+
+- Update dependency pytz to v2022.2.1 [\#625](https://github.com/tj-django/django-clone/pull/625) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency pytz to v2022.2 [\#624](https://github.com/tj-django/django-clone/pull/624) ([renovate[bot]](https://github.com/apps/renovate))
+- Update actions/cache action to v3.0.7 [\#623](https://github.com/tj-django/django-clone/pull/623) ([renovate[bot]](https://github.com/apps/renovate))
+- Update actions/cache action to v3.0.6 [\#622](https://github.com/tj-django/django-clone/pull/622) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency django to v4.1 [\#621](https://github.com/tj-django/django-clone/pull/621) ([renovate[bot]](https://github.com/apps/renovate))
+- Update actions/cache action to v3.0.5 [\#620](https://github.com/tj-django/django-clone/pull/620) ([renovate[bot]](https://github.com/apps/renovate))
+- Update wearerequired/lint-action action to v2.0.1 [\#619](https://github.com/tj-django/django-clone/pull/619) ([renovate[bot]](https://github.com/apps/renovate))
+- \[pre-commit.ci\] pre-commit autoupdate [\#618](https://github.com/tj-django/django-clone/pull/618) ([pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci))
+- Update dependency django to v4.0.6 [\#617](https://github.com/tj-django/django-clone/pull/617) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency typing-extensions to v4.3.0 [\#616](https://github.com/tj-django/django-clone/pull/616) ([renovate[bot]](https://github.com/apps/renovate))
+- Update tj-actions/github-changelog-generator action to v1.14 [\#615](https://github.com/tj-django/django-clone/pull/615) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency twine to v4 [\#614](https://github.com/tj-django/django-clone/pull/614) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency twine to v3.8.0 [\#613](https://github.com/tj-django/django-clone/pull/613) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#612](https://github.com/tj-django/django-clone/pull/612) ([github-actions[bot]](https://github.com/apps/github-actions))
+
 ## [v3.0.3](https://github.com/tj-django/django-clone/tree/v3.0.3) (2022-06-26)
 
 [Full Changelog](https://github.com/tj-django/django-clone/compare/v3.0.2...v3.0.3)
@@ -13,12 +58,9 @@
 - Cloning a relationship that is null errors out [\#571](https://github.com/tj-django/django-clone/issues/571)
 - \[BUG\] Unexpected argument 'save\_new' [\#546](https://github.com/tj-django/django-clone/issues/546)
 
-**Closed issues:**
-
-- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
-
 **Merged pull requests:**
 
+- Upgraded v3.0.2 → v3.0.3 [\#611](https://github.com/tj-django/django-clone/pull/611) ([jackton1](https://github.com/jackton1))
 - feat: add support for cloning nullable m2o fields [\#610](https://github.com/tj-django/django-clone/pull/610) ([jackton1](https://github.com/jackton1))
 - fix: m2o clone when the value is None [\#609](https://github.com/tj-django/django-clone/pull/609) ([jackton1](https://github.com/jackton1))
 - Bump tj-actions/verify-changed-files from 9 to 10 [\#608](https://github.com/tj-django/django-clone/pull/608) ([dependabot[bot]](https://github.com/apps/dependabot))
