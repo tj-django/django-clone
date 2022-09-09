@@ -62,6 +62,7 @@ class CloneMixinTestCase(TestCase):
     def test_cloning_model_with_custom_id(self):
         instance = Library.objects.create(name="First library", user=self.user1)
         clone = instance.make_clone({"user": self.user2})
+        clone.refresh_from_db()
         self.assertNotEqual(instance.pk, clone.pk)
 
     @patch("sample.models.Library._clone_excluded_fields", new_callable=PropertyMock)
@@ -69,6 +70,7 @@ class CloneMixinTestCase(TestCase):
         _clone_excluded_fields_mock.return_value = ["name"]
         instance = Library.objects.create(name="First library", user=self.user1)
         clone = instance.make_clone({"name": "New Library"})
+        clone.refresh_from_db()
         self.assertNotEqual(instance.pk, clone.pk)
         self.assertNotEqual(instance.name, clone.name)
 
@@ -76,6 +78,7 @@ class CloneMixinTestCase(TestCase):
         name = "New Library"
         instance = Library.objects.create(name=name, user=self.user1)
         clone = instance.make_clone({"user": self.user2, "name": "New name"})
+        clone.refresh_from_db()
 
         self.assertEqual(instance.name, name)
         self.assertNotEqual(instance.pk, clone.pk)
@@ -88,6 +91,7 @@ class CloneMixinTestCase(TestCase):
         )
         _clone_fields_mock.return_value = ["name", "created_by", "slug", "published_at"]
         clone = instance.make_clone()
+        clone.refresh_from_db()
         self.assertNotEqual(instance.pk, clone.pk)
         self.assertEqual(instance.name, clone.name)
         self.assertNotEqual(instance.slug, clone.slug)
@@ -95,6 +99,7 @@ class CloneMixinTestCase(TestCase):
 
         _clone_fields_mock.return_value.remove("published_at")
         clone = instance.make_clone()
+        clone.refresh_from_db()
         self.assertNotEqual(instance.pk, clone.pk)
         self.assertEqual(instance.name, clone.name)
         self.assertNotEqual(instance.slug, clone.slug)
@@ -104,6 +109,7 @@ class CloneMixinTestCase(TestCase):
         name = "New Library"
         instance = Library.objects.create(name=name, user=self.user1)
         clone = instance.make_clone({"user": self.user2})
+        clone.refresh_from_db()
 
         self.assertNotEqual(instance.pk, clone.pk)
         self.assertNotEqual(instance.user, clone.user)
@@ -112,6 +118,7 @@ class CloneMixinTestCase(TestCase):
         name = "New Library"
         instance = Library.objects.create(name=name, user=self.user1)
         clone = instance.make_clone()
+        clone.refresh_from_db()
 
         self.assertNotEqual(instance.pk, clone.pk)
         self.assertNotEqual(instance.user.pk, clone.user.pk)
@@ -125,6 +132,7 @@ class CloneMixinTestCase(TestCase):
             )
             cover = Cover.objects.create(content="New Cover", book=book)
             clone = cover.make_clone()
+            clone.refresh_from_db()
 
             self.assertNotEqual(cover.pk, clone.pk)
             self.assertNotEqual(cover.book.pk, clone.book.pk)
@@ -139,6 +147,7 @@ class CloneMixinTestCase(TestCase):
             )
             cover = Cover.objects.create(content="New Cover", book=book)
             clone = book.make_clone()
+            clone.refresh_from_db()
 
             self.assertNotEqual(book.pk, clone.pk)
             self.assertNotEqual(cover.pk, clone.cover.pk)
@@ -149,6 +158,7 @@ class CloneMixinTestCase(TestCase):
             )
             backcover = BackCover.objects.create(content="New Back Cover", book=book)
             clone = book.make_clone()
+            clone.refresh_from_db()
 
             self.assertNotEqual(book.pk, clone.pk)
             self.assertIsNotNone(clone.backcover.pk)
@@ -165,6 +175,7 @@ class CloneMixinTestCase(TestCase):
             attrs={"user": new_user, "name": "New name"},
             using=self.REPLICA_DB_ALIAS,
         )
+        clone.refresh_from_db()
 
         self.assertEqual(instance.name, name)
         self.assertNotEqual(instance.pk, clone.pk)
@@ -175,6 +186,7 @@ class CloneMixinTestCase(TestCase):
         instance = Library.objects.create(name=name, user=self.user1)
         new_name = "My New Library"
         clone = instance.make_clone(attrs={"name": new_name, "user": self.user2})
+        clone.refresh_from_db()
 
         self.assertEqual(instance.name, name)
 
@@ -191,6 +203,7 @@ class CloneMixinTestCase(TestCase):
         time.sleep(1)
         new_name = "My New Book"
         clone = instance.make_clone(attrs={"name": new_name})
+        clone.refresh_from_db()
 
         self.assertEqual(instance.name, name)
         self.assertEqual(clone.created_by, instance.created_by)
@@ -227,6 +240,7 @@ class CloneMixinTestCase(TestCase):
         book.authors.set([author_1, author_2])
 
         book_clone = book.make_clone()
+        book_clone.refresh_from_db()
 
         self.assertEqual(book.name, name)
         self.assertEqual(book.created_by, book_clone.created_by)
@@ -238,6 +252,7 @@ class CloneMixinTestCase(TestCase):
     def test_cloning_with_unique_constraint_is_valid(self):
         sale_tag = SaleTag.objects.create(name="test-sale-tag")
         clone_sale_tag_1 = sale_tag.make_clone()
+        clone_sale_tag_1.refresh_from_db()
 
         self.assertNotEqual(sale_tag.pk, clone_sale_tag_1.pk)
         self.assertRegexpMatches(
@@ -246,6 +261,7 @@ class CloneMixinTestCase(TestCase):
         )
 
         clone_sale_tag_2 = clone_sale_tag_1.make_clone()
+        clone_sale_tag_2.refresh_from_db()
 
         self.assertNotEqual(clone_sale_tag_1.pk, clone_sale_tag_2.pk)
         self.assertRegexpMatches(
@@ -256,6 +272,7 @@ class CloneMixinTestCase(TestCase):
     def test_cloning_with_unique_constraint_uses_field_default(self):
         tag = Tag.objects.create(name="test-tag")
         clone_tag = tag.make_clone()
+        clone_tag.refresh_from_db()
 
         self.assertNotEqual(tag.pk, clone_tag.pk)
         self.assertRegexpMatches(
@@ -287,6 +304,7 @@ class CloneMixinTestCase(TestCase):
         book_1.authors.set([author_1, author_2])
 
         book_clone_1 = book_1.make_clone()
+        book_clone_1.refresh_from_db()
 
         self.assertEqual(
             list(book_1.authors.values_list("first_name", "last_name")),
@@ -305,6 +323,7 @@ class CloneMixinTestCase(TestCase):
         BookTag.objects.create(book=book_2, tag=tag_2)
 
         book_clone_2 = book_2.make_clone()
+        book_clone_2.refresh_from_db()
 
         self.assertEqual(
             list(book_2.tags.values_list("name")),
@@ -323,6 +342,7 @@ class CloneMixinTestCase(TestCase):
         BookSaleTag.objects.create(book=book_3, sale_tag=sale_tag_2)
 
         book_clone_3 = book_3.make_clone()
+        book_clone_3.refresh_from_db()
 
         self.assertEqual(
             list(book_3.sale_tags.values_list("name")),
@@ -340,6 +360,7 @@ class CloneMixinTestCase(TestCase):
         _clone_excluded_fields_mock.return_value = ["last_name"]
 
         author_clone = author.make_clone()
+        author_clone.refresh_from_db()
 
         self.assertNotEqual(author.last_name, author_clone.last_name)
 
@@ -363,6 +384,7 @@ class CloneMixinTestCase(TestCase):
         author.books.set([book_1, book_2])
 
         author_clone = author.make_clone()
+        author_clone.refresh_from_db()
 
         self.assertEqual(
             list(author.books.values_list("name")),
@@ -381,6 +403,7 @@ class CloneMixinTestCase(TestCase):
         )
 
         author_clone = author.make_clone()
+        author_clone.refresh_from_db()
 
         self.assertNotEqual(author.pk, author_clone.pk)
         self.assertEqual(
@@ -427,6 +450,7 @@ class CloneMixinTestCase(TestCase):
         )
 
         author_clone = author.make_clone()
+        author_clone.refresh_from_db()
 
         self.assertNotEqual(author.pk, author_clone.pk)
         self.assertEqual(
@@ -447,6 +471,7 @@ class CloneMixinTestCase(TestCase):
         )
 
         author_clone_1 = author.make_clone()
+        author_clone_1.refresh_from_db()
 
         self.assertNotEqual(author.pk, author_clone_1.pk)
         self.assertEqual(author.sex, author_clone_1.sex)
@@ -460,6 +485,7 @@ class CloneMixinTestCase(TestCase):
         )
 
         author_clone_2 = author.make_clone()
+        author_clone_2.refresh_from_db()
 
         self.assertNotEqual(author.pk, author_clone_2.pk)
         self.assertEqual(author.sex, author_clone_2.sex)
@@ -477,6 +503,7 @@ class CloneMixinTestCase(TestCase):
         )
 
         author_clone_3 = author.make_clone()
+        author_clone_3.refresh_from_db()
 
         self.assertNotEqual(author.pk, author_clone_3.pk)
         self.assertEqual(author.sex, author_clone_3.sex)
@@ -498,6 +525,7 @@ class CloneMixinTestCase(TestCase):
         book = Book.objects.create(name=name, created_by=self.user1, slug=slugify(name))
 
         book_clone = book.make_clone()
+        book_clone.refresh_from_db()
 
         self.assertEqual(
             book_clone.slug,
@@ -509,6 +537,7 @@ class CloneMixinTestCase(TestCase):
         book = Book.objects.create(name=name, created_by=self.user1, slug=slugify(name))
 
         book_clone = book.make_clone()
+        book_clone.refresh_from_db()
 
         self.assertEqual(
             book_clone.slug,
@@ -517,6 +546,7 @@ class CloneMixinTestCase(TestCase):
 
         for i in range(2, 7):
             book_clone = book_clone.make_clone()
+            book_clone.refresh_from_db()
 
             self.assertEqual(
                 book_clone.slug,
@@ -542,6 +572,7 @@ class CloneMixinTestCase(TestCase):
         use_duplicate_suffix_for_non_unique_fields_mock.return_value = True
 
         book_clone = book.make_clone()
+        book_clone.refresh_from_db()
 
         self.assertEqual(
             book_clone.custom_slug,
@@ -570,6 +601,7 @@ class CloneMixinTestCase(TestCase):
         )
 
         author_clone = author.make_clone()
+        author_clone.refresh_from_db()
 
         self.assertEqual(
             len(author_clone.first_name),
@@ -685,6 +717,7 @@ class CloneMixinTestCase(TestCase):
         self.assertEqual(self.user1.book_set.count(), 1)
 
         book_clone = book.make_clone()
+        book_clone.refresh_from_db()
 
         self.assertEqual(book.name, name)
         self.assertEqual(book_clone.name, name)
@@ -717,6 +750,7 @@ class CloneMixinTestCase(TestCase):
 
         book.page_set.set([page])
         edition_clone = edition.make_clone()
+        edition_clone.refresh_from_db()
 
         self.assertNotEqual(edition.book.id, edition_clone.book.id)
         self.assertEqual(edition.book.name, edition_clone.book.name)
@@ -745,6 +779,7 @@ class CloneMixinTestCase(TestCase):
         Furniture.objects.create(name="Chair for room 2", room=room_2)
 
         clone_house = house.make_clone()
+        clone_house.refresh_from_db()
 
         self.assertEqual(house.name, clone_house.name)
         self.assertEqual(house.rooms.count(), clone_house.rooms.count())
@@ -960,6 +995,7 @@ class CloneMixinTransactionTestCase(TransactionTestCase):
     def test_cloning_model_with_unique_text_field(self):
         product = Product.objects.create(name="Test Product")
         clone = product.make_clone()
+        clone.refresh_from_db()
         self.assertEqual(
             clone.name,
             "{0} {1} 1".format(product.name, Product.UNIQUE_DUPLICATE_SUFFIX),
