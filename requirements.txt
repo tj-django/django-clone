@@ -16,7 +16,7 @@ pytz==2022.2.1
     # via django
 six==1.16.0
     # via django-clone (setup.py)
-sqlparse==0.4.2
+sqlparse==0.4.3
     # via django
 typing-extensions==4.3.0
     # via asgiref
