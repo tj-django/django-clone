@@ -6,10 +6,12 @@ __version__ = "3.0.6"
 
 from model_clone.admin import CloneModelAdmin, CloneModelAdminMixin
 from model_clone.mixin import CloneMixin
+from model_clone.models import CloneModel
 from model_clone.utils import create_copy_of_instance
 
 __all__ = [
     "CloneMixin",
+    "CloneModel",
     "CloneModelAdmin",
     "CloneModelAdminMixin",
     "create_copy_of_instance",
