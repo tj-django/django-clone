@@ -68,7 +68,7 @@ class MyModel(models.Model):
 
 ```python
 from django.db import models
-from model_clone import CloneModel
+from model_clone.models import CloneModel
 
 class MyModel(CloneModel):
     title = models.CharField(max_length=200)
@@ -79,7 +79,7 @@ class MyModel(CloneModel):
 ```python
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from model_clone import CloneModel
+from model_clone.models import CloneModel
 
 class TestModel(CloneModel):
     title = models.CharField(max_length=200)
