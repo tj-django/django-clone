@@ -48,15 +48,12 @@ body:
       label: What OS are you seeing the problem on?
       multiple: true
       options:
-        - all
-        - ubuntu-latest or ubuntu-20.04
-        - ubuntu-18.04
-        - macos-latest or macos-10.15
-        - macos-11
-        - windows-latest or windows-2019
-        - windows-2016
+          - Ubuntu
+          - macOS
+          - Windows
+          - Other
     validations:
-      required: true
+      required: false
   - type: textarea
     id: expected
     attributes:
@@ -70,6 +67,11 @@ body:
     attributes:
       label: Relevant log output
       description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      placeholder: |
+        This can be achieved by:
+        1. Re-running the workflow with debug logging enabled.
+        2. Copy or download the log archive.
+        3. Paste the contents here or upload the file in a subsequent comment.
       render: shell
   - type: textarea
     attributes:
