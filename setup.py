@@ -26,6 +26,7 @@ deploy_requires = [
     "changes",
     "git-changelog",
     "twine",
+    "build",
 ]
 
 lint_requires = [
