@@ -1007,6 +1007,7 @@ class CloneMixinTestCase(TestCase):
 
         self.assertEqual(2, len(clones))
         self.assertEqual(3, Sentence.objects.count())
+        self.assertEqual(3, Ending.objects.count())
 
 
 class CloneMixinTransactionTestCase(TransactionTestCase):
