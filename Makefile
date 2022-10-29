@@ -65,9 +65,9 @@ install-deploy: clean setup.py install-wheel ## Install deploy extra dependencie
 
 install-dev: clean setup.py install-wheel  ## Install development extra dependencies.
 	@echo "Installing development requirements..."
-	@$(PYTHON_PIP) install -e .'[development]' -r requirements.txt
+	@$(PYTHON_PIP) install -e .'[development]'
 
-update-requirements:  ## Updates the requirement.txt adding missing package dependencies
+update-requirements:  ## Updates the requirements.txt adding missing package dependencies
 	@echo "Syncing the package requirements.txt..."
 	@$(PIP_COMPILE)
 

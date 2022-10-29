@@ -82,11 +82,19 @@ class SaleTag(CloneModel):
         return _(self.name)
 
 
+class Editor(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return _(self.name)
+
+
 class Book(CloneModel):
     name = models.CharField(max_length=2000)
     slug = models.SlugField(unique=True)
     custom_slug = models.SlugField(default="")
     authors = models.ManyToManyField(Author, related_name="books")
+    editors = models.ManyToManyField(Editor, related_name="books")
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.PROTECT,

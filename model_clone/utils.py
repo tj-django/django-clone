@@ -203,7 +203,6 @@ def generate_value(value, suffix, transform, max_length, max_attempts):
     """
     Given a fixed max attempt generate a unique value.
     """
-    yield get_value(value, suffix, transform, max_length, 1)
 
     for i in range(1, max_attempts):
         yield get_value(value, suffix, transform, max_length, i)
@@ -223,14 +222,18 @@ def get_unique_value(
     suffix="",
     max_length=None,
     max_attempts=100,
+    using=None,
 ):
     """
     Generate a unique value using current value and query the model
     for existing objects with the new value.
     """
-    qs = model._default_manager.all()
-    it = generate_value(value, suffix, transform, max_length, max_attempts)
+    qs = model._default_manager.using(using or model._default_manager.db).all()
 
+    if not qs.filter(**{fname: value}).exists():
+        return value
+
+    it = generate_value(value, suffix, transform, max_length, max_attempts)
     new = six.next(it)
     kwargs = {fname: new}
 

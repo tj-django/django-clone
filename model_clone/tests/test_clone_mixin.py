@@ -20,6 +20,7 @@ from sample.models import (
     BookTag,
     Cover,
     Edition,
+    Editor,
     Ending,
     Furniture,
     House,
@@ -169,17 +170,75 @@ class CloneMixinTestCase(TestCase):
         name = "New Library"
         instance = Library(name=name, user=self.user1)
         instance.save(using=DEFAULT_DB_ALIAS)
-        new_user = User(username="new user 2")
-        new_user.save(using=self.REPLICA_DB_ALIAS)
         clone = instance.make_clone(
-            attrs={"user": new_user, "name": "New name"},
+            attrs={"name": "New name"},
             using=self.REPLICA_DB_ALIAS,
         )
         clone.refresh_from_db()
 
         self.assertEqual(instance.name, name)
+        self.assertEqual(clone.name, "New name")
+        self.assertEqual(clone._state.db, self.REPLICA_DB_ALIAS)
         self.assertNotEqual(instance.pk, clone.pk)
         self.assertNotEqual(instance.name, clone.name)
+
+    @patch("sample.models.Book._clone_m2m_fields", new_callable=PropertyMock)
+    def test_cloning_m2m_fields_with_different_db_alias_is_valid(
+        self, _clone_m2m_fields_mock
+    ):
+        author_1 = Author(
+            first_name="Ruby", last_name="Jack", age=26, sex="F", created_by=self.user1
+        )
+        author_1.save(using=DEFAULT_DB_ALIAS)
+
+        author_2 = Author(
+            first_name="Ibinabo",
+            last_name="Jack",
+            age=19,
+            sex="F",
+            created_by=self.user1,
+        )
+        author_2.save(using=DEFAULT_DB_ALIAS)
+
+        editor_1 = Editor(name="Opubo")
+        editor_1.save(using=DEFAULT_DB_ALIAS)
+
+        editor_2 = Editor(name="Ruby")
+        editor_2.save(using=DEFAULT_DB_ALIAS)
+
+        _clone_m2m_fields_mock.return_value = ["authors", "editors"]
+
+        name = "New Book"
+        book = Book(name=name, created_by=self.user1, slug=slugify(name))
+        book.save(using=DEFAULT_DB_ALIAS)
+
+        book.authors.set([author_1, author_2])
+        book.editors.set([editor_1, editor_2])
+
+        book_clone = book.make_clone(using=self.REPLICA_DB_ALIAS)
+        book_clone.refresh_from_db()
+
+        self.assertEqual(book.name, name)
+        self.assertEqual(book.created_by, book_clone.created_by)
+        self.assertNotEqual(
+            list(book.authors.values_list("first_name", "last_name")),
+            list(book_clone.authors.values_list("first_name", "last_name")),
+        )
+        self.assertEqual(
+            list(book.authors.values_list("first_name", "last_name")),
+            [("Ruby", "Jack"), ("Ibinabo", "Jack")],
+        )
+        self.assertEqual(
+            list(book_clone.authors.values_list("first_name", "last_name")),
+            [("Ruby", "Unknown"), ("Ibinabo", "Unknown")],
+        )
+        self.assertEqual(book._state.db, DEFAULT_DB_ALIAS)
+        self.assertEqual(book_clone._state.db, self.REPLICA_DB_ALIAS)
+
+        self.assertEqual(
+            list(book_clone.editors.values_list("name", flat=True)),
+            ["Opubo", "Ruby"],
+        )
 
     def test_cloning_with_field_overridden(self):
         name = "New Library"
@@ -308,7 +367,12 @@ class CloneMixinTestCase(TestCase):
 
         self.assertEqual(
             list(book_1.authors.values_list("first_name", "last_name")),
+            [("Opubo", "Jack"), ("Nimabo", "Jack")],
+        )
+
+        self.assertEqual(
             list(book_clone_1.authors.values_list("first_name", "last_name")),
+            [("Opubo copy 1", "Unknown"), ("Nimabo copy 1", "Unknown copy 1")],
         )
 
         tag_1 = Tag.objects.create(name="test-tag-1")
