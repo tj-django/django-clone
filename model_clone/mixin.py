@@ -17,7 +17,7 @@ from model_clone.utils import (
     get_unique_default,
     get_unique_value,
     get_value,
-    transaction_autocommit, create_copy_of_instance,
+    transaction_autocommit,
 )
 
 

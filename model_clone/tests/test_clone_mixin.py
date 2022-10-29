@@ -182,7 +182,9 @@ class CloneMixinTestCase(TestCase):
         self.assertNotEqual(instance.name, clone.name)
 
     @patch("sample.models.Book._clone_m2m_fields", new_callable=PropertyMock)
-    def test_cloning_m2m_fields_with_different_db_alias_is_valid(self, _clone_m2m_fields_mock):
+    def test_cloning_m2m_fields_with_different_db_alias_is_valid(
+        self, _clone_m2m_fields_mock
+    ):
         author_1 = Author(
             first_name="Ruby", last_name="Jack", age=26, sex="F", created_by=self.user1
         )
