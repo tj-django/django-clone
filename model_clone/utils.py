@@ -1,6 +1,6 @@
 import contextlib
+import platform
 import re
-import sys
 
 import six
 from django.db import models, transaction
@@ -235,7 +235,7 @@ def get_unique_value(
         qs = model._default_manager.using(using).all()
 
     if (
-        (sys.version_info[0], sys.version_info[1]) > (3, 6)
+        platform.python_version_tuple() >= ("3", "6")
         and not qs.filter(**{fname: value}).exists()
     ):
         return value
