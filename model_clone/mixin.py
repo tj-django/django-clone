@@ -403,21 +403,20 @@ class CloneMixin(object):
                         )
 
                 elif isinstance(f, models.OneToOneField) and not sub_clone:
-                    sub_instance = getattr(instance, f.name, None) or f.get_default()
-
-                    if sub_instance is not None and parent is None:
-                        sub_instance = CloneMixin._create_copy_of_instance(
-                            sub_instance,
-                            force=True,
-                            sub_clone=True,
-                            using=using,
-                        )
-                        sub_instance.save(using=using)
-                        value = sub_instance.pk
-                    elif parent is not None:
+                    if parent is not None:
                         value = parent.pk
                     else:
-                        value = None
+                        sub_instance = getattr(instance, f.name, None) or f.get_default()
+
+                        if sub_instance is not None:
+                            sub_instance = CloneMixin._create_copy_of_instance(
+                                sub_instance,
+                                force=True,
+                                sub_clone=True,
+                                using=using,
+                            )
+                            sub_instance.save(using=using)
+                            value = sub_instance.pk
             elif all(
                 [
                     use_duplicate_suffix_for_non_unique_fields,
