@@ -200,7 +200,7 @@ class CloneMixin(object):
         return instance
 
     @transaction.atomic
-    def make_clone(self, attrs=None, sub_clone=False, using=None):
+    def make_clone(self, attrs=None, sub_clone=False, using=None, parent=None):
         """Creates a clone of the django model instance.
 
         :param attrs: Dictionary of attributes to be replaced on the cloned object.
@@ -211,6 +211,8 @@ class CloneMixin(object):
         :param using: The database alias used to save the created instances.
         :type using: str
         :return: The model instance that has been cloned.
+        :param parent: The parent object that is being cloned.
+        :type parent: :obj:`django.db.models.Model`
         """
         using = using or self._state.db or self.__class__._default_manager.db
         attrs = attrs or {}
@@ -224,7 +226,7 @@ class CloneMixin(object):
             duplicate = self  # pragma: no cover
             duplicate.pk = None  # pragma: no cover
         else:
-            duplicate = self._create_copy_of_instance(self, using=using)
+            duplicate = self._create_copy_of_instance(self, using=using, parent=parent)
 
         for name, value in attrs.items():
             setattr(duplicate, name, value)
@@ -285,7 +287,9 @@ class CloneMixin(object):
         pass
 
     @staticmethod
-    def _create_copy_of_instance(instance, using=None, force=False, sub_clone=False):
+    def _create_copy_of_instance(
+        instance, using=None, force=False, sub_clone=False, parent=None
+    ):
         """Create a copy of a model instance.
 
         :param instance: The instance to be duplicated.
@@ -298,6 +302,8 @@ class CloneMixin(object):
         :type sub_clone: bool
         :return: A new transient instance.
         :rtype: `django.db.models.Model`
+        :param parent: The parent object that is being cloned.
+        :type parent: :obj:`django.db.models.Model`
         """
         cls = instance.__class__
         clone_fields = getattr(cls, "_clone_fields", CloneMixin._clone_fields)
@@ -399,17 +405,22 @@ class CloneMixin(object):
                         )
 
                 elif isinstance(f, models.OneToOneField) and not sub_clone:
-                    sub_instance = getattr(instance, f.name, None) or f.get_default()
-
-                    if sub_instance is not None:
-                        sub_instance = CloneMixin._create_copy_of_instance(
-                            sub_instance,
-                            force=True,
-                            sub_clone=True,
-                            using=using,
+                    if parent is not None:
+                        value = parent.pk
+                    else:
+                        sub_instance = (
+                            getattr(instance, f.name, None) or f.get_default()
                         )
-                        sub_instance.save(using=using)
-                        value = sub_instance.pk
+
+                        if sub_instance is not None:
+                            sub_instance = CloneMixin._create_copy_of_instance(
+                                sub_instance,
+                                force=True,
+                                sub_clone=True,
+                                using=using,
+                            )
+                            sub_instance.save(using=using)
+                            value = sub_instance.pk
             elif all(
                 [
                     use_duplicate_suffix_for_non_unique_fields,
@@ -467,11 +478,19 @@ class CloneMixin(object):
                 ):
                     rel_object = getattr(self, f.name, None)
                     if rel_object:
-                        new_rel_object = CloneMixin._create_copy_of_instance(
-                            rel_object,
-                            force=True,
-                            sub_clone=True,
-                        )
+                        if hasattr(rel_object, "make_clone"):
+                            new_rel_object = rel_object.make_clone(
+                                using=using,
+                                parent=duplicate,
+                            )
+                        else:
+                            new_rel_object = CloneMixin._create_copy_of_instance(
+                                rel_object,
+                                force=True,
+                                using=using,
+                                parent=duplicate,
+                            )
+
                         setattr(new_rel_object, f.remote_field.name, duplicate)
                         new_rel_object.save(using=using)
 
