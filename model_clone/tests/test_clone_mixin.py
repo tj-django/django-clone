@@ -181,6 +181,48 @@ class CloneMixinTestCase(TestCase):
         self.assertNotEqual(instance.pk, clone.pk)
         self.assertNotEqual(instance.name, clone.name)
 
+    @patch("sample.models.Book._clone_m2m_fields", new_callable=PropertyMock)
+    def test_cloning_m2m_fields_with_different_db_alias_is_valid(self, _clone_m2m_fields_mock):
+        author_1 = Author(
+            first_name="Ruby", last_name="Jack", age=26, sex="F", created_by=self.user1
+        )
+        author_1.save(using=DEFAULT_DB_ALIAS)
+
+        author_2 = Author(
+            first_name="Ibinabo",
+            last_name="Jack",
+            age=19,
+            sex="F",
+            created_by=self.user1,
+        )
+        author_2.save(using=DEFAULT_DB_ALIAS)
+
+        _clone_m2m_fields_mock.return_value = ["authors"]
+
+        name = "New Book"
+        book = Book(name=name, created_by=self.user1, slug=slugify(name))
+        book.save(using=DEFAULT_DB_ALIAS)
+
+        book.authors.set([author_1, author_2])
+
+        book_clone = book.make_clone(using=self.REPLICA_DB_ALIAS)
+        book_clone.refresh_from_db()
+
+        self.assertEqual(book.name, name)
+        self.assertEqual(book.created_by, book_clone.created_by)
+        self.assertNotEqual(
+            list(book.authors.values_list("first_name", "last_name")),
+            list(book_clone.authors.values_list("first_name", "last_name")),
+        )
+        self.assertEqual(
+            list(book.authors.values_list("first_name", "last_name")),
+            [("Ruby", "Jack"), ("Ibinabo", "Jack")],
+        )
+        self.assertEqual(
+            list(book_clone.authors.values_list("first_name", "last_name")),
+            [("Ruby", "Unknown"), ("Ibinabo", "Unknown")],
+        )
+
     def test_cloning_with_field_overridden(self):
         name = "New Library"
         instance = Library.objects.create(name=name, user=self.user1)
@@ -308,7 +350,12 @@ class CloneMixinTestCase(TestCase):
 
         self.assertEqual(
             list(book_1.authors.values_list("first_name", "last_name")),
+            [("Opubo", "Jack"), ("Nimabo", "Jack")],
+        )
+
+        self.assertEqual(
             list(book_clone_1.authors.values_list("first_name", "last_name")),
+            [("Opubo copy 1", "Unknown"), ("Nimabo copy 1", "Unknown copy 1")],
         )
 
         tag_1 = Tag.objects.create(name="test-tag-1")

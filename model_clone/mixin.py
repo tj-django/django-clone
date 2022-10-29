@@ -17,7 +17,7 @@ from model_clone.utils import (
     get_unique_default,
     get_unique_value,
     get_value,
-    transaction_autocommit,
+    transaction_autocommit, create_copy_of_instance,
 )
 
 
@@ -350,7 +350,7 @@ class CloneMixin(object):
                 f.pre_save(new_instance, add=True)
                 continue
 
-            value = getattr(instance, f.attname)
+            value = f.value_from_object(instance)
 
             if all(
                 [
@@ -395,6 +395,7 @@ class CloneMixin(object):
                             suffix=unique_duplicate_suffix,
                             max_length=f.max_length,
                             max_attempts=max_unique_duplicate_query_attempts,
+                            using=using,
                         )
 
                 elif isinstance(f, models.OneToOneField) and not sub_clone:
@@ -426,6 +427,19 @@ class CloneMixin(object):
                         suffix=duplicate_suffix,
                         max_length=f.max_length,
                     )
+
+            if (f.many_to_one or f.one_to_many) and instance._state.db != using:
+                sub_instance = getattr(instance, f.name, None) or f.get_default()
+
+                if sub_instance is not None:
+                    sub_instance = CloneMixin._create_copy_of_instance(
+                        sub_instance,
+                        force=True,
+                        sub_clone=True,
+                        using=using,
+                    )
+                    sub_instance.save(using=using)
+                    value = sub_instance.pk
 
             setattr(new_instance, f.attname, value)
 
@@ -533,7 +547,7 @@ class CloneMixin(object):
                         try:
                             item_clone = item.make_clone(using=using)
                         except IntegrityError:
-                            item_clone = item.make_clone(sub_clone=True)
+                            item_clone = item.make_clone(sub_clone=True, using=using)
                     elif item is None:
                         item_clone = None
                     else:
@@ -590,6 +604,7 @@ class CloneMixin(object):
                 field_name = field.m2m_field_name()
                 source = getattr(self, field.attname)
                 destination = getattr(duplicate, field.attname)
+
             if all(
                 [
                     through,
@@ -615,6 +630,25 @@ class CloneMixin(object):
                         setattr(item, field_name, duplicate)
                         item.save(using=using)
             else:
-                destination.set(source.all())
+                items_clone = []
+                for item in source.all():
+                    if hasattr(item, "make_clone"):
+                        try:
+                            item_clone = item.make_clone(
+                                using=using,
+                            )
+                        except IntegrityError:
+                            item_clone = item.make_clone(
+                                sub_clone=True,
+                                using=using,
+                            )
+                    else:
+                        item.pk = None
+                        item.save(using=using)
+                        item_clone = item
+
+                    items_clone.append(item_clone)
+
+                destination.set(items_clone)
 
         return duplicate
