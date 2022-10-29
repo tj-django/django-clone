@@ -406,6 +406,7 @@ class CloneMixin(object):
                             sub_instance,
                             force=True,
                             sub_clone=True,
+                            using=using,
                         )
                         sub_instance.save(using=using)
                         value = sub_instance.pk

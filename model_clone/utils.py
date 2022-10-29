@@ -229,15 +229,9 @@ def get_unique_value(
     Generate a unique value using current value and query the model
     for existing objects with the new value.
     """
-    qs = model._default_manager.all()
+    qs = model._default_manager.using(using or model._default_manager.db).all()
 
-    if using is not None:
-        qs = model._default_manager.using(using).all()
-
-    if (
-        platform.python_version_tuple() > ("3", "6")
-        and not qs.filter(**{fname: value}).exists()
-    ):
+    if not qs.filter(**{fname: value}).exists():
         return value
 
     it = generate_value(value, suffix, transform, max_length, max_attempts)
