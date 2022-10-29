@@ -1,5 +1,4 @@
 import contextlib
-import platform
 import re
 
 import six
