@@ -287,7 +287,9 @@ class CloneMixin(object):
         pass
 
     @staticmethod
-    def _create_copy_of_instance(instance, using=None, force=False, sub_clone=False, parent=None):
+    def _create_copy_of_instance(
+        instance, using=None, force=False, sub_clone=False, parent=None
+    ):
         """Create a copy of a model instance.
 
         :param instance: The instance to be duplicated.
@@ -406,7 +408,9 @@ class CloneMixin(object):
                     if parent is not None:
                         value = parent.pk
                     else:
-                        sub_instance = getattr(instance, f.name, None) or f.get_default()
+                        sub_instance = (
+                            getattr(instance, f.name, None) or f.get_default()
+                        )
 
                         if sub_instance is not None:
                             sub_instance = CloneMixin._create_copy_of_instance(
