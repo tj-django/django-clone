@@ -1,7 +1,6 @@
 import contextlib
 import re
 import sys
-from platform import python_version
 
 import six
 from django.db import models, transaction
