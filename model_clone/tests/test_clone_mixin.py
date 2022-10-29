@@ -20,6 +20,7 @@ from sample.models import (
     BookTag,
     Cover,
     Edition,
+    Editor,
     Ending,
     Furniture,
     House,
@@ -29,7 +30,7 @@ from sample.models import (
     Room,
     SaleTag,
     Sentence,
-    Tag, Editor,
+    Tag,
 )
 
 User = get_user_model()

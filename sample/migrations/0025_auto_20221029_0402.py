@@ -6,20 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sample', '0024_alter_edition_book'),
+        ("sample", "0024_alter_edition_book"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Editor',
+            name="Editor",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255, unique=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255, unique=True)),
             ],
         ),
         migrations.AddField(
-            model_name='book',
-            name='editors',
-            field=models.ManyToManyField(related_name='books', to='sample.Editor'),
+            model_name="book",
+            name="editors",
+            field=models.ManyToManyField(related_name="books", to="sample.Editor"),
         ),
     ]
