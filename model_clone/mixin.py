@@ -644,9 +644,14 @@ class CloneMixin(object):
                                 using=using,
                             )
                     else:
-                        item.pk = None
-                        item.save(using=using)
-                        item_clone = item
+                        item_clone = CloneMixin._create_copy_of_instance(
+                            item,
+                            force=True,
+                            sub_clone=True,
+                            using=using,
+                        )
+
+                        item_clone.save(using=using)
 
                     items_clone.append(item_clone)
 

@@ -29,7 +29,7 @@ from sample.models import (
     Room,
     SaleTag,
     Sentence,
-    Tag,
+    Tag, Editor,
 )
 
 User = get_user_model()
@@ -199,13 +199,20 @@ class CloneMixinTestCase(TestCase):
         )
         author_2.save(using=DEFAULT_DB_ALIAS)
 
-        _clone_m2m_fields_mock.return_value = ["authors"]
+        editor_1 = Editor(name="Opubo")
+        editor_1.save(using=DEFAULT_DB_ALIAS)
+
+        editor_2 = Editor(name="Ruby")
+        editor_2.save(using=DEFAULT_DB_ALIAS)
+
+        _clone_m2m_fields_mock.return_value = ["authors", "editors"]
 
         name = "New Book"
         book = Book(name=name, created_by=self.user1, slug=slugify(name))
         book.save(using=DEFAULT_DB_ALIAS)
 
         book.authors.set([author_1, author_2])
+        book.editors.set([editor_1, editor_2])
 
         book_clone = book.make_clone(using=self.REPLICA_DB_ALIAS)
         book_clone.refresh_from_db()
@@ -223,6 +230,13 @@ class CloneMixinTestCase(TestCase):
         self.assertEqual(
             list(book_clone.authors.values_list("first_name", "last_name")),
             [("Ruby", "Unknown"), ("Ibinabo", "Unknown")],
+        )
+        self.assertEqual(book._state.db, DEFAULT_DB_ALIAS)
+        self.assertEqual(book_clone._state.db, self.REPLICA_DB_ALIAS)
+
+        self.assertEqual(
+            list(book_clone.editors.values_list("name", flat=True)),
+            ["Opubo", "Ruby"],
         )
 
     def test_cloning_with_field_overridden(self):
