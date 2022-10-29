@@ -487,7 +487,6 @@ class CloneMixin(object):
                             new_rel_object = CloneMixin._create_copy_of_instance(
                                 rel_object,
                                 force=True,
-                                sub_clone=True,
                                 using=using,
                                 parent=duplicate,
                             )
