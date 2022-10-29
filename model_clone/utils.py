@@ -235,7 +235,7 @@ def get_unique_value(
         qs = model._default_manager.using(using).all()
 
     if (
-        platform.python_version_tuple() >= ("3", "6")
+        platform.python_version_tuple() > ("3", "6")
         and not qs.filter(**{fname: value}).exists()
     ):
         return value
