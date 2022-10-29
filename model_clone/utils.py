@@ -203,7 +203,6 @@ def generate_value(value, suffix, transform, max_length, max_attempts):
     """
     Given a fixed max attempt generate a unique value.
     """
-    yield get_value(value, suffix, transform, max_length, 1)
 
     for i in range(1, max_attempts):
         yield get_value(value, suffix, transform, max_length, i)
