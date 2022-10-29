@@ -1,5 +1,7 @@
 import contextlib
 import re
+import sys
+from platform import python_version
 
 import six
 from django.db import models, transaction
@@ -233,7 +235,7 @@ def get_unique_value(
     if using is not None:
         qs = model._default_manager.using(using).all()
 
-    if not qs.filter(**{fname: value}).exists():
+    if (sys.version_info[0], sys.version_info[1]) > (3, 6) and not qs.filter(**{fname: value}).exists():
         return value
 
     it = generate_value(value, suffix, transform, max_length, max_attempts)
