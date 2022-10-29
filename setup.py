@@ -25,16 +25,8 @@ deploy_requires = [
     "readme_renderer[md]",
     "changes",
     "git-changelog",
-    "twine",
-    "build",
 ]
 
-lint_requires = [
-    "flake8",
-    "yamllint",
-    "isort",
-    "black",
-]
 
 local_dev_requires = [
     "pip-tools",
@@ -46,11 +38,9 @@ extras_require = {
         local_dev_requires,
         install_requires,
         test_requires,
-        lint_requires,
         deploy_requires,
     ],
     "test": test_requires,
-    "lint": lint_requires,
     "deploy": deploy_requires,
 }
 
