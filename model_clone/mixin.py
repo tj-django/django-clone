@@ -232,9 +232,9 @@ class CloneMixin(object):
             setattr(duplicate, name, value)
 
         duplicate = self.pre_save_duplicate(duplicate)
+        duplicate = self.__duplicate_m2o_fields(duplicate, using=using)
         duplicate.save(using=using)
 
-        duplicate = self.__duplicate_m2o_fields(duplicate, using=using)
         duplicate = self.__duplicate_o2o_fields(duplicate, using=using)
         duplicate = self.__duplicate_o2m_fields(duplicate, using=using)
         duplicate = self.__duplicate_m2m_fields(duplicate, using=using)
@@ -440,19 +440,6 @@ class CloneMixin(object):
                         max_length=f.max_length,
                     )
 
-            if (f.many_to_one or f.one_to_many) and instance._state.db != using:
-                sub_instance = getattr(instance, f.name, None) or f.get_default()
-
-                if sub_instance is not None:
-                    sub_instance = CloneMixin._create_copy_of_instance(
-                        sub_instance,
-                        force=True,
-                        sub_clone=True,
-                        using=using,
-                    )
-                    sub_instance.save(using=using)
-                    value = sub_instance.pk
-
             setattr(new_instance, f.attname, value)
 
         return new_instance
@@ -571,8 +558,13 @@ class CloneMixin(object):
                     elif item is None:
                         item_clone = None
                     else:
-                        item.pk = None  # pragma: no cover
-                        item_clone = item.save(using=using)  # pragma: no cover
+                        item_clone = CloneMixin._create_copy_of_instance(
+                            item,
+                            force=True,
+                            sub_clone=True,
+                            using=using,
+                        )
+                        item_clone.save(using=using)
 
                     setattr(duplicate, f.name, item_clone)
 
