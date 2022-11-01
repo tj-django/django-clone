@@ -1,7 +1,7 @@
 import io
 import os
 
-from setuptools import find_packages, setup, find_namespace_packages
+from setuptools import find_namespace_packages, setup
 
 install_requires = [
     "django",
@@ -109,7 +109,7 @@ setup(
         include=[
             "model_clone.templates.admin",
             "model_clone",
-            "model_clone.templates.clone"
+            "model_clone.templates.clone",
         ],
     ),
 )
