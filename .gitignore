@@ -143,3 +143,5 @@ cython_debug/
 
 # Test Results
 test-reports/
+
+.DS_Store
