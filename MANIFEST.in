@@ -8,7 +8,6 @@ prune sample_driver
 prune sample
 prune .github
 prune .circleci
-prune manage.py
 global-exclude __pycache__
 global-exclude *.py[co]
 
@@ -25,11 +24,12 @@ exclude .coveragerc
 include LICENSE
 exclude Makefile
 exclude tox.ini
+exclude manage.py
 exclude .tox
 exclude .all-contributorsrc
 exclude .pypirc
-
 exclude *.yml
+
 recursive-exclude docs *.html
 recursive-exclude docs *.md
 recursive-exclude docs *.nojekyll
