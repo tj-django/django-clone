@@ -440,19 +440,6 @@ class CloneMixin(object):
                         max_length=f.max_length,
                     )
 
-            if (f.many_to_one or f.one_to_many) and instance._state.db != using:
-                sub_instance = getattr(instance, f.name, None) or f.get_default()
-
-                if sub_instance is not None:
-                    sub_instance = CloneMixin._create_copy_of_instance(
-                        sub_instance,
-                        force=True,
-                        sub_clone=True,
-                        using=using,
-                    )
-                    sub_instance.save(using=using)
-                    value = sub_instance.pk
-
             setattr(new_instance, f.attname, value)
 
         return new_instance
