@@ -559,7 +559,8 @@ class CloneMixin(object):
                         item_clone = None
                     else:
                         item.pk = None  # pragma: no cover
-                        item_clone = item.save(using=using)  # pragma: no cover
+                        item.save(using=using)  # pragma: no cover
+                        item_clone = item
 
                     setattr(duplicate, f.name, item_clone)
 
