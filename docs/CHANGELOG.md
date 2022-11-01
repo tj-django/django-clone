@@ -1,5 +1,29 @@
 # Changelog
 
+## [Unreleased](https://github.com/tj-django/django-clone/tree/HEAD)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v4.0.2...HEAD)
+
+**Fixed bugs:**
+
+- \[BUG\] duplicate functional -\> duplicate records [\#672](https://github.com/tj-django/django-clone/issues/672)
+
+## [v4.0.2](https://github.com/tj-django/django-clone/tree/v4.0.2) (2022-11-01)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v4.0.1...v4.0.2)
+
+**Closed issues:**
+
+- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
+
+**Merged pull requests:**
+
+- Update dependency pytz to v2022.6 [\#675](https://github.com/tj-django/django-clone/pull/675) ([renovate[bot]](https://github.com/apps/renovate))
+- \[pre-commit.ci\] pre-commit autoupdate [\#674](https://github.com/tj-django/django-clone/pull/674) ([pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci))
+- chore: remove unused code block [\#673](https://github.com/tj-django/django-clone/pull/673) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#671](https://github.com/tj-django/django-clone/pull/671) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Upgraded v4.0.0 → v4.0.1 [\#670](https://github.com/tj-django/django-clone/pull/670) ([jackton1](https://github.com/jackton1))
+
 ## [v4.0.1](https://github.com/tj-django/django-clone/tree/v4.0.1) (2022-10-29)
 
 [Full Changelog](https://github.com/tj-django/django-clone/compare/v4.0.0...v4.0.1)
@@ -28,10 +52,6 @@
 **Fixed bugs:**
 
 - \[BUG\] Readme examples outdated [\#663](https://github.com/tj-django/django-clone/issues/663)
-
-**Closed issues:**
-
-- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
 
 **Merged pull requests:**
 
