@@ -232,9 +232,9 @@ class CloneMixin(object):
             setattr(duplicate, name, value)
 
         duplicate = self.pre_save_duplicate(duplicate)
+        duplicate = self.__duplicate_m2o_fields(duplicate, using=using)
         duplicate.save(using=using)
 
-        duplicate = self.__duplicate_m2o_fields(duplicate, using=using)
         duplicate = self.__duplicate_o2o_fields(duplicate, using=using)
         duplicate = self.__duplicate_o2m_fields(duplicate, using=using)
         duplicate = self.__duplicate_m2m_fields(duplicate, using=using)
@@ -558,9 +558,13 @@ class CloneMixin(object):
                     elif item is None:
                         item_clone = None
                     else:
-                        item.pk = None  # pragma: no cover
-                        item.save(using=using)  # pragma: no cover
-                        item_clone = item
+                        item_clone = CloneMixin._create_copy_of_instance(
+                            item,
+                            force=True,
+                            sub_clone=True,
+                            using=using,
+                        )
+                        item_clone.save(using=using)
 
                     setattr(duplicate, f.name, item_clone)
 
