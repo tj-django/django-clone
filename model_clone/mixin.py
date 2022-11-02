@@ -10,6 +10,7 @@ from django.db.models import SlugField
 from django.utils.text import slugify
 
 from model_clone.apps import ModelCloneConfig
+from model_clone.signals import post_clone_save, pre_clone_save
 from model_clone.utils import (
     clean_value,
     context_mutable_attribute,
@@ -233,13 +234,16 @@ class CloneMixin(object):
 
         duplicate = self.pre_save_duplicate(duplicate)
         duplicate = self.__duplicate_m2o_fields(duplicate, using=using)
+
+        pre_clone_save.send(sender=self.__class__, instance=duplicate)
+
         duplicate.save(using=using)
 
         duplicate = self.__duplicate_o2o_fields(duplicate, using=using)
         duplicate = self.__duplicate_o2m_fields(duplicate, using=using)
         duplicate = self.__duplicate_m2m_fields(duplicate, using=using)
 
-        duplicate.save(using=using)
+        post_clone_save.send(sender=self.__class__, instance=duplicate)
 
         return duplicate
 
