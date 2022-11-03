@@ -30,9 +30,9 @@ class CloneSignalsTestCase(TestCase):
             slug=slugify(name),
             published_at=first_published_at,
         )
-        assert book.published_at == first_published_at
+        self.assertEqual(book.published_at, first_published_at)
         edition = Edition.objects.create(seq=1, book=book)
         cloned_edition = edition.make_clone()
-        assert cloned_edition.seq == 2
+        self.assertEqual(cloned_edition.seq, 2)
         book.refresh_from_db()
-        assert book.published_at != first_published_at
+        self.assertNotEqual(book.published_at, first_published_at)
