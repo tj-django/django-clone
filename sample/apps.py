@@ -1,3 +1,4 @@
+# pylint: disable=unused-import
 from django.apps import AppConfig
 
 
@@ -6,4 +7,4 @@ class SampleConfig(AppConfig):
     name = "sample"
 
     def ready(self):
-        from . import signals
+        from . import signals # noqa: F401
