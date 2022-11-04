@@ -53,7 +53,8 @@
       "contributions": [
         "code",
         "bug",
-        "test"
+        "test",
+        "doc"
       ]
     },
     {
@@ -94,5 +95,6 @@
   "projectOwner": "tj-django",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "skipCi": true
+  "skipCi": true,
+  "commitConvention": "angular"
 }
