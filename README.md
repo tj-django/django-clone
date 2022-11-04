@@ -38,6 +38,7 @@ This solves the problem introduced by using `instance.pk = None` and `instance.s
             *   [List View](#list-view)
             *   [Change View](#change-view)
         *   [CloneModelAdmin class attributes](#clonemodeladmin-class-attributes)
+    *   [Signals](#signals)
 *   [Compatibility](#compatibility)
 *   [Running locally](#running-locally)
 *   [Found a Bug?](#found-a-bug)
@@ -339,6 +340,29 @@ INSTALLED_APPS = [
     '...',
 ]
 ```
+### Signals
+#### pre_clone_save, post_clone_save
+```python
+from django.dispatch import receiver
+from django.utils import timezone
+
+from model_clone.signals import post_clone_save, pre_clone_save
+
+from sample.models import Edition
+
+
+@receiver(pre_clone_save, sender=Edition)
+def increase_seq(sender, instance, **kwargs):
+    instance.seq += 1
+
+
+@receiver(post_clone_save, sender=Edition)
+def update_book_published_at(sender, instance, **kwargs):
+    if instance.book:
+        instance.book.published_at = timezone.now()
+        instance.book.save(update_fields=["published_at"])
+```
+
 
 ## Compatibility
 
