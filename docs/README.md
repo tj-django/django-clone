@@ -38,6 +38,8 @@ This solves the problem introduced by using `instance.pk = None` and `instance.s
             *   [List View](#list-view)
             *   [Change View](#change-view)
         *   [CloneModelAdmin class attributes](#clonemodeladmin-class-attributes)
+    *   [Signals](#signals)
+        *   [pre\_clone\_save, post\_clone\_save](#pre_clone_save-post_clone_save)
 *   [Compatibility](#compatibility)
 *   [Running locally](#running-locally)
 *   [Found a Bug?](#found-a-bug)
@@ -340,6 +342,31 @@ INSTALLED_APPS = [
 ]
 ```
 
+### Signals
+
+#### pre\_clone\_save, post\_clone\_save
+
+```python
+from django.dispatch import receiver
+from django.utils import timezone
+
+from model_clone.signals import post_clone_save, pre_clone_save
+
+from sample.models import Edition
+
+
+@receiver(pre_clone_save, sender=Edition)
+def increase_seq(sender, instance, **kwargs):
+    instance.seq += 1
+
+
+@receiver(post_clone_save, sender=Edition)
+def update_book_published_at(sender, instance, **kwargs):
+    if instance.book:
+        instance.book.published_at = timezone.now()
+        instance.book.save(update_fields=["published_at"])
+```
+
 ## Compatibility
 
 |  Python      |  Supported version |
@@ -393,16 +420,16 @@ Thanks goes to these wonderful people:
 <table>
   <tbody>
     <tr>
-      <td align="center"><a href="http://gerritneven.nl"><img src="https://avatars1.githubusercontent.com/u/2500973?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Gerben Neven</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/issues?q=author%3Agerbyzation" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=gerbyzation" title="Tests">⚠️</a> <a href="https://github.com/tj-django/django-clone/commits?author=gerbyzation" title="Code">💻</a></td>
-      <td align="center"><a href="http://sebastian-kindt.com"><img src="https://avatars1.githubusercontent.com/u/2536081?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Sebastian Kapunkt</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/commits?author=SebastianKapunkt" title="Code">💻</a> <a href="https://github.com/tj-django/django-clone/issues?q=author%3ASebastianKapunkt" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=SebastianKapunkt" title="Tests">⚠️</a></td>
-      <td align="center"><a href="https://github.com/andresp99999"><img src="https://avatars0.githubusercontent.com/u/1036725?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Andrés Portillo</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/issues?q=author%3Aandresp99999" title="Bug reports">🐛</a></td>
-      <td align="center"><a href="https://renovate.whitesourcesoftware.com"><img src="https://avatars0.githubusercontent.com/u/25180681?v=4?s=100" width="100px;" alt=""/><br /><sub><b>WhiteSource Renovate</b></sub></a><br /><a href="#maintenance-renovate-bot" title="Maintenance">🚧</a></td>
-      <td align="center"><a href="https://github.com/yuekui"><img src="https://avatars2.githubusercontent.com/u/2561450?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Yuekui</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/commits?author=yuekui" title="Code">💻</a> <a href="https://github.com/tj-django/django-clone/issues?q=author%3Ayuekui" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=yuekui" title="Tests">⚠️</a></td>
-      <td align="center"><a href="https://github.com/diesieben07"><img src="https://avatars.githubusercontent.com/u/1915984?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Take Weiland</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/commits?author=diesieben07" title="Tests">⚠️</a> <a href="https://github.com/tj-django/django-clone/issues?q=author%3Adiesieben07" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=diesieben07" title="Code">💻</a></td>
-      <td align="center"><a href="https://github.com/ptrck"><img src="https://avatars.githubusercontent.com/u/1259703?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Patrick</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/issues?q=author%3Aptrck" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=ptrck" title="Code">💻</a></td>
+      <td align="center"><a href="http://gerritneven.nl"><img src="https://avatars1.githubusercontent.com/u/2500973?v=4?s=100" width="100px;" alt="Gerben Neven"/><br /><sub><b>Gerben Neven</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/issues?q=author%3Agerbyzation" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=gerbyzation" title="Tests">⚠️</a> <a href="https://github.com/tj-django/django-clone/commits?author=gerbyzation" title="Code">💻</a></td>
+      <td align="center"><a href="http://sebastian-kindt.com"><img src="https://avatars1.githubusercontent.com/u/2536081?v=4?s=100" width="100px;" alt="Sebastian Kapunkt"/><br /><sub><b>Sebastian Kapunkt</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/commits?author=SebastianKapunkt" title="Code">💻</a> <a href="https://github.com/tj-django/django-clone/issues?q=author%3ASebastianKapunkt" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=SebastianKapunkt" title="Tests">⚠️</a></td>
+      <td align="center"><a href="https://github.com/andresp99999"><img src="https://avatars0.githubusercontent.com/u/1036725?v=4?s=100" width="100px;" alt="Andrés Portillo"/><br /><sub><b>Andrés Portillo</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/issues?q=author%3Aandresp99999" title="Bug reports">🐛</a></td>
+      <td align="center"><a href="https://renovate.whitesourcesoftware.com"><img src="https://avatars0.githubusercontent.com/u/25180681?v=4?s=100" width="100px;" alt="WhiteSource Renovate"/><br /><sub><b>WhiteSource Renovate</b></sub></a><br /><a href="#maintenance-renovate-bot" title="Maintenance">🚧</a></td>
+      <td align="center"><a href="https://github.com/yuekui"><img src="https://avatars2.githubusercontent.com/u/2561450?v=4?s=100" width="100px;" alt="Yuekui"/><br /><sub><b>Yuekui</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/commits?author=yuekui" title="Code">💻</a> <a href="https://github.com/tj-django/django-clone/issues?q=author%3Ayuekui" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=yuekui" title="Tests">⚠️</a> <a href="https://github.com/tj-django/django-clone/commits?author=yuekui" title="Documentation">📖</a></td>
+      <td align="center"><a href="https://github.com/diesieben07"><img src="https://avatars.githubusercontent.com/u/1915984?v=4?s=100" width="100px;" alt="Take Weiland"/><br /><sub><b>Take Weiland</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/commits?author=diesieben07" title="Tests">⚠️</a> <a href="https://github.com/tj-django/django-clone/issues?q=author%3Adiesieben07" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=diesieben07" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/ptrck"><img src="https://avatars.githubusercontent.com/u/1259703?v=4?s=100" width="100px;" alt="Patrick"/><br /><sub><b>Patrick</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/issues?q=author%3Aptrck" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=ptrck" title="Code">💻</a></td>
     </tr>
     <tr>
-      <td align="center"><a href="https://github.com/Akollek"><img src="https://avatars.githubusercontent.com/u/5873158?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Amiel Kollek</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/commits?author=Akollek" title="Code">💻</a> <a href="https://github.com/tj-django/django-clone/issues?q=author%3AAkollek" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=Akollek" title="Tests">⚠️</a></td>
+      <td align="center"><a href="https://github.com/Akollek"><img src="https://avatars.githubusercontent.com/u/5873158?v=4?s=100" width="100px;" alt="Amiel Kollek"/><br /><sub><b>Amiel Kollek</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/commits?author=Akollek" title="Code">💻</a> <a href="https://github.com/tj-django/django-clone/issues?q=author%3AAkollek" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=Akollek" title="Tests">⚠️</a></td>
     </tr>
   </tbody>
 </table>
