@@ -16,9 +16,10 @@ This solves the problem introduced by using `instance.pk = None` and `instance.s
 
 *   100% test coverage.
 *   More control over how a model instance should be duplicated
-*   Multi Database support i.e Create a duplicate on one or more databases.
+*   Multi Database support i.e Create duplicates on one or more databases.
 *   Restrict fields used for creating a duplicate instance.
-*   Detect unique fields and naively adds a suffix (`copy {count}`) to each new instance.
+*   Detects unique fields and naively adds a suffix `copy {count}` to each duplicate instance (for supported fields only).
+*   Optionally differentiate between a duplicate instance and the original by appending a **copy** suffix to non unique fields (for supported fields only).
 
 ## Table of Contents
 
