@@ -1,20 +1,36 @@
 # Changelog
 
-## [Unreleased](https://github.com/tj-django/django-clone/tree/HEAD)
+## [v4.1.0](https://github.com/tj-django/django-clone/tree/v4.1.0) (2022-11-04)
 
-[Full Changelog](https://github.com/tj-django/django-clone/compare/v4.0.2...HEAD)
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v4.0.2...v4.1.0)
 
 **Fixed bugs:**
 
 - \[BUG\] duplicate functional -\> duplicate records [\#672](https://github.com/tj-django/django-clone/issues/672)
 
-## [v4.0.2](https://github.com/tj-django/django-clone/tree/v4.0.2) (2022-11-01)
-
-[Full Changelog](https://github.com/tj-django/django-clone/compare/v4.0.1...v4.0.2)
-
 **Closed issues:**
 
 - Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
+
+**Merged pull requests:**
+
+- Updated docs [\#688](https://github.com/tj-django/django-clone/pull/688) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Fix cache path issue for multiple platforms [\#687](https://github.com/tj-django/django-clone/pull/687) ([yuekui](https://github.com/yuekui))
+- Updated README.md [\#686](https://github.com/tj-django/django-clone/pull/686) ([jackton1](https://github.com/jackton1))
+- Updated README.md [\#685](https://github.com/tj-django/django-clone/pull/685) ([jackton1](https://github.com/jackton1))
+- docs: add yuekui as a contributor for doc [\#684](https://github.com/tj-django/django-clone/pull/684) ([allcontributors[bot]](https://github.com/apps/allcontributors))
+- Add Python 3.11 in testing and refine uploading Codecov reports [\#683](https://github.com/tj-django/django-clone/pull/683) ([yuekui](https://github.com/yuekui))
+- Update document for signals [\#682](https://github.com/tj-django/django-clone/pull/682) ([yuekui](https://github.com/yuekui))
+- Updated README.md [\#681](https://github.com/tj-django/django-clone/pull/681) ([jackton1](https://github.com/jackton1))
+- Add pre and post clone save signals [\#680](https://github.com/tj-django/django-clone/pull/680) ([yuekui](https://github.com/yuekui))
+- Update dependency django to v4.1.3 [\#679](https://github.com/tj-django/django-clone/pull/679) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#678](https://github.com/tj-django/django-clone/pull/678) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Upgraded v4.0.1 → v4.0.2 [\#677](https://github.com/tj-django/django-clone/pull/677) ([jackton1](https://github.com/jackton1))
+- chore: fix warnings [\#676](https://github.com/tj-django/django-clone/pull/676) ([jackton1](https://github.com/jackton1))
+
+## [v4.0.2](https://github.com/tj-django/django-clone/tree/v4.0.2) (2022-11-01)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v4.0.1...v4.0.2)
 
 **Merged pull requests:**
 
