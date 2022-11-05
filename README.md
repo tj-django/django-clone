@@ -19,7 +19,7 @@ This solves the problem introduced by using `instance.pk = None` and `instance.s
 *   Multi Database support i.e Create duplicates on one or more databases.
 *   Restrict fields used for creating a duplicate instance.
 *   Detects unique fields and naively adds a suffix (`copy {count}`) to each new instance for supported fields only.
-*   Optionally differentiate between a duplicate instance and the original by appending a **Copy** suffix.
+*   Optionally differentiate between a duplicate instance and the original by appending a **copy** suffix.
 
 ## Table of Contents
 
