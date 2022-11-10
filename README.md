@@ -413,11 +413,8 @@ Support me with a :star:
 Thanks goes to these wonderful people:
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-
 <!-- prettier-ignore-start -->
-
 <!-- markdownlint-disable -->
-
 <table>
   <tbody>
     <tr>
@@ -425,7 +422,7 @@ Thanks goes to these wonderful people:
       <td align="center"><a href="http://sebastian-kindt.com"><img src="https://avatars1.githubusercontent.com/u/2536081?v=4?s=100" width="100px;" alt="Sebastian Kapunkt"/><br /><sub><b>Sebastian Kapunkt</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/commits?author=SebastianKapunkt" title="Code">💻</a> <a href="https://github.com/tj-django/django-clone/issues?q=author%3ASebastianKapunkt" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=SebastianKapunkt" title="Tests">⚠️</a></td>
       <td align="center"><a href="https://github.com/andresp99999"><img src="https://avatars0.githubusercontent.com/u/1036725?v=4?s=100" width="100px;" alt="Andrés Portillo"/><br /><sub><b>Andrés Portillo</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/issues?q=author%3Aandresp99999" title="Bug reports">🐛</a></td>
       <td align="center"><a href="https://renovate.whitesourcesoftware.com"><img src="https://avatars0.githubusercontent.com/u/25180681?v=4?s=100" width="100px;" alt="WhiteSource Renovate"/><br /><sub><b>WhiteSource Renovate</b></sub></a><br /><a href="#maintenance-renovate-bot" title="Maintenance">🚧</a></td>
-      <td align="center"><a href="https://github.com/yuekui"><img src="https://avatars2.githubusercontent.com/u/2561450?v=4?s=100" width="100px;" alt="Yuekui"/><br /><sub><b>Yuekui</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/commits?author=yuekui" title="Code">💻</a> <a href="https://github.com/tj-django/django-clone/issues?q=author%3Ayuekui" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=yuekui" title="Tests">⚠️</a> <a href="https://github.com/tj-django/django-clone/commits?author=yuekui" title="Documentation">📖</a></td>
+      <td align="center"><a href="https://github.com/yuekui"><img src="https://avatars2.githubusercontent.com/u/2561450?v=4?s=100" width="100px;" alt="Yuekui"/><br /><sub><b>Yuekui</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/commits?author=yuekui" title="Code">💻</a> <a href="https://github.com/tj-django/django-clone/issues?q=author%3Ayuekui" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=yuekui" title="Tests">⚠️</a> <a href="https://github.com/tj-django/django-clone/commits?author=yuekui" title="Documentation">📖</a> <a href="#maintenance-yuekui" title="Maintenance">🚧</a></td>
       <td align="center"><a href="https://github.com/diesieben07"><img src="https://avatars.githubusercontent.com/u/1915984?v=4?s=100" width="100px;" alt="Take Weiland"/><br /><sub><b>Take Weiland</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/commits?author=diesieben07" title="Tests">⚠️</a> <a href="https://github.com/tj-django/django-clone/issues?q=author%3Adiesieben07" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=diesieben07" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/ptrck"><img src="https://avatars.githubusercontent.com/u/1259703?v=4?s=100" width="100px;" alt="Patrick"/><br /><sub><b>Patrick</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/issues?q=author%3Aptrck" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=ptrck" title="Code">💻</a></td>
     </tr>
@@ -436,7 +433,6 @@ Thanks goes to these wonderful people:
 </table>
 
 <!-- markdownlint-restore -->
-
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
