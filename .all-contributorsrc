@@ -54,7 +54,8 @@
         "code",
         "bug",
         "test",
-        "doc"
+        "doc",
+        "maintenance"
       ]
     },
     {
