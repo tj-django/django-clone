@@ -1,7 +1,7 @@
 import itertools
+import warnings
 from itertools import repeat
 from typing import Dict, List, Optional
-import warnings
 
 from conditional import conditional
 from django.core.checks import Error
@@ -209,7 +209,7 @@ class CloneMixin(object):
             "The usage of `pre_save_duplicate` has been deprecated "
             "and would be removed in the 5.0.0 release "
             "Please use `pre_clone_save` signal instead.",
-            DeprecationWarning, 
+            DeprecationWarning,
             stacklevel=2,
         )
         return instance
