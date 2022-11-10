@@ -1,4 +1,5 @@
 import itertools
+import warnings
 from itertools import repeat
 from typing import Dict, List, Optional
 
@@ -197,7 +198,20 @@ class CloneMixin(object):
         pass
 
     def pre_save_duplicate(self, instance):  # pylint: disable=R0201
-        """Override this method to modify the duplicate instance before it's saved."""
+        """
+        This method has been deprecated and would be removed in the 5.0.0 release.
+        Please use `pre_clone_save` signal instead.
+
+        See: https://github.com/tj-django/django-clone#signals for guidance.
+        """
+        # TODO: Remove prior to v5.0.0 release
+        warnings.warn(
+            "The usage of `pre_save_duplicate` has been deprecated "
+            "and would be removed in the 5.0.0 release "
+            "Please use `pre_clone_save` signal instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         return instance
 
     @transaction.atomic
