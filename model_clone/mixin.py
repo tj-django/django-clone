@@ -1,7 +1,7 @@
 import itertools
 from itertools import repeat
 from typing import Dict, List, Optional
-from warnings import warn
+import warnings
 
 from conditional import conditional
 from django.core.checks import Error
@@ -198,10 +198,19 @@ class CloneMixin(object):
         pass
 
     def pre_save_duplicate(self, instance):  # pylint: disable=R0201
-        """The method `pre_save_duplicate` has been deprecated, please use singal `pre_clone_save` instead."""
-        # TODO: Remove this method
-        warn(
-            "The method `pre_save_duplicate` has been deprecated, please use singal `pre_clone_save` instead."
+        """
+        This method has been deprecated and would be removed in the 5.0.0 release.
+        Please use `pre_clone_save` signal instead.
+
+        See: https://github.com/tj-django/django-clone#signals for guidance.
+        """
+        # TODO: Remove prior to v5.0.0 release
+        warnings.warn(
+            "The usage of `pre_save_duplicate` has been deprecated "
+            "and would be removed in the 5.0.0 release "
+            "Please use `pre_clone_save` signal instead.",
+            DeprecationWarning, 
+            stacklevel=2,
         )
         return instance
 
