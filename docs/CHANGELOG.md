@@ -1,5 +1,17 @@
 # Changelog
 
+## [v4.1.1](https://github.com/tj-django/django-clone/tree/v4.1.1) (2022-11-10)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v4.1.0...v4.1.1)
+
+**Merged pull requests:**
+
+- docs: add yuekui as a contributor for maintenance [\#694](https://github.com/tj-django/django-clone/pull/694) ([allcontributors[bot]](https://github.com/apps/allcontributors))
+- Add deprecation warning for pre\_save\_duplicate [\#693](https://github.com/tj-django/django-clone/pull/693) ([yuekui](https://github.com/yuekui))
+- Updated docs [\#692](https://github.com/tj-django/django-clone/pull/692) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated docs [\#690](https://github.com/tj-django/django-clone/pull/690) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Upgraded v4.0.2 → v4.1.0 [\#689](https://github.com/tj-django/django-clone/pull/689) ([jackton1](https://github.com/jackton1))
+
 ## [v4.1.0](https://github.com/tj-django/django-clone/tree/v4.1.0) (2022-11-04)
 
 [Full Changelog](https://github.com/tj-django/django-clone/compare/v4.0.2...v4.1.0)
