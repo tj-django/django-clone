@@ -1,5 +1,16 @@
 # Changelog
 
+## [v4.1.2](https://github.com/tj-django/django-clone/tree/v4.1.2) (2022-11-12)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v4.1.1...v4.1.2)
+
+**Merged pull requests:**
+
+- chore: update list of supported python versions [\#698](https://github.com/tj-django/django-clone/pull/698) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#697](https://github.com/tj-django/django-clone/pull/697) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated README.md [\#696](https://github.com/tj-django/django-clone/pull/696) ([jackton1](https://github.com/jackton1))
+- Upgraded v4.1.0 → v4.1.1 [\#695](https://github.com/tj-django/django-clone/pull/695) ([jackton1](https://github.com/jackton1))
+
 ## [v4.1.1](https://github.com/tj-django/django-clone/tree/v4.1.1) (2022-11-10)
 
 [Full Changelog](https://github.com/tj-django/django-clone/compare/v4.1.0...v4.1.1)
