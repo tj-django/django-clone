@@ -310,8 +310,7 @@ class CloneMixinTestCase(TestCase):
             list(book_clone.authors.values_list("first_name", "last_name")),
         )
         self.assertEqual(
-            len(list(book_clone.authors.values_list("first_name", "last_name"))),
-            0
+            len(list(book_clone.authors.values_list("first_name", "last_name"))), 0
         )
 
     def test_cloning_with_unique_constraint_is_valid(self):
