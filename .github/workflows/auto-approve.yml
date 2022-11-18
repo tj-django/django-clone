@@ -31,6 +31,6 @@ jobs:
         github.actor == 'pre-commit-ci[bot]'
       )
     steps:
-      - uses: hmarr/auto-approve-action@v2
+      - uses: hmarr/auto-approve-action@v3
         with:
           github-token: ${{ secrets.PAT_TOKEN }}
