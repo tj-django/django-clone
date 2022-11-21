@@ -80,15 +80,15 @@ migrations:
 migrate:
 	@$(MANAGE_PY) migrate
 
-run: migrate
-	@echo "Starting server..."
-	@$(MANAGE_PY) runserver
-
 default-user: migrate
 	@echo "Creating a default user..."
 	@$(MANAGE_PY) create_default_user
 	@echo "Username: admin@admin.com"
 	@echo "Password: admin"
+
+run: default-user
+	@echo "Starting server..."
+	@$(MANAGE_PY) runserver
 
 makemessages: clean-build  ## Runs over the entire source tree of the current directory and pulls out all strings marked for translation.
 	@$(MANAGE_PY) makemessages --locale=en_US  --ignore=sample --ignore=django_clone

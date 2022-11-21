@@ -11,7 +11,6 @@ from model_clone.mixin import CloneMixin
 
 class CloneModelAdminMixin(object):
     """Mixin to handle duplication of models."""
-
     include_duplicate_action = True
     include_duplicate_object_link = True
 
