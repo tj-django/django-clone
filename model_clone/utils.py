@@ -146,6 +146,7 @@ def clean_value(value, suffix):
     :param suffix: The suffix value to be replaced with an empty string.
     :type suffix: `str`
     :return: Stripped string without the suffix.
+    :rtype: `str`
     """
     # type: (str, str) -> str
     return re.sub(r"([\s-]?){}[\s-][\d]$".format(suffix), "", value, flags=re.I)
@@ -154,7 +155,10 @@ def clean_value(value, suffix):
 @contextlib.contextmanager
 def transaction_autocommit(using=None):
     """
-    Context manager with autocommit enabled.
+    Context manager to enable autocommit.
+
+    :param using: The database alias used to save the created instances.
+    :type using: str
     """
     try:
         transaction.set_autocommit(True, using=using)
@@ -167,6 +171,13 @@ def transaction_autocommit(using=None):
 def context_mutable_attribute(obj, key, value):
     """
     Context manager that modifies an obj temporarily.
+
+    :param obj: The object to modify.
+    :type obj: `object`
+    :param key: The attribute name to modify.
+    :type key: `str`
+    :param value: The value to set on the attribute.
+    :type value: `object`
     """
     attribute_exists = hasattr(obj, key)
     default = getattr(obj, key, None)
@@ -182,8 +193,20 @@ def context_mutable_attribute(obj, key, value):
 
 def get_value(value, suffix, transform, max_length, index=None):
     """
-    Append a suffix to a string value and apply a pass directly to a
+    Append a suffix to a string value and pass it directly to a
     transformation function.
+
+    :param value: Current value e.g "Test Copy" or "test-copy" for slug fields.
+    :type value: `str`
+    :param suffix: The suffix value to be replaced with an empty string.
+    :type suffix: `str`
+    :param transform: The transformation function to apply to the value.
+    :type transform: `callable`
+    :param max_length: The maximum length of the value.
+    :type max_length: `int`
+    :param index: The index of the copy.
+    :type index: `int`
+    :return: The transformed value.
     """
     if index is None:
         duplicate_suffix = " {}".format(suffix.strip())
@@ -202,6 +225,18 @@ def get_value(value, suffix, transform, max_length, index=None):
 def generate_value(value, suffix, transform, max_length, max_attempts):
     """
     Given a fixed max attempt generate a unique value.
+
+    :param value: Current value e.g "Test Copy" or "test-copy" for slug fields.
+    :type value: `str`
+    :param suffix: The suffix value to be replaced with an empty string.
+    :type suffix: `str`
+    :param transform: The transformation function to apply to the value.
+    :type transform: `callable`
+    :param max_length: The maximum length of the value.
+    :type max_length: `int`
+    :param max_attempts: The maximum number of attempts to generate a unique value.
+    :type max_attempts: `int`
+    :return: The unique value.
     """
 
     for i in range(1, max_attempts):
