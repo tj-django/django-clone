@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from sample_assignment.models import Contract
 
 

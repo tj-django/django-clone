@@ -1,7 +1,5 @@
 import contextlib
-import functools
 import re
-import warnings
 
 import six
 from django.db import models, transaction
