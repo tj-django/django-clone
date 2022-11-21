@@ -155,7 +155,7 @@ def clean_value(value, suffix):
 @contextlib.contextmanager
 def transaction_autocommit(using=None):
     """
-    Context manager to disable transaction management.
+    Context manager to enable autocommit.
 
     :param using: The database alias used to save the created instances.
     :type using: str
