@@ -1,7 +1,6 @@
 import itertools
 import warnings
 from itertools import repeat
-from typing import Dict, List, Optional
 
 from conditional import conditional
 from django.core.checks import Error
