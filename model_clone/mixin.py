@@ -1,5 +1,4 @@
 import itertools
-import warnings
 from itertools import repeat
 
 from conditional import conditional
@@ -196,23 +195,6 @@ class CloneMixin(object):
         # TODO: Support bulk clones split by the batch_size
         pass
 
-    def pre_save_duplicate(self, instance):  # pylint: disable=R0201
-        """
-        This method has been deprecated and would be removed in the 5.0.0 release.
-        Please use `pre_clone_save` signal instead.
-
-        See: https://github.com/tj-django/django-clone#signals for guidance.
-        """
-        # TODO: Remove prior to v5.0.0 release
-        warnings.warn(
-            "The usage of `pre_save_duplicate` has been deprecated "
-            "and would be removed in the 5.0.0 release "
-            "Please use `pre_clone_save` signal instead.",
-            DeprecationWarning,
-            stacklevel=2,
-        )
-        return instance
-
     @transaction.atomic
     def make_clone(self, attrs=None, sub_clone=False, using=None, parent=None):
         """Creates a clone of the django model instance.
@@ -245,7 +227,6 @@ class CloneMixin(object):
         for name, value in attrs.items():
             setattr(duplicate, name, value)
 
-        duplicate = self.pre_save_duplicate(duplicate)
         duplicate = self.__duplicate_m2o_fields(duplicate, using=using)
 
         pre_clone_save.send(sender=self.__class__, instance=duplicate)
