@@ -1,5 +1,29 @@
 # Changelog
 
+## [v4.1.3](https://github.com/tj-django/django-clone/tree/v4.1.3) (2022-11-30)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v4.1.2...v4.1.3)
+
+**Fixed bugs:**
+
+- \[BUG\] m2m fields are cloned even if \_clone\_m2m\_fields is empty [\#701](https://github.com/tj-django/django-clone/issues/701)
+
+**Closed issues:**
+
+- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
+
+**Merged pull requests:**
+
+- \[pre-commit.ci\] pre-commit autoupdate [\#709](https://github.com/tj-django/django-clone/pull/709) ([pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci))
+- Update peter-evans/create-pull-request action to v4.2.3 [\#708](https://github.com/tj-django/django-clone/pull/708) ([renovate[bot]](https://github.com/apps/renovate))
+- Update peter-evans/create-pull-request action to v4.2.2 [\#707](https://github.com/tj-django/django-clone/pull/707) ([renovate[bot]](https://github.com/apps/renovate))
+- Update peter-evans/create-pull-request action to v4.2.1 [\#706](https://github.com/tj-django/django-clone/pull/706) ([renovate[bot]](https://github.com/apps/renovate))
+- chore: update local dev setup [\#705](https://github.com/tj-django/django-clone/pull/705) ([jackton1](https://github.com/jackton1))
+- Bump hmarr/auto-approve-action from 2 to 3 [\#704](https://github.com/tj-django/django-clone/pull/704) ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore: test m2m clone [\#702](https://github.com/tj-django/django-clone/pull/702) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#700](https://github.com/tj-django/django-clone/pull/700) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Upgraded v4.1.1 → v4.1.2 [\#699](https://github.com/tj-django/django-clone/pull/699) ([jackton1](https://github.com/jackton1))
+
 ## [v4.1.2](https://github.com/tj-django/django-clone/tree/v4.1.2) (2022-11-12)
 
 [Full Changelog](https://github.com/tj-django/django-clone/compare/v4.1.1...v4.1.2)
@@ -30,10 +54,6 @@
 **Fixed bugs:**
 
 - \[BUG\] duplicate functional -\> duplicate records [\#672](https://github.com/tj-django/django-clone/issues/672)
-
-**Closed issues:**
-
-- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
 
 **Merged pull requests:**
 
