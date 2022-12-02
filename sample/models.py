@@ -107,11 +107,6 @@ class Book(CloneModel):
     def __str__(self):
         return _(self.name)
 
-    def pre_save_duplicate(self, instance):
-        instance.name = self.name
-
-        return instance
-
 
 class BookTag(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
