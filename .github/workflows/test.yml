@@ -28,6 +28,10 @@ jobs:
         exclude:
           - platform: ubuntu-latest
             python-version: 3.6
+          - platform: macos-latest
+            python-version: 3.11
+          - platform: windows-latest
+            python-version: 3.11
 
     steps:
       - uses: actions/checkout@v3.1.0
