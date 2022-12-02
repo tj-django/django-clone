@@ -1,5 +1,4 @@
 import itertools
-import warnings
 from itertools import repeat
 
 from conditional import conditional
