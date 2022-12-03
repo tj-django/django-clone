@@ -1,5 +1,15 @@
 # Changelog
 
+## [v5.0.0](https://github.com/tj-django/django-clone/tree/v5.0.0) (2022-12-02)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v4.1.3...v5.0.0)
+
+**Merged pull requests:**
+
+- Updated docs [\#712](https://github.com/tj-django/django-clone/pull/712) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Upgraded v4.1.2 → v4.1.3 [\#711](https://github.com/tj-django/django-clone/pull/711) ([jackton1](https://github.com/jackton1))
+- chore: remove deprecated pre\_save [\#710](https://github.com/tj-django/django-clone/pull/710) ([jackton1](https://github.com/jackton1))
+
 ## [v4.1.3](https://github.com/tj-django/django-clone/tree/v4.1.3) (2022-11-30)
 
 [Full Changelog](https://github.com/tj-django/django-clone/compare/v4.1.2...v4.1.3)
