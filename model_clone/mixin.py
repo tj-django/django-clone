@@ -189,12 +189,6 @@ class CloneMixin(object):
 
         return errors
 
-    @classmethod
-    def bulk_clone_multi(cls, objs, attrs=None, batch_size=None):
-        # type: (List[models.Model], Optional[List[Dict]], Optional[int]) -> List[models.Model]
-        # TODO: Support bulk clones split by the batch_size
-        pass
-
     @transaction.atomic
     def make_clone(self, attrs=None, sub_clone=False, using=None, parent=None):
         """Creates a clone of the django model instance.
