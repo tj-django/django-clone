@@ -267,17 +267,6 @@ class CloneMixin(object):
 
         return clones
 
-    def parallel_clone(self, count, attrs=None, batch_size=None, auto_commit=False):
-        # if this takes n time for t records
-        # t^n i.e 100 ** 2ms = 10000ms (10s) to clone 100 objects.
-        # I'll like to reduce this down to max time to clone count/batch_size i.e
-        # If it take 10000ms to clone 100 objects with a db of batch_size 100
-        # If it takes 20ms to clone 10 objects I'll like to keep this down to 20ms
-        # i.e max_num_of_threads 10 for 100 objects.
-        # This should run in parallel
-        # Testing jit and cpython if they offer better API's.
-        pass
-
     @staticmethod
     def _create_copy_of_instance(
         instance, using=None, force=False, sub_clone=False, parent=None
