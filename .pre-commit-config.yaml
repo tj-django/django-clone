@@ -6,7 +6,7 @@ repos:
         args: ['--in-place', '--remove-all-unused-imports', '--remove-unused-variable']
 
   - repo: https://github.com/pycqa/isort
-    rev: 5.10.1
+    rev: 5.11.1
     hooks:
       - id: isort
         args: ["--profile", "black", "--filter-files"]
@@ -20,7 +20,7 @@ repos:
         exclude: ^docs/.*|.*.md
 
   - repo: https://github.com/psf/black
-    rev: 22.10.0
+    rev: 22.12.0
     hooks:
       - id: black
         language_version: python3
