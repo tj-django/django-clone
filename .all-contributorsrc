@@ -89,6 +89,15 @@
         "bug",
         "test"
       ]
+    },
+    {
+      "login": "erictheise",
+      "name": "Eric Theise",
+      "avatar_url": "https://avatars.githubusercontent.com/u/317680?v=4",
+      "profile": "https://erictheise.com/",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
