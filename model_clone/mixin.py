@@ -1,5 +1,6 @@
 import itertools
 from itertools import repeat
+from typings import List  # noqa
 
 from conditional import conditional
 from django.core.checks import Error
