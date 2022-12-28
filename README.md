@@ -302,6 +302,7 @@ class TestModelAdmin(ModelAdmin):
 **to**
 
 ```python
+from django.contrib import admin
 from model_clone import CloneModelAdmin
 
 @admin.register(TestModel)
