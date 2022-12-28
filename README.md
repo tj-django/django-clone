@@ -414,11 +414,8 @@ Support me with a :star:
 Thanks goes to these wonderful people:
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-
 <!-- prettier-ignore-start -->
-
 <!-- markdownlint-disable -->
-
 <table>
   <tbody>
     <tr>
@@ -432,12 +429,12 @@ Thanks goes to these wonderful people:
     </tr>
     <tr>
       <td align="center"><a href="https://github.com/Akollek"><img src="https://avatars.githubusercontent.com/u/5873158?v=4?s=100" width="100px;" alt="Amiel Kollek"/><br /><sub><b>Amiel Kollek</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/commits?author=Akollek" title="Code">💻</a> <a href="https://github.com/tj-django/django-clone/issues?q=author%3AAkollek" title="Bug reports">🐛</a> <a href="https://github.com/tj-django/django-clone/commits?author=Akollek" title="Tests">⚠️</a></td>
+      <td align="center"><a href="https://erictheise.com/"><img src="https://avatars.githubusercontent.com/u/317680?v=4?s=100" width="100px;" alt="Eric Theise"/><br /><sub><b>Eric Theise</b></sub></a><br /><a href="https://github.com/tj-django/django-clone/commits?author=erictheise" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>
 
 <!-- markdownlint-restore -->
-
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
