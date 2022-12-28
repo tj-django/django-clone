@@ -1,5 +1,6 @@
 import itertools
 from itertools import repeat
+from typing import List  # noqa
 
 from conditional import conditional
 from django.core.checks import Error
@@ -7,7 +8,6 @@ from django.core.exceptions import ValidationError
 from django.db import IntegrityError, connections, models, transaction
 from django.db.models import SlugField
 from django.utils.text import slugify
-from typing import List  # noqa
 
 from model_clone.apps import ModelCloneConfig
 from model_clone.signals import post_clone_save, pre_clone_save
