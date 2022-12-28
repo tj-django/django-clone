@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 from django.db import IntegrityError, connections, models, transaction
 from django.db.models import SlugField
 from django.utils.text import slugify
-from typings import List  # noqa
+from typing import List  # noqa
 
 from model_clone.apps import ModelCloneConfig
 from model_clone.signals import post_clone_save, pre_clone_save
