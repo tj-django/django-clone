@@ -1,5 +1,34 @@
 # Changelog
 
+## [v5.1.0](https://github.com/tj-django/django-clone/tree/v5.1.0) (2022-12-28)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v5.0.0...v5.1.0)
+
+**Closed issues:**
+
+- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
+
+**Merged pull requests:**
+
+- chore: update imports [\#733](https://github.com/tj-django/django-clone/pull/733) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#732](https://github.com/tj-django/django-clone/pull/732) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated README.md [\#731](https://github.com/tj-django/django-clone/pull/731) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#730](https://github.com/tj-django/django-clone/pull/730) ([github-actions[bot]](https://github.com/apps/github-actions))
+- docs: add erictheise as a contributor for doc [\#729](https://github.com/tj-django/django-clone/pull/729) ([allcontributors[bot]](https://github.com/apps/allcontributors))
+- Restore admin import to Django Admin example [\#728](https://github.com/tj-django/django-clone/pull/728) ([erictheise](https://github.com/erictheise))
+- \[pre-commit.ci\] pre-commit autoupdate [\#727](https://github.com/tj-django/django-clone/pull/727) ([pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci))
+- chore\(deps\): update dependency asgiref to v3.6.0 [\#725](https://github.com/tj-django/django-clone/pull/725) ([renovate[bot]](https://github.com/apps/renovate))
+- \[pre-commit.ci\] pre-commit autoupdate [\#724](https://github.com/tj-django/django-clone/pull/724) ([pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci))
+- Bump pytz from 2022.6 to 2022.7 [\#723](https://github.com/tj-django/django-clone/pull/723) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump tj-actions/verify-changed-files from 12 to 13 [\#721](https://github.com/tj-django/django-clone/pull/721) ([dependabot[bot]](https://github.com/apps/dependabot))
+- \[pre-commit.ci\] pre-commit autoupdate [\#719](https://github.com/tj-django/django-clone/pull/719) ([pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci))
+- Update actions/checkout action to v3.2.0 [\#718](https://github.com/tj-django/django-clone/pull/718) ([renovate[bot]](https://github.com/apps/renovate))
+- chore: remove unused code [\#717](https://github.com/tj-django/django-clone/pull/717) ([jackton1](https://github.com/jackton1))
+- chore: remove unused code [\#716](https://github.com/tj-django/django-clone/pull/716) ([jackton1](https://github.com/jackton1))
+- Update dependency django to v4.1.4 [\#715](https://github.com/tj-django/django-clone/pull/715) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#714](https://github.com/tj-django/django-clone/pull/714) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Upgraded v4.1.3 → v5.0.0 [\#713](https://github.com/tj-django/django-clone/pull/713) ([jackton1](https://github.com/jackton1))
+
 ## [v5.0.0](https://github.com/tj-django/django-clone/tree/v5.0.0) (2022-12-02)
 
 [Full Changelog](https://github.com/tj-django/django-clone/compare/v4.1.3...v5.0.0)
@@ -17,10 +46,6 @@
 **Fixed bugs:**
 
 - \[BUG\] m2m fields are cloned even if \_clone\_m2m\_fields is empty [\#701](https://github.com/tj-django/django-clone/issues/701)
-
-**Closed issues:**
-
-- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
 
 **Merged pull requests:**
 
