@@ -1,12 +1,32 @@
 # Changelog
 
-## [v5.1.0](https://github.com/tj-django/django-clone/tree/v5.1.0) (2022-12-28)
+## [Unreleased](https://github.com/tj-django/django-clone/tree/HEAD)
 
-[Full Changelog](https://github.com/tj-django/django-clone/compare/v5.0.0...v5.1.0)
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v5.2.0...HEAD)
+
+**Closed issues:**
+
+- CVE-2022-40899 \(Medium\) detected in future-0.18.2.tar.gz - autoclosed [\#726](https://github.com/tj-django/django-clone/issues/726)
+
+## [v5.2.0](https://github.com/tj-django/django-clone/tree/v5.2.0) (2022-12-30)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v5.1.0...v5.2.0)
 
 **Closed issues:**
 
 - Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
+
+**Merged pull requests:**
+
+- chore: remove unused dependency [\#738](https://github.com/tj-django/django-clone/pull/738) ([jackton1](https://github.com/jackton1))
+- chore\(deps\): update tj-actions/github-changelog-generator action to v1.17 [\#737](https://github.com/tj-django/django-clone/pull/737) ([renovate[bot]](https://github.com/apps/renovate))
+- chore\(deps\): update tj-actions/github-changelog-generator action to v1.16 [\#736](https://github.com/tj-django/django-clone/pull/736) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#735](https://github.com/tj-django/django-clone/pull/735) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Upgraded v5.0.0 → v5.1.0 [\#734](https://github.com/tj-django/django-clone/pull/734) ([jackton1](https://github.com/jackton1))
+
+## [v5.1.0](https://github.com/tj-django/django-clone/tree/v5.1.0) (2022-12-28)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v5.0.0...v5.1.0)
 
 **Merged pull requests:**
 
