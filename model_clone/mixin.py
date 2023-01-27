@@ -226,7 +226,7 @@ class CloneMixin(object):
                         f'with ManyToMany fields using a "through" model for model {cls.__name__}'
                     ),
                     obj=cls,
-                    id=f"{ModelCloneConfig.name}.E003"
+                    id=f"{ModelCloneConfig.name}.E003",
                 )
             )
 
@@ -246,7 +246,6 @@ class CloneMixin(object):
                 return True
 
         return False
-
 
     @transaction.atomic
     def make_clone(self, attrs=None, sub_clone=False, using=None, parent=None):

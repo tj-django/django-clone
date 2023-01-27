@@ -856,11 +856,13 @@ class CloneMixinTestCase(TestCase):
 
     def test_cloning_linked_m2m(self):
         driver = Driver.objects.create(name="Dave", age=42)
-        driver.flags.set([
-            DriverFlag.objects.create(name="awesome"),
-            DriverFlag.objects.create(name="usually_on_time"),
-            DriverFlag.objects.create(name="great_hats"),
-        ])
+        driver.flags.set(
+            [
+                DriverFlag.objects.create(name="awesome"),
+                DriverFlag.objects.create(name="usually_on_time"),
+                DriverFlag.objects.create(name="great_hats"),
+            ]
+        )
 
         clone_driver = driver.make_clone()
 
@@ -869,11 +871,11 @@ class CloneMixinTestCase(TestCase):
         self.assertEqual(driver.flags.count(), clone_driver.flags.count())
         self.assertSequenceEqual(
             list(driver.flags.order_by("name")),
-            list(clone_driver.flags.order_by("name"))
+            list(clone_driver.flags.order_by("name")),
         )
         self.assertEqual(
             driver.flags.order_by("name").first().id,
-            clone_driver.flags.order_by("name").first().id
+            clone_driver.flags.order_by("name").first().id,
         ),
 
     @patch(
@@ -1040,7 +1042,7 @@ class CloneMixinTestCase(TestCase):
     @patch(
         "sample_driver.models.Driver._clone_excluded_m2m_fields",
         new_callable=PropertyMock,
-        return_value=["flags"]
+        return_value=["flags"],
     )
     def test_clone_linked_m2m_fields_excluded_check(self, _):
         errors = Driver.check()
@@ -1062,7 +1064,7 @@ class CloneMixinTestCase(TestCase):
     @patch(
         "sample_driver.models.Driver._clone_m2m_fields",
         new_callable=PropertyMock,
-        return_value=["flags"]
+        return_value=["flags"],
     )
     def test_clone_linked_m2m_fields_redundant_check(self, _):
         errors = Driver.check()
@@ -1084,7 +1086,7 @@ class CloneMixinTestCase(TestCase):
     @patch(
         "sample.models.Book._clone_linked_m2m_fields",
         new_callable=PropertyMock,
-        return_value=["tags"]
+        return_value=["tags"],
     )
     def test_clone_linked_m2m_invalid_through_check(self, _):
         errors = Book.check()
