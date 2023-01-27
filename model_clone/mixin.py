@@ -89,6 +89,9 @@ class CloneMixin(object):
     _clone_m2o_or_o2m_fields = []  # type: List[str]
     _clone_o2o_fields = []  # type: List[str]
 
+    # Included / linked (not copied) fields
+    _clone_linked_m2m_fields = []  # type: List[str]
+
     # Excluded fields
     _clone_excluded_fields = []  # type: List[str]
     _clone_excluded_m2m_fields = []  # type: List[str]
@@ -157,6 +160,32 @@ class CloneMixin(object):
                 )
             )
 
+        if all([cls._clone_linked_m2m_fields, cls._clone_excluded_m2m_fields]):
+            errors.append(
+                Error(
+                    "Conflicting configuration.",
+                    hint=(
+                        'Please provide either "_clone_linked_m2m_fields"'
+                        f' or "_clone_excluded_m2m_fields" for model {cls.__name__}'
+                    ),
+                    obj=cls,
+                    id=f"{ModelCloneConfig.name}.E002",
+                )
+            )
+
+        if set(cls._clone_linked_m2m_fields) & set(cls._clone_m2m_fields):
+            errors.append(
+                Error(
+                    "Conflicting configuration.",
+                    hint=(
+                        'Fields can only be defined in one of either "_clone_linked_m2m_fields"'
+                        f' or "_clone_m2m_fields" for model {cls.__name__}'
+                    ),
+                    obj=cls,
+                    id=f"{ModelCloneConfig.name}.E002",
+                )
+            )
+
         if all(
             [
                 cls._clone_m2o_or_o2m_fields,
@@ -188,7 +217,36 @@ class CloneMixin(object):
                 )
             )
 
+        if cls.__check_has_invalid_linked_m2m_fields():
+            errors.append(
+                Error(
+                    "Invalid configuration.",
+                    hint=(
+                        'Use "_clone_m2m_fields" instead of "_clone_linked_m2m_fields" '
+                        f'with ManyToMany fields using a "through" model for model {cls.__name__}'
+                    ),
+                    obj=cls,
+                    id=f"{ModelCloneConfig.name}.E003"
+                )
+            )
+
         return errors
+
+    @classmethod
+    def __check_has_invalid_linked_m2m_fields(cls):
+        if not cls._clone_linked_m2m_fields:
+            return
+
+        for field_name in cls._clone_linked_m2m_fields:
+            field = cls._meta.get_field(field_name)
+            through_field = getattr(field, "field", getattr(field, "remote_field"))
+            through_model = through_field.through
+            # custom "through" models cannot be used with _clone_linked_m2m_fields
+            if not through_model._meta.auto_created:
+                return True
+
+        return False
+
 
     @transaction.atomic
     def make_clone(self, attrs=None, sub_clone=False, using=None, parent=None):
@@ -231,6 +289,7 @@ class CloneMixin(object):
         duplicate = self.__duplicate_o2o_fields(duplicate, using=using)
         duplicate = self.__duplicate_o2m_fields(duplicate, using=using)
         duplicate = self.__duplicate_m2m_fields(duplicate, using=using)
+        duplicate = self.__duplicate_linked_m2m_fields(duplicate)
 
         post_clone_save.send(sender=self.__class__, instance=duplicate)
 
@@ -649,5 +708,62 @@ class CloneMixin(object):
                     items_clone.append(item_clone)
 
                 destination.set(items_clone)
+
+        return duplicate
+
+    def __duplicate_linked_m2m_fields(self, duplicate):
+        """Duplicate many to many fields.
+
+        :param duplicate: The transient instance that should be duplicated.
+        :type duplicate: `django.db.models.Model`
+        :param using: The database alias used to save the created instances.
+        :type using: str
+        :return: The duplicate instance with all the many to many fields duplicated.
+        """
+        fields = set()
+
+        for f in self._meta.many_to_many:
+            if any(
+                [
+                    f.name in self._clone_linked_m2m_fields,
+                    self._clone_excluded_m2m_fields
+                    and f.name not in self._clone_excluded_m2m_fields,
+                ]
+            ):
+                fields.add(f)
+
+        for f in self._meta.related_objects:
+            if f.many_to_many:
+                if any(
+                    [
+                        f.get_accessor_name() in self._clone_linked_m2m_fields,
+                        self._clone_excluded_m2m_fields
+                        and f.get_accessor_name()
+                        not in self._clone_excluded_m2m_fields,
+                    ]
+                ):
+                    fields.add(f)
+
+        # Link objects from many to many fields
+        for field in fields:
+            if hasattr(field, "field"):
+                # ManyToManyRel
+                through = field.through
+                source = getattr(self, field.get_accessor_name())
+                destination = getattr(duplicate, field.get_accessor_name())
+            else:
+                through = field.remote_field.through
+                source = getattr(self, field.attname)
+                destination = getattr(duplicate, field.attname)
+
+            if all(
+                [
+                    through,
+                    not through._meta.auto_created,
+                ]
+            ):
+                raise Exception("nope")
+
+            destination.set(list(source.all()))
 
         return duplicate
