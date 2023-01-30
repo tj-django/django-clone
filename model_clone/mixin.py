@@ -718,11 +718,13 @@ class CloneMixin(object):
         """
 
         for field in self._meta.many_to_many:
-            if all([
-                field.attname not in self._clone_m2m_fields,
-                field.attname not in self._clone_excluded_m2m_fields,
-                field.attname in self._clone_linked_m2m_fields,
-            ]):
+            if all(
+                [
+                    field.attname not in self._clone_m2m_fields,
+                    field.attname not in self._clone_excluded_m2m_fields,
+                    field.attname in self._clone_linked_m2m_fields,
+                ]
+            ):
                 source = getattr(self, field.attname)
                 destination = getattr(duplicate, field.attname)
                 destination.set(list(source.all()))
