@@ -715,44 +715,14 @@ class CloneMixin(object):
 
         :param duplicate: The transient instance that should be duplicated.
         :type duplicate: `django.db.models.Model`
-        :param using: The database alias used to save the created instances.
-        :type using: str
-        :return: The duplicate instance with all the many to many fields duplicated.
+        :return: The duplicate instance objects from all the many to many fields duplicated.
         """
-        fields = set()
 
-        for f in self._meta.many_to_many:
-            if any(
-                [
-                    f.name in self._clone_linked_m2m_fields,
-                    self._clone_excluded_m2m_fields
-                    and f.name not in self._clone_excluded_m2m_fields,
-                ]
-            ):
-                fields.add(f)
-
-        for f in self._meta.related_objects:
-            if f.many_to_many:
-                if any(
-                    [
-                        f.get_accessor_name() in self._clone_linked_m2m_fields,
-                        self._clone_excluded_m2m_fields
-                        and f.get_accessor_name()
-                        not in self._clone_excluded_m2m_fields,
-                    ]
-                ):
-                    fields.add(f)
-
-        # Link objects from many to many fields
-        for field in fields:
-            if hasattr(field, "field"):
-                # ManyToManyRel
-                source = getattr(self, field.get_accessor_name())
-                destination = getattr(duplicate, field.get_accessor_name())
-            else:
+        # for linking, only look at locally defined m2m fields as it won't make sense to clone from the other direction
+        for field in self._meta.many_to_many:
+            if field.name in self._clone_linked_m2m_fields:
                 source = getattr(self, field.attname)
                 destination = getattr(duplicate, field.attname)
-
-            destination.set(list(source.all()))
+                destination.set(list(source.all()))
 
         return duplicate
