@@ -233,9 +233,11 @@ Out[10]: 'replica'
 |    Attribute        |  Description |
 |:------------------------------:|:------------:|
 | `_clone_fields` | Restrict the list of fields to copy from the instance (By default: Copies all fields excluding auto-created/non editable model fields) |
-`_clone_m2m_fields` | Restricted Many to many fields (i.e Test.tags) |
-`_clone_m2o_or_o2m_fields` | Restricted Many to One/One to Many fields |
-`_clone_o2o_fields` | Restricted One to One fields |
+| `_clone_m2m_fields` | Restricted Many to many fields (i.e Test.tags) |
+| `_clone_m2o_or_o2m_fields` | Restricted Many to One/One to Many fields |
+| `_clone_o2o_fields` | Restricted One to One fields |
+| `_clone_linked_m2m_fields` | Restricted Many to Many fields to linked to the new instance |
+
 
 #### Implicit (include all except these fields)
 
