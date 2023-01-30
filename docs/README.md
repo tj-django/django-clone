@@ -1,6 +1,6 @@
 <p align="center"> 
-    <img width="466" alt="4FC889E9-FF59-4E44-9EB6-2AF7DC034C74" src="https://user-images.githubusercontent.com/17484350/213922773-27b73654-f963-441b-87a1-eae5a15ee278.png">
-</div>
+    <img width="466" alt="4FC889E9-FF59-4E44-9EB6-2AF7DC034C74" src="https://user-images.githubusercontent.com/17484350/215616634-17439a58-7bd8-4e9c-989f-e6bef7c73e48.png">
+</p>
 
 |  Python   | Django  |  Downloads  |   Code Style   |
 |:---------:|:-------:|:-----------:|:--------------:|
