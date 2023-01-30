@@ -32,6 +32,7 @@ from sample.models import (
     Sentence,
     Tag,
 )
+from sample_driver.models import Driver, DriverFlag
 
 User = get_user_model()
 
@@ -598,7 +599,7 @@ class CloneMixinTestCase(TestCase):
 
         self.assertEqual(
             book_clone.slug,
-            slugify("{} {} {}".format(book.slug, Book.UNIQUE_DUPLICATE_SUFFIX, 1)),
+            slugify(f"{book.slug} {Book.UNIQUE_DUPLICATE_SUFFIX} {1}"),
         )
 
     def test_making_sub_clones_of_a_unique_slug_field(self):
@@ -610,7 +611,7 @@ class CloneMixinTestCase(TestCase):
 
         self.assertEqual(
             book_clone.slug,
-            slugify("{} {} {}".format(book.slug, Book.UNIQUE_DUPLICATE_SUFFIX, 1)),
+            slugify(f"{book.slug} {Book.UNIQUE_DUPLICATE_SUFFIX} {1}"),
         )
 
         for i in range(2, 7):
@@ -619,7 +620,7 @@ class CloneMixinTestCase(TestCase):
 
             self.assertEqual(
                 book_clone.slug,
-                slugify("{} {} {}".format(book.slug, Book.UNIQUE_DUPLICATE_SUFFIX, i)),
+                slugify(f"{book.slug} {Book.UNIQUE_DUPLICATE_SUFFIX} {i}"),
             )
 
     @patch(
@@ -853,6 +854,43 @@ class CloneMixinTestCase(TestCase):
         self.assertEqual(house.name, clone_house.name)
         self.assertEqual(house.rooms.count(), clone_house.rooms.count())
 
+    def test_cloning_linked_m2m(self):
+        driver = Driver.objects.create(name="Dave", age=42)
+        driver.flags.set(
+            [
+                DriverFlag.objects.create(name="awesome"),
+                DriverFlag.objects.create(name="usually_on_time"),
+                DriverFlag.objects.create(name="great_hats"),
+            ]
+        )
+
+        clone_driver = driver.make_clone()
+
+        self.assertEqual(driver.name, clone_driver.name)
+        self.assertEqual(driver.age, clone_driver.age)
+        self.assertEqual(driver.flags.count(), clone_driver.flags.count())
+        self.assertSequenceEqual(
+            list(driver.flags.order_by("name")),
+            list(clone_driver.flags.order_by("name")),
+        )
+        self.assertEqual(
+            driver.flags.order_by("name").first().id,
+            clone_driver.flags.order_by("name").first().id,
+        )
+
+    def test_cloning_o2o_fields(self):
+        sentence = Sentence.objects.create(value="A really long sentence")
+        Ending.objects.create(sentence=sentence)
+
+        self.assertEqual(1, Sentence.objects.count())
+        self.assertEqual(1, Ending.objects.count())
+
+        clones = [sentence.make_clone() for _ in range(2)]
+
+        self.assertEqual(2, len(clones))
+        self.assertEqual(3, Sentence.objects.count())
+        self.assertEqual(3, Ending.objects.count())
+
     @patch(
         "sample.models.Edition.USE_UNIQUE_DUPLICATE_SUFFIX",
         new_callable=PropertyMock,
@@ -1001,18 +1039,65 @@ class CloneMixinTestCase(TestCase):
         ]
         self.assertEqual(errors, expected_errors)
 
-    def test_cloning_o2o_fields(self):
-        sentence = Sentence.objects.create(value="A really long sentence")
-        Ending.objects.create(sentence=sentence)
+    @patch(
+        "sample_driver.models.Driver._clone_excluded_m2m_fields",
+        new_callable=PropertyMock,
+        return_value=["flags"],
+    )
+    def test_clone_linked_m2m_fields_excluded_check(self, _):
+        errors = Driver.check()
+        expected_errors = [
+            Error(
+                "Invalid configuration for _clone_excluded_m2m_fields: flags",
+                hint=(
+                    "Fields that are linked with _clone_linked_m2m_fields "
+                    f"cannot be excluded in _clone_excluded_m2m_fields for model {Driver.__name__}"
+                ),
+                obj=Driver,
+                id="{}.E002".format(ModelCloneConfig.name),
+            )
+        ]
+        self.assertEqual(errors, expected_errors)
 
-        self.assertEqual(1, Sentence.objects.count())
-        self.assertEqual(1, Ending.objects.count())
+    @patch(
+        "sample_driver.models.Driver._clone_m2m_fields",
+        new_callable=PropertyMock,
+        return_value=["flags"],
+    )
+    def test_clone_linked_m2m_fields_redundant_check(self, _):
+        errors = Driver.check()
+        expected_errors = [
+            Error(
+                "Invalid configuration for _clone_m2m_fields: flags",
+                hint=(
+                    "Fields that are linked with _clone_linked_m2m_fields "
+                    f"cannot be included in _clone_m2m_fields for model {Driver.__name__}"
+                ),
+                obj=Driver,
+                id="{}.E002".format(ModelCloneConfig.name),
+            )
+        ]
+        self.assertEqual(errors, expected_errors)
 
-        clones = [sentence.make_clone() for _ in range(2)]
-
-        self.assertEqual(2, len(clones))
-        self.assertEqual(3, Sentence.objects.count())
-        self.assertEqual(3, Ending.objects.count())
+    @patch(
+        "sample.models.Book._clone_linked_m2m_fields",
+        new_callable=PropertyMock,
+        return_value=["tags"],
+    )
+    def test_clone_linked_m2m_invalid_through_check(self, _):
+        errors = Book.check()
+        expected_errors = [
+            Error(
+                "Invalid configuration for _clone_linked_m2m_fields: tags",
+                hint=(
+                    'Use "_clone_m2m_fields" instead of "_clone_linked_m2m_fields"'
+                    f" for m2m fields that are not auto-created for model {Book.__name__}"
+                ),
+                obj=Book,
+                id="{}.E003".format(ModelCloneConfig.name),
+            )
+        ]
+        self.assertEqual(errors, expected_errors)
 
 
 class CloneMixinTransactionTestCase(TransactionTestCase):

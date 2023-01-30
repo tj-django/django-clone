@@ -89,6 +89,9 @@ class CloneMixin(object):
     _clone_m2o_or_o2m_fields = []  # type: List[str]
     _clone_o2o_fields = []  # type: List[str]
 
+    # Included / linked (not copied) fields
+    _clone_linked_m2m_fields = []  # type: List[str]
+
     # Excluded fields
     _clone_excluded_fields = []  # type: List[str]
     _clone_excluded_m2m_fields = []  # type: List[str]
@@ -188,6 +191,58 @@ class CloneMixin(object):
                 )
             )
 
+        errors.extend(cls.__check_has_invalid_linked_m2m_fields())
+
+        return errors
+
+    @classmethod
+    def __check_has_invalid_linked_m2m_fields(cls):
+        errors = []
+
+        for field_name in cls._clone_linked_m2m_fields:
+            field = cls._meta.get_field(field_name)
+            through_field = getattr(field, "field", getattr(field, "remote_field"))
+            through_model = through_field.through
+            if not through_model._meta.auto_created:
+                errors.append(
+                    Error(
+                        f"Invalid configuration for _clone_linked_m2m_fields: {field_name}",
+                        hint=(
+                            'Use "_clone_m2m_fields" instead of "_clone_linked_m2m_fields"'
+                            f" for m2m fields that are not auto-created for model {cls.__name__}"
+                        ),
+                        obj=cls,
+                        id=f"{ModelCloneConfig.name}.E003",
+                    )
+                )
+
+            if field_name in cls._clone_excluded_m2m_fields:
+                errors.append(
+                    Error(
+                        f"Invalid configuration for _clone_excluded_m2m_fields: {field_name}",
+                        hint=(
+                            "Fields that are linked with _clone_linked_m2m_fields "
+                            f"cannot be excluded in _clone_excluded_m2m_fields for model "
+                            f"{cls.__name__}"
+                        ),
+                        obj=cls,
+                        id=f"{ModelCloneConfig.name}.E002",
+                    )
+                )
+
+            if field_name in cls._clone_m2m_fields:
+                errors.append(
+                    Error(
+                        f"Invalid configuration for _clone_m2m_fields: {field_name}",
+                        hint=(
+                            "Fields that are linked with _clone_linked_m2m_fields "
+                            f"cannot be included in _clone_m2m_fields for model {cls.__name__}"
+                        ),
+                        obj=cls,
+                        id=f"{ModelCloneConfig.name}.E002",
+                    )
+                )
+
         return errors
 
     @transaction.atomic
@@ -231,6 +286,7 @@ class CloneMixin(object):
         duplicate = self.__duplicate_o2o_fields(duplicate, using=using)
         duplicate = self.__duplicate_o2m_fields(duplicate, using=using)
         duplicate = self.__duplicate_m2m_fields(duplicate, using=using)
+        duplicate = self.__duplicate_linked_m2m_fields(duplicate)
 
         post_clone_save.send(sender=self.__class__, instance=duplicate)
 
@@ -649,5 +705,27 @@ class CloneMixin(object):
                     items_clone.append(item_clone)
 
                 destination.set(items_clone)
+
+        return duplicate
+
+    def __duplicate_linked_m2m_fields(self, duplicate):
+        """Duplicate many to many fields.
+
+        :param duplicate: The transient instance that should be duplicated.
+        :type duplicate: `django.db.models.Model`
+        :return: The duplicate instance objects from all the many-to-many fields duplicated.
+        """
+
+        for field in self._meta.many_to_many:
+            if all(
+                [
+                    field.attname not in self._clone_m2m_fields,
+                    field.attname not in self._clone_excluded_m2m_fields,
+                    field.attname in self._clone_linked_m2m_fields,
+                ]
+            ):
+                source = getattr(self, field.attname)
+                destination = getattr(duplicate, field.attname)
+                destination.set(list(source.all()))
 
         return duplicate
