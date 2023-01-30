@@ -208,7 +208,7 @@ class CloneMixin(object):
                     Error(
                         f"Invalid configuration for _clone_linked_m2m_fields: {field_name}",
                         hint=(
-                            "Use \"_clone_m2m_fields\" instead of \"_clone_linked_m2m_fields\""
+                            'Use "_clone_m2m_fields" instead of "_clone_linked_m2m_fields"'
                             f" for m2m fields that are not auto-created for model {cls.__name__}"
                         ),
                         obj=cls,
