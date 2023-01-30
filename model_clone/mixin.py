@@ -160,32 +160,6 @@ class CloneMixin(object):
                 )
             )
 
-        if all([cls._clone_linked_m2m_fields, cls._clone_excluded_m2m_fields]):
-            errors.append(
-                Error(
-                    "Conflicting configuration.",
-                    hint=(
-                        'Please provide either "_clone_linked_m2m_fields"'
-                        f' or "_clone_excluded_m2m_fields" for model {cls.__name__}'
-                    ),
-                    obj=cls,
-                    id=f"{ModelCloneConfig.name}.E002",
-                )
-            )
-
-        if set(cls._clone_linked_m2m_fields) & set(cls._clone_m2m_fields):
-            errors.append(
-                Error(
-                    "Conflicting configuration.",
-                    hint=(
-                        'Fields can only be defined in one of either "_clone_linked_m2m_fields"'
-                        f' or "_clone_m2m_fields" for model {cls.__name__}'
-                    ),
-                    obj=cls,
-                    id=f"{ModelCloneConfig.name}.E002",
-                )
-            )
-
         if all(
             [
                 cls._clone_m2o_or_o2m_fields,
@@ -217,25 +191,13 @@ class CloneMixin(object):
                 )
             )
 
-        if cls.__check_has_invalid_linked_m2m_fields():
-            errors.append(
-                Error(
-                    "Invalid configuration.",
-                    hint=(
-                        'Use "_clone_m2m_fields" instead of "_clone_linked_m2m_fields" '
-                        f'with ManyToMany fields using a "through" model for model {cls.__name__}'
-                    ),
-                    obj=cls,
-                    id=f"{ModelCloneConfig.name}.E003",
-                )
-            )
+        errors.extend(cls.__check_has_invalid_linked_m2m_fields())
 
         return errors
 
     @classmethod
     def __check_has_invalid_linked_m2m_fields(cls):
-        if not cls._clone_linked_m2m_fields:
-            return
+        errors = []
 
         for field_name in cls._clone_linked_m2m_fields:
             field = cls._meta.get_field(field_name)
@@ -243,9 +205,46 @@ class CloneMixin(object):
             through_model = through_field.through
             # custom "through" models cannot be used with _clone_linked_m2m_fields
             if not through_model._meta.auto_created:
-                return True
+                errors.append(
+                    Error(
+                        f"Invalid configuration for _clone_linked_m2m_fields: {field_name}",
+                        hint=(
+                            f"Please provide a valid m2m field for model {cls.__name__} "
+                            "that uses the default through model"
+                        ),
+                        obj=cls,
+                        id=f"{ModelCloneConfig.name}.E003",
+                    )
+                )
 
-        return False
+            if field_name in cls._clone_excluded_m2m_fields:
+                errors.append(
+                    Error(
+                        f"Invalid configuration for _clone_excluded_m2m_fields: {field_name}",
+                        hint=(
+                            f"Please provide a valid m2m field for model {cls.__name__} "
+                            "that is not excluded"
+                        ),
+                        obj=cls,
+                        id=f"{ModelCloneConfig.name}.E003",
+                    )
+                )
+
+            if field_name in cls._clone_m2m_fields:
+                errors.append(
+                    Error(
+                        f"Invalid configuration for _clone_m2m_fields: {field_name}",
+                        hint=(
+                            f"Please exclude m2m field {field_name} for model {cls.__name__} "
+                            "when using _clone_linked_m2m_fields or remove it from "
+                            "_clone_m2m_fields"
+                        ),
+                        obj=cls,
+                        id=f"{ModelCloneConfig.name}.E003",
+                    )
+                )
+
+        return errors
 
     @transaction.atomic
     def make_clone(self, attrs=None, sub_clone=False, using=None, parent=None):
@@ -715,12 +714,15 @@ class CloneMixin(object):
 
         :param duplicate: The transient instance that should be duplicated.
         :type duplicate: `django.db.models.Model`
-        :return: The duplicate instance objects from all the many to many fields duplicated.
+        :return: The duplicate instance objects from all the many-to-many fields duplicated.
         """
 
-        # for linking, only look at locally defined m2m fields as it won't make sense to clone from the other direction
         for field in self._meta.many_to_many:
-            if field.name in self._clone_linked_m2m_fields:
+            if all([
+                field.attname not in self._clone_m2m_fields,
+                field.attname not in self._clone_excluded_m2m_fields,
+                field.attname in self._clone_linked_m2m_fields,
+            ]):
                 source = getattr(self, field.attname)
                 destination = getattr(duplicate, field.attname)
                 destination.set(list(source.all()))
