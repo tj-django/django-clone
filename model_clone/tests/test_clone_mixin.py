@@ -599,7 +599,7 @@ class CloneMixinTestCase(TestCase):
 
         self.assertEqual(
             book_clone.slug,
-            slugify("{} {} {}".format(book.slug, Book.UNIQUE_DUPLICATE_SUFFIX, 1)),
+            slugify(f"{book.slug} {Book.UNIQUE_DUPLICATE_SUFFIX} {1}"),
         )
 
     def test_making_sub_clones_of_a_unique_slug_field(self):
@@ -611,7 +611,7 @@ class CloneMixinTestCase(TestCase):
 
         self.assertEqual(
             book_clone.slug,
-            slugify("{} {} {}".format(book.slug, Book.UNIQUE_DUPLICATE_SUFFIX, 1)),
+            slugify(f"{book.slug} {Book.UNIQUE_DUPLICATE_SUFFIX} {1}"),
         )
 
         for i in range(2, 7):
@@ -620,7 +620,7 @@ class CloneMixinTestCase(TestCase):
 
             self.assertEqual(
                 book_clone.slug,
-                slugify("{} {} {}".format(book.slug, Book.UNIQUE_DUPLICATE_SUFFIX, i)),
+                slugify(f"{book.slug} {Book.UNIQUE_DUPLICATE_SUFFIX} {i}"),
             )
 
     @patch(
@@ -876,7 +876,20 @@ class CloneMixinTestCase(TestCase):
         self.assertEqual(
             driver.flags.order_by("name").first().id,
             clone_driver.flags.order_by("name").first().id,
-        ),
+        )
+
+    def test_cloning_o2o_fields(self):
+        sentence = Sentence.objects.create(value="A really long sentence")
+        Ending.objects.create(sentence=sentence)
+
+        self.assertEqual(1, Sentence.objects.count())
+        self.assertEqual(1, Ending.objects.count())
+
+        clones = [sentence.make_clone() for _ in range(2)]
+
+        self.assertEqual(2, len(clones))
+        self.assertEqual(3, Sentence.objects.count())
+        self.assertEqual(3, Ending.objects.count())
 
     @patch(
         "sample.models.Edition.USE_UNIQUE_DUPLICATE_SUFFIX",
@@ -1026,19 +1039,6 @@ class CloneMixinTestCase(TestCase):
         ]
         self.assertEqual(errors, expected_errors)
 
-    def test_cloning_o2o_fields(self):
-        sentence = Sentence.objects.create(value="A really long sentence")
-        Ending.objects.create(sentence=sentence)
-
-        self.assertEqual(1, Sentence.objects.count())
-        self.assertEqual(1, Ending.objects.count())
-
-        clones = [sentence.make_clone() for _ in range(2)]
-
-        self.assertEqual(2, len(clones))
-        self.assertEqual(3, Sentence.objects.count())
-        self.assertEqual(3, Ending.objects.count())
-
     @patch(
         "sample_driver.models.Driver._clone_excluded_m2m_fields",
         new_callable=PropertyMock,
@@ -1048,12 +1048,10 @@ class CloneMixinTestCase(TestCase):
         errors = Driver.check()
         expected_errors = [
             Error(
-                "Conflicting configuration.",
+                "Invalid configuration for _clone_excluded_m2m_fields: flags",
                 hint=(
-                    'Please provide either "_clone_linked_m2m_fields"'
-                    + ' or "_clone_excluded_m2m_fields" for model {}'.format(
-                        Driver.__name__,
-                    )
+                    "Fields that are linked with _clone_linked_m2m_fields "
+                    f"cannot be excluded in _clone_excluded_m2m_fields for model {Driver.__name__}"
                 ),
                 obj=Driver,
                 id="{}.E002".format(ModelCloneConfig.name),
@@ -1070,12 +1068,10 @@ class CloneMixinTestCase(TestCase):
         errors = Driver.check()
         expected_errors = [
             Error(
-                "Conflicting configuration.",
+                "Invalid configuration for _clone_m2m_fields: flags",
                 hint=(
-                    'Fields can only be defined in one of either "_clone_linked_m2m_fields"'
-                    + ' or "_clone_m2m_fields" for model {}'.format(
-                        Driver.__name__,
-                    )
+                    "Fields that are linked with _clone_linked_m2m_fields "
+                    f"cannot be included in _clone_m2m_fields for model {Driver.__name__}"
                 ),
                 obj=Driver,
                 id="{}.E002".format(ModelCloneConfig.name),
@@ -1092,12 +1088,10 @@ class CloneMixinTestCase(TestCase):
         errors = Book.check()
         expected_errors = [
             Error(
-                "Invalid configuration.",
+                "Invalid configuration for _clone_linked_m2m_fields: tags",
                 hint=(
-                    'Use "_clone_m2m_fields" instead of "_clone_linked_m2m_fields" '
-                    + 'with ManyToMany fields using a "through" model for model {}'.format(
-                        Book.__name__,
-                    )
+                    "Use \"_clone_m2m_fields\" instead of \"_clone_linked_m2m_fields\""
+                    f" for m2m fields that are not auto-created for model {Book.__name__}"
                 ),
                 obj=Book,
                 id="{}.E003".format(ModelCloneConfig.name),

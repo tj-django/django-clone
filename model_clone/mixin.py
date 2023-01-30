@@ -203,14 +203,13 @@ class CloneMixin(object):
             field = cls._meta.get_field(field_name)
             through_field = getattr(field, "field", getattr(field, "remote_field"))
             through_model = through_field.through
-            # custom "through" models cannot be used with _clone_linked_m2m_fields
             if not through_model._meta.auto_created:
                 errors.append(
                     Error(
                         f"Invalid configuration for _clone_linked_m2m_fields: {field_name}",
                         hint=(
-                            f"Please provide a valid m2m field for model {cls.__name__} "
-                            "that uses the default through model"
+                            "Use \"_clone_m2m_fields\" instead of \"_clone_linked_m2m_fields\""
+                            f" for m2m fields that are not auto-created for model {cls.__name__}"
                         ),
                         obj=cls,
                         id=f"{ModelCloneConfig.name}.E003",
@@ -222,11 +221,11 @@ class CloneMixin(object):
                     Error(
                         f"Invalid configuration for _clone_excluded_m2m_fields: {field_name}",
                         hint=(
-                            f"Please provide a valid m2m field for model {cls.__name__} "
-                            "that is not excluded"
+                            "Fields that are linked with _clone_linked_m2m_fields "
+                            f"cannot be excluded in _clone_excluded_m2m_fields for model {cls.__name__}"
                         ),
                         obj=cls,
-                        id=f"{ModelCloneConfig.name}.E003",
+                        id=f"{ModelCloneConfig.name}.E002",
                     )
                 )
 
@@ -235,12 +234,11 @@ class CloneMixin(object):
                     Error(
                         f"Invalid configuration for _clone_m2m_fields: {field_name}",
                         hint=(
-                            f"Please exclude m2m field {field_name} for model {cls.__name__} "
-                            "when using _clone_linked_m2m_fields or remove it from "
-                            "_clone_m2m_fields"
+                            "Fields that are linked with _clone_linked_m2m_fields "
+                            f"cannot be included in _clone_m2m_fields for model {cls.__name__}"
                         ),
                         obj=cls,
-                        id=f"{ModelCloneConfig.name}.E003",
+                        id=f"{ModelCloneConfig.name}.E002",
                     )
                 )
 
