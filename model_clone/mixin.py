@@ -747,21 +747,11 @@ class CloneMixin(object):
         for field in fields:
             if hasattr(field, "field"):
                 # ManyToManyRel
-                through = field.through
                 source = getattr(self, field.get_accessor_name())
                 destination = getattr(duplicate, field.get_accessor_name())
             else:
-                through = field.remote_field.through
                 source = getattr(self, field.attname)
                 destination = getattr(duplicate, field.attname)
-
-            if all(
-                [
-                    through,
-                    not through._meta.auto_created,
-                ]
-            ):
-                raise Exception("nope")
 
             destination.set(list(source.all()))
 
