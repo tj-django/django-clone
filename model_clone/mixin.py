@@ -222,7 +222,8 @@ class CloneMixin(object):
                         f"Invalid configuration for _clone_excluded_m2m_fields: {field_name}",
                         hint=(
                             "Fields that are linked with _clone_linked_m2m_fields "
-                            f"cannot be excluded in _clone_excluded_m2m_fields for model {cls.__name__}"
+                            f"cannot be excluded in _clone_excluded_m2m_fields for model "
+                            f"{cls.__name__}"
                         ),
                         obj=cls,
                         id=f"{ModelCloneConfig.name}.E002",
