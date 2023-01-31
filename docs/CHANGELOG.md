@@ -1,20 +1,42 @@
 # Changelog
 
-## [Unreleased](https://github.com/tj-django/django-clone/tree/HEAD)
+## [v5.3.0](https://github.com/tj-django/django-clone/tree/v5.3.0) (2023-01-30)
 
-[Full Changelog](https://github.com/tj-django/django-clone/compare/v5.2.0...HEAD)
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v5.2.0...v5.3.0)
+
+**Implemented enhancements:**
+
+- \[Feature\] Create m2m relations with existing objects new.m2mfield.set\(old.m2mfield.all\(\)\) [\#703](https://github.com/tj-django/django-clone/issues/703)
 
 **Closed issues:**
 
 - CVE-2022-40899 \(Medium\) detected in future-0.18.2.tar.gz - autoclosed [\#726](https://github.com/tj-django/django-clone/issues/726)
+- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
+
+**Merged pull requests:**
+
+- Updated README.md [\#756](https://github.com/tj-django/django-clone/pull/756) ([jackton1](https://github.com/jackton1))
+- Updated docs [\#755](https://github.com/tj-django/django-clone/pull/755) ([github-actions[bot]](https://github.com/apps/github-actions))
+- docs: add DanielSchaffer as a contributor for code, and test [\#754](https://github.com/tj-django/django-clone/pull/754) ([allcontributors[bot]](https://github.com/apps/allcontributors))
+- fix: error running pre-commit [\#753](https://github.com/tj-django/django-clone/pull/753) ([jackton1](https://github.com/jackton1))
+- feat: add option to link existing objects of m2m fields instead of cloning them [\#752](https://github.com/tj-django/django-clone/pull/752) ([DanielSchaffer](https://github.com/DanielSchaffer))
+- Updated docs [\#751](https://github.com/tj-django/django-clone/pull/751) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Updated README.md [\#750](https://github.com/tj-django/django-clone/pull/750) ([jackton1](https://github.com/jackton1))
+- chore\(deps\): update peaceiris/actions-gh-pages action to v3.9.2 [\#749](https://github.com/tj-django/django-clone/pull/749) ([renovate[bot]](https://github.com/apps/renovate))
+- \[pre-commit.ci\] pre-commit autoupdate [\#748](https://github.com/tj-django/django-clone/pull/748) ([pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci))
+- chore\(deps\): update tj-actions/semver-diff action to v2.4.1 [\#747](https://github.com/tj-django/django-clone/pull/747) ([renovate[bot]](https://github.com/apps/renovate))
+- chore\(deps\): update tj-actions/semver-diff action to v2.4.0 [\#746](https://github.com/tj-django/django-clone/pull/746) ([renovate[bot]](https://github.com/apps/renovate))
+- Bump tj-actions/semver-diff from 2.2.0 to 2.3.0 [\#745](https://github.com/tj-django/django-clone/pull/745) ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): update tj-actions/semver-diff action to v2.2.0 [\#744](https://github.com/tj-django/django-clone/pull/744) ([renovate[bot]](https://github.com/apps/renovate))
+- chore\(deps\): update actions/checkout action to v3.3.0 [\#743](https://github.com/tj-django/django-clone/pull/743) ([renovate[bot]](https://github.com/apps/renovate))
+- chore\(deps\): update peaceiris/actions-gh-pages action to v3.9.1 [\#742](https://github.com/tj-django/django-clone/pull/742) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#741](https://github.com/tj-django/django-clone/pull/741) ([github-actions[bot]](https://github.com/apps/github-actions))
+- chore\(deps\): update dependency django to v4.1.5 [\#740](https://github.com/tj-django/django-clone/pull/740) ([renovate[bot]](https://github.com/apps/renovate))
+- Upgraded v5.1.0 → v5.2.0 [\#739](https://github.com/tj-django/django-clone/pull/739) ([jackton1](https://github.com/jackton1))
 
 ## [v5.2.0](https://github.com/tj-django/django-clone/tree/v5.2.0) (2022-12-30)
 
 [Full Changelog](https://github.com/tj-django/django-clone/compare/v5.1.0...v5.2.0)
-
-**Closed issues:**
-
-- Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
 
 **Merged pull requests:**
 
