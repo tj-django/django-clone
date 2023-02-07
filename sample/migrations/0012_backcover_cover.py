@@ -7,7 +7,6 @@ import model_clone.mixin
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("sample", "0011_auto_20210414_1744"),
     ]

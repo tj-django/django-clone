@@ -6,7 +6,6 @@ import sample.models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("sample", "0019_saletag_sale_tag_unique_name"),
     ]

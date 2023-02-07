@@ -8,7 +8,6 @@ import model_clone.mixin
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("sample", "0012_backcover_cover"),
     ]
