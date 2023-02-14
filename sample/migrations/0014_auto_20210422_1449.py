@@ -7,7 +7,6 @@ import model_clone.mixin
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("sample", "0013_edition"),
     ]

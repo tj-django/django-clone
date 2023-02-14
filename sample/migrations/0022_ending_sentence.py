@@ -7,7 +7,6 @@ import model_clone.mixin
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("sample", "0021_book_custom_slug"),
     ]

@@ -6,7 +6,6 @@ import model_clone.mixin
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = []
