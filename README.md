@@ -59,11 +59,12 @@ This solves the problem introduced by using `instance.pk = None` and `instance.s
 
 ### Subclassing the `CloneModel`
 
-![](https://user-images.githubusercontent.com/17484350/221386788-8f37d01f-7295-4755-bf7f-b3c01434e21e.png)
+![](https://user-images.githubusercontent.com/17484350/221387430-efd5508a-2597-4320-9750-5a4c56833edb.png)
+
 
 ### Using the `CloneMixin`
 
-![](https://user-images.githubusercontent.com/17484350/221386927-44cd3cf6-c815-4666-b69e-bcaa3231c9d5.png)
+![](https://user-images.githubusercontent.com/17484350/221387397-6ad5475b-6887-4a5f-b6d3-42784f9dfa7c.png)
 
 ### Duplicating a model instance
 
@@ -166,6 +167,7 @@ INSTALLED_APPS = [
 ![](https://user-images.githubusercontent.com/17484350/221387226-572cedbe-e30e-456d-af75-bcd25edec754.png)
 
 #### Using the `CloneMixin`
+![carbon (37)](https://user-images.githubusercontent.com/17484350/221387393-196bcb4b-e136-4d5b-89cd-0fb28d8e6e6e.png)
 
 ![](https://user-images.githubusercontent.com/17484350/221387265-ccf05239-ec0c-47ec-b0ed-6c2e01428aee.png)
 
