@@ -52,171 +52,29 @@ This solves the problem introduced by using `instance.pk = None` and `instance.s
 
 ## Installation
 
-Run
+![](https://user-images.githubusercontent.com/17484350/221386740-aa66df70-eed0-40ed-9c5f-1d3b6c9045c2.png)
 
-```bash script
-pip install django-clone
-```
 
 ## Usage
 
 ### Subclassing the `CloneModel`
 
-**CHANGE**
-
-```python
-from django.db import models
-
-class MyModel(models.Model):
-    title = models.CharField(max_length=200)
-```
-
-**TO**
-
-```python
-from django.db import models
-from model_clone.models import CloneModel
-
-class MyModel(CloneModel):
-    title = models.CharField(max_length=200)
-```
-
-**Example**
-
-```python
-from django.db import models
-from django.utils.translation import gettext_lazy as _
-from model_clone.models import CloneModel
-
-class TestModel(CloneModel):
-    title = models.CharField(max_length=200)
-    tags =  models.ManyToManyField('Tags')
-
-    _clone_m2m_fields = ['tags']
-
-
-class Tags(models.Model):  #  To enable cloning tags directly use `CloneModel` as shown above.
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return _(self.name)
-```
+![](https://user-images.githubusercontent.com/17484350/221386788-8f37d01f-7295-4755-bf7f-b3c01434e21e.png)
 
 ### Using the `CloneMixin`
 
-```python
-from django.db import models
-from django.utils.translation import gettext_lazy as _
-from model_clone import CloneMixin
-
-class TestModel(CloneMixin, models.Model):
-    title = models.CharField(max_length=200)
-    tags =  models.ManyToManyField('Tags')
-
-    _clone_m2m_fields = ['tags']
+![](https://user-images.githubusercontent.com/17484350/221386927-44cd3cf6-c815-4666-b69e-bcaa3231c9d5.png)
 
 
-class Tags(models.Model):  #  To enable cloning tags directly use `CloneMixin` as shown above.
-    name = models.CharField(max_length=255)
+### Creating clones without subclassing `CloneMixin`.
 
-    def __str__(self):
-        return _(self.name)
-```
+> **NOTE:** :warning:
+>
+> *   This method won't copy over related objects like Many to Many/One to Many relationships.
+> *   Ensure that required fields skipped from being cloned are passed in using the `attrs` kwargs.
 
-### Duplicating a model instance
+![](https://user-images.githubusercontent.com/17484350/221385171-add1a0c3-21fc-4c48-bfe9-4f2014ffe035.png)
 
-```python
-In [1]: test_obj = TestModel.objects.create(title='New')
-
-In [2]: test_obj.pk
-Out[2]: 1
-
-In [3]: test_obj.title
-Out[3]: 'New'
-
-In [4]: test_obj.tags.create(name='men')
-
-In [4]: test_obj.tags.create(name='women')
-
-In [5]: test_obj.tags.all()
-Out[5]: <QuerySet [<Tag: men>, <Tag: women>]>
-
-In [6]: test_obj_clone = test_obj.make_clone()
-
-In [7]: test_obj_clone.pk
-Out[7]: 2
-
-In [8]: test_obj_clone.title
-Out[8]: 'New copy 1'
-
-In [9]: test_obj_clone.tags.all()
-Out[9]: <QuerySet [<Tag: men>, <Tag: women>]>
-
-In [6]: test_obj_clone = test_obj.make_clone(attrs={'title': 'Updated title'})
-
-In [7]: test_obj_clone.pk
-Out[7]: 3
-
-In [8]: test_obj_clone.title
-Out[8]: 'Updated title'
-
-In [9]: test_obj_clone.tags.all()
-Out[9]: <QuerySet [<Tag: men>, <Tag: women>]>
-```
-
-#### Bulk cloning a model
-
-```python
-In [1]: test_obj = TestModel.objects.create(title='New')
-
-In [2]: test_obj.pk
-Out[2]: 1
-
-In [3]: test_obj.title
-Out[3]: 'New'
-
-In [4]: test_obj.tags.create(name='men')
-
-In [4]: test_obj.tags.create(name='women')
-
-In [5]: test_obj.tags.all()
-Out[5]: <QuerySet [<Tag: men>, <Tag: women>]>
-
-In [6]: test_obj_clones = test_obj.bulk_clone(1000)
-
-In [7]: len(test_obj_clones)
-Out[7]: 1000
-
-In [8]: test_obj_clone = test_obj_clones[0]
-
-In [9]: test_obj_clone.pk
-Out[9]: 2
-
-In [10]: test_obj_clone.title
-Out[10]: 'New copy 1'
-
-In [11]: test_obj_clone.tags.all()
-Out[11]: <QuerySet [<Tag: men>, <Tag: women>]>
-```
-
-#### Multi database support
-
-```python
-
-In [6]: test_obj_clone = test_obj.make_clone(using='replica')  # Replicate test object to a different database.
-
-In [7]: test_obj_clone.pk
-Out[7]: 1
-
-In [8]: test_obj_clone.title
-Out[8]: 'New'
-
-In [9]: test_obj_clone.tags.all()
-Out[9]: <QuerySet [<Tag: men>, <Tag: women>]>
-
-In [10]: test_obj_clone._state.db
-Out[10]: 'replica'
-```
 
 ### CloneMixin attributes
 
@@ -251,69 +109,13 @@ Out[10]: 'replica'
 >
 > *   Ensure to either set `_clone_excluded_*` or `_clone_*`. Using both would raise errors.
 
-### Creating clones without subclassing `CloneMixin`.
-
-```python
-
-In [1]: from model_clone.utils import create_copy_of_instance
-
-In [2]: test_obj = TestModel.objects.create(title='New')
-
-In [3]: test_obj.pk
-Out[3]: 1
-
-In [4]: test_obj.title
-Out[4]: 'New'
-
-In [5]: test_obj.tags.create(name='men')
-
-In [6]: test_obj.tags.create(name='women')
-
-In [7]: test_obj.tags.all()
-Out[7]: <QuerySet [<Tag: men>, <Tag: women>]>
-
-In [8]: test_obj_clone = create_copy_of_instance(test_obj, attrs={'title': 'Updated title'})
-
-In [9]: test_obj_clone.pk
-Out[9]: 2
-
-In [10]: test_obj_clone.title
-Out[10]: 'Updated title'
-
-In [11]: test_obj_clone.tags.all()
-Out[11]: <QuerySet []>
-```
-
-> **NOTE:** :warning:
->
-> *   This method won't copy over related objects like Many to Many/One to Many relationships.
-> *   Ensure that required fields skipped from being cloned are passed in using the `attrs` kwargs.
 
 ### Django Admin
 
 #### Duplicating Models from the Django Admin view.
 
-**Change**
+![](https://user-images.githubusercontent.com/17484350/221386874-047989a4-ae4d-4d82-9ef6-2b303001a4c2.png)
 
-```python
-from django.contrib import admin
-from django.contrib.admin import ModelAdmin
-
-@admin.register(TestModel)
-class TestModelAdmin(ModelAdmin):
-    pass
-```
-
-**to**
-
-```python
-from django.contrib import admin
-from model_clone import CloneModelAdmin
-
-@admin.register(TestModel)
-class TestModelAdmin(CloneModelAdmin):
-    pass
-```
 
 ##### List View
 
@@ -325,17 +127,8 @@ class TestModelAdmin(CloneModelAdmin):
 
 #### CloneModelAdmin class attributes
 
-```python
+![](https://user-images.githubusercontent.com/17484350/221387085-e0ca31ee-8c4c-40d9-9ce6-44ff5e6814ff.png)
 
-from model_clone import CloneModelAdmin
-
-@admin.register(TestModel)
-class TestModelAdmin(CloneModelAdmin):
-    # Enables/Disables the Duplicate action in the List view (Defaults to True)
-    include_duplicate_action = True
-    # Enables/Disables the Duplicate action in the Change view (Defaults to True)
-    include_duplicate_object_link = True
-```
 
 > **NOTE:** :warning:
 >
@@ -349,30 +142,38 @@ INSTALLED_APPS = [
 ]
 ```
 
+
+## Advanced Usage 
+
 ### Signals
 
 #### pre\_clone\_save, post\_clone\_save
 
-```python
-from django.dispatch import receiver
-from django.utils import timezone
-
-from model_clone.signals import post_clone_save, pre_clone_save
-
-from sample.models import Edition
+![](https://user-images.githubusercontent.com/17484350/221387120-b5219cdb-9f74-4751-b593-2c68db9fd0e0.png)
 
 
-@receiver(pre_clone_save, sender=Edition)
-def increase_seq(sender, instance, **kwargs):
-    instance.seq += 1
+### Clone Many to Many fields
+
+#### Using the `CloneModel`
+
+![](https://user-images.githubusercontent.com/17484350/221387226-572cedbe-e30e-456d-af75-bcd25edec754.png)
+
+#### Using the `CloneMixin`
+
+![](https://user-images.githubusercontent.com/17484350/221387265-ccf05239-ec0c-47ec-b0ed-6c2e01428aee.png)
+
+### Duplicating a model instance
+
+![](https://user-images.githubusercontent.com/17484350/221386600-731a6f45-1704-4834-bcbe-0f57d912faf7.png)
+
+### Bulk cloning a model
+
+![](https://user-images.githubusercontent.com/17484350/221386555-13978280-35a1-4941-8186-a1c6723a0346.png)
 
 
-@receiver(post_clone_save, sender=Edition)
-def update_book_published_at(sender, instance, **kwargs):
-    if instance.book:
-        instance.book.published_at = timezone.now()
-        instance.book.save(update_fields=["published_at"])
-```
+### Multi database support
+
+![](https://user-images.githubusercontent.com/17484350/221385217-3a123080-b247-4ef0-b876-e75db1518c92.png)
 
 ## Compatibility
 
