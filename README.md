@@ -32,19 +32,23 @@ This solves the problem introduced by using `instance.pk = None` and `instance.s
     *   [Subclassing the `CloneModel`](#subclassing-the-clonemodel)
     *   [Using the `CloneMixin`](#using-the-clonemixin)
     *   [Duplicating a model instance](#duplicating-a-model-instance)
-        *   [Bulk cloning a model](#bulk-cloning-a-model)
-        *   [Multi database support](#multi-database-support)
+    *   [Bulk cloning a model](#bulk-cloning-a-model)
+    *   [Creating clones without subclassing `CloneMixin`.](#creating-clones-without-subclassing-clonemixin)
     *   [CloneMixin attributes](#clonemixin-attributes)
         *   [Explicit (include only these fields)](#explicit-include-only-these-fields)
         *   [Implicit (include all except these fields)](#implicit-include-all-except-these-fields)
-    *   [Creating clones without subclassing `CloneMixin`.](#creating-clones-without-subclassing-clonemixin)
     *   [Django Admin](#django-admin)
         *   [Duplicating Models from the Django Admin view.](#duplicating-models-from-the-django-admin-view)
             *   [List View](#list-view)
             *   [Change View](#change-view)
         *   [CloneModelAdmin class attributes](#clonemodeladmin-class-attributes)
+*   [Advanced Usage](#advanced-usage)
     *   [Signals](#signals)
         *   [pre\_clone\_save, post\_clone\_save](#pre_clone_save-post_clone_save)
+    *   [Clone Many to Many fields](#clone-many-to-many-fields)
+        *   [Using the `CloneModel`](#using-the-clonemodel)
+        *   [Using the `CloneMixin`](#using-the-clonemixin-1)
+    *   [Multi database support](#multi-database-support)
 *   [Compatibility](#compatibility)
 *   [Running locally](#running-locally)
 *   [Found a Bug?](#found-a-bug)
@@ -53,7 +57,6 @@ This solves the problem introduced by using `instance.pk = None` and `instance.s
 ## Installation
 
 ![](https://user-images.githubusercontent.com/17484350/221386740-aa66df70-eed0-40ed-9c5f-1d3b6c9045c2.png)
-
 
 ## Usage
 
@@ -81,7 +84,6 @@ This solves the problem introduced by using `instance.pk = None` and `instance.s
 > *   Ensure that required fields skipped from being cloned are passed in using the `attrs` kwargs.
 
 ![](https://user-images.githubusercontent.com/17484350/221385171-add1a0c3-21fc-4c48-bfe9-4f2014ffe035.png)
-
 
 ### CloneMixin attributes
 
@@ -116,13 +118,11 @@ This solves the problem introduced by using `instance.pk = None` and `instance.s
 >
 > *   Ensure to either set `_clone_excluded_*` or `_clone_*`. Using both would raise errors.
 
-
 ### Django Admin
 
 #### Duplicating Models from the Django Admin view.
 
 ![](https://user-images.githubusercontent.com/17484350/221386874-047989a4-ae4d-4d82-9ef6-2b303001a4c2.png)
-
 
 ##### List View
 
@@ -136,7 +136,6 @@ This solves the problem introduced by using `instance.pk = None` and `instance.s
 
 ![](https://user-images.githubusercontent.com/17484350/221387085-e0ca31ee-8c4c-40d9-9ce6-44ff5e6814ff.png)
 
-
 > **NOTE:** :warning:
 >
 > *   Ensure that `model_clone` is placed before `django.contrib.admin`
@@ -149,15 +148,13 @@ INSTALLED_APPS = [
 ]
 ```
 
-
-## Advanced Usage 
+## Advanced Usage
 
 ### Signals
 
 #### pre\_clone\_save, post\_clone\_save
 
 ![](https://user-images.githubusercontent.com/17484350/221387120-b5219cdb-9f74-4751-b593-2c68db9fd0e0.png)
-
 
 ### Clone Many to Many fields
 
@@ -168,7 +165,6 @@ INSTALLED_APPS = [
 #### Using the `CloneMixin`
 
 ![](https://user-images.githubusercontent.com/17484350/221387265-ccf05239-ec0c-47ec-b0ed-6c2e01428aee.png)
-
 
 ### Multi database support
 
