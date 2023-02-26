@@ -65,6 +65,13 @@ This solves the problem introduced by using `instance.pk = None` and `instance.s
 
 ![](https://user-images.githubusercontent.com/17484350/221386927-44cd3cf6-c815-4666-b69e-bcaa3231c9d5.png)
 
+### Duplicating a model instance
+
+![](https://user-images.githubusercontent.com/17484350/221386600-731a6f45-1704-4834-bcbe-0f57d912faf7.png)
+
+### Bulk cloning a model
+
+![](https://user-images.githubusercontent.com/17484350/221386555-13978280-35a1-4941-8186-a1c6723a0346.png)
 
 ### Creating clones without subclassing `CloneMixin`.
 
@@ -161,14 +168,6 @@ INSTALLED_APPS = [
 #### Using the `CloneMixin`
 
 ![](https://user-images.githubusercontent.com/17484350/221387265-ccf05239-ec0c-47ec-b0ed-6c2e01428aee.png)
-
-### Duplicating a model instance
-
-![](https://user-images.githubusercontent.com/17484350/221386600-731a6f45-1704-4834-bcbe-0f57d912faf7.png)
-
-### Bulk cloning a model
-
-![](https://user-images.githubusercontent.com/17484350/221386555-13978280-35a1-4941-8186-a1c6723a0346.png)
 
 
 ### Multi database support
