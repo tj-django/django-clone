@@ -1,31 +1,26 @@
 *   [Installation](#installation)
-
 *   [Usage](#usage)
-
     *   [Subclassing the `CloneModel`](#subclassing-the-clonemodel)
-
     *   [Using the `CloneMixin`](#using-the-clonemixin)
-
     *   [Duplicating a model instance](#duplicating-a-model-instance)
-
-        *   [Bulk cloning a model](#bulk-cloning-a-model)
-
-    *   [CloneMixin attributes](#clonemixin-attributes)
-
-        *   [Explicit](#explicit)
-        *   [Implicit](#implicit)
-
+    *   [Bulk cloning a model](#bulk-cloning-a-model)
     *   [Creating clones without subclassing `CloneMixin`.](#creating-clones-without-subclassing-clonemixin)
-
+    *   [CloneMixin attributes](#clonemixin-attributes)
+        *   [Explicit (include only these fields)](#explicit-include-only-these-fields)
+        *   [Implicit (include all except these fields)](#implicit-include-all-except-these-fields)
     *   [Django Admin](#django-admin)
-
         *   [Duplicating Models from the Django Admin view.](#duplicating-models-from-the-django-admin-view)
-
             *   [List View](#list-view)
             *   [Change View](#change-view)
-
         *   [CloneModelAdmin class attributes](#clonemodeladmin-class-attributes)
-
+*   [Advanced Usage](#advanced-usage)
+    *   [Signals](#signals)
+        *   [pre\_clone\_save, post\_clone\_save](#pre_clone_save-post_clone_save)
+    *   [Clone Many to Many fields](#clone-many-to-many-fields)
+        *   [Using the `CloneModel`](#using-the-clonemodel)
+        *   [Using the `CloneMixin`](#using-the-clonemixin-1)
+    *   [Multi database support](#multi-database-support)
+*   [Compatibility](#compatibility)
+*   [Running locally](#running-locally)
 *   [Found a Bug?](#found-a-bug)
-
 *   [Contributors ✨](#contributors-)
