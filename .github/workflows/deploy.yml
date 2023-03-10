@@ -44,7 +44,7 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
 
       - name: Generate CHANGELOG
-        uses: tj-actions/github-changelog-generator@v1.17
+        uses: tj-actions/github-changelog-generator@v1.18
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
