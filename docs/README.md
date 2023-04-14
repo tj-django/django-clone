@@ -28,6 +28,8 @@ This solves the problem introduced by using `instance.pk = None` and `instance.s
 ## Table of Contents
 
 *   [Installation](#installation)
+    *   [pip](#pip)
+    *   [poetry](#poetry)
 *   [Usage](#usage)
     *   [Subclassing the `CloneModel`](#subclassing-the-clonemodel)
     *   [Using the `CloneMixin`](#using-the-clonemixin)
@@ -56,7 +58,17 @@ This solves the problem introduced by using `instance.pk = None` and `instance.s
 
 ## Installation
 
-![](https://user-images.githubusercontent.com/17484350/221386740-aa66df70-eed0-40ed-9c5f-1d3b6c9045c2.png)
+### pip
+
+```bash
+pip install django-clone
+```
+
+### poetry
+
+```bash
+poetry add django-clone
+```
 
 ## Usage
 
