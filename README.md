@@ -28,6 +28,8 @@ This solves the problem introduced by using `instance.pk = None` and `instance.s
 ## Table of Contents
 
 *   [Installation](#installation)
+    *   [pip](#pip)
+    *   [poetry](#poetry)
 *   [Usage](#usage)
     *   [Subclassing the `CloneModel`](#subclassing-the-clonemodel)
     *   [Using the `CloneMixin`](#using-the-clonemixin)
