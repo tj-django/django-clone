@@ -36,7 +36,7 @@
       "matchUpdateTypes": ["major", "minor", "patch", "pin", "digest"],
       "rebaseWhen": "behind-base-branch",
       "addLabels": [
-        "automerge"
+        "merge-when-passing"
       ],
       "automerge": true
     }
