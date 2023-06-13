@@ -1,12 +1,26 @@
 # Changelog
 
-## [v5.3.2](https://github.com/tj-django/django-clone/tree/v5.3.2) (2023-05-27)
+## [v5.3.3](https://github.com/tj-django/django-clone/tree/v5.3.3) (2023-06-12)
 
-[Full Changelog](https://github.com/tj-django/django-clone/compare/v5.3.1...v5.3.2)
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v5.3.2...v5.3.3)
 
 **Closed issues:**
 
 - Dependency Dashboard [\#198](https://github.com/tj-django/django-clone/issues/198)
+
+**Merged pull requests:**
+
+- chore\(deps\): update tj-actions/verify-changed-files action to v15 [\#804](https://github.com/tj-django/django-clone/pull/804) ([renovate[bot]](https://github.com/apps/renovate))
+- feat: add support for Django 4.2 [\#803](https://github.com/tj-django/django-clone/pull/803) ([jackton1](https://github.com/jackton1))
+- chore\(deps\): update actions/checkout action to v3.5.3 [\#802](https://github.com/tj-django/django-clone/pull/802) ([renovate[bot]](https://github.com/apps/renovate))
+- chore\(deps\): update dependency django to v4.2.2 [\#801](https://github.com/tj-django/django-clone/pull/801) ([renovate[bot]](https://github.com/apps/renovate))
+- Updated docs [\#800](https://github.com/tj-django/django-clone/pull/800) ([github-actions[bot]](https://github.com/apps/github-actions))
+- Upgraded v5.3.1 → v5.3.2 [\#799](https://github.com/tj-django/django-clone/pull/799) ([jackton1](https://github.com/jackton1))
+- chore\(deps\): update tj-actions/github-changelog-generator action to v1.19 [\#797](https://github.com/tj-django/django-clone/pull/797) ([renovate[bot]](https://github.com/apps/renovate))
+
+## [v5.3.2](https://github.com/tj-django/django-clone/tree/v5.3.2) (2023-05-27)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v5.3.1...v5.3.2)
 
 **Merged pull requests:**
 
