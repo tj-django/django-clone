@@ -33,6 +33,7 @@ This solves the problem introduced by using `instance.pk = None` and `instance.s
 *   [Usage](#usage)
     *   [Subclassing the `CloneModel`](#subclassing-the-clonemodel)
     *   [Using the `CloneMixin`](#using-the-clonemixin)
+    *   [Using the `CloneModel`](#using-the-clonemodel)
     *   [Duplicating a model instance](#duplicating-a-model-instance)
     *   [Bulk cloning a model](#bulk-cloning-a-model)
     *   [Creating clones without subclassing `CloneMixin`.](#creating-clones-without-subclassing-clonemixin)
@@ -46,11 +47,8 @@ This solves the problem introduced by using `instance.pk = None` and `instance.s
         *   [CloneModelAdmin class attributes](#clonemodeladmin-class-attributes)
 *   [Advanced Usage](#advanced-usage)
     *   [Signals](#signals)
-        *   [pre\_clone\_save, post\_clone\_save](#pre_clone_save-post_clone_save)
-    *   [Clone Many to Many fields](#clone-many-to-many-fields)
-        *   [Using the `CloneModel`](#using-the-clonemodel)
-        *   [Using the `CloneMixin`](#using-the-clonemixin-1)
-    *   [Multi database support](#multi-database-support)
+        *   [`pre_clone_save`, `post_clone_save`](#pre_clone_save-post_clone_save)
+    *   [Multi-database support](#multi-database-support)
 *   [Compatibility](#compatibility)
 *   [Running locally](#running-locally)
 *   [Found a Bug?](#found-a-bug)
@@ -79,6 +77,10 @@ poetry add django-clone
 ### Using the `CloneMixin`
 
 ![](https://user-images.githubusercontent.com/17484350/221387397-6ad5475b-6887-4a5f-b6d3-42784f9dfa7c.png)
+
+### Using the `CloneModel`
+
+![](https://user-images.githubusercontent.com/17484350/221387226-572cedbe-e30e-456d-af75-bcd25edec754.png)
 
 ### Duplicating a model instance
 
@@ -164,23 +166,11 @@ INSTALLED_APPS = [
 
 ### Signals
 
-#### pre\_clone\_save, post\_clone\_save
+#### `pre_clone_save`, `post_clone_save`
 
 ![](https://user-images.githubusercontent.com/17484350/221387120-b5219cdb-9f74-4751-b593-2c68db9fd0e0.png)
 
-### Clone Many to Many fields
-
-#### Using the `CloneModel`
-
-![](https://user-images.githubusercontent.com/17484350/221387226-572cedbe-e30e-456d-af75-bcd25edec754.png)
-
-#### Using the `CloneMixin`
-
-![carbon (37)](https://user-images.githubusercontent.com/17484350/221387393-196bcb4b-e136-4d5b-89cd-0fb28d8e6e6e.png)
-
-![](https://user-images.githubusercontent.com/17484350/221387265-ccf05239-ec0c-47ec-b0ed-6c2e01428aee.png)
-
-### Multi database support
+### Multi-database support
 
 ![](https://user-images.githubusercontent.com/17484350/221385217-3a123080-b247-4ef0-b876-e75db1518c92.png)
 
