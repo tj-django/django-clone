@@ -80,9 +80,7 @@ poetry add django-clone
 
 ![](https://user-images.githubusercontent.com/17484350/221387397-6ad5475b-6887-4a5f-b6d3-42784f9dfa7c.png)
 
-### Clone Many to Many fields
-
-#### Using the `CloneModel`
+### Using the `CloneModel`
 
 ![](https://user-images.githubusercontent.com/17484350/221387226-572cedbe-e30e-456d-af75-bcd25edec754.png)
 
