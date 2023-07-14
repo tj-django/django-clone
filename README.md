@@ -80,6 +80,12 @@ poetry add django-clone
 
 ![](https://user-images.githubusercontent.com/17484350/221387397-6ad5475b-6887-4a5f-b6d3-42784f9dfa7c.png)
 
+### Clone Many to Many fields
+
+#### Using the `CloneModel`
+
+![](https://user-images.githubusercontent.com/17484350/221387226-572cedbe-e30e-456d-af75-bcd25edec754.png)
+
 ### Duplicating a model instance
 
 ![](https://user-images.githubusercontent.com/17484350/221386600-731a6f45-1704-4834-bcbe-0f57d912faf7.png)
@@ -164,23 +170,11 @@ INSTALLED_APPS = [
 
 ### Signals
 
-#### pre\_clone\_save, post\_clone\_save
+#### `pre_clone_save`, `post_clone_save`
 
 ![](https://user-images.githubusercontent.com/17484350/221387120-b5219cdb-9f74-4751-b593-2c68db9fd0e0.png)
 
-### Clone Many to Many fields
-
-#### Using the `CloneModel`
-
-![](https://user-images.githubusercontent.com/17484350/221387226-572cedbe-e30e-456d-af75-bcd25edec754.png)
-
-#### Using the `CloneMixin`
-
-![carbon (37)](https://user-images.githubusercontent.com/17484350/221387393-196bcb4b-e136-4d5b-89cd-0fb28d8e6e6e.png)
-
-![](https://user-images.githubusercontent.com/17484350/221387265-ccf05239-ec0c-47ec-b0ed-6c2e01428aee.png)
-
-### Multi database support
+### Multi-database support
 
 ![](https://user-images.githubusercontent.com/17484350/221385217-3a123080-b247-4ef0-b876-e75db1518c92.png)
 
