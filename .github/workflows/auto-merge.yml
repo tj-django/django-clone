@@ -1,26 +1,40 @@
-name: automerge
+name: Auto-merge
 on:
-  check_suite:
-    types:
-      - completed
+  pull_request_target:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
-  automerge:
+  dependabot:
     runs-on: ubuntu-latest
-    if: |
-      github.actor == 'dependabot[bot]' ||
-      github.actor == 'dependabot' ||
-      github.actor == 'dependabot-preview[bot]' ||
-      github.actor == 'dependabot-preview' ||
-      github.actor == 'renovate[bot]' ||
-      github.actor == 'renovate'
+    if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
-      - name: automerge
-        uses: pascalgn/automerge-action@v0.15.6
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Enable auto-merge for Dependabot PRs
+        if: |
+          (
+            steps.metadata.outputs.update-type == 'version-update:semver-minor' ||
+            steps.metadata.outputs.update-type == 'version-update:semver-patch'
+          )
+        run: gh pr merge --auto --squash "$PR_URL"
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-          MERGE_METHOD: "rebase"
-          UPDATE_METHOD: "rebase"
-          MERGE_RETRIES: "6"
-          MERGE_RETRY_SLEEP: "100000"
-          MERGE_LABELS: ""
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.PAT_TOKEN}}
+  pre-commit-ci:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor == 'pre-commit-ci[bot]' }}
+    steps:
+      - name: Enable auto-merge for Dependabot PRs
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.PAT_TOKEN}}
+     
