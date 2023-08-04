@@ -9,13 +9,6 @@ permissions:
   pull-requests: write
 
 jobs:
-  show:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
   dependabot:
     runs-on: ubuntu-latest
     if: ${{ github.actor == 'dependabot[bot]' }}
@@ -37,7 +30,7 @@ jobs:
           GITHUB_TOKEN: ${{secrets.PAT_TOKEN}}
   pre-commit-ci:
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'pre-commit-ci[bot]' }}
+    if: ${{ github.event.pull_request.user.login == 'pre-commit-ci[bot]' }}
     steps:
       - name: Enable auto-merge for Dependabot PRs
         run: gh pr merge --auto --squash "$PR_URL"
