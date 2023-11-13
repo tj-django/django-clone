@@ -20,13 +20,13 @@ repos:
         exclude: ^docs/.*|.*.md
 
   - repo: https://github.com/psf/black
-    rev: 23.10.1
+    rev: 23.11.0
     hooks:
       - id: black
         language_version: python3
 
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.32.0
+    rev: v1.33.0
     hooks:
       - id: yamllint
         args: ["-d", "relaxed"]
