@@ -35,6 +35,9 @@ class CloneMixin(object):
     :param _clone_o2o_fields: One to One fields.
     :type _clone_o2o_fields: collections.Iterable
 
+    :param _clone_linked_m2m_fields: List of fields to link to the cloned instance.
+    :type _clone_linked_m2m_fields: collections.Iterable
+
     :param _clone_excluded_fields: Excluded model fields.
     :type _clone_excluded_fields: collections.Iterable
     :param _clone_excluded_m2m_fields: Excluded many to many fields.
