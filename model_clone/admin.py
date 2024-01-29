@@ -17,9 +17,9 @@ class CloneModelAdminMixin(object):
 
     def change_view(self, request, object_id, form_url="", extra_context=None):
         extra_context = extra_context or {}
-        extra_context[
-            "include_duplicate_object_link"
-        ] = self.include_duplicate_object_link
+        extra_context["include_duplicate_object_link"] = (
+            self.include_duplicate_object_link
+        )
         if self.include_duplicate_object_link:
             to_field = request.POST.get(TO_FIELD_VAR, request.GET.get(TO_FIELD_VAR))
             if to_field and not self.to_field_allowed(request, to_field):
