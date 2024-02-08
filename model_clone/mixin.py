@@ -718,6 +718,8 @@ class CloneMixin(object):
         :return: The duplicate instance objects from all the many-to-many fields duplicated.
         """
 
+        changed = False
+
         for field in self._meta.many_to_many:
             if all(
                 [
@@ -729,5 +731,9 @@ class CloneMixin(object):
                 source = getattr(self, field.attname)
                 destination = getattr(duplicate, field.attname)
                 destination.set(list(source.all()))
+                changed = True
+
+        if changed:
+            duplicate.save()
 
         return duplicate
