@@ -187,6 +187,7 @@ INSTALLED_APPS = [
 |  1.11        |    `<=2.7.2`        |
 |  2.x         |    All versions     |
 |  3.x         |    All versions     |
+|  4.x         |    All versions     |
 
 ## Running locally
 
