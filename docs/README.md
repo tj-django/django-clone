@@ -178,15 +178,17 @@ INSTALLED_APPS = [
 
 |  Python      |  Supported version |
 |--------------|--------------------|
-|  Python2.x  |    `<=2.5.3`       |
-|  Python3.5  |    `<=2.9.6`       |
-|  Python3.6+  |    All versions    |
+|  Python2.x   |    `<=2.5.3`       |
+|  Python3.5   |    `<=2.9.6`       |
+|  Python3.6+  |    `<=5.3.3`       |
+|  Python3.7+  |    All versions    |
 
 |  Django      |   Supported version |
 |--------------|---------------------|
 |  1.11        |    `<=2.7.2`        |
 |  2.x         |    All versions     |
 |  3.x         |    All versions     |
+|  4.x         |    All versions     |
 
 ## Running locally
 
