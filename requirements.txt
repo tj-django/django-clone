@@ -10,7 +10,7 @@ conditional==1.5
     # via django-clone (setup.py)
 django==5.0.11
     # via django-clone (setup.py)
-six==1.16.0
+six==1.17.0
     # via django-clone (setup.py)
 sqlparse==0.5.3
     # via django
