@@ -47,7 +47,7 @@ jobs:
         uses: tj-actions/github-changelog-generator@v1.20
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           base: "main"
           title: "Upgraded ${{ steps.semver-diff.outputs.old_version }} → ${{ steps.semver-diff.outputs.new_version }}"
