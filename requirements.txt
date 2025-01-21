@@ -6,7 +6,7 @@
 #
 asgiref==3.8.1
     # via django
-conditional==1.5
+conditional==2.0
     # via django-clone (setup.py)
 django==5.0.11
     # via django-clone (setup.py)
