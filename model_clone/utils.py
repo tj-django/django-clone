@@ -6,7 +6,9 @@ from django.db import models, transaction
 from django.db.transaction import TransactionManagementError
 
 
-def create_copy_of_instance(instance, attrs=None, exclude=(), save_new=True, using=None):
+def create_copy_of_instance(
+    instance, attrs=None, exclude=(), save_new=True, using=None
+):
     """
     Clone an instance of `django.db.models.Model`.
 
@@ -111,7 +113,9 @@ def unpack_unique_constraints(opts, only_fields=()):
     :return: Flat list of fields.
     """
     fields = []
-    constraints = getattr(opts, "total_unique_constraints", getattr(opts, "constraints", []))
+    constraints = getattr(
+        opts, "total_unique_constraints", getattr(opts, "constraints", [])
+    )
     for constraint in constraints:
         fields.extend([f for f in constraint.fields if f in only_fields])
     return fields
@@ -240,7 +244,9 @@ def generate_value(value, suffix, transform, max_length, max_attempts):
         yield get_value(value, suffix, transform, max_length, i)
 
     raise StopIteration(
-        "CloneError: max unique attempts for {} exceeded ({})".format(value, max_attempts)
+        "CloneError: max unique attempts for {} exceeded ({})".format(
+            value, max_attempts
+        )
     )
 
 
@@ -293,11 +299,19 @@ def get_fields_and_unique_fields_from_cls(
         if not getattr(f, "primary_key", False):
             if clone_fields and not force and not getattr(f, "one_to_one", False):
                 valid = f.name in clone_fields
-            elif clone_excluded_fields and not force and not getattr(f, "one_to_one", False):
+            elif (
+                clone_excluded_fields
+                and not force
+                and not getattr(f, "one_to_one", False)
+            ):
                 valid = f.name not in clone_excluded_fields
             elif clone_o2o_fields and not force and getattr(f, "one_to_one", False):
                 valid = f.name in clone_o2o_fields
-            elif clone_excluded_o2o_fields and not force and getattr(f, "one_to_one", False):
+            elif (
+                clone_excluded_o2o_fields
+                and not force
+                and getattr(f, "one_to_one", False)
+            ):
                 valid = f.name not in clone_excluded_o2o_fields  # pragma: no cover
             else:
                 valid = True
@@ -320,7 +334,9 @@ def get_fields_and_unique_fields_from_cls(
         for f in fields
         if not f.auto_created
         and (
-            f.unique or f.name in unique_field_names or f.name in unique_constraint_field_names
+            f.unique
+            or f.name in unique_field_names
+            or f.name in unique_constraint_field_names
         )
     ]
 
