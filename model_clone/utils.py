@@ -149,7 +149,8 @@ def clean_value(value, suffix):
     :rtype: `str`
     """
     # type: (str, str) -> str
-    return re.sub(r"([\s-]?){}[\s-][\d]$".format(suffix), "", value, flags=re.I)
+    escaped_suffix = re.escape(suffix)
+    return re.sub(r"([\s-]?){}[\s-]\d+$".format(escaped_suffix), "", value, flags=re.I)
 
 
 @contextlib.contextmanager
