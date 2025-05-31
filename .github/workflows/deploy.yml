@@ -4,6 +4,10 @@ on:
   release:
     types: [created]
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -54,4 +58,4 @@ jobs:
           branch: "chore/upgrade-${{ steps.semver-diff.outputs.old_version }}-to-${{ steps.semver-diff.outputs.new_version }}"
           commit-message: "Upgraded from ${{ steps.semver-diff.outputs.old_version }} → ${{ steps.semver-diff.outputs.new_version }}"
           body: "View [CHANGES](https://github.com/${{ github.repository }}/compare/${{ steps.semver-diff.outputs.old_version }}...${{ steps.semver-diff.outputs.new_version }})"
-          token: ${{ secrets.PAT_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
