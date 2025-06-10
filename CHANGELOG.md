@@ -1,5 +1,13 @@
 # Changelog
 
+## [v5.5.0](https://github.com/tj-django/django-clone/tree/v5.5.0) (2025-06-10)
+
+[Full Changelog](https://github.com/tj-django/django-clone/compare/v5.4.1...v5.5.0)
+
+**Merged pull requests:**
+
+- Upgraded v5.3.3 → v5.4.0 [\#948](https://github.com/tj-django/django-clone/pull/948) ([github-actions[bot]](https://github.com/apps/github-actions))
+
 ## [v5.4.1](https://github.com/tj-django/django-clone/tree/v5.4.1) (2025-06-10)
 
 [Full Changelog](https://github.com/tj-django/django-clone/compare/v5.4.0...v5.4.1)
