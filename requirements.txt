@@ -4,7 +4,7 @@
 #
 #    pip-compile
 #
-asgiref==3.11.1
+asgiref==3.12.0
     # via django
 conditional==2.2
     # via django-clone (setup.py)
