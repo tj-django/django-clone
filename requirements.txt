@@ -12,5 +12,5 @@ django==6.1
     # via django-clone (setup.py)
 six==1.17.0
     # via django-clone (setup.py)
-sqlparse==0.5.5
+sqlparse==0.6.0
     # via django
