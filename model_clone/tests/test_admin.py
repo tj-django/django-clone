@@ -15,7 +15,7 @@ class CloneModelAdminActionsTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = get_user_model().objects.create_superuser(
-            username="admin", email="admin@example.com", password="password"
+            username="admin", email="admin@example.com", password=None
         )
 
     def setUp(self):
