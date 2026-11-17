@@ -62,12 +62,16 @@ class CloneModelAdminMixin(object):
 
     make_clone.short_description = _("Duplicate selected %(verbose_name_plural)s")
 
-    def _get_base_actions(self):
+    def _get_base_actions(self, **kwargs):
         """Return the list of actions, prior to any request-based filtering."""
-        actions = list(super()._get_base_actions())
+        # Django 6 passes ``action_location`` here and to ``get_action``, which
+        # returns None for an action not offered at that location.
+        actions = list(super()._get_base_actions(**kwargs))
         # Add the make clone action
         if self.include_duplicate_action and issubclass(self.model, CloneMixin):
-            actions.extend(self.get_action(action) for action in ["make_clone"])
+            action = self.get_action("make_clone", **kwargs)
+            if action:
+                actions.append(action)
 
         return actions
 
